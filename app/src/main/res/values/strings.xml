@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">GrabApp</string>
+    <string name="main_header">Vận Chuyển Ngay</string>
+    <string name="ship">Vận Chuyển</string>
+    <string name="fast"><![CDATA[Nhanh & Tin Cậy]]></string>
+    <string name="main_description">Giao hàng toàn quốc với công nghệ hiện đại, theo dõi real-time, cam kết đúng hẹn</string>
+    <string name="K50">50K+</string>
+    <string name="percent">99.5%</string>
+    <string name="time">24/7</string>
+    <string name="percent_description">Đúng hẹn</string>
+    <string name="order_description">Đơn \nhàng/tháng</string>
+    <string name="time_description">Hỗ trợ</string>
+    <string name="ship_now">Gửi hàng ngay</string>
+    <string name="become_to_driver">Trở thành tài xế</string>
+    <string name="search_order">Tra cứu đơn hàng</string>
+    <string name="order_code">Nhập mã đơn hàng</string>
+</resources>
