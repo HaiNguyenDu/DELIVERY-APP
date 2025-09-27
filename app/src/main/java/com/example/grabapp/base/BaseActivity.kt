@@ -2,6 +2,7 @@ package com.example.grabapp.base
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -13,12 +14,17 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
 import com.example.grabapp.extention.setPadding
 
-open class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity() {
+abstract  class BaseActivity<T : ViewBinding, V : BaseViewModel?> : AppCompatActivity() {
+    abstract fun getLazyBinding(): Lazy<T>
+    abstract fun getLazyViewModel(): Lazy<V>
+    protected val binding: T by this.getLazyBinding()
+    protected val viewModel: V by this.getLazyViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT))
         handleInsets()
         setStatusBarColor()
+        setContentView(binding.root)
     }
 
     private fun handleInsets() {
@@ -40,4 +46,5 @@ open class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity(
     open fun handleInsets(v: View, insets: Insets) {
         v.setPadding(insets)
     }
+
 }
