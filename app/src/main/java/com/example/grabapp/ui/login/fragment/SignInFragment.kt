@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentSignInBinding
+import com.example.grabapp.extention.hideKeyboard
 import com.example.grabapp.ui.login.LoginViewModel
 import com.example.grabapp.ui.login.adapter.LoginPageAdapter
 import com.example.grabapp.view.ExitConfirmDialog
@@ -34,7 +35,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, LoginViewModel>() {
 
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
-    override fun setBackPress(){
+    override fun setBackPress() {
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 showDialog()
@@ -43,6 +44,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, LoginViewModel>() {
 
         activity?.onBackPressedDispatcher?.addCallback(requireActivity(), onBackPressedCallback)
     }
+
     private fun handleInset() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -61,9 +63,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, LoginViewModel>() {
 
     private fun setUpClick() {
         binding.btnNext.setOnClickListener {
+            hideKeyboard()
             requireActivity().lifecycleScope.launch {
                 viewModel.showLoading()
-                delay(1000)
+                delay(3000)
                 val phoneNumber = binding.textInput.text
                 if (phoneNumber == null || phoneNumber.length < 9 || phoneNumber.length > 12) {
                     SnackBarCustom(
