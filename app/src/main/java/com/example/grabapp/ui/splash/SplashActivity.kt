@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.core.graphics.Insets
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
@@ -19,13 +22,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
 
 
     override fun getLazyViewModel(): Lazy<NoViewModel> {
-        return lazy { NoViewModel() }
+        return lazy { NoViewModel(application) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
+        setUpUi()
         handleForNextScreen()
     }
 
@@ -39,6 +42,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
         }
     }
 
+    private fun setUpUi(){
+        WindowCompat.setDecorFitsSystemWindows(window,false)
+        val controller = WindowCompat.getInsetsController(window,window.decorView)
+        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        controller.hide(WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.statusBars())
+    }
     private fun funShowNextScreen() {
         startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
         overridePendingTransition(

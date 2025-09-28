@@ -11,7 +11,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun getLazyBinding(): Lazy<ActivityMainBinding> = lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel(): Lazy<MainViewModel> {
-        return lazy { MainViewModel() }
+        return lazy { MainViewModel(application) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
