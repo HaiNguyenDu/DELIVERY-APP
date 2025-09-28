@@ -14,4 +14,23 @@
     <string name="become_to_driver">Trở thành tài xế</string>
     <string name="search_order">Tra cứu đơn hàng</string>
     <string name="order_code">Nhập mã đơn hàng</string>
+    <string name="log_in">Đăng Nhập</string>
+    <string name="sign_in">Khách hàng mới? Đăng ký!</string>
+    <string name="exit_alert">Bạn chắc chắn muốn thoát?</string>
+    <string name="cancel">Hủy</string>
+    <string name="exit">"Thoát "</string>
+    <string name="your_number">Chào mừng bạn! Số điện thoại của bạn là?</string>
+    <string name="sign_in_description">Với số điện thoại hợp lệ,bạn có thể truy cập đầy đủ dịch vụ của chúng tôi</string>
+    <string name="_84">+84</string>
+    <string name="_000000000">000000000</string>
+    <string name="next">Tiếp theo</string>
+    <string name="entry_phone_request">Vui lòng nhập số điện thoại hợp lệ</string>
+    <string name="confirm_otp">Nhập mã gồm 6 chữ số được gửi đến số %s thông qua tin nhắn Zalo</string>
+    <string name="_000000">000000</string>
+    <string name="new_otp">Nhận mã mới</string>
+    <string name="cannot_get_otp">Bạn không nhận được mã?</string>
+    <string name="name">"Tên "</string>
+    <string name="hint_name">Bạn thích mọi người gọi bạn bằng tên gì?</string>
+    <string name="policy">Bằng cách tiếp tục, bạn xác nhận rằng bạn đã đọc và đồng ý với Điều Khoản Dịch Vụ và Thông Báo Bảo Mật của chúng tôi.</string>
+    <string name="start">Bắt đầu</string>
 </resources>

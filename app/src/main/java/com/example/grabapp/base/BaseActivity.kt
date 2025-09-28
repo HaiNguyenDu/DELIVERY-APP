@@ -1,7 +1,9 @@
 package com.example.grabapp.base
 
+import android.R
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -13,12 +15,17 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
 import com.example.grabapp.extention.setPadding
 
-open class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity() {
+abstract  class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity() {
+    abstract fun getLazyBinding(): Lazy<T>
+    abstract fun getLazyViewModel(): Lazy<V>
+    protected val binding: T by this.getLazyBinding()
+    protected val viewModel: V by this.getLazyViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT))
         handleInsets()
-        setStatusBarColor()
+        setIsLightThemeStatusBar()
+        setContentView(binding.root)
     }
 
     private fun handleInsets() {
@@ -26,18 +33,19 @@ open class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity(
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
             val inset = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             handleInsets(v, inset)
-            WindowInsetsCompat.CONSUMED
+            insets
         }
     }
 
-    protected fun setStatusBarColor() {
+    protected fun setIsLightThemeStatusBar(value: Boolean = true) {
         val controller = WindowCompat.getInsetsController(window, window.decorView.rootView)
-        controller.isAppearanceLightStatusBars = true
-        controller.isAppearanceLightNavigationBars = true
+        controller.isAppearanceLightStatusBars = value
+        controller.isAppearanceLightNavigationBars = value
         window.decorView.setBackgroundColor(Color.WHITE)
     }
 
     open fun handleInsets(v: View, insets: Insets) {
         v.setPadding(insets)
     }
+
 }
