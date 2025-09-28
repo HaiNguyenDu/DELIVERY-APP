@@ -1,47 +1,100 @@
 package com.example.grabapp.ui.login.fragment
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
-import com.example.grabapp.databinding.FragmentSignInBinding
+import com.example.grabapp.databinding.FragmentEnterNameBinding
 import com.example.grabapp.extention.hideKeyboard
 import com.example.grabapp.ui.login.LoginViewModel
 import com.example.grabapp.ui.login.adapter.LoginPageAdapter
 import com.example.grabapp.view.ExitConfirmDialog
-import com.example.grabapp.view.SnackBarCustom
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SignInFragment : BaseFragment<FragmentSignInBinding, LoginViewModel>() {
-    override fun getLazyBinding(): Lazy<FragmentSignInBinding> =
-        lazy { FragmentSignInBinding.inflate(layoutInflater) }
+class EnterNameFragment : BaseFragment<FragmentEnterNameBinding, LoginViewModel>() {
+    override fun getLazyBinding(): Lazy<FragmentEnterNameBinding> =
+        lazy { FragmentEnterNameBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel(): Lazy<LoginViewModel> =
         lazy { ViewModelProvider(requireActivity())[LoginViewModel::class.java] }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpToolBar()
-        handleInset()
-        setUpClick()
-        observerData()
-        setUpUi()
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
+    private fun handleInset() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            val bottomInset = maxOf(systemBarInsets.bottom, imeInsets.bottom)
+            binding.root.setPadding(
+                0,
+                0,
+                0,
+                bottomInset
+            )
+            binding.toolbar.setPadding(0, systemBarInsets.top, 0, 0)
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
-    private fun setUpUi(){
+    private fun setUpUi() {
+        val spanner = SpannableStringBuilder(getString(R.string.policy))
+        val mainText = getString(R.string.policy)
+        val text1 = "Điều Khoản Dịch Vụ"
+        val indexText1 = mainText.lastIndexOf(text1)
+        val text2 = "Thông Báo Bảo Mật"
+        val indexText2 = mainText.lastIndexOf(text2)
+        spanner.setSpan(
+            ForegroundColorSpan(requireActivity().getColor(R.color.green)),
+            indexText1,
+            indexText1 + text1.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spanner.setSpan(
+            StyleSpan(Typeface.BOLD),
+            indexText1,
+            indexText1 + text1.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spanner.setSpan(
+            ForegroundColorSpan(requireActivity().getColor(R.color.green)),
+            indexText2,
+            indexText2 + text2.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spanner.setSpan(
+            StyleSpan(Typeface.BOLD),
+            indexText2,
+            indexText2 + text2.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.tvPolicy.text = spanner
         binding.btnNext.alpha = 0.6f
         binding.btnNext.isEnabled = false
     }
-    private fun observerData(){
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        handleInset()
+        setUpToolBar()
+        setUpUi()
+        observerData()
+    }
+
+    private fun observerData() {
         binding.textInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 p0: CharSequence?,
@@ -74,56 +127,15 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, LoginViewModel>() {
 
         })
     }
-    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override fun setBackPress() {
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showDialog()
+                showDialogExit()
             }
         }
 
         activity?.onBackPressedDispatcher?.addCallback(requireActivity(), onBackPressedCallback)
-    }
-
-    private fun handleInset() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
-            val bottomInset = maxOf(systemBarInsets.bottom, imeInsets.bottom)
-            binding.root.setPadding(
-                0,
-                0,
-                0,
-                bottomInset
-            )
-            binding.toolbar.setPadding(0, systemBarInsets.top, 0, 0)
-            WindowInsetsCompat.CONSUMED
-        }
-    }
-
-    override fun setUpClick() {
-        binding.btnNext.setOnClickListener {
-            hideKeyboard()
-            requireActivity().lifecycleScope.launch {
-                viewModel.showLoading()
-                delay(3000)
-                val phoneNumber = binding.textInput.text
-                if (phoneNumber == null || phoneNumber.length < 9 || phoneNumber.length > 12) {
-                    SnackBarCustom(
-                        view = binding.root,
-                        message = getString(R.string.entry_phone_request),
-                        backgroundColor = context?.getColor(R.color.white)!!,
-                        textColor = context?.getColor(R.color.green)!!,
-                        bottomMarginDp = 100f,
-                    ).show()
-                } else {
-                    viewModel.setPhoneNumber(phoneNumber.toString())
-                    viewModel.replaceFragment(LoginPageAdapter.FRAGMENT_CONFIRM)
-                }
-                viewModel.hideLoading()
-            }
-        }
     }
 
     private fun setUpToolBar() {
@@ -133,7 +145,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, LoginViewModel>() {
                 setDisplayHomeAsUpEnabled(true)
                 setHomeAsUpIndicator(R.drawable.ic_back)
                 setDisplayShowHomeEnabled(false)
-                title = ""
+                title = getString(R.string.start)
             }
         }
 
@@ -142,7 +154,18 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, LoginViewModel>() {
         }
     }
 
-    private fun showDialog() {
+    override fun setUpClick() {
+        binding.btnNext.setOnClickListener {
+            hideKeyboard()
+            CoroutineScope(Dispatchers.Main).launch {
+                viewModel.showLoading()
+                delay(5000)
+                viewModel.hideLoading()
+            }
+        }
+    }
+
+    private fun showDialogExit() {
         ExitConfirmDialog.with(requireActivity()).setListener(
             object : ExitConfirmDialog.ExitDialogListener {
                 override fun onClickYes() {
@@ -153,7 +176,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, LoginViewModel>() {
 
                 override fun onClickCancel() {
                 }
-
             }
         ).show()
     }

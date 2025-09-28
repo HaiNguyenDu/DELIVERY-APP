@@ -25,6 +25,7 @@ abstract class BaseFragment<T : ViewBinding, V : BaseViewModel> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isCreated = true
+        setUpClick()
     }
 
     override fun onDestroyView() {
@@ -35,4 +36,6 @@ abstract class BaseFragment<T : ViewBinding, V : BaseViewModel> : Fragment() {
     open fun setBackPress() {
 
     }
+
+    abstract fun setUpClick()
 }

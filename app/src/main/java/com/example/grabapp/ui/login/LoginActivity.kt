@@ -41,7 +41,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                     val fragment = supportFragmentManager.findFragmentByTag("f$position")
                     if (fragment is BaseFragment<*, *>)
                         fragment.setBackPress()
-
                 }
             })
         }
@@ -58,7 +57,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
         lifecycleScope.launch {
             viewModel.isLoading.collect {
-                binding.lottie.isVisible = it
+                binding.lottie.apply {
+                    if (it) {
+                        cancelAnimation()
+                        progress = 0f
+                        playAnimation()
+                    }
+                    binding.lottie.isVisible = it
+                }
             }
         }
     }
