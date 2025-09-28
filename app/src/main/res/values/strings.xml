@@ -29,4 +29,8 @@
     <string name="_000000">000000</string>
     <string name="new_otp">Nhận mã mới</string>
     <string name="cannot_get_otp">Bạn không nhận được mã?</string>
+    <string name="name">"Tên "</string>
+    <string name="hint_name">Bạn thích mọi người gọi bạn bằng tên gì?</string>
+    <string name="policy">Bằng cách tiếp tục, bạn xác nhận rằng bạn đã đọc và đồng ý với Điều Khoản Dịch Vụ và Thông Báo Bảo Mật của chúng tôi.</string>
+    <string name="start">Bắt đầu</string>
 </resources>

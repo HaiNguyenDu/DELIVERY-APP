@@ -15,10 +15,21 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
     private val _phoneNumber = MutableStateFlow("")
 
     val phoneNumber: StateFlow<String> = _phoneNumber
+
+    private val _isLogin = MutableStateFlow<Boolean>(true)
+
     fun replaceFragment(index: Int) {
         viewModelScope.launch {
             _currentFragmentIndex.emit(index)
         }
+    }
+
+    fun getIsLogin(): Boolean {
+        return _isLogin.value
+    }
+
+    fun setIsLogin(value: Boolean) {
+        _isLogin.value = value
     }
 
     fun setPhoneNumber(phoneNumber: String) {

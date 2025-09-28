@@ -41,7 +41,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                     val fragment = supportFragmentManager.findFragmentByTag("f$position")
                     if (fragment is BaseFragment<*, *>)
                         fragment.setBackPress()
-
                 }
             })
         }

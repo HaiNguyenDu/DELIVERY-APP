@@ -18,10 +18,10 @@ class MainLoginFragment : BaseFragment<FragmentMainLoginBinding, LoginViewModel>
     override fun getLazyViewModel(): Lazy<LoginViewModel> =
         lazy { ViewModelProvider(requireActivity())[LoginViewModel::class.java] }
 
-    private fun handleInset(){
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root){v, insets ->
+    private fun handleInset() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val padding = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            binding.root.setPadding(0,0,0,padding.bottom)
+            binding.root.setPadding(0, 0, 0, padding.bottom)
             WindowInsetsCompat.CONSUMED
         }
     }
@@ -29,16 +29,17 @@ class MainLoginFragment : BaseFragment<FragmentMainLoginBinding, LoginViewModel>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleInset()
-        setUpClick()
     }
 
 
-    private fun setUpClick(){
+    override fun setUpClick() {
         binding.btnSigIn.setOnClickListener {
+            viewModel.setIsLogin(true)
             viewModel.replaceFragment(LoginPageAdapter.FRAGMENT_SIGN_IN)
         }
 
         binding.btnSignUp.setOnClickListener {
+            viewModel.setIsLogin(false)
             viewModel.replaceFragment(LoginPageAdapter.FRAGMENT_SIGN_IN)
         }
     }

@@ -2,8 +2,10 @@ package com.example.grabapp.ui.login.fragment
 
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.TextWatcher
 import android.text.style.StyleSpan
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -35,7 +37,6 @@ class ConfirmOTPFragment : BaseFragment<FragmentConfirmOtpBinding, LoginViewMode
         super.onViewCreated(view, savedInstanceState)
         setUpToolBar()
         handleInset()
-        setUpClick()
         observerData()
     }
 
@@ -104,7 +105,7 @@ class ConfirmOTPFragment : BaseFragment<FragmentConfirmOtpBinding, LoginViewMode
         ).show()
     }
 
-    private fun setUpClick() {
+    override fun setUpClick() {
         binding.tvNewOtp.setOnClickListener {
             startCountdown()
             it.isEnabled = false
@@ -117,6 +118,35 @@ class ConfirmOTPFragment : BaseFragment<FragmentConfirmOtpBinding, LoginViewMode
                 setUpUi()
             }
         }
+
+        binding.textInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                p0: CharSequence?,
+                p1: Int,
+                p2: Int,
+                p3: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                p0: CharSequence?,
+                p1: Int,
+                p2: Int,
+                p3: Int
+            ) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val textLength = p0?.length
+                if (textLength == 6) {
+                    if (viewModel.getIsLogin()) {
+
+                    } else {
+                        viewModel.replaceFragment(LoginPageAdapter.FRAGMENT_ENTER_NAME)
+                    }
+                }
+            }
+        })
     }
 
     private fun setUpToolBar() {
