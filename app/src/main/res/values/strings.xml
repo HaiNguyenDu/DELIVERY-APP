@@ -33,4 +33,7 @@
     <string name="hint_name">Bạn thích mọi người gọi bạn bằng tên gì?</string>
     <string name="policy">Bằng cách tiếp tục, bạn xác nhận rằng bạn đã đọc và đồng ý với Điều Khoản Dịch Vụ và Thông Báo Bảo Mật của chúng tôi.</string>
     <string name="start">Bắt đầu</string>
+    <string name="tra_c_u_b_ng_m_v_n_n">Tra cứu bằng mã vận đơn</string>
+    <string name="nguy_n_duy_h_i">Nguyễn Duy Hải</string>
+    <string name="h_s">Hồ sơ</string>
 </resources>
