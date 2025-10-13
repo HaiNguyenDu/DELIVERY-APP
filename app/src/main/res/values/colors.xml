@@ -10,4 +10,7 @@
     <color name="splash_green">#58BC6B</color>
     <color name="grey">#676767</color>
     <color name="text_color">#3E3E3E</color>
+    <color name="dark_green">#004B23</color>
+    <color name="light_blue">#e8f6f9</color>
+    <color name="light_grey">#F5F5F5</color>
 </resources>
