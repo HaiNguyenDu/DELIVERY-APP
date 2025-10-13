@@ -1,5 +1,6 @@
 package com.example.grabapp.ui.login.fragment
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
@@ -18,6 +19,7 @@ import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentEnterNameBinding
 import com.example.grabapp.extention.hideKeyboard
+import com.example.grabapp.ui.home.MainActivity
 import com.example.grabapp.ui.login.LoginViewModel
 import com.example.grabapp.ui.login.adapter.LoginPageAdapter
 import com.example.grabapp.view.ExitConfirmDialog
@@ -161,6 +163,7 @@ class EnterNameFragment : BaseFragment<FragmentEnterNameBinding, LoginViewModel>
                 viewModel.showLoading()
                 delay(5000)
                 viewModel.hideLoading()
+                startActivity(Intent(context, MainActivity::class.java))
             }
         }
     }
