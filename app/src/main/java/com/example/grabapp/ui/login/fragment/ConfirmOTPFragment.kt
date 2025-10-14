@@ -1,5 +1,6 @@
 package com.example.grabapp.ui.login.fragment
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
@@ -17,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentConfirmOtpBinding
+import com.example.grabapp.ui.home.MainActivity
 import com.example.grabapp.ui.login.LoginViewModel
 import com.example.grabapp.ui.login.adapter.LoginPageAdapter
 import com.example.grabapp.view.ExitConfirmDialog
@@ -140,7 +142,7 @@ class ConfirmOTPFragment : BaseFragment<FragmentConfirmOtpBinding, LoginViewMode
                 val textLength = p0?.length
                 if (textLength == 6) {
                     if (viewModel.getIsLogin()) {
-
+                        startActivity(Intent(context, MainActivity::class.java))
                     } else {
                         viewModel.replaceFragment(LoginPageAdapter.FRAGMENT_ENTER_NAME)
                     }
