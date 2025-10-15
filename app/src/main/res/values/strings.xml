@@ -36,4 +36,9 @@
     <string name="tra_c_u_b_ng_m_v_n_n">Tra cứu bằng mã vận đơn</string>
     <string name="nguy_n_duy_h_i">Nguyễn Duy Hải</string>
     <string name="h_s">Hồ sơ</string>
+    <string name="choose_transportation">Chọn dịch vụ muốn đăng ký</string>
+    <string name="service_type">Loại dịch vụ</string>
+    <string name="grab_bike">GrabBike (2 bánh)</string>
+    <string name="grab_car">GrabCar</string>
+    <string name="grab_taxi">GrabTaxi</string>
 </resources>
