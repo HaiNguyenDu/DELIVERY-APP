@@ -29,4 +29,8 @@
     <dimen name="size_1">1dp</dimen>
     <dimen name="size_2">2dp</dimen>
     <dimen name="size_3">3dp</dimen>
+    <dimen name="size_200">200dp</dimen>
+    <dimen name="size_9">9dp</dimen>
+    <dimen name="size_250">250dp</dimen>
+    <dimen name="size_12">12dp</dimen>
 </resources>

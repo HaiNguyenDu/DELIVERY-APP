@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityMainBinding
+import com.example.grabapp.ui.address_selection.AddressSelectionActivity
 import com.example.grabapp.ui.user.ActivityUser
 import com.facebook.shimmer.Shimmer
 
@@ -68,6 +69,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun observeView() {
         binding.btnUser.setOnClickListener {
             startActivity(Intent(this, ActivityUser::class.java))
+            overridePendingTransition(
+                R.anim.anim_translate_in_right,
+                R.anim.anim_translate_out_left
+            )
+        }
+        binding.btnShipping.setOnClickListener {
+            startActivity(Intent(this, AddressSelectionActivity::class.java))
             overridePendingTransition(
                 R.anim.anim_translate_in_right,
                 R.anim.anim_translate_out_left

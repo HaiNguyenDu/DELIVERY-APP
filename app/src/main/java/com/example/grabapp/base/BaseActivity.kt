@@ -23,9 +23,10 @@ abstract  class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT))
-        handleInsets()
         setIsLightThemeStatusBar()
         setContentView(binding.root)
+        handleInsets()
+
     }
 
     private fun handleInsets() {

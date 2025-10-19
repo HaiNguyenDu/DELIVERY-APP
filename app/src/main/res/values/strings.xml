@@ -36,4 +36,6 @@
     <string name="tra_c_u_b_ng_m_v_n_n">Tra cứu bằng mã vận đơn</string>
     <string name="nguy_n_duy_h_i">Nguyễn Duy Hải</string>
     <string name="h_s">Hồ sơ</string>
+    <string name="s_t_ng_s_t_a_nh">Số tầng, số tòa nhà</string>
+    <string name="th_m_s_t_ng_ho_c_s_c_n_h">Thêm số tầng hoặc số căn hộ</string>
 </resources>
