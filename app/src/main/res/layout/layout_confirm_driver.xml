@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/font_13"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="3/4" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginEnd="@dimen/size_50"
+        android:fontFamily="@font/medium"
+        android:lines="3"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintTop_toBottomOf="@id/tvCount"
+        tools:text="Đây là ứng dụng dành cho Tài xế đăng ký hoạt động với Grab. Bạn muốn đăng ký trở thành Tài xế?" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_8"
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bg_background_item"
+        android:fontFamily="@font/regular"
+        android:paddingHorizontal="@dimen/size_6"
+        android:paddingVertical="@dimen/size_12"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:text="- Đăng ký tham gia cung cấp các loại hình Dịch vụ hiện có trên Ứng Dụng Grab. \n- Thực hiện khoản Ký Quỹ: 2.000.000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription">
+
+        <TextView
+            android:id="@+id/tvNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_circle"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:paddingVertical="@dimen/size_10"
+            android:text="@string/no"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:id="@+id/tvYes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_16"
+            android:layout_weight="1"
+            android:background="@drawable/bg_circle_white_50"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:paddingVertical="@dimen/size_10"
+            android:text="@string/yes_next"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_16" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

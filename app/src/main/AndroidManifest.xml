@@ -11,6 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrabApp">
         <activity
+            android:name=".ui.driver.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.driver.transportation.TransportationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.driver.confirm_driver.ConfirmDriverActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.user.ActivityUser"
             android:exported="false" />
         <activity
