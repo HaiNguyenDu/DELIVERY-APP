@@ -33,4 +33,9 @@
     <dimen name="font_22">22sp</dimen>
     <dimen name="size_6">6dp</dimen>
     <dimen name="font_13">13sp</dimen>
+    <dimen name="size_36">36dp</dimen>
+    <dimen name="size_32">32dp</dimen>
+    <dimen name="size_46">46dp</dimen>
+    <dimen name="size_56">56dp</dimen>
+    <dimen name="size_26">26dp</dimen>
 </resources>
