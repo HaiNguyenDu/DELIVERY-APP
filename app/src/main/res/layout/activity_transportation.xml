@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/size_36"
+    tools:context=".ui.driver.confirm_driver.ConfirmDriverActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/size_12"
+        android:paddingEnd="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/size_12"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_logout"
+            app:tint="@color/red" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/llTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:text="@string/choose_transportation"
+            android:textSize="@dimen/font_22" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="@dimen/size_60"
+            android:layout_height="@dimen/size_150"
+            android:layout_weight="1"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="driver.json"
+            app:lottie_loop="true"
+            app:lottie_repeatMode="reverse" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_20"
+        android:background="@drawable/bg_circle_gray_8dp"
+        android:paddingHorizontal="@dimen/size_12"
+        android:paddingVertical="@dimen/size_6"
+        app:layout_constraintTop_toBottomOf="@id/llTitle">
+
+        <TextView
+            android:id="@+id/tvServiceType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/service_type"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvServiceType"
+            tools:text="GrabBike (2 bánh)" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/grey" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:background="@drawable/bg_circle"
+        android:fontFamily="@font/medium"
+        android:gravity="center"
+        android:paddingVertical="@dimen/size_12"
+        android:text="@string/next"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

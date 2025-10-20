@@ -6,4 +6,21 @@
     </style>
 
     <style name="Theme.GrabApp" parent="Base.Theme.GrabApp" />
+
+    <style name="Base.Theme.Themepack_GrabApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
+        <item name="android:fontFamily">@font/medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Theme.Themepack_GrabApp" parent="Base.Theme.Themepack_GrabApp">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="statusBarBackground">@color/white</item>
+    </style>
 </resources>
