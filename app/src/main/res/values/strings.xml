@@ -82,4 +82,6 @@
     <string name="vehicle_brand">Hãng xe</string>
     <string name="vehicle_model">Mẫu xe</string>
     <string name="vehicle_manufacture_year">Năm Sản Xuất Xe</string>
+    <string name="s_t_ng_s_t_a_nh">Số tầng, số tòa nhà</string>
+    <string name="th_m_s_t_ng_ho_c_s_c_n_h">Thêm số tầng hoặc số căn hộ</string>
 </resources>
