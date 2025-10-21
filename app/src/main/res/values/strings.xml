@@ -84,4 +84,11 @@
     <string name="vehicle_manufacture_year">Năm Sản Xuất Xe</string>
     <string name="s_t_ng_s_t_a_nh">Số tầng, số tòa nhà</string>
     <string name="th_m_s_t_ng_ho_c_s_c_n_h">Thêm số tầng hoặc số căn hộ</string>
+    <string name="home">Trang chủ</string>
+    <string name="history">Lịch sử</string>
+    <string name="income">Thu nhập</string>
+    <string name="profile">Hồ sơ</string>
+    <string name="you_are_offline">Bạn đang offline.</string>
+    <string name="turn_on_power">Bật kết nối</string>
+    <string name="m_ng_v_gps_t_t_h_y_b_t_c_2_d_ch_v">Mạng và GPS đã tắt, hãy bật cả 2 dịch vụ</string>
 </resources>

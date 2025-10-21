@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrabApp">
         <activity
+            android:name=".driver.home.DriverHomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.address_selection.AddressSelectionActivity"
             android:exported="false" />
         <activity
