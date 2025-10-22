@@ -51,15 +51,12 @@ class DriverIncomeActivity : BaseActivity<ActivityDriverIncomeBinding, DriverInc
         binding.apply {
             llIncome.onClickWithScale {
                 switchFragment(IncomeFragment())
-                updateBottomBarSelection(0)
             }
             llBonus.onClickWithScale {
                 switchFragment(DriverBonusFragment())
-                updateBottomBarSelection(1)
             }
             llWallet.onClickWithScale {
                 switchFragment(DriverWalletFragment())
-                updateBottomBarSelection(2)
             }
         }
     }
@@ -70,15 +67,4 @@ class DriverIncomeActivity : BaseActivity<ActivityDriverIncomeBinding, DriverInc
             .commit()
     }
 
-    private fun updateBottomBarSelection(selectedIndex: Int) {
-        binding.llIncome.setBackgroundResource(android.R.color.transparent)
-        binding.llBonus.setBackgroundResource(android.R.color.transparent)
-        binding.llWallet.setBackgroundResource(android.R.color.transparent)
-
-        when (selectedIndex) {
-            0 -> binding.llIncome.setBackgroundResource(R.drawable.bg_button_green)
-            1 -> binding.llBonus.setBackgroundResource(R.drawable.bg_button_green)
-            2 -> binding.llWallet.setBackgroundResource(R.drawable.bg_button_green)
-        }
-    }
 }
