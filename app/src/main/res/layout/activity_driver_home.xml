@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tvNotice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/red"
@@ -131,13 +132,14 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottombar_home"
+        android:background="@drawable/bg_bottom_bar_home"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/size_22"
         android:paddingVertical="@dimen/size_10"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
+            android:id="@+id/llHome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -151,17 +153,18 @@
                 android:layout_height="@dimen/size_24"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_home"
-                app:tint="@color/dark_green" />
+                app:tint="@color/green" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bold"
+                android:fontFamily="@font/medium"
                 android:text="@string/home"
-                android:textColor="@color/dark_green" />
+                android:textColor="@color/green" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llHistory"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -179,11 +182,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bold"
+                android:fontFamily="@font/medium"
                 android:text="@string/history" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llIncome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -201,11 +205,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bold"
+                android:fontFamily="@font/medium"
                 android:text="@string/income" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llProfile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -223,7 +228,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bold"
+                android:fontFamily="@font/medium"
                 android:text="@string/profile" />
         </LinearLayout>
     </LinearLayout>

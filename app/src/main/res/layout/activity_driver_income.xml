@@ -21,7 +21,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back" />
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
@@ -31,13 +32,14 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottombar_home"
+        android:background="@drawable/bg_bottom_bar_home"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/size_22"
         android:paddingVertical="@dimen/size_10"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
+            android:id="@+id/llIncome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,6 +64,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llBonus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -84,6 +87,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llWallet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

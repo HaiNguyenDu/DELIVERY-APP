@@ -23,10 +23,10 @@
         android:id="@+id/layoutCompletedTrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/size_16"
+        android:layout_marginHorizontal="@dimen/size_12"
         android:layout_marginTop="@dimen/size_20"
         android:background="@drawable/bg_circle_white_8"
-        android:layout_marginHorizontal="@dimen/size_12"
+        android:paddingHorizontal="@dimen/size_16"
         android:paddingVertical="@dimen/size_12"
         app:layout_constraintTop_toBottomOf="@id/rvIncome">
 
@@ -53,9 +53,9 @@
         <ImageView
             android:id="@+id/ivIcon"
             android:layout_width="@dimen/size_24"
-            android:src="@drawable/ic_chevron_right"
             android:layout_height="@dimen/size_24"
             android:contentDescription="@null"
+            android:src="@drawable/ic_chevron_right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
