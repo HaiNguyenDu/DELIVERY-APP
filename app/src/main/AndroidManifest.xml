@@ -11,6 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrabApp">
         <activity
+            android:name=".driver.driver_income.period_income.PeriodIncomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".driver.driver_income.DriverIncomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".driver.home.DriverHomeActivity"
             android:exported="false" />
         <activity
@@ -42,8 +48,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.home.MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

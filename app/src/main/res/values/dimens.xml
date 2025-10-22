@@ -42,4 +42,5 @@
     <dimen name="size_56">56dp</dimen>
     <dimen name="size_26">26dp</dimen>
     <dimen name="size_22">22dp</dimen>
+    <dimen name="size_300">300dp</dimen>
 </resources>
