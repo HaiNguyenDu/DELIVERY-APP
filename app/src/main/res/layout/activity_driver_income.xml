@@ -49,18 +49,20 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
+                android:id="@+id/ivIncome"
                 android:layout_width="@dimen/size_24"
                 android:layout_height="@dimen/size_24"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_income"
-                app:tint="@color/dark_green" />
+                app:tint="@color/green" />
 
             <TextView
+                android:id="@+id/tvIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
                 android:text="@string/income"
-                android:textColor="@color/dark_green" />
+                android:textColor="@color/green" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,12 +76,14 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
+                android:id="@+id/ivBonus"
                 android:layout_width="@dimen/size_24"
                 android:layout_height="@dimen/size_24"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_gem" />
 
             <TextView
+                android:id="@+id/tvBonus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"
@@ -97,12 +101,14 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
+                android:id="@+id/ivWallet"
                 android:layout_width="@dimen/size_24"
                 android:layout_height="@dimen/size_24"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_wallet" />
 
             <TextView
+                android:id="@+id/tvWallet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bold"

@@ -1,4 +1,4 @@
-package com.example.grabapp.ui.driver.register.bank_account
+package com.example.grabapp.driver.register.bank_account
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

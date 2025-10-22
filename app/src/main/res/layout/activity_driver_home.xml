@@ -21,8 +21,9 @@
         android:layout_height="wrap_content"
         android:background="@color/red"
         android:fontFamily="@font/medium"
+        android:paddingTop="@dimen/size_12"
+        android:paddingBottom="@dimen/size_20"
         android:gravity="center"
-        android:paddingVertical="@dimen/size_12"
         android:text="@string/m_ng_v_gps_t_t_h_y_b_t_c_2_d_ch_v"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />

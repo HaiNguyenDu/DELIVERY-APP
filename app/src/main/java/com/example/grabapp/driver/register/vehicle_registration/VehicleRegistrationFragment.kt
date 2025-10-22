@@ -1,4 +1,4 @@
-package com.example.grabapp.ui.driver.register.vehicle_registration
+package com.example.grabapp.driver.register.vehicle_registration
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

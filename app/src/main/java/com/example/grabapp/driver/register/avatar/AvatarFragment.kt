@@ -1,4 +1,4 @@
-package com.example.grabapp.ui.driver.register.avatar
+package com.example.grabapp.driver.register.avatar
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
