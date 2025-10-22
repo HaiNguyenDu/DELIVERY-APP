@@ -22,7 +22,6 @@
         android:layout_marginStart="@dimen/size_20"
         android:fontFamily="@font/medium"
         android:text="@string/_14_06_2025_14_24_am"
-        android:textSize="@dimen/font_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageView1"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +36,7 @@
         android:gravity="end"
         android:text="@string/_60000"
         android:textColor="@color/green"
-        android:textSize="@dimen/font_18"
+        android:textSize="@dimen/font_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvTime"

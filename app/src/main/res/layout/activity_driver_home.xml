@@ -7,26 +7,95 @@
     android:layout_height="match_parent"
     tools:context=".driver.home.DriverHomeActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#F3F4F8"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toTopOf="@id/bottomBar"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tvNotice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/red"
         android:fontFamily="@font/medium"
+        android:gravity="center"
         android:paddingTop="@dimen/size_12"
         android:paddingBottom="@dimen/size_20"
-        android:gravity="center"
         android:text="@string/m_ng_v_gps_t_t_h_y_b_t_c_2_d_ch_v"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_22"
+        android:background="@drawable/bg_circle_white_8"
+        android:elevation="@dimen/size_12"
+        android:outlineProvider="bounds"
+        android:padding="@dimen/size_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNotice">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/vnd"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:id="@+id/tvMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_4"
+            android:fontFamily="@font/medium"
+            android:text="100000"
+            android:textSize="@dimen/font_18" />
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:layout_marginEnd="@dimen/size_8"
+        android:paddingTop="@dimen/size_6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNotice">
+
+        <ImageView
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_marginBottom="@dimen/size_16"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bottom_bar_home"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/size_10"
+            android:paddingVertical="@dimen/size_4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_16"
+                android:layout_height="@dimen/size_16"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_income" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="5.00" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/llSwitchToOnline"
@@ -111,7 +180,7 @@
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/size_8"
         android:paddingVertical="@dimen/size_8"
-        app:layout_constraintBottom_toTopOf="@id/bottomBar">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:layout_width="@dimen/size_20"
@@ -129,108 +198,4 @@
             android:textSize="@dimen/font_16" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom_bar_home"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/size_22"
-        android:paddingVertical="@dimen/size_10"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:id="@+id/llHome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingVertical="@dimen/size_12"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_home"
-                app:tint="@color/green" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/medium"
-                android:text="@string/home"
-                android:textColor="@color/green" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llHistory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingVertical="@dimen/size_12"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_history" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/medium"
-                android:text="@string/history" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llIncome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingVertical="@dimen/size_12"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_wallet" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/medium"
-                android:text="@string/income" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llProfile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingVertical="@dimen/size_12"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_profile" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/medium"
-                android:text="@string/profile" />
-        </LinearLayout>
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

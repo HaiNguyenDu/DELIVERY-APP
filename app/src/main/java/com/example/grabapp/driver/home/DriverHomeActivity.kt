@@ -7,6 +7,7 @@ import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityDriverHomeBinding
 import com.example.grabapp.driver.driver_income.DriverIncomeActivity
+import com.example.grabapp.driver.driver_profile.DriverProfileActivity
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
 
@@ -36,16 +37,15 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
 
     private fun observeView() {
         binding.apply {
-            llIncome.onClickWithScale {
+            llMoney.onClickWithScale {
                 startActivity<DriverIncomeActivity> {
                     /*no-op*/
                 }
             }
-            llHistory.onClickWithScale {
-
-            }
-            llProfile.onClickWithScale {
-
+            ctlProfile.onClickWithScale {
+                startActivity<DriverProfileActivity> {
+                    /*no-op*/
+                }
             }
         }
     }
