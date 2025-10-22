@@ -51,12 +51,15 @@ class DriverIncomeActivity : BaseActivity<ActivityDriverIncomeBinding, DriverInc
         binding.apply {
             llIncome.onClickWithScale {
                 switchFragment(IncomeFragment())
+                updateBottomBarSelection(0)
             }
             llBonus.onClickWithScale {
                 switchFragment(DriverBonusFragment())
+                updateBottomBarSelection(1)
             }
             llWallet.onClickWithScale {
                 switchFragment(DriverWalletFragment())
+                updateBottomBarSelection(2)
             }
         }
     }
@@ -65,6 +68,38 @@ class DriverIncomeActivity : BaseActivity<ActivityDriverIncomeBinding, DriverInc
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()
+    }
+
+    private fun updateBottomBarSelection(selectedIndex: Int) {
+        binding.apply {
+            resetBottomBarColors()
+            
+            when (selectedIndex) {
+                0 -> {
+                    ivIncome.setColorFilter(getColor(R.color.green))
+                    tvIncome.setTextColor(getColor(R.color.green))
+                }
+                1 -> {
+                    ivBonus.setColorFilter(getColor(R.color.green))
+                    tvBonus.setTextColor(getColor(R.color.green))
+                }
+                2 -> {
+                    ivWallet.setColorFilter(getColor(R.color.green))
+                    tvWallet.setTextColor(getColor(R.color.green))
+                }
+            }
+        }
+    }
+
+    private fun resetBottomBarColors() {
+        binding.apply {
+            ivIncome.setColorFilter(getColor(R.color.black))
+            tvIncome.setTextColor(getColor(R.color.black))
+            ivBonus.setColorFilter(getColor(R.color.black))
+            tvBonus.setTextColor(getColor(R.color.black))
+            ivWallet.setColorFilter(getColor(R.color.black))
+            tvWallet.setTextColor(getColor(R.color.black))
+        }
     }
 
 }
