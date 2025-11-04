@@ -90,6 +90,7 @@
     <string name="profile">Hồ sơ</string>
     <string name="you_are_offline">Bạn đang offline.</string>
     <string name="turn_on_power">Bật kết nối</string>
+    <string name="turn_off_power">Tắt kết nối</string>
     <string name="m_ng_v_gps_t_t_h_y_b_t_c_2_d_ch_v">Mạng và GPS đã tắt, hãy bật cả 2 dịch vụ</string>
     <string name="bonus">Tiền thưởng</string>
     <string name="wallet">Ví</string>
@@ -108,4 +109,20 @@
     <string name="_3">3</string>
     <string name="_2">2</string>
     <string name="_1">1</string>
+    <string name="t_ng_c_h_i_nh_n_cu_c_khi_b_t_t_ng_nh_n_cu_c">Tăng cơ hội nhận cuốc khi bật tự động nhận cuốc</string>
+    <string name="automatically_receive_trip">Tự động nhận cuốc</string>
+    <string name="ang_t_ng_nh_n_cu_c_xe_n">Đang tự động nhận cuốc xe đến</string>
+    <string name="ang_t_m_ki_m_n_h_ng_g_n_b_n">Đang tìm kiếm đơn hàng gần bạn …</string>
+    <string name="h_m_nay_l_m_t_ng_y_tuy_t_v_i_giao_h_ng">Hôm nay là một ngày tuyệt vời để giao hàng</string>
+    <string name="xin_ch_o_nguy_n_quang_tr_ng">Xin chào, Nguyễn Quang Trường</string>
+    <string name="offline">Offline</string>
+    <string name="n_h_m_nay">Đơn hôm nay</string>
+    <string name="_75_000">75.000đ</string>
+    <string name="s_d_v">Số dư ví</string>
+    <string name="nh_gi">Đánh giá</string>
+    <string name="m_o_nh">Mẹo nhỏ</string>
+    <string name="trick_des">Bật trạng thái Online để bắt đầu nhận đơn hàng. Hệ thống sẽ tự động đẩy đơn phù hợp với vị trí của bạn.</string>
+    <string name="ang_t_m_n_h_ng">Đang tìm đơn hàng</string>
+    <string name="finding_orders_des">Hệ thống đang tìm đơn hàng phù hợp gần vị trí của bạn...</string>
+    <string name="trang_ch">Trang chủ</string>
 </resources>
