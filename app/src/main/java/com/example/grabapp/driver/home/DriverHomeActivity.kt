@@ -27,7 +27,7 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
 
     override fun handleInsets(v: View, insets: Insets) {
         v.setPadding(insets.left, 0, insets.right, insets.bottom)
-        binding.tvNotice.setPadding(
+        binding.viewPager.setPadding(
             0,
             insets.top,
             0,
@@ -37,12 +37,7 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
 
     private fun observeView() {
         binding.apply {
-            llMoney.onClickWithScale {
-                startActivity<DriverIncomeActivity> {
-                    /*no-op*/
-                }
-            }
-            ctlProfile.onClickWithScale {
+            llProfile.onClickWithScale {
                 startActivity<DriverProfileActivity> {
                     /*no-op*/
                 }

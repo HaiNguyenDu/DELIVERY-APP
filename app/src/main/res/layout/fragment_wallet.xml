@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".driver.home.wallet.WalletFragment">
+
+    <View
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="-48dp"
+        android:background="@drawable/bg_gradient_green_no_border"
+        app:layout_constraintBottom_toBottomOf="@id/lineaLayout1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="@dimen/size_48"
+        android:layout_height="@dimen/size_48"
+        android:layout_marginStart="@dimen/font_24"
+        android:layout_marginTop="@dimen/size_20"
+        android:background="@drawable/bg_border_white_16_20_per"
+        android:contentDescription="@null"
+        android:padding="@dimen/size_12"
+        android:src="@drawable/ic_wallet_selected"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_weight="1"
+        android:fontFamily="@font/bold"
+        android:text="@string/v_c_a_t_i"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageView1"
+        app:layout_constraintTop_toTopOf="@id/imageView1" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:fontFamily="@font/regular"
+        android:gravity="start"
+        android:text="@string/qu_n_l_thu_nh_p"
+        android:textColor="@color/grey_93"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageView1"
+        app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+    <LinearLayout
+        android:id="@+id/lineaLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_18"
+        android:background="@drawable/bg_border_stroke_white_12_20_per"
+        android:orientation="vertical"
+        android:padding="@dimen/size_24"
+        app:layout_constraintTop_toBottomOf="@id/textView2">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:gravity="start"
+            android:text="@string/s_d_kh_d_ng"
+            android:textColor="#E6FFFFFF"
+            android:textSize="@dimen/font_14" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/size_8"
+            android:fontFamily="@font/bold"
+            android:text="@string/_75_000"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_34" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:background="@drawable/bg_border_white_6_90_per"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/size_8">
+
+            <ImageView
+                android:layout_width="@dimen/size_16"
+                android:layout_height="@dimen/size_16"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_currency"
+                app:tint="@color/green_20" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_8"
+                android:fontFamily="@font/bold"
+                android:gravity="center"
+                android:text="@string/r_t_ti_n"
+                android:textColor="@color/green_29" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
