@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size_12"
+    android:background="@drawable/bg_border_stroke_white_12_80_per"
+    android:elevation="@dimen/size_12"
+    android:padding="@dimen/size_16">
+
+    <TextView
+        android:id="@+id/tvOrderId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:text="@string/dh001234"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintEnd_toStartOf="@id/tvOrderState"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvOrderState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_border_stroke_green_6_20_per"
+        android:fontFamily="@font/bold"
+        android:paddingHorizontal="@dimen/size_12"
+        android:paddingVertical="@dimen/size_4"
+        android:text="@string/ho_n_th_nh"
+        android:textColor="@color/green_20"
+        android:textSize="@dimen/font_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvOrderId"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:background="@null"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvOrderId">
+
+        <ImageView
+            android:layout_width="@dimen/size_12"
+            android:layout_height="@dimen/size_12"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_calendar" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_8"
+            android:fontFamily="@font/regular"
+            android:text="@string/_02_11_2025_05_20"
+            android:textColor="@color/grey_46"
+            android:textSize="@dimen/font_12" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="@dimen/size_20"
+        android:layout_height="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_12"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_green_dot"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llTime" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_marginTop="-4dp"
+        android:fontFamily="@font/regular"
+        android:text="@string/l_y_h_ng"
+        android:textColor="@color/grey_46"
+        android:textSize="@dimen/font_12"
+        app:layout_constraintStart_toEndOf="@id/imageView1"
+        app:layout_constraintTop_toTopOf="@id/imageView1" />
+
+    <TextView
+        android:id="@+id/tvFromAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:text="@string/_123_ng_l_l_i_qu_n_1_tp_hcm"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageView1"
+        app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="@dimen/size_20"
+        android:layout_height="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_12"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_red_dot"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvFromAddress" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_marginTop="-4dp"
+        android:fontFamily="@font/regular"
+        android:text="@string/giao_h_ng"
+        android:textColor="@color/grey_46"
+        android:textSize="@dimen/font_12"
+        app:layout_constraintStart_toEndOf="@id/imageView2"
+        app:layout_constraintTop_toTopOf="@id/imageView2" />
+
+    <TextView
+        android:id="@+id/tvToAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:text="@string/_456_ng_nguy_n_hu_qu_n_1_tp_hcm"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageView2"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+    <View
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_marginTop="@dimen/size_12"
+        android:background="@color/grey_46"
+        app:layout_constraintTop_toBottomOf="@id/tvToAddress" />
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_16"
+        android:fontFamily="@font/regular"
+        android:text="@string/_3_2_km"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emptyView" />
+
+    <TextView
+        android:id="@+id/tvIncome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_14"
+        android:fontFamily="@font/bold"
+        android:text="@string/_25_000"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emptyView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
