@@ -57,6 +57,7 @@
             android:src="@drawable/ic_second_count" />
 
         <TextView
+            android:id="@+id/tvCount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/bold"
@@ -99,6 +100,7 @@
         android:layout_marginEnd="@dimen/size_24"
         android:fontFamily="@font/bold"
         android:text="@string/nguy_n_v_n_a"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/textView2"
@@ -149,6 +151,7 @@
         android:layout_marginEnd="@dimen/size_24"
         android:fontFamily="@font/bold"
         android:text="@string/nguy_n_v_n_a"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/textView3"
@@ -206,6 +209,7 @@
             android:layout_marginTop="@dimen/size_4"
             android:fontFamily="@font/bold"
             android:text="@string/_3_2_km"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_18"
             app:layout_constraintTop_toBottomOf="@id/imageView3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -253,6 +257,7 @@
             android:layout_marginTop="@dimen/size_4"
             android:fontFamily="@font/bold"
             android:text="@string/_15_ph_t"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_18"
             app:layout_constraintTop_toBottomOf="@id/imageView4" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -298,7 +303,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_4"
             android:fontFamily="@font/bold"
-            android:text="@string/_3_2_km"
+            android:text="@string/_75_000"
             android:textColor="@color/green_24"
             android:textSize="@dimen/font_18"
             app:layout_constraintTop_toBottomOf="@id/imageView5" />
@@ -398,6 +403,7 @@
         android:gravity="center"
         android:paddingVertical="@dimen/size_16"
         android:text="@string/b_qua"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_16"
         app:layout_constraintEnd_toStartOf="@id/tvAcceptOrder"
         app:layout_constraintStart_toStartOf="parent"

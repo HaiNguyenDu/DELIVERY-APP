@@ -1,15 +1,25 @@
 package com.example.grabapp.driver.home
 
+import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
+import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentHomeBinding
+import com.example.grabapp.driver.home.data.ConnectionState
+import com.example.grabapp.driver.order_detail.OrderDetailActivity
 import com.example.grabapp.extention.onClickWithScale
+import com.example.grabapp.extention.startActivity
+import com.example.grabapp.view.NewOrderedDialog
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
 
     private var connectionState: ConnectionState = ConnectionState.DISCONNECTED
+    private var countdownJob: Job? = null
 
     override fun getLazyBinding(): Lazy<FragmentHomeBinding> =
         lazy { FragmentHomeBinding.inflate(layoutInflater) }
@@ -17,9 +27,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
     override fun getLazyViewModel(): Lazy<DriverHomeViewModel> =
         lazy { DriverHomeViewModel(requireActivity().application) }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        updateUIState(ConnectionState.DISCONNECTED)
+    }
+
     override fun setUpClick() {
-        initializeConnectionState()
-        setupConnectionToggleListener()
+        binding.ivToggleConnection.onClickWithScale {
+            connectionState = connectionState.toggle()
+            updateUIState(connectionState)
+            handleConnectionStateChange(connectionState)
+        }
     }
 
     override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
@@ -27,22 +46,53 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
         binding.llTitle.setPadding(0, inset.top / 2, 0, 0)
     }
 
-    private fun initializeConnectionState() {
-        updateUIState(ConnectionState.DISCONNECTED)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        countdownJob?.cancel()
+        countdownJob = null
     }
 
-    private fun setupConnectionToggleListener() {
-        binding.ivToggleConnection.onClickWithScale {
-            connectionState = connectionState.toggle()
-            updateUIState(connectionState)
+    private fun handleConnectionStateChange(state: ConnectionState) {
+        countdownJob?.cancel()
+        countdownJob = null
+
+        if (state == ConnectionState.CONNECTED) {
+            startCountdownToShowDialog()
         }
     }
+
+    private fun startCountdownToShowDialog() {
+        countdownJob = lifecycleScope.launch {
+            delay(5000)
+            if (connectionState == ConnectionState.CONNECTED) {
+                showNewOrderDialog()
+            }
+        }
+    }
+
+    private fun showNewOrderDialog() {
+        NewOrderedDialog().apply {
+            onSkipOrder = {
+                this@apply.dismiss()
+                if (connectionState == ConnectionState.CONNECTED) {
+                    startCountdownToShowDialog()
+                }
+            }
+            onAcceptOrder = {
+                this@apply.dismiss()
+                requireContext().startActivity<OrderDetailActivity>()
+            }
+        }.show(parentFragmentManager, "NewOrderedDialog")
+    }
+
 
     private fun updateUIState(state: ConnectionState) {
         binding.apply {
             constrainLayout1.background = requireContext().getDrawable(state.backgroundRes)
             updateConnectionStatusViews(state)
-            updateFindingSectionVisibility(state)
+            llFinding.visibility = state.findingVisibility
+            llSmallTrick.visibility = state.trickVisibility
+            llFindingOrders.visibility = state.findingOrdersVisibility
         }
     }
 
@@ -61,39 +111,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
                 binding.ivToggleConnection.setBackgroundResource(R.drawable.bg_circle_stroke_gray_16)
                 binding.tvConnectionStatus.text = getString(R.string.offline)
             }
-        }
-    }
-
-    private fun updateFindingSectionVisibility(state: ConnectionState) {
-        binding.apply {
-            llFinding.visibility = state.findingVisibility
-            llSmallTrick.visibility = state.trickVisibility
-            llFindingOrders.visibility = state.findingOrdersVisibility
-        }
-    }
-
-    private enum class ConnectionState(
-        val backgroundRes: Int,
-        val findingVisibility: Int,
-        val trickVisibility: Int,
-        val findingOrdersVisibility: Int
-    ) {
-        CONNECTED(
-            backgroundRes = R.drawable.bg_gradient_green_connected,
-            findingVisibility = View.VISIBLE,
-            trickVisibility = View.GONE,
-            findingOrdersVisibility = View.VISIBLE
-        ),
-        DISCONNECTED(
-            backgroundRes = R.drawable.bg_gradient_green_disconnected,
-            findingVisibility = View.GONE,
-            trickVisibility = View.VISIBLE,
-            findingOrdersVisibility = View.GONE
-        );
-
-        fun toggle(): ConnectionState = when (this) {
-            CONNECTED -> DISCONNECTED
-            DISCONNECTED -> CONNECTED
         }
     }
 }

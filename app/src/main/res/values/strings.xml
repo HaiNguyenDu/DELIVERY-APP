@@ -213,4 +213,5 @@
     <string name="c_m_n_anh_t_i_nh_n_c_h_ng_r_i">Cảm ơn anh, tôi đã nhận được hàng rồi</string>
     <string name="tr_chuy_n_v_i_kh_ch_h_ng">Trò chuyện với khách hàng</string>
     <string name="ang_online">Đang Online</string>
+    <string name="second_count">%1$ds</string>
 </resources>
