@@ -1,392 +1,386 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/img_home_background"
     tools:context=".driver.home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/content"
+    <View
+        android:id="@+id/emptyView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/img_home_background">
+        android:layout_height="0dp"
+        android:layout_marginBottom="-32dp"
+        android:background="@drawable/bg_gradient_green_no_border"
+        app:layout_constraintBottom_toBottomOf="@id/textView1"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/emptyView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="-32dp"
-            android:background="@drawable/bg_gradient_green_no_border"
-            app:layout_constraintBottom_toBottomOf="@id/textView1"
+    <LinearLayout
+        android:id="@+id/llTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_24"
+        android:background="@null"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_star" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:text="@string/xin_ch_o_nguy_n_quang_tr_ng"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_22" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:gravity="start"
+        android:text="@string/h_m_nay_l_m_t_ng_y_tuy_t_v_i_giao_h_ng"
+        android:textColor="@color/grey_93"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintTop_toBottomOf="@id/llTitle" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrainLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/bg_gradient_green_disconnected"
+        android:padding="@dimen/size_24"
+        app:layout_constraintTop_toBottomOf="@id/emptyView">
+
+        <ImageView
+            android:id="@+id/ivConnectionStatus"
+            android:layout_width="@dimen/size_64"
+            android:layout_height="@dimen/size_64"
+            android:background="@drawable/bg_circle_stroke_gray_16"
+            android:contentDescription="@null"
+            android:elevation="@dimen/size_12"
+            android:padding="@dimen/size_12"
+            android:src="@drawable/ic_no_wifi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvConnectionStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_6"
+            android:layout_marginTop="@dimen/size_8"
+            android:fontFamily="@font/bold"
+            android:text="@string/offline"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_20"
+            app:layout_constraintEnd_toStartOf="@id/ivToggleConnection"
+            app:layout_constraintStart_toEndOf="@id/ivConnectionStatus"
+            app:layout_constraintTop_toTopOf="@id/ivConnectionStatus" />
+
+        <ImageView
+            android:id="@+id/ivToggleConnection"
+            android:layout_width="@dimen/size_56"
+            android:layout_height="@dimen/size_56"
+            android:background="@drawable/bg_circle_stroke_gray_16"
+            android:contentDescription="@null"
+            android:elevation="@dimen/size_12"
+            android:padding="@dimen/size_12"
+            android:src="@drawable/ic_white_power"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/llTitle"
+            android:id="@+id/llFinding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/size_24"
-            android:layout_marginTop="@dimen/size_24"
-            android:background="@null"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_star" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/bold"
-                android:text="@string/xin_ch_o_nguy_n_quang_tr_ng"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_22" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/size_24"
-            android:layout_marginTop="@dimen/size_8"
-            android:fontFamily="@font/regular"
-            android:gravity="start"
-            android:text="@string/h_m_nay_l_m_t_ng_y_tuy_t_v_i_giao_h_ng"
-            android:textColor="@color/grey_93"
-            android:textSize="@dimen/font_16"
-            app:layout_constraintTop_toBottomOf="@id/llTitle" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constrainLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/size_16"
-            android:layout_marginTop="-20dp"
-            android:background="@drawable/bg_gradient_green_connected"
-            android:padding="@dimen/size_24"
-            app:layout_constraintTop_toBottomOf="@id/emptyView">
-
-            <ImageView
-                android:id="@+id/ivConnectionStatus"
-                android:layout_width="@dimen/size_64"
-                android:layout_height="@dimen/size_64"
-                android:background="@drawable/bg_circle_stroke_gray_16"
-                android:contentDescription="@null"
-                android:elevation="@dimen/size_12"
-                android:padding="@dimen/size_12"
-                android:src="@drawable/ic_no_wifi"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvConnectionStatus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_6"
-                android:layout_marginTop="@dimen/size_8"
-                android:fontFamily="@font/bold"
-                android:text="@string/offline"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_20"
-                app:layout_constraintEnd_toStartOf="@id/ivToggleConnection"
-                app:layout_constraintStart_toEndOf="@id/ivConnectionStatus"
-                app:layout_constraintTop_toTopOf="@id/ivConnectionStatus" />
-
-            <ImageView
-                android:id="@+id/ivToggleConnection"
-                android:layout_width="@dimen/size_56"
-                android:layout_height="@dimen/size_56"
-                android:background="@drawable/bg_circle_stroke_gray_16"
-                android:contentDescription="@null"
-                android:elevation="@dimen/size_12"
-                android:padding="@dimen/size_12"
-                android:src="@drawable/ic_white_power"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/llFinding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_16"
-                android:background="@drawable/bg_circle_stroke_green_100"
-                android:gravity="center"
-                android:visibility="gone"
-                android:paddingHorizontal="@dimen/size_18"
-                android:paddingVertical="@dimen/size_10"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivConnectionStatus">
-
-                <ImageView
-                    android:layout_width="@dimen/size_8"
-                    android:layout_height="@dimen/size_8"
-                    android:contentDescription="@null"
-                    android:src="@drawable/bg_circle_white_100" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_8"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/medium"
-                    android:gravity="center_vertical"
-                    android:text="@string/ang_t_m_ki_m_n_h_ng_g_n_b_n"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_12" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ctlOrderedToday"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_16"
             android:layout_marginTop="@dimen/size_16"
-            android:background="@drawable/bg_gradient_ordered_today_12"
-            android:padding="@dimen/size_16"
-            app:layout_constraintEnd_toStartOf="@id/ctlWalletBalance"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constrainLayout1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/medium"
-                android:text="@string/n_h_m_nay"
-                android:textSize="@dimen/font_14"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="@dimen/size_40"
-                android:layout_height="@dimen/size_40"
-                android:background="@drawable/bg_gradient_green_border_12"
-                android:contentDescription="@null"
-                android:padding="@dimen/size_10"
-                android:src="@drawable/ic_box"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvOrderedCount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_8"
-                android:fontFamily="@font/bold"
-                android:text="@string/_3"
-                android:textSize="@dimen/font_20"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageView1" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ctlWalletBalance"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_12"
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_marginEnd="@dimen/size_16"
-            android:background="@drawable/bg_gradient_wallet_balance_12"
-            android:padding="@dimen/size_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ctlOrderedToday"
-            app:layout_constraintTop_toBottomOf="@id/constrainLayout1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/medium"
-                android:text="@string/s_d_v"
-                android:textSize="@dimen/font_14"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="@dimen/size_40"
-                android:layout_height="@dimen/size_40"
-                android:background="@drawable/bg_gradient_wallet_12"
-                android:contentDescription="@null"
-                android:padding="@dimen/size_10"
-                android:src="@drawable/ic_currency"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvWalletBalance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_8"
-                android:fontFamily="@font/bold"
-                android:text="@string/_75_000"
-                android:textSize="@dimen/font_20"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageView2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ctlIncome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_16"
-            android:layout_marginTop="@dimen/size_16"
-            android:background="@drawable/bg_circle_stroke_white_12"
-            android:padding="@dimen/size_16"
-            app:layout_constraintEnd_toStartOf="@id/ctlRate"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ctlOrderedToday">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/medium"
-                android:text="@string/income"
-                android:textSize="@dimen/font_14"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="@dimen/size_40"
-                android:layout_height="@dimen/size_40"
-                android:background="@drawable/bg_gradient_income_12"
-                android:contentDescription="@null"
-                android:padding="@dimen/size_10"
-                android:src="@drawable/ic_income"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvIncome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_8"
-                android:fontFamily="@font/bold"
-                android:text="@string/_3"
-                android:textSize="@dimen/font_20"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageView3" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ctlRate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_12"
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_marginEnd="@dimen/size_16"
-            android:background="@drawable/bg_gradient_orange_12"
-            android:padding="@dimen/size_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ctlIncome"
-            app:layout_constraintTop_toBottomOf="@id/ctlWalletBalance">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/medium"
-                android:text="@string/nh_gi"
-                android:textSize="@dimen/font_14"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="@dimen/size_40"
-                android:layout_height="@dimen/size_40"
-                android:background="@drawable/bg_gradient_rate_12"
-                android:contentDescription="@null"
-                android:padding="@dimen/size_10"
-                android:src="@drawable/ic_rate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvRate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_8"
-                android:fontFamily="@font/bold"
-                android:text="@string/_75_000"
-                android:textSize="@dimen/font_20"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageView4" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-            android:id="@+id/llSmallTrick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/size_18"
-            android:layout_marginTop="@dimen/size_16"
-            android:background="@drawable/bg_circle_stroke_trick_12"
-            android:orientation="vertical"
-            android:padding="@dimen/size_16"
-            android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@id/ctlIncome">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/size_4"
-                android:fontFamily="@font/bold"
-                android:text="@string/m_o_nh"
-                android:textColor="@color/green_20"
-                app:drawableStartCompat="@drawable/ic_rate" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:text="@string/trick_des"
-                android:textColor="@color/green_24" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llFindingOrders"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/size_18"
-            android:layout_marginTop="@dimen/size_16"
-            android:background="@drawable/bg_circle_stroke_trick_12"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="@dimen/size_16"
+            android:background="@drawable/bg_circle_stroke_green_100"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/size_18"
+            android:paddingVertical="@dimen/size_10"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/llSmallTrick">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivConnectionStatus">
 
             <ImageView
-                android:layout_width="@dimen/size_48"
-                android:layout_height="@dimen/size_48"
-                android:background="@drawable/bg_gradient_finding_orders_100"
+                android:layout_width="@dimen/size_8"
+                android:layout_height="@dimen/size_8"
                 android:contentDescription="@null"
-                android:padding="@dimen/size_18"
-                android:src="@drawable/ic_dot" />
+                android:src="@drawable/bg_circle_white_100" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_12"
-                android:drawablePadding="@dimen/size_4"
-                android:fontFamily="@font/bold"
-                android:gravity="center"
-                android:text="@string/ang_t_m_n_h_ng"
-                android:textColor="@color/green_20" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_4"
-                android:fontFamily="@font/regular"
-                android:gravity="center"
-                android:text="@string/finding_orders_des"
-                android:textColor="@color/green_24" />
+                android:layout_marginStart="@dimen/size_8"
+                android:layout_weight="1"
+                android:fontFamily="@font/medium"
+                android:gravity="center_vertical"
+                android:text="@string/ang_t_m_ki_m_n_h_ng_g_n_b_n"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_12" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlOrderedToday"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bg_gradient_ordered_today_12"
+        android:padding="@dimen/size_16"
+        app:layout_constraintEnd_toStartOf="@id/ctlWalletBalance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constrainLayout1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/n_h_m_nay"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:background="@drawable/bg_gradient_green_border_12"
+            android:contentDescription="@null"
+            android:padding="@dimen/size_10"
+            android:src="@drawable/ic_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvOrderedCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:fontFamily="@font/bold"
+            android:text="@string/_3"
+            android:textSize="@dimen/font_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlWalletBalance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_16"
+        android:layout_marginEnd="@dimen/size_16"
+        android:background="@drawable/bg_gradient_wallet_balance_12"
+        android:padding="@dimen/size_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ctlOrderedToday"
+        app:layout_constraintTop_toBottomOf="@id/constrainLayout1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/s_d_v"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:background="@drawable/bg_gradient_wallet_12"
+            android:contentDescription="@null"
+            android:padding="@dimen/size_10"
+            android:src="@drawable/ic_currency"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvWalletBalance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:fontFamily="@font/bold"
+            android:text="@string/_75_000"
+            android:textSize="@dimen/font_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlIncome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bg_circle_stroke_white_12"
+        android:padding="@dimen/size_16"
+        app:layout_constraintEnd_toStartOf="@id/ctlRate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ctlOrderedToday">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/income"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:background="@drawable/bg_gradient_income_12"
+            android:contentDescription="@null"
+            android:padding="@dimen/size_10"
+            android:src="@drawable/ic_income"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvIncome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:fontFamily="@font/bold"
+            android:text="@string/_3"
+            android:textSize="@dimen/font_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlRate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_16"
+        android:layout_marginEnd="@dimen/size_16"
+        android:background="@drawable/bg_gradient_orange_12"
+        android:padding="@dimen/size_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ctlIncome"
+        app:layout_constraintTop_toBottomOf="@id/ctlWalletBalance">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/nh_gi"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:background="@drawable/bg_gradient_rate_12"
+            android:contentDescription="@null"
+            android:padding="@dimen/size_10"
+            android:src="@drawable/ic_rate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:fontFamily="@font/bold"
+            android:text="@string/_75_000"
+            android:textSize="@dimen/font_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView4" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/llSmallTrick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_18"
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bg_circle_stroke_trick_12"
+        android:orientation="vertical"
+        android:padding="@dimen/size_16"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/ctlIncome">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/size_4"
+            android:fontFamily="@font/bold"
+            android:text="@string/m_o_nh"
+            android:textColor="@color/green_20"
+            app:drawableStartCompat="@drawable/ic_rate" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/trick_des"
+            android:textColor="@color/green_24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llFindingOrders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_18"
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bg_circle_stroke_trick_12"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/size_16"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/llSmallTrick">
+
+        <ImageView
+            android:layout_width="@dimen/size_48"
+            android:layout_height="@dimen/size_48"
+            android:background="@drawable/bg_gradient_finding_orders_100"
+            android:contentDescription="@null"
+            android:padding="@dimen/size_18"
+            android:src="@drawable/ic_dot" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_12"
+            android:drawablePadding="@dimen/size_4"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:text="@string/ang_t_m_n_h_ng"
+            android:textColor="@color/green_20" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:text="@string/finding_orders_des"
+            android:textColor="@color/green_24" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
