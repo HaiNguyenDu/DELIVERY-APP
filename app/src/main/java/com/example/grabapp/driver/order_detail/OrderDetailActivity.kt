@@ -89,6 +89,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             OrderState.RECEIVED_GOODS -> OrderState.DELIVERING
             OrderState.DELIVERING -> OrderState.DELIVERED
             OrderState.DELIVERED -> return
+            OrderState.CANCELED -> return
         }
         updateUIForCurrentState()
     }
@@ -152,6 +153,9 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
                     tvDeliveryComplete.text = getString(R.string.chi_ti_t_n_h_ng)
                 }
+            }
+            
+            OrderState.CANCELED -> {
             }
         }
     }

@@ -19,7 +19,8 @@ data class Order(
     val isBusinessHours: Boolean,
     val orderType: OrderType,
     val orderState: OrderState,
-    val goodsWeight: String
+    val goodsWeight: String,
+    val orderTime: String
 ) : Parcelable {
     companion object {
         fun getMockOrder(): Order {
@@ -38,7 +39,8 @@ data class Order(
                 isBusinessHours = true,
                 orderType = OrderType.FRAGILE,
                 orderState = OrderState.DELIVERING,
-                goodsWeight = "2.5 kg"
+                goodsWeight = "2.5 kg",
+                orderTime = "02/11/2025 05:20"
             )
         }
 
@@ -59,7 +61,8 @@ data class Order(
                     isBusinessHours = true,
                     orderType = OrderType.FOOD,
                     orderState = OrderState.DELIVERING,
-                    goodsWeight = "1.2 kg"
+                    goodsWeight = "1.2 kg",
+                    orderTime = "02/11/2025 08:15"
                 ),
                 Order(
                     orderId = "MĐH001236",
@@ -76,7 +79,8 @@ data class Order(
                     isBusinessHours = true,
                     orderType = OrderType.FOOD,
                     orderState = OrderState.DELIVERED,
-                    goodsWeight = "0.8 kg"
+                    goodsWeight = "0.8 kg",
+                    orderTime = "02/11/2025 10:30"
                 ),
                 Order(
                     orderId = "MĐH001237",
@@ -93,7 +97,8 @@ data class Order(
                     isBusinessHours = false,
                     orderType = OrderType.FRAGILE,
                     orderState = OrderState.CANCELED,
-                    goodsWeight = "3.0 kg"
+                    goodsWeight = "3.0 kg",
+                    orderTime = "02/11/2025 14:45"
                 ),
                 Order(
                     orderId = "MĐH001238",
@@ -110,7 +115,8 @@ data class Order(
                     isBusinessHours = true,
                     orderType = OrderType.CLOTHING,
                     orderState = OrderState.DELIVERED,
-                    goodsWeight = "0.5 kg"
+                    goodsWeight = "0.5 kg",
+                    orderTime = "02/11/2025 16:20"
                 ),
                 Order(
                     orderId = "MĐH001239",
@@ -127,7 +133,8 @@ data class Order(
                     isBusinessHours = false,
                     orderType = OrderType.ELECTRONICS,
                     orderState = OrderState.DELIVERING,
-                    goodsWeight = "4.5 kg"
+                    goodsWeight = "4.5 kg",
+                    orderTime = "02/11/2025 18:00"
                 )
             )
         }

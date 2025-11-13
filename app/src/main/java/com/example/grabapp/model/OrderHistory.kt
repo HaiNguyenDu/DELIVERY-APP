@@ -4,8 +4,8 @@ data class OrderHistory(
     val orderId: String,
     val orderState: String,
     val orderTime: String,
-    val fromAddress: String,
-    val toAddress: String,
-    val orderDistance: String,
-    val orderIncome: String
+    val pickerAddress: String,
+    val deliveryAddress: String,
+    val distance: String,
+    val income: String
 )
