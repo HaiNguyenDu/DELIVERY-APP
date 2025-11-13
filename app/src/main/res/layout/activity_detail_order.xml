@@ -169,6 +169,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/medium"
                         android:text="@string/received_order"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/font_14" />
 
                     <ImageView

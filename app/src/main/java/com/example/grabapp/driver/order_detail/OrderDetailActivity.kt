@@ -28,11 +28,17 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupClickListeners()
         getOrderFromIntent()
         setupToolbar()
         setupOrderInformation()
         setupStateManagement()
-        setupClickListeners()
+    }
+
+    private fun setupClickListeners() {
+        binding.tvDeliveryComplete.onClickWithScale {
+            moveToNextState()
+        }
     }
 
     private fun getOrderFromIntent() {
@@ -76,12 +82,6 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         updateUIForCurrentState()
     }
 
-    private fun setupClickListeners() {
-        binding.tvDeliveryComplete.onClickWithScale {
-            moveToNextState()
-        }
-    }
-
     private fun moveToNextState() {
         currentState = when (currentState) {
             OrderState.RECEIVED_ORDER -> OrderState.COMING_TO_PICKUP
@@ -94,7 +94,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     }
 
     private fun updateUIForCurrentState() {
-        resetAllStates()
+        val paddingPx = resources.getDimensionPixelSize(R.dimen.size_8)
 
         when (currentState) {
             OrderState.RECEIVED_ORDER -> {
@@ -108,103 +108,51 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
             OrderState.COMING_TO_PICKUP -> {
                 binding.apply {
-                    ivReceivedOrder.setImageResource(R.drawable.ic_white_tick)
-                    ivReceivedOrder.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivReceivedOrderStatus.visibility = View.VISIBLE
-
                     ivComingTo.setImageResource(R.drawable.ic_white_tick)
                     ivComingTo.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
+                    ivComingTo.setPadding(paddingPx, paddingPx, paddingPx, paddingPx)
+                    tvComingTo.setTextColor(getColor(R.color.black))
                     ivComingToStatus.visibility = View.VISIBLE
+
+                    tvDeliveryComplete.text = getString(R.string.received_goods)
                 }
-                binding.tvDeliveryComplete.text = getString(R.string.received_goods)
             }
 
             OrderState.RECEIVED_GOODS -> {
                 binding.apply {
-                    ivReceivedOrder.setImageResource(R.drawable.ic_white_tick)
-                    ivReceivedOrder.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivReceivedOrderStatus.visibility = View.VISIBLE
-
-                    ivComingTo.setImageResource(R.drawable.ic_white_tick)
-                    ivComingTo.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivComingToStatus.visibility = View.VISIBLE
-
                     ivReceivedGood.setImageResource(R.drawable.ic_white_tick)
                     ivReceivedGood.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
+                    ivReceivedGood.setPadding(paddingPx, paddingPx, paddingPx, paddingPx)
+                    tvReceivedGood.setTextColor(getColor(R.color.black))
                     ivReceivedGoodStatus.visibility = View.VISIBLE
+
+                    tvDeliveryComplete.text = getString(R.string.ang_giao_h_ng)
                 }
-                binding.tvDeliveryComplete.text = getString(R.string.ang_giao_h_ng)
             }
 
             OrderState.DELIVERING -> {
                 binding.apply {
-                    ivReceivedOrder.setImageResource(R.drawable.ic_white_tick)
-                    ivReceivedOrder.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivReceivedOrderStatus.visibility = View.VISIBLE
-
-                    ivComingTo.setImageResource(R.drawable.ic_white_tick)
-                    ivComingTo.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivComingToStatus.visibility = View.VISIBLE
-
-                    ivReceivedGood.setImageResource(R.drawable.ic_white_tick)
-                    ivReceivedGood.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivReceivedGoodStatus.visibility = View.VISIBLE
-
                     ivDelivering.setImageResource(R.drawable.ic_white_tick)
                     ivDelivering.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
+                    ivDelivering.setPadding(paddingPx, paddingPx, paddingPx, paddingPx)
+                    tvDelivering.setTextColor(getColor(R.color.black))
                     ivDeliveringStatus.visibility = View.VISIBLE
+
+                    tvDeliveryComplete.text = getString(R.string.ho_n_th_nh_giao_h_ng)
                 }
-                binding.tvDeliveryComplete.text = getString(R.string.ho_n_th_nh_giao_h_ng)
             }
 
             OrderState.DELIVERED -> {
                 binding.apply {
-                    ivReceivedOrder.setImageResource(R.drawable.ic_white_tick)
-                    ivReceivedOrder.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivReceivedOrderStatus.visibility = View.VISIBLE
-
-                    ivComingTo.setImageResource(R.drawable.ic_white_tick)
-                    ivComingTo.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivComingToStatus.visibility = View.VISIBLE
-
-                    ivReceivedGood.setImageResource(R.drawable.ic_white_tick)
-                    ivReceivedGood.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivReceivedGoodStatus.visibility = View.VISIBLE
-
-                    ivDelivering.setImageResource(R.drawable.ic_white_tick)
-                    ivDelivering.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
-                    ivDeliveringStatus.visibility = View.VISIBLE
-
                     ivDelivered.setImageResource(R.drawable.ic_white_tick)
                     ivDelivered.setBackgroundResource(R.drawable.bg_gradient_finding_orders_100)
+                    ivDelivered.setPadding(paddingPx, paddingPx, paddingPx, paddingPx)
+                    tvDelivered.setTextColor(getColor(R.color.black))
                     ivDeliveredStatus.visibility = View.VISIBLE
+
+                    tvDeliveryComplete.text = getString(R.string.chi_ti_t_n_h_ng)
                 }
-                binding.tvDeliveryComplete.text = getString(R.string.chi_ti_t_n_h_ng)
             }
-        }
-    }
-
-    private fun resetAllStates() {
-        binding.apply {
-            ivReceivedOrder.setImageResource(R.drawable.ic_not_in_progress)
-            ivReceivedOrder.setBackgroundResource(0)
-            ivReceivedOrderStatus.visibility = View.GONE
-
-            ivComingTo.setImageResource(R.drawable.ic_not_in_progress)
-            ivComingTo.setBackgroundResource(0)
-            ivComingToStatus.visibility = View.GONE
-
-            ivReceivedGood.setImageResource(R.drawable.ic_not_in_progress)
-            ivReceivedGood.setBackgroundResource(0)
-            ivReceivedGoodStatus.visibility = View.GONE
-
-            ivDelivering.setImageResource(R.drawable.ic_not_in_progress)
-            ivDelivering.setBackgroundResource(0)
-            ivDeliveringStatus.visibility = View.GONE
-
-            ivDelivered.setImageResource(R.drawable.ic_not_in_progress)
-            ivDelivered.setBackgroundResource(0)
-            ivDeliveredStatus.visibility = View.GONE
         }
     }
 
