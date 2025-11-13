@@ -14,15 +14,6 @@
             android:name=".driver.order_detail.OrderDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".driver.driver_profile.DriverProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".driver.driver_income.period_income.PeriodIncomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".driver.driver_income.DriverIncomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".driver.home.DriverHomeActivity"
             android:exported="false" />
         <activity
