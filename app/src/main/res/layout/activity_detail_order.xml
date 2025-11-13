@@ -246,7 +246,8 @@
                         android:layout_width="@dimen/size_8"
                         android:layout_height="@dimen/size_8"
                         android:background="@drawable/bg_gradient_purple_100"
-                        android:contentDescription="@null" />
+                        android:contentDescription="@null"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -281,7 +282,8 @@
                         android:layout_width="@dimen/size_8"
                         android:layout_height="@dimen/size_8"
                         android:background="@drawable/bg_gradient_red_100"
-                        android:contentDescription="@null" />
+                        android:contentDescription="@null"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -316,7 +318,8 @@
                         android:layout_width="@dimen/size_8"
                         android:layout_height="@dimen/size_8"
                         android:background="@drawable/bg_gradient_green_100"
-                        android:contentDescription="@null" />
+                        android:contentDescription="@null"
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -449,7 +452,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_16"
                         android:fontFamily="@font/medium"
-                        android:text="@string/g_i"
+                        android:text="@string/nh_n_tin"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_12" />
                 </LinearLayout>
@@ -583,7 +586,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_16"
                         android:fontFamily="@font/medium"
-                        android:text="@string/g_i"
+                        android:text="@string/nh_n_tin"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_12" />
                 </LinearLayout>

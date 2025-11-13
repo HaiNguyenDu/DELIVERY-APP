@@ -47,7 +47,7 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
             tvIncome.text = "${String.format("%,d", order.income)}đ"
             tvCOD.text = if (order.hasCOD) getString(R.string.cod) else getString(R.string.kh_ng)
 
-            tvIsNotion.visibility = if (order.isNotion) View.VISIBLE else View.GONE
+            tvIsNotion.visibility = if (order.notion != null) View.VISIBLE else View.GONE
             tvFragileGoods.visibility = if (order.fragileGoods) View.VISIBLE else View.GONE
         }
     }

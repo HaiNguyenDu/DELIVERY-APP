@@ -11,6 +11,7 @@ import com.example.grabapp.driver.home.data.ConnectionState
 import com.example.grabapp.driver.order_detail.OrderDetailActivity
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
+import com.example.grabapp.model.Order
 import com.example.grabapp.view.NewOrderedDialog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -71,6 +72,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
     }
 
     private fun showNewOrderDialog() {
+        val order = Order.getMockOrder()
         NewOrderedDialog().apply {
             onSkipOrder = {
                 this@apply.dismiss()
@@ -80,7 +82,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
             }
             onAcceptOrder = {
                 this@apply.dismiss()
-                requireContext().startActivity<OrderDetailActivity>()
+                requireContext().startActivity<OrderDetailActivity> {
+                    putExtra("extra_order", order)
+                }
             }
         }.show(parentFragmentManager, "NewOrderedDialog")
     }

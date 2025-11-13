@@ -1,5 +1,9 @@
 package com.example.grabapp.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Order(
     val orderId: String,
     val pickerName: String,
@@ -10,9 +14,12 @@ data class Order(
     val estimatedTime: String,
     val income: Long,
     val hasCOD: Boolean,
-    val isNotion: Boolean,
-    val fragileGoods: Boolean
-) {
+    val notion: String?,
+    val fragileGoods: Boolean,
+    val isBusinessHours: Boolean,
+    val orderType: OrderType,
+    val goodsWeight: String
+) : Parcelable {
     companion object {
         fun getMockOrder(): Order {
             return Order(
@@ -25,8 +32,11 @@ data class Order(
                 estimatedTime = "15 phút",
                 income = 75000L,
                 hasCOD = false,
-                isNotion = true,
-                fragileGoods = true
+                notion = "Gọi trước 10 phút",
+                fragileGoods = true,
+                isBusinessHours = true,
+                orderType = OrderType.FRAGILE,
+                goodsWeight = "2.5 kg"
             )
         }
     }
