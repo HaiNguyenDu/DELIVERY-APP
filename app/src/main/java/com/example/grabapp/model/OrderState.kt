@@ -5,5 +5,6 @@ enum class OrderState {
     COMING_TO_PICKUP,
     RECEIVED_GOODS,
     DELIVERING,
-    DELIVERED
+    DELIVERED,
+    CANCELED
 }
