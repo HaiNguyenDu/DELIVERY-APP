@@ -51,7 +51,6 @@ class ActivityUser : BaseActivity<ActivityUserBinding, NoViewModel>() {
 
                         override fun onLogOut() {
                         }
-
                     }
                 ).show()
             }

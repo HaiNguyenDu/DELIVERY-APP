@@ -55,4 +55,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.lottie)
     implementation(libs.dots.indicator)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("org.maplibre.gl:android-sdk:12.0.1")
+    implementation("com.mapbox.maps:android-ndk27:11.16.0")
 }

@@ -9,6 +9,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets
+import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -42,7 +43,7 @@ abstract  class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActi
         val controller = WindowCompat.getInsetsController(window, window.decorView.rootView)
         controller.isAppearanceLightStatusBars = value
         controller.isAppearanceLightNavigationBars = value
-        window.decorView.setBackgroundColor(Color.WHITE)
+        window.decorView.setBackgroundColor("#F8F8F8".toColorInt())
     }
 
     open fun handleInsets(v: View, insets: Insets) {

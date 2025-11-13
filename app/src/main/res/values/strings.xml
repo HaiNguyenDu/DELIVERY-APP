@@ -1,5 +1,12 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">GrabApp</string>
+    //goongmap
+    <string name="goong_api_url">https://rsapi.goong.io/</string>
+    <string name="goong_map_url">https://tiles.goong.io</string>
+    <string name="goong_api_key">lFHqJVvz4R97UeVo202sBed6FGh7KSi5CJZvjacg</string>
+    <string name="goong_map_key">ZxCQP01JWowkSbE5ELrpGNvEJTD3vHYILu3uyvlx</string>
+    <string name="mapbox_access_token" translatable="false" tools:ignore="UnusedResources">YOUR_MAPBOX_ACCESS_TOKEN</string>
+    //
     <string name="main_header">Vận Chuyển Ngay</string>
     <string name="ship">Vận Chuyển</string>
     <string name="fast"><![CDATA[Nhanh & Tin Cậy]]></string>
@@ -84,4 +91,7 @@
     <string name="vehicle_manufacture_year">Năm Sản Xuất Xe</string>
     <string name="s_t_ng_s_t_a_nh">Số tầng, số tòa nhà</string>
     <string name="th_m_s_t_ng_ho_c_s_c_n_h">Thêm số tầng hoặc số căn hộ</string>
+    <string name="giao_n_u">Giao đến đâu?</string>
+    <string name="giao_den_dau">Giao đến đâu ?</string>
+    <string name="default_detail_info">Thêm chi tiết món hàng</string>
 </resources>

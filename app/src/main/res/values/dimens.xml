@@ -41,4 +41,6 @@
     <dimen name="size_46">46dp</dimen>
     <dimen name="size_56">56dp</dimen>
     <dimen name="size_26">26dp</dimen>
+    <dimen name="size_35">35dp</dimen>
+    <dimen name="font_10">10sp</dimen>
 </resources>
