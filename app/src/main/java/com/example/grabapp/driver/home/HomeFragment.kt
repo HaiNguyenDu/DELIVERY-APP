@@ -12,7 +12,7 @@ import com.example.grabapp.driver.order_detail.OrderDetailActivity
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
 import com.example.grabapp.model.Order
-import com.example.grabapp.view.NewOrderedDialog
+import com.example.grabapp.view.dialog.NewOrderedDialog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
