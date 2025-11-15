@@ -1,21 +1,13 @@
-package com.example.grabapp.ui.driver.transportation
+package com.example.grabapp.driver.transportation
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.grabapp.R
+import com.example.grabapp.base.BaseActivity
+import com.example.grabapp.databinding.ActivityTransportationBinding
 
-class TransportationActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_transportation)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-    }
+class TransportationActivity :
+    BaseActivity<ActivityTransportationBinding, TransportationViewModel>() {
+    override fun getLazyBinding(): Lazy<ActivityTransportationBinding> =
+        lazy { ActivityTransportationBinding.inflate(layoutInflater) }
+
+    override fun getLazyViewModel(): Lazy<TransportationViewModel> =
+        lazy { TransportationViewModel(application) }
 }
