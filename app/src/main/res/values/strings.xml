@@ -216,4 +216,18 @@
     <string name="second_count">%1$ds</string>
     <string name="giao_gi_h_nh_ch_nh">Giao giờ hành chính</string>
     <string name="nh_n_tin">Nhắn tin</string>
+    <string name="confirm_pager1_step">Trước khi tiến hành đăng ký</string>
+    <string name="confirm_pager1_title">Đây là ứng dụng dành cho Tài xế đăng ký hoạt động với Grab. Bạn muốn đăng ký trở thành tài xế?</string>
+    <string name="confirm_pager1_content">Nếu đối tác đã từng hoạt động với Grab, cần sử dụng đúng email đã đăng ký tài khoản</string>
+    <string name="confirm_pager2_step">2 of 4</string>
+    <string name="confirm_pager2_title">Bạn có đáp ứng được các yêu cầu sau đây không?</string>
+    <string name="confirm_pager2_content">- Công dân Việt Nam trong độ tuổi: Nam từ 18 đến 60 tuổi, Nữ từ 18 đến 55 tuổi\n- Có khả năng đọc và viết</string>
+    <string name="confirm_pager3_step">3 of 4</string>
+    <string name="confirm_pager3_title">Bạn đã có lý lịch tư pháp chưa?</string>
+    <string name="confirm_pager3_content">- Lý lịch tư pháp còn hạn ít nhất 10 tháng kể từ ngày cấp\n- Bạn có thể đăng ký bằng giấy hẹn LLTP hoặc biên lai bưu điện</string>
+    <string name="confirm_pager4_step">4 of 4</string>
+    <string name="confirm_pager4_title">Bạn vui lòng xác nhận đã đọc và động ý nội dung dưới đây:</string>
+    <string name="confirm_pager4_content">- Đăng ký tham gia cung cấp các loại hình Dịch Vụ hiện có trên Ứng dụng Grab.\n- Thực hiện Khoản Ký Quỹ: 2.000.000</string>
+    <string name="kh_ng_ng">KHÔNG ĐỒNG Ý</string>
+    <string name="ng">ĐỒNG Ý</string>
 </resources>

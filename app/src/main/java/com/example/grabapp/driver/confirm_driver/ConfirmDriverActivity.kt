@@ -1,21 +1,12 @@
 package com.example.grabapp.driver.confirm_driver
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.grabapp.R
+import com.example.grabapp.base.BaseActivity
+import com.example.grabapp.databinding.ActivityConfirmDriverBinding
 
-class ConfirmDriverActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_confirm_driver)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-    }
+class ConfirmDriverActivity : BaseActivity<ActivityConfirmDriverBinding, ConfirmDriverViewModel>() {
+    override fun getLazyBinding(): Lazy<ActivityConfirmDriverBinding> =
+        lazy { ActivityConfirmDriverBinding.inflate(layoutInflater) }
+
+    override fun getLazyViewModel(): Lazy<ConfirmDriverViewModel> =
+        lazy { ConfirmDriverViewModel(application) }
 }

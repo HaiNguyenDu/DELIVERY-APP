@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityTransportationBinding
+import com.example.grabapp.driver.confirm_driver.ConfirmDriverActivity
 import com.example.grabapp.extention.onClickWithScale
+import com.example.grabapp.extention.startActivity
 import com.example.grabapp.view.bottom_sheet.TransportationBottomSheet
 import kotlinx.coroutines.launch
 
@@ -30,8 +32,15 @@ class TransportationActivity :
     }
 
     private fun setupListeners() {
-        binding.layoutService.onClickWithScale {
-            showTransportationBottomSheet()
+        binding.apply {
+            layoutService.onClickWithScale {
+                showTransportationBottomSheet()
+            }
+            tvNext.onClickWithScale {
+                startActivity<ConfirmDriverActivity> {
+                    /*no-op*/
+                }
+            }
         }
     }
 

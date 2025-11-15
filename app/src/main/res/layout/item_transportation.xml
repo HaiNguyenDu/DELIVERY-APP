@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:fontFamily="@font/regular"
         android:textColor="@color/green_36"
-        android:textSize="@dimen/font_14"
+        android:textSize="@dimen/font_16"
         tools:text="GrabBike" />
 
     <ImageView
