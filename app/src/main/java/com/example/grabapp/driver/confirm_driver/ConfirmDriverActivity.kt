@@ -1,4 +1,4 @@
-package com.example.grabapp.ui.driver.confirm_driver
+package com.example.grabapp.driver.confirm_driver
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

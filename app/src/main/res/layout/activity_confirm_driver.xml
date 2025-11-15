@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/size_36"
-    tools:context=".ui.driver.confirm_driver.ConfirmDriverActivity">
+    tools:context=".driver.confirm_driver.ConfirmDriverActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -38,9 +38,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/ivNext"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_bias="0.52"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <ImageView

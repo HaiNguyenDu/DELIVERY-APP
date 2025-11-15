@@ -6,7 +6,7 @@ import androidx.core.graphics.Insets
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityUserBinding
-import com.example.grabapp.driver.home.DriverHomeActivity
+import com.example.grabapp.driver.transportation.TransportationActivity
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
 import com.example.grabapp.ui.splash.NoViewModel
@@ -44,7 +44,7 @@ class ActivityUser : BaseActivity<ActivityUserBinding, NoViewModel>() {
     private fun observeView() {
         binding.apply {
             tvSwitchToDriver.onClickWithScale {
-                startActivity<DriverHomeActivity> {
+                startActivity<TransportationActivity> {
                     /*no-op*/
                 }
             }
