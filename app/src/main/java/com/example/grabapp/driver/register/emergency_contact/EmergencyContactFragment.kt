@@ -1,32 +1,16 @@
 package com.example.grabapp.driver.register.emergency_contact
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.grabapp.R
+import com.example.grabapp.base.BaseFragment
+import com.example.grabapp.databinding.FragmentEmergencyContactBinding
+import com.example.grabapp.driver.register.RegisterViewModel
 
-class EmergencyContactFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
+class EmergencyContactFragment :
+    BaseFragment<FragmentEmergencyContactBinding, RegisterViewModel>() {
+    override fun getLazyBinding(): Lazy<FragmentEmergencyContactBinding> =
+        lazy { FragmentEmergencyContactBinding.inflate(layoutInflater) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_emergency_contact, container, false)
-    }
+    override fun getLazyViewModel(): Lazy<RegisterViewModel> =
+        lazy { RegisterViewModel(requireActivity().application) }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EmergencyContactFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
+    override fun setUpClick() = Unit
 }

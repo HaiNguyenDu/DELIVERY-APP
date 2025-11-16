@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrabApp">
         <activity
+            android:name=".driver.profile_preview.ProfileReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".driver.confirm_driver.eligibility.DriverEligibilityActivity"
             android:exported="false" />
         <activity

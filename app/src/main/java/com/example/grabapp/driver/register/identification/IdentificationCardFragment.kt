@@ -1,33 +1,15 @@
 package com.example.grabapp.driver.register.identification
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.grabapp.R
+import com.example.grabapp.base.BaseFragment
+import com.example.grabapp.databinding.FragmentIdentificationCardBinding
+import com.example.grabapp.driver.register.RegisterViewModel
 
-class IdentificationCardFragment : Fragment() {
+class IdentificationCardFragment : BaseFragment<FragmentIdentificationCardBinding, RegisterViewModel>() {
+    override fun getLazyBinding(): Lazy<FragmentIdentificationCardBinding> =
+        lazy { FragmentIdentificationCardBinding.inflate(layoutInflater) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
+    override fun getLazyViewModel(): Lazy<RegisterViewModel> =
+        lazy { RegisterViewModel(requireActivity().application) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_identification_card, container, false)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            IdentificationCardFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
+    override fun setUpClick() = Unit
 }

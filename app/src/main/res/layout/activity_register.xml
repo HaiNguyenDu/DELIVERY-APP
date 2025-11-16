@@ -60,7 +60,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/tvNo"
+            android:id="@+id/tvPrevious"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -68,12 +68,12 @@
             android:fontFamily="@font/medium"
             android:gravity="center"
             android:paddingVertical="@dimen/size_10"
-            android:text="@string/save"
+            android:text="@string/tr_c"
             android:textColor="@color/white"
             android:textSize="@dimen/font_16" />
 
         <TextView
-            android:id="@+id/tvYes"
+            android:id="@+id/tvNext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_16"

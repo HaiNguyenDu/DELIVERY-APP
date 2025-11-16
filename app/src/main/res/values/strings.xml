@@ -234,4 +234,6 @@
     <string name="eligibility_des">Vì sự an toàn của bạn và người khác, hãy chắc rằng bạn đáp ứng đủ mọi yêu cầu của Grab và có các hồ sơ cần thiết.</string>
     <string name="b_n_c_p_ng_c_c_y_u_c_u_tr_n">Bạn có đáp ứng đủ các yêu cầu trên?</string>
     <string name="nh_p_v_o_y_ti_p_t_c">Nhấp vào đây để tiếp tục</string>
+    <string name="profile_review">Profile Review</string>
+    <string name="tr_c">Trước đó</string>
 </resources>

@@ -1,34 +1,15 @@
 package com.example.grabapp.driver.register.vehicle_confirm
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.grabapp.R
+import com.example.grabapp.base.BaseFragment
+import com.example.grabapp.databinding.FragmentVehicleConfirmBinding
+import com.example.grabapp.driver.register.RegisterViewModel
 
-class VehicleConfirmFragment : Fragment() {
+class VehicleConfirmFragment :  BaseFragment<FragmentVehicleConfirmBinding, RegisterViewModel>() {
+    override fun getLazyBinding(): Lazy<FragmentVehicleConfirmBinding> =
+        lazy { FragmentVehicleConfirmBinding.inflate(layoutInflater) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
+    override fun getLazyViewModel(): Lazy<RegisterViewModel> =
+        lazy { RegisterViewModel(requireActivity().application) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vehicle_confirm, container, false)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            VehicleConfirmFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
+    override fun setUpClick() = Unit
 }
