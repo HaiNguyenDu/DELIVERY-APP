@@ -1,5 +1,12 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">GrabApp</string>
+    //goongmap
+    <string name="goong_api_url">https://rsapi.goong.io/</string>
+    <string name="goong_map_url">https://tiles.goong.io</string>
+    <string name="goong_api_key">lFHqJVvz4R97UeVo202sBed6FGh7KSi5CJZvjacg</string>
+    <string name="goong_map_key">ZxCQP01JWowkSbE5ELrpGNvEJTD3vHYILu3uyvlx</string>
+    <string name="mapbox_access_token" translatable="false" tools:ignore="UnusedResources">YOUR_MAPBOX_ACCESS_TOKEN</string>
+    //
     <string name="main_header">Vận Chuyển Ngay</string>
     <string name="ship">Vận Chuyển</string>
     <string name="fast"><![CDATA[Nhanh & Tin Cậy]]></string>
@@ -109,6 +116,18 @@
     <string name="_3">3</string>
     <string name="_2">2</string>
     <string name="_1">1</string>
+    <string name="giao_n_u">Giao đến đâu?</string>
+    <string name="giao_den_dau">Giao đến đâu ?</string>
+    <string name="default_detail_info">Thêm chi tiết món hàng</string>
+    <string name="mat_hang_nao_bi_cam">Mặt hàng nào bị cấm?</string>
+    <string name="package_type">Loại hàng hoá*</string>
+    <string name="clothes">Quần áo</string>
+    <string name="equipment">Điện tử</string>
+    <string name="fragile">Dễ vỡ</string>
+    <string name="other">Khác</string>
+    <string name="detail_package">Chi tiết món hàng</string>
+    <string name="description_detail_package">Thông tin này giúp tài xế sắp xếp và bảo quản hàng đúng cách.</string>
+    <string name="add_image">Thêm ảnh (Không bắt buộc)</string>
     <string name="t_ng_c_h_i_nh_n_cu_c_khi_b_t_t_ng_nh_n_cu_c">Tăng cơ hội nhận cuốc khi bật tự động nhận cuốc</string>
     <string name="automatically_receive_trip">Tự động nhận cuốc</string>
     <string name="ang_t_ng_nh_n_cu_c_xe_n">Đang tự động nhận cuốc xe đến</string>

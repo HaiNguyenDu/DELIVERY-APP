@@ -13,6 +13,7 @@
         android:paddingTop="@dimen/size_20"
         android:paddingBottom="@dimen/size_50"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -92,7 +93,7 @@
                 android:maxLines="1"
                 android:text="32 Tran Ke Xuong St."
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_18"
+                android:textSize="@dimen/font_16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -105,9 +106,9 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/bold"
                 android:maxLines="1"
-                android:text="Giao đến đâu ?"
+                android:text="@string/giao_den_dau"
                 android:textColor="@color/grey"
-                android:textSize="@dimen/font_18"
+                android:textSize="@dimen/font_16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ic_drop_off_location" />
@@ -125,6 +126,7 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
+        android:id="@+id/ic_user"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/img_shipper"
