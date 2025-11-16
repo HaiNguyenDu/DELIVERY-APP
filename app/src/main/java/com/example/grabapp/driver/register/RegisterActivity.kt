@@ -62,13 +62,6 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             setHomeAsUpIndicator(R.drawable.ic_back)
             title = ""
         }
-        onBackPressedDispatcher.addCallback(this) {
-            if (currentStep.isFirstStep()) {
-                finish()
-            } else {
-                handlePreviousClick()
-            }
-        }
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
