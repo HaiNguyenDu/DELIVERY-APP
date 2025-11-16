@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
 import com.example.grabapp.extention.setPadding
 
-abstract  class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity() {
+abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity() {
     abstract fun getLazyBinding(): Lazy<T>
     abstract fun getLazyViewModel(): Lazy<V>
     protected val binding: T by this.getLazyBinding()
@@ -50,4 +50,7 @@ abstract  class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActi
         v.setPadding(insets)
     }
 
+    protected fun setRootColor(color: Int) {
+        window.decorView.setBackgroundColor(color)
+    }
 }

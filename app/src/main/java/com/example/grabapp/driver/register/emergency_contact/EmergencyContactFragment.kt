@@ -1,4 +1,4 @@
-package com.example.grabapp.ui.driver.register.emergency_contact
+package com.example.grabapp.driver.register.emergency_contact
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

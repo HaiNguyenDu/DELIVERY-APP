@@ -1,4 +1,4 @@
-package com.example.grabapp.ui.driver.register.identification
+package com.example.grabapp.driver.register.identification
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -27,6 +27,17 @@
                 android:src="@drawable/ic_line_back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvSwitchToDriver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size_20"
+                android:background="@drawable/bg_button_green"
+                android:padding="@dimen/size_8"
+                android:text="@string/driver_app"
+                android:textColor="@color/white"
+                android:layout_gravity="end"/>
         </FrameLayout>
 
         <androidx.cardview.widget.CardView
@@ -106,15 +117,14 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="300dp"
             android:layout_height="300dp"
+            android:layout_marginTop="@dimen/size_100"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/size_100"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_repeatMode="reverse"
-            app:lottie_fileName="empty_box.json"
             app:layout_constraintTop_toBottomOf="@+id/tv_odered"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="empty_box.json"
+            app:lottie_loop="true"
+            app:lottie_repeatMode="reverse" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
