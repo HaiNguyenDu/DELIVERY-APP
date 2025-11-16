@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,44 +12,36 @@
         android:layout_height="wrap_content"
         tools:context=".driver.register.avatar.AvatarFragment">
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_150"
-        android:background="@color/green"
-        android:contentDescription="@null"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvHello"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_26"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:text="@string/hello_user"
+            android:textSize="@dimen/font_22"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvHello"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_26"
-        android:fontFamily="@font/bold"
-        android:gravity="center"
-        android:text="@string/hello_user"
-        android:textSize="@dimen/font_22"
-        app:layout_constraintTop_toBottomOf="@id/imageView1" />
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintTop_toBottomOf="@id/tvHello"
+            tools:text="Bạn đang đăng ký dịch vụ GrabBike" />
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_16"
-        android:fontFamily="@font/regular"
-        android:gravity="center"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintTop_toBottomOf="@id/tvHello"
-        tools:text="Bạn đang đăng ký dịch vụ GrabBike" />
-
-    <ImageView
-        android:layout_width="@dimen/size_100"
-        android:layout_height="@dimen/size_100"
-        android:layout_marginTop="@dimen/size_26"
-        android:background="@color/black"
-        android:contentDescription="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+        <ImageView
+            android:layout_width="@dimen/size_100"
+            android:layout_height="@dimen/size_100"
+            android:layout_marginTop="@dimen/size_26"
+            android:background="@color/black"
+            android:contentDescription="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

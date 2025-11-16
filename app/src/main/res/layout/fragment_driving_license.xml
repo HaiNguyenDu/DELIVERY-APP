@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,165 +13,157 @@
         android:background="@color/white"
         tools:context=".driver.register.identification.IdentificationCardFragment">
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_150"
-        android:background="@color/green"
-        android:contentDescription="@null"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_24"
+            android:fontFamily="@font/bold"
+            android:text="@string/driving_license"
+            android:textSize="@dimen/font_22"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_24"
-        android:fontFamily="@font/bold"
-        android:text="@string/driving_license"
-        android:textSize="@dimen/font_22"
-        app:layout_constraintTop_toBottomOf="@id/imageView1" />
+        <LinearLayout
+            android:id="@+id/llFrontCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
-    <LinearLayout
-        android:id="@+id/llFrontCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/bold"
+                android:text="@string/front_card"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
+                android:id="@+id/ivFrontCard"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="@dimen/size_80"
+                android:contentDescription="@null"
+                android:src="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBackCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/llFrontCard">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/bold"
+                android:text="@string/back_card"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
+                android:id="@+id/ivBackCard"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="@dimen/size_80"
+                android:contentDescription="@null"
+                android:src="@color/black" />
+        </LinearLayout>
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/bold"
-            android:text="@string/front_card"
-            android:textSize="@dimen/font_16" />
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:text="@string/driving_license_number"
+            app:layout_constraintTop_toBottomOf="@id/llBackCard" />
 
-        <ImageView
-            android:id="@+id/ivFrontCard"
-            android:layout_width="@dimen/size_80"
-            android:layout_height="@dimen/size_80"
-            android:contentDescription="@null"
-            android:src="@color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llBackCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/llFrontCard">
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtIDNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/bg_circle_stroke_8"
+            android:paddingHorizontal="@dimen/size_8"
+            android:paddingVertical="@dimen/size_12"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintTop_toBottomOf="@id/textView1"
+            tools:text="049204013824" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/bold"
-            android:text="@string/back_card"
-            android:textSize="@dimen/font_16" />
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:text="@string/driving_license_categories"
+            app:layout_constraintTop_toBottomOf="@id/edtIDNumber" />
+
+        <TextView
+            android:id="@+id/tvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/bg_circle_stroke_8"
+            android:hint="@string/driving_license_categories"
+            android:paddingHorizontal="@dimen/size_8"
+            android:paddingVertical="@dimen/size_12"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintTop_toBottomOf="@id/textView3" />
 
         <ImageView
-            android:id="@+id/ivBackCard"
-            android:layout_width="@dimen/size_80"
-            android:layout_height="@dimen/size_80"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_marginEnd="@dimen/size_6"
             android:contentDescription="@null"
-            android:src="@color/black" />
-    </LinearLayout>
+            android:src="@drawable/ic_chevron_down"
+            app:layout_constraintBottom_toBottomOf="@id/tvCategories"
+            app:layout_constraintEnd_toEndOf="@id/tvCategories"
+            app:layout_constraintTop_toTopOf="@id/tvCategories" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:text="@string/driving_license_number"
-        app:layout_constraintTop_toBottomOf="@id/llBackCard" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:text="@string/issue_date"
+            app:layout_constraintTop_toBottomOf="@id/tvCategories" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edtIDNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_4"
-        android:background="@drawable/bg_circle_stroke_8"
-        android:paddingHorizontal="@dimen/size_8"
-        android:paddingVertical="@dimen/size_12"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintTop_toBottomOf="@id/textView1"
-        tools:text="049204013824" />
+        <TextView
+            android:id="@+id/tvIssueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/bg_circle_stroke_8"
+            android:hint="@string/issue_date"
+            android:paddingHorizontal="@dimen/size_8"
+            android:paddingVertical="@dimen/size_12"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintTop_toBottomOf="@id/textView2" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:text="@string/driving_license_categories"
-        app:layout_constraintTop_toBottomOf="@id/edtIDNumber" />
-
-    <TextView
-        android:id="@+id/tvCategories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_4"
-        android:background="@drawable/bg_circle_stroke_8"
-        android:hint="@string/driving_license_categories"
-        android:paddingHorizontal="@dimen/size_8"
-        android:paddingVertical="@dimen/size_12"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintTop_toBottomOf="@id/textView3" />
-
-    <ImageView
-        android:layout_width="@dimen/size_24"
-        android:layout_height="@dimen/size_24"
-        android:layout_marginEnd="@dimen/size_6"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_chevron_down"
-        app:layout_constraintBottom_toBottomOf="@id/tvCategories"
-        app:layout_constraintEnd_toEndOf="@id/tvCategories"
-        app:layout_constraintTop_toTopOf="@id/tvCategories" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:text="@string/issue_date"
-        app:layout_constraintTop_toBottomOf="@id/tvCategories" />
-
-    <TextView
-        android:id="@+id/tvIssueDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_4"
-        android:background="@drawable/bg_circle_stroke_8"
-        android:hint="@string/issue_date"
-        android:paddingHorizontal="@dimen/size_8"
-        android:paddingVertical="@dimen/size_12"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
-
-    <ImageView
-        android:layout_width="@dimen/size_24"
-        android:layout_height="@dimen/size_24"
-        android:layout_marginEnd="@dimen/size_6"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_calendar"
-        app:layout_constraintBottom_toBottomOf="@id/tvIssueDate"
-        app:layout_constraintEnd_toEndOf="@id/tvIssueDate"
-        app:layout_constraintTop_toTopOf="@id/tvIssueDate" />
+        <ImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_marginEnd="@dimen/size_6"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_calendar"
+            app:layout_constraintBottom_toBottomOf="@id/tvIssueDate"
+            app:layout_constraintEnd_toEndOf="@id/tvIssueDate"
+            app:layout_constraintTop_toTopOf="@id/tvIssueDate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,14 +12,6 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         tools:context=".driver.register.identification.IdentificationCardFragment">
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_150"
-            android:background="@color/green"
-            android:contentDescription="@null"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -29,7 +22,7 @@
             android:fontFamily="@font/bold"
             android:text="@string/vehicle_registration"
             android:textSize="@dimen/font_22"
-            app:layout_constraintTop_toBottomOf="@id/imageView1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/llFrontCard"

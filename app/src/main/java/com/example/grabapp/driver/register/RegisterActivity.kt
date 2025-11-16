@@ -1,7 +1,8 @@
 package com.example.grabapp.driver.register
 
 import android.os.Bundle
-import androidx.activity.addCallback
+import android.view.View
+import androidx.core.graphics.Insets
 import androidx.viewpager2.widget.ViewPager2
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
@@ -33,6 +34,11 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         setupViewPager(savedInstanceState)
         setupListeners()
         setupObserve()
+    }
+
+    override fun handleInsets(v: View, insets: Insets) {
+        binding.imageView1.setPadding(0, -insets.top, 0, 0)
+        binding.toolbar.setPadding(0, insets.top/2, 0, 0)
     }
 
     private fun setupListeners() {

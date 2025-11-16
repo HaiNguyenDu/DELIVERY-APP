@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,135 +13,127 @@
         android:background="@color/white"
         tools:context=".driver.register.identification.IdentificationCardFragment">
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_150"
-        android:background="@color/green"
-        android:contentDescription="@null"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_24"
-        android:fontFamily="@font/bold"
-        android:text="@string/vehicle_image"
-        android:textSize="@dimen/font_22"
-        app:layout_constraintTop_toBottomOf="@id/imageView1" />
-
-    <LinearLayout
-        android:id="@+id/llFrontSide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle">
-
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_24"
             android:fontFamily="@font/bold"
-            android:text="@string/front_site_of_vehicle"
-            android:textSize="@dimen/font_16" />
+            android:text="@string/vehicle_image"
+            android:textSize="@dimen/font_22"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivFrontSide"
-            android:layout_width="@dimen/size_80"
-            android:layout_height="@dimen/size_80"
-            android:contentDescription="@null"
-            android:src="@color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llBackSide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/llFrontSide">
-
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/llFrontSide"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/bold"
-            android:text="@string/back_site_of_vehicle"
-            android:textSize="@dimen/font_16" />
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
-        <ImageView
-            android:id="@+id/ivBackSide"
-            android:layout_width="@dimen/size_80"
-            android:layout_height="@dimen/size_80"
-            android:contentDescription="@null"
-            android:src="@color/black" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/bold"
+                android:text="@string/front_site_of_vehicle"
+                android:textSize="@dimen/font_16" />
 
-    <LinearLayout
-        android:id="@+id/llRightSide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/llBackSide">
+            <ImageView
+                android:id="@+id/ivFrontSide"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="@dimen/size_80"
+                android:contentDescription="@null"
+                android:src="@color/black" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/llBackSide"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/bold"
-            android:text="@string/vehicle_right_side"
-            android:textSize="@dimen/font_16" />
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/llFrontSide">
 
-        <ImageView
-            android:id="@+id/ivRightSide"
-            android:layout_width="@dimen/size_80"
-            android:layout_height="@dimen/size_80"
-            android:contentDescription="@null"
-            android:src="@color/black" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/bold"
+                android:text="@string/back_site_of_vehicle"
+                android:textSize="@dimen/font_16" />
 
-    <LinearLayout
-        android:id="@+id/llLeftSide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/llRightSide">
+            <ImageView
+                android:id="@+id/ivBackSide"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="@dimen/size_80"
+                android:contentDescription="@null"
+                android:src="@color/black" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/llRightSide"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/bold"
-            android:text="@string/vehicle_left_side"
-            android:textSize="@dimen/font_16" />
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/llBackSide">
 
-        <ImageView
-            android:id="@+id/ivLeftSide"
-            android:layout_width="@dimen/size_80"
-            android:layout_height="@dimen/size_80"
-            android:contentDescription="@null"
-            android:src="@color/black" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/bold"
+                android:text="@string/vehicle_right_side"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
+                android:id="@+id/ivRightSide"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="@dimen/size_80"
+                android:contentDescription="@null"
+                android:src="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llLeftSide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/llRightSide">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/bold"
+                android:text="@string/vehicle_left_side"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
+                android:id="@+id/ivLeftSide"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="@dimen/size_80"
+                android:contentDescription="@null"
+                android:src="@color/black" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

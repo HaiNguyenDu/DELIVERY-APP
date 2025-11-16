@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,120 +13,112 @@
         android:background="@color/white"
         tools:context=".driver.register.identification.IdentificationCardFragment">
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_150"
-        android:background="@color/green"
-        android:contentDescription="@null"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_24"
+            android:fontFamily="@font/bold"
+            android:text="@string/bank_account"
+            android:textSize="@dimen/font_22"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_24"
-        android:fontFamily="@font/bold"
-        android:text="@string/bank_account"
-        android:textSize="@dimen/font_22"
-        app:layout_constraintTop_toBottomOf="@id/imageView1" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_20"
+            android:text="@string/account_name"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_20"
-        android:text="@string/account_name"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtAccountName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/bg_circle_stroke_8"
+            android:hint="@string/account_name"
+            android:paddingHorizontal="@dimen/size_8"
+            android:paddingVertical="@dimen/size_12"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintTop_toBottomOf="@id/textView1" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edtAccountName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_4"
-        android:background="@drawable/bg_circle_stroke_8"
-        android:hint="@string/account_name"
-        android:paddingHorizontal="@dimen/size_8"
-        android:paddingVertical="@dimen/size_12"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintTop_toBottomOf="@id/textView1" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:text="@string/account_number"
+            app:layout_constraintTop_toBottomOf="@id/edtAccountName" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:text="@string/account_number"
-        app:layout_constraintTop_toBottomOf="@id/edtAccountName" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtAccountNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/bg_circle_stroke_8"
+            android:hint="@string/account_number"
+            android:paddingHorizontal="@dimen/size_8"
+            android:paddingVertical="@dimen/size_12"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintTop_toBottomOf="@id/textView3" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edtAccountNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_4"
-        android:background="@drawable/bg_circle_stroke_8"
-        android:hint="@string/account_number"
-        android:paddingHorizontal="@dimen/size_8"
-        android:paddingVertical="@dimen/size_12"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintTop_toBottomOf="@id/textView3" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_12"
+            android:text="@string/bank_name"
+            app:layout_constraintTop_toBottomOf="@id/edtAccountNumber" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:text="@string/bank_name"
-        app:layout_constraintTop_toBottomOf="@id/edtAccountNumber" />
+        <TextView
+            android:id="@+id/tvBankName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/bg_circle_stroke_8"
+            android:hint="@string/bank_name"
+            android:paddingHorizontal="@dimen/size_8"
+            android:paddingVertical="@dimen/size_12"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintTop_toBottomOf="@id/textView2" />
 
-    <TextView
-        android:id="@+id/tvBankName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_4"
-        android:background="@drawable/bg_circle_stroke_8"
-        android:hint="@string/bank_name"
-        android:paddingHorizontal="@dimen/size_8"
-        android:paddingVertical="@dimen/size_12"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
+        <ImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_marginEnd="@dimen/size_6"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_chevron_down"
+            app:layout_constraintBottom_toBottomOf="@id/tvBankName"
+            app:layout_constraintEnd_toEndOf="@id/tvBankName"
+            app:layout_constraintTop_toTopOf="@id/tvBankName" />
 
-    <ImageView
-        android:layout_width="@dimen/size_24"
-        android:layout_height="@dimen/size_24"
-        android:layout_marginEnd="@dimen/size_6"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_chevron_down"
-        app:layout_constraintBottom_toBottomOf="@id/tvBankName"
-        app:layout_constraintEnd_toEndOf="@id/tvBankName"
-        app:layout_constraintTop_toTopOf="@id/tvBankName" />
+        <CheckBox
+            android:id="@+id/cbConfirm"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_marginStart="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBankName" />
 
-    <CheckBox
-        android:id="@+id/cbConfirm"
-        android:layout_width="@dimen/size_24"
-        android:layout_height="@dimen/size_24"
-        android:layout_marginStart="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvBankName" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_4"
-        android:layout_marginEnd="@dimen/size_12"
-        android:text="@string/bank_account_info_confirmation"
-        app:layout_constraintBottom_toBottomOf="@id/cbConfirm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cbConfirm"
-        app:layout_constraintTop_toTopOf="@id/cbConfirm" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_4"
+            android:layout_marginEnd="@dimen/size_12"
+            android:text="@string/bank_account_info_confirmation"
+            app:layout_constraintBottom_toBottomOf="@id/cbConfirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cbConfirm"
+            app:layout_constraintTop_toTopOf="@id/cbConfirm" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
