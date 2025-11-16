@@ -50,4 +50,5 @@
     <dimen name="font_34">34sp</dimen>
     <dimen name="font_10">10sp</dimen>
     <dimen name="_500dp">500dp</dimen>
+    <dimen name="size_52">52dp</dimen>
 </resources>

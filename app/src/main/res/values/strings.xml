@@ -123,7 +123,7 @@
     <string name="m_o_nh">Mẹo nhỏ</string>
     <string name="trick_des">Bật trạng thái Online để bắt đầu nhận đơn hàng. Hệ thống sẽ tự động đẩy đơn phù hợp với vị trí của bạn.</string>
     <string name="ang_t_m_n_h_ng">Đang tìm đơn hàng</string>
-    <string name="finding_orders_des">Hệ thống đang tìm đơn hàng phù hợp gần vị trí của bạn...</string>
+    <string name="finding_orders_des">Hệ thống đang tìm đơn hàng phù hợp gần vị trí của bạn…</string>
     <string name="trang_ch">Trang chủ</string>
     <string name="n_h_ng_m_i">Đơn hàng mới!</string>
     <string name="m_dh001234">Mã: DH001234</string>
@@ -165,7 +165,7 @@
     <string name="th_ng_tin_r_t_ti_n">Thông tin rút tiền</string>
     <string name="s_ti_n_r_t_t_i_thi_u_50_000">Số tiền rút tối thiểu: 50.000đ</string>
     <string name="ph_r_t_ti_n_mi_n_ph">Phí rút tiền: Miễn phí</string>
-    <string name="th_i_gian_x_l_1_2_ng_y_l_m_vi_c">Thời gian xử lý: 1-2 ngày làm việc</string>
+    <string name="th_i_gian_x_l_1_2_ng_y_l_m_vi_c">Thời gian xử lý: 1–2 ngày làm việc</string>
     <string name="ti_n_s_c_chuy_n_v_t_i_kho_n_ng_n_h_ng_ng_k">Tiền sẽ được chuyển về tài khoản ngân hàng đã đăng ký</string>
     <string name="l_ch_s_giao_d_ch">Lịch sử giao dịch</string>
     <string name="ch_a_c_giao_d_ch">Chưa có giao dịch</string>
@@ -206,7 +206,7 @@
     <string name="x_c_nh_n_giao_h_ng">Xác nhận giao hàng</string>
     <string name="ch_p_nh_h_ng_h_a_giao_ho_c_v_tr_giao_h_ng_x_c_nh_n">Chụp ảnh hàng hóa đã giao hoặc vị trí giao hàng để xác nhận</string>
     <string name="tin_nh_n">Tin nhắn</string>
-    <string name="t_m_theo_t_n_ho_c_m_n">Tìm theo tên hoặc mã đơn...</string>
+    <string name="t_m_theo_t_n_ho_c_m_n">Tìm theo tên hoặc mã đơn…</string>
     <string name="t">T</string>
     <string name="tr_n_th_b">Trần thị B</string>
     <string name="dh001235">#DH001235</string>
@@ -230,4 +230,8 @@
     <string name="confirm_pager4_content">- Đăng ký tham gia cung cấp các loại hình Dịch Vụ hiện có trên Ứng dụng Grab.\n- Thực hiện Khoản Ký Quỹ: 2.000.000</string>
     <string name="kh_ng_ng">KHÔNG ĐỒNG Ý</string>
     <string name="ng">ĐỒNG Ý</string>
+    <string name="tr_c_khi_ng_k">Trước khi đăng ký …</string>
+    <string name="eligibility_des">Vì sự an toàn của bạn và người khác, hãy chắc rằng bạn đáp ứng đủ mọi yêu cầu của Grab và có các hồ sơ cần thiết.</string>
+    <string name="b_n_c_p_ng_c_c_y_u_c_u_tr_n">Bạn có đáp ứng đủ các yêu cầu trên?</string>
+    <string name="nh_p_v_o_y_ti_p_t_c">Nhấp vào đây để tiếp tục</string>
 </resources>
