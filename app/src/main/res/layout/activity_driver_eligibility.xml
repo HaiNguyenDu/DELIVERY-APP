@@ -20,6 +20,7 @@
         tools:navigationIcon="@drawable/ic_back">
 
         <ImageView
+            android:id="@+id/tvLogOut"
             android:layout_width="@dimen/size_24"
             android:layout_height="@dimen/size_24"
             android:layout_gravity="end"
