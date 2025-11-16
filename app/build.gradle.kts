@@ -56,4 +56,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.lottie)
     implementation(libs.dots.indicator)
+    implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.play.services.location)
+    implementation(libs.android.sdk)
+    implementation(libs.android.ndk27)
+    implementation(libs.glide)
 }

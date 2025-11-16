@@ -7,10 +7,10 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets
+import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.viewbinding.ViewBinding
 import com.example.grabapp.extention.setPadding
 
@@ -41,13 +41,7 @@ abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActiv
         val controller = WindowCompat.getInsetsController(window, window.decorView.rootView)
         controller.isAppearanceLightStatusBars = value
         controller.isAppearanceLightNavigationBars = value
-
-        // Ẩn SystemBar, chỉ hiển thị khi swipe lên
-        controller.hide(WindowInsetsCompat.Type.navigationBars())
-        controller.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-        window.decorView.setBackgroundColor(Color.WHITE)
+        window.decorView.setBackgroundColor("#F8F8F8".toColorInt())
     }
 
     open fun handleInsets(v: View, insets: Insets) {
