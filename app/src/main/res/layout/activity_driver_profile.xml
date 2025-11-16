@@ -93,6 +93,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:paddingEnd="@dimen/size_12"
             android:layout_weight="1">
 
             <TextView

@@ -1,9 +1,7 @@
 package com.example.grabapp.base
 
-import android.R
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge

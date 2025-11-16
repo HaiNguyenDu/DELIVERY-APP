@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_circle_dialog_24"
+    android:paddingHorizontal="@dimen/size_26"
+    android:paddingBottom="@dimen/size_26">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_26"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:text="@string/x_c_nh_n_giao_h_ng"
+        android:textSize="@dimen/font_18"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="@dimen/size_36"
+        android:layout_height="@dimen/size_36"
+        android:layout_marginTop="-10dp"
+        android:layout_marginEnd="-10dp"
+        android:contentDescription="@null"
+        android:padding="@dimen/size_8"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="@id/textView1"
+        app:layout_constraintTop_toTopOf="@id/textView1" />
+
+    <ImageView
+        android:id="@+id/ivTakePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/img_take_photo"
+        android:contentDescription="@null"
+        app:layout_constraintDimensionRatio="380:256"
+        app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bg_border_stroke_green_8_10_per"
+        android:fontFamily="@font/regular"
+        android:paddingHorizontal="@dimen/size_16"
+        android:paddingVertical="@dimen/size_14"
+        android:text="@string/ch_p_nh_h_ng_h_a_giao_ho_c_v_tr_giao_h_ng_x_c_nh_n"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintTop_toBottomOf="@id/ivTakePhoto" />
+
+    <TextView
+        android:id="@+id/tvCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_24"
+        android:background="@drawable/bg_border_stroke_white_6_50_per"
+        android:fontFamily="@font/medium"
+        android:gravity="center"
+        android:paddingVertical="@dimen/size_8"
+        android:text="@string/cancel"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toStartOf="@id/tvCompleteDelivery"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+    <TextView
+        android:id="@+id/tvCompleteDelivery"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_24"
+        android:background="@drawable/bg_gradient_green_border_6"
+        android:fontFamily="@font/medium"
+        android:gravity="center"
+        android:paddingVertical="@dimen/size_8"
+        android:text="@string/ho_n_th_nh_giao_h_ng"
+        android:textColor="@color/grey_98"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvCancel"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+</androidx.constraintlayout.widget.ConstraintLayout>
