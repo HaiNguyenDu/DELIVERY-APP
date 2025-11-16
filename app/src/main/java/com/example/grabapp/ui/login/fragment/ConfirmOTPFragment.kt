@@ -38,7 +38,6 @@ class ConfirmOTPFragment : BaseFragment<FragmentConfirmOtpBinding, LoginViewMode
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpToolBar()
-        handleInset()
         observerData()
     }
 
@@ -164,22 +163,6 @@ class ConfirmOTPFragment : BaseFragment<FragmentConfirmOtpBinding, LoginViewMode
 
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
-        }
-    }
-
-    private fun handleInset() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
-            val bottomInset = maxOf(systemBarInsets.bottom, imeInsets.bottom)
-            binding.root.setPadding(
-                0,
-                0,
-                0,
-                bottomInset
-            )
-            binding.toolbar.setPadding(0, systemBarInsets.top, 0, 0)
-            WindowInsetsCompat.CONSUMED
         }
     }
 

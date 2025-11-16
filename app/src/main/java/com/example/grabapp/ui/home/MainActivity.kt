@@ -1,18 +1,41 @@
 package com.example.grabapp.ui.home
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
+import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.databinding.ActivityMainBinding
+import com.example.grabapp.ui.address_selection.AddressSelectionActivity
 import com.example.grabapp.ui.user.ActivityUser
 import com.facebook.shimmer.Shimmer
+import org.maplibre.android.MapLibre
+import org.maplibre.android.WellKnownTileServer
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
+    val locationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permission ->
+        val fineLocationPermission = permission[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+        val coarseLocationPermission =
+            permission[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+        if (fineLocationPermission && coarseLocationPermission) {
+            startActivity(Intent(this, AddressSelectionActivity::class.java))
+            overridePendingTransition(
+                R.anim.anim_translate_in_right,
+                R.anim.anim_translate_out_left
+            )
+        }
+    }
+
     override fun getLazyBinding(): Lazy<ActivityMainBinding> =
         lazy { ActivityMainBinding.inflate(layoutInflater) }
 
@@ -26,9 +49,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         observeView()
         shimmer()
         setIsLightThemeStatusBar(false)
+        MapLibre.getInstance(
+            this,
+            AddressRepository.API_KEY,
+            WellKnownTileServer.MapLibre
+        )
     }
 
-    fun shimmer(){
+    fun shimmer() {
         val shimmerBuilder = Shimmer.AlphaHighlightBuilder()
             .setBaseAlpha(1f)
             .setHighlightAlpha(0.08f)
@@ -72,6 +100,30 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 R.anim.anim_translate_in_right,
                 R.anim.anim_translate_out_left
             )
+        }
+        binding.btnShipping.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                locationPermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+            } else {
+                startActivity(Intent(this, AddressSelectionActivity::class.java))
+                overridePendingTransition(
+                    R.anim.anim_translate_in_right,
+                    R.anim.anim_translate_out_left
+                )
+            }
         }
     }
 

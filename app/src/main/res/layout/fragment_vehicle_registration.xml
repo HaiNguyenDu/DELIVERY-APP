@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".driver.register.identification.IdentificationCardFragment">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_150"
+        android:background="@color/green"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_24"
+        android:fontFamily="@font/bold"
+        android:text="@string/vehicle_registration"
+        android:textSize="@dimen/font_22"
+        app:layout_constraintTop_toBottomOf="@id/imageView1" />
+
+    <LinearLayout
+        android:id="@+id/llFrontCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_12"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:text="@string/front_card"
+            android:textSize="@dimen/font_16" />
+
+        <ImageView
+            android:id="@+id/ivFrontCard"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_80"
+            android:contentDescription="@null"
+            android:src="@color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llBackCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_12"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/llFrontCard">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/bold"
+            android:text="@string/back_card"
+            android:textSize="@dimen/font_16" />
+
+        <ImageView
+            android:id="@+id/ivBackCard"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_80"
+            android:contentDescription="@null"
+            android:src="@color/black" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_12"
+        android:text="@string/license_plate"
+        app:layout_constraintTop_toBottomOf="@id/llBackCard" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtLicensePlate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_4"
+        android:background="@drawable/bg_circle_stroke_8"
+        android:hint="@string/license_plate"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="@dimen/size_12"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintTop_toBottomOf="@id/textView1"
+        tools:text="92T1" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_12"
+        android:text="@string/fuel_type"
+        app:layout_constraintTop_toBottomOf="@id/edtLicensePlate" />
+
+    <TextView
+        android:id="@+id/tvFuelType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_4"
+        android:background="@drawable/bg_circle_stroke_8"
+        android:hint="@string/fuel_type"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="@dimen/size_12"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+    <ImageView
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:layout_marginEnd="@dimen/size_6"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_chevron_down"
+        app:layout_constraintBottom_toBottomOf="@id/tvFuelType"
+        app:layout_constraintEnd_toEndOf="@id/tvFuelType"
+        app:layout_constraintTop_toTopOf="@id/tvFuelType" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_12"
+        android:text="@string/vehicle_brand"
+        app:layout_constraintTop_toBottomOf="@id/tvFuelType" />
+
+    <TextView
+        android:id="@+id/tvVehicleBrand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_4"
+        android:background="@drawable/bg_circle_stroke_8"
+        android:hint="@string/vehicle_brand"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="@dimen/size_12"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintTop_toBottomOf="@id/textView3" />
+
+    <ImageView
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:layout_marginEnd="@dimen/size_6"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_chevron_down"
+        app:layout_constraintBottom_toBottomOf="@id/tvVehicleBrand"
+        app:layout_constraintEnd_toEndOf="@id/tvVehicleBrand"
+        app:layout_constraintTop_toTopOf="@id/tvVehicleBrand" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_12"
+        android:text="@string/vehicle_model"
+        app:layout_constraintTop_toBottomOf="@id/tvVehicleBrand" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtVehicleModel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_4"
+        android:background="@drawable/bg_circle_stroke_8"
+        android:hint="@string/vehicle_model"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="@dimen/size_12"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintTop_toBottomOf="@id/textView4" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_12"
+        android:text="@string/vehicle_manufacture_year"
+        app:layout_constraintTop_toBottomOf="@id/edtVehicleModel" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtManufactureYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_4"
+        android:background="@drawable/bg_circle_stroke_8"
+        android:hint="@string/vehicle_manufacture_year"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="@dimen/size_12"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintTop_toBottomOf="@id/textView5" />
+</androidx.constraintlayout.widget.ConstraintLayout>

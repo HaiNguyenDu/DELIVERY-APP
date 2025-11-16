@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,16 +20,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrabApp">
         <activity
+            android:name=".driver.order_detail.OrderDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".driver.home.DriverHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.address_selection.AddressSelectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.driver.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.driver.transportation.TransportationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.driver.confirm_driver.ConfirmDriverActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.user.ActivityUser"
             android:exported="false" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
@@ -28,7 +50,25 @@
         <activity
             android:name=".ui.home.MainActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.goong.api_key"
+            android:value="lFHqJVvz4R97UeVo202sBed6FGh7KSi5CJZvjacg" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.grabapp.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

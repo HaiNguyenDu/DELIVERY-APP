@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <org.maplibre.android.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maplibre_apiBaseUri="https://api.maplibre.org"
+        app:maplibre_cameraBearing="0.0"
+        app:maplibre_cameraPitchMax="90.0"
+        app:maplibre_cameraPitchMin="0.0"
+        app:maplibre_cameraTargetLat="42.31230486601532"
+        app:maplibre_cameraTargetLng="64.63967338936439"
+        app:maplibre_cameraTilt="0.0"
+        app:maplibre_cameraZoom="3.9"
+        app:maplibre_cameraZoomMax="26.0"
+        app:maplibre_cameraZoomMin="2.0"
+        app:maplibre_localIdeographFontFamily="Droid Sans"
+        app:maplibre_uiCompass="true"
+        app:maplibre_uiCompassFadeFacingNorth="true"
+        app:maplibre_uiCompassGravity="top|end"
+        app:maplibre_uiDoubleTapGestures="true"
+        app:maplibre_uiHorizontalScrollGestures="true"
+        app:maplibre_uiRotateGestures="true"
+        app:maplibre_uiScrollGestures="true"
+        app:maplibre_uiTiltGestures="true"
+        app:maplibre_uiZoomGestures="true" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/size_20"
+        android:backgroundTint="@color/white"
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="@dimen/size_20"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_margin="@dimen/size_5"
+            android:src="@drawable/ic_back"
+            />
+    </androidx.cardview.widget.CardView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_0"
+        android:background="@drawable/bg_corner"
+        android:elevation="@dimen/size_4"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapView">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="Thông tin điểm giao hàng"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="Địa chỉ"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/edt_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_text_input_thin"
+                    android:fontFamily="@font/medium"
+                    android:hint="@string/th_m_s_t_ng_ho_c_s_c_n_h"
+                    android:paddingHorizontal="@dimen/size_20"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="none"
+                    android:inputType="none"
+                    android:imeOptions="actionDone"
+                    android:paddingVertical="@dimen/size_8"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title1" />
+
+                <!-- Title 2 -->
+                <TextView
+                    android:id="@+id/title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:fontFamily="@font/medium"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="none"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:text="@string/s_t_ng_s_t_a_nh"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edt_address" />
+
+                <!-- EditText 2 -->
+                <EditText
+                    android:id="@+id/edt_detail_address"
+                    android:layout_width="0dp"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="none"
+                    android:imeOptions="actionDone"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_text_input_thin"
+                    android:fontFamily="@font/medium"
+                    android:hint="Nhập số điện thoại"
+                    android:inputType="phone"
+                    android:paddingHorizontal="@dimen/size_20"
+                    android:paddingVertical="@dimen/size_8"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title2" />
+
+                <!-- Title 3 -->
+                <TextView
+                    android:id="@+id/title3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:fontFamily="@font/medium"
+                    android:text="Tên người liên lạc"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edt_detail_address" />
+
+                <!-- EditText 3 -->
+                <EditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_text_input_thin"
+                    android:fontFamily="@font/medium"
+                    android:hint="Nhập địa chỉ"
+                    android:paddingHorizontal="@dimen/size_20"
+                    android:paddingVertical="@dimen/size_8"
+                    android:textSize="@dimen/font_14"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="none"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title3" />
+
+                <!-- Title 4 -->
+                <TextView
+                    android:id="@+id/title4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:text="Số điện thoại"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edt_name" />
+
+                <!-- EditText 4 -->
+                <EditText
+                    android:id="@+id/edt_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_text_input_thin"
+                    android:fontFamily="@font/medium"
+                    android:hint="Nhập số điện thoại"
+                    android:paddingHorizontal="@dimen/size_20"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="none"
+                    android:inputType="phone"
+                    android:imeOptions="actionDone"
+                    android:paddingVertical="@dimen/size_8"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title4" />
+
+                <!-- Title 5 -->
+                <TextView
+                    android:id="@+id/title5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:text="Ghi chú cho tài xế"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edt_phone" />
+
+                <!-- EditText 5 -->
+                <EditText
+                    android:id="@+id/edt_note"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_text_input_thin"
+                    android:fontFamily="@font/medium"
+                    android:hint="Nhập ghi chú cho tài xế"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="none"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:paddingHorizontal="@dimen/size_20"
+                    android:paddingVertical="@dimen/size_8"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title5" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

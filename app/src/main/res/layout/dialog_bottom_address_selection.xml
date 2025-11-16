@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:layout_marginStart="@dimen/size_20"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_pick_up"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt_pick_up" />
+
+    <ImageView
+        android:id="@+id/ic_pick_up_location"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:layout_marginStart="@dimen/size_20"
+        android:padding="2dp"
+        android:visibility="visible"
+        android:src="@drawable/ic_now_location_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_pick_up"
+        app:layout_constraintStart_toEndOf="@+id/btn_back"
+        app:layout_constraintTop_toTopOf="@+id/edt_pick_up" />
+
+    <ImageView
+        android:id="@+id/ic_drop_off_location"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:layout_marginStart="@dimen/size_20"
+        android:src="@drawable/ic_map"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_drop_off"
+        app:layout_constraintStart_toEndOf="@+id/btn_back"
+        app:layout_constraintTop_toTopOf="@+id/edt_drop_off" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/point"
+        android:layout_width="@dimen/size_5"
+        android:layout_height="@dimen/size_5"
+        android:backgroundTint="@color/text_color"
+        app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
+        app:layout_constraintEnd_toEndOf="@+id/ic_pick_up_location"
+        app:layout_constraintStart_toStartOf="@id/ic_drop_off_location"
+        app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_pick_up"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_20"
+        android:background="@drawable/bg_edt_address"
+        android:fontFamily="@font/medium"
+        android:singleLine="true"
+        android:scrollHorizontally="true"
+        android:ellipsize="none"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:paddingHorizontal="@dimen/size_20"
+        android:text="32 Tran Ke Xuong St."
+        android:textSize="@dimen/font_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginTop="@dimen/size_20" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_drop_off"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@drawable/bg_edt_address"
+        android:fontFamily="@font/medium"
+        android:hint="@string/giao_n_u"
+        android:singleLine="true"
+        android:scrollHorizontally="true"
+        android:ellipsize="none"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:paddingHorizontal="@dimen/size_20"
+        android:textSize="@dimen/font_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ic_drop_off_location"
+        app:layout_constraintTop_toBottomOf="@+id/edt_pick_up" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_address"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_0"
+        android:layout_marginTop="@dimen/size_20"
+        app:layout_constraintTop_toBottomOf="@+id/edt_drop_off"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/rcv_address"
+        app:layout_constraintEnd_toEndOf="@id/rcv_address"
+        app:layout_constraintStart_toStartOf="@id/rcv_address"
+        app:layout_constraintTop_toTopOf="@id/rcv_address"
+        app:lottie_fileName="loading_map.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/empty"
+        android:layout_width="@dimen/size_150"
+        android:layout_height="@dimen/size_150"
+        android:visibility="gone"
+        android:layout_marginHorizontal="@dimen/size_50"
+        app:layout_constraintBottom_toBottomOf="@id/rcv_address"
+        app:layout_constraintEnd_toEndOf="@id/rcv_address"
+        app:layout_constraintStart_toStartOf="@id/rcv_address"
+        app:layout_constraintTop_toTopOf="@id/rcv_address"
+        app:lottie_fileName="empty_box.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse" />
+    <!--    <ScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginTop="@dimen/size_10"-->
+    <!--        android:elevation="4dp"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/edt_drop_off">-->
+
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:paddingBottom="@dimen/size_50">-->
+
+    <!--            <androidx.cardview.widget.CardView-->
+    <!--                android:id="@+id/btn_user_detail"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/size_20"-->
+    <!--                android:layout_marginTop="@dimen/size_20"-->
+    <!--                android:backgroundTint="@color/light_blue"-->
+    <!--                app:cardCornerRadius="@dimen/size_20"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginHorizontal="@dimen/size_15"-->
+    <!--                    android:layout_marginVertical="@dimen/size_5"-->
+    <!--                    android:fontFamily="@font/bold"-->
+    <!--                    android:text="Đề xuất"-->
+    <!--                    android:textColor="@color/dark_green"-->
+    <!--                    android:textSize="@dimen/font_16" />-->
+    <!--            </androidx.cardview.widget.CardView>-->
+
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        -->
+    <!--    </ScrollView>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

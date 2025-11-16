@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue"
+        android:paddingHorizontal="@dimen/size_20"
+        android:paddingTop="@dimen/size_20"
+        android:paddingBottom="@dimen/size_50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/font_16"
+            android:fontFamily="@font/bold"
+            android:text="Cần ship hàng"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_back" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:maxWidth="@dimen/size_250"
+            android:text="Đặt DeliveryExpress giao nhanh đúng hẹn !"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layout_input_address"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_120"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="-20dp"
+        app:cardCornerRadius="@dimen/size_15"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/size_20">
+
+            <ImageView
+                android:id="@+id/ic_drop_off_location"
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                android:src="@drawable/ic_map"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_drop_off_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_drop_off_location" />
+
+            <ImageView
+                android:id="@+id/ic_pick_up_location"
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                android:padding="2dp"
+                android:src="@drawable/ic_now_location_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_pick_up_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_pick_up_location" />
+
+            <TextView
+                android:id="@+id/tv_pick_up_location"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_20"
+                android:ellipsize="end"
+                android:fontFamily="@font/bold"
+                android:maxLines="1"
+                android:text="32 Tran Ke Xuong St."
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_drop_off_location"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_20"
+                android:ellipsize="end"
+                android:fontFamily="@font/bold"
+                android:maxLines="1"
+                android:text="@string/giao_den_dau"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ic_drop_off_location" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/size_5"
+                android:layout_height="@dimen/size_5"
+                app:cardCornerRadius="@dimen/size_5"
+                android:backgroundTint="@color/text_color"
+                app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
+                app:layout_constraintEnd_toEndOf="@+id/ic_pick_up_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/ic_user"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/img_shipper"
+        app:layout_constraintBottom_toTopOf="@+id/layout_input_address"
+        app:layout_constraintEnd_toEndOf="@+id/layout_input_address" />
+</androidx.constraintlayout.widget.ConstraintLayout>

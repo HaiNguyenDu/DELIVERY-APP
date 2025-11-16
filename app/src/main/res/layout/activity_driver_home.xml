@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.grabapp.driver.home.data.TabType" />
+
+        <variable
+            name="selectedTab"
+            type="com.example.grabapp.driver.home.data.TabType" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".driver.home.DriverHomeActivity">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/llBottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_no_border_white_80_per"
+            android:elevation="@dimen/size_12"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/llHome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{selectedTab == TabType.HOME ? @drawable/bg_no_border_green_10_per : @drawable/bg_no_border_white_80_per}"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/size_6">
+
+                <ImageView
+                    android:id="@+id/ivHome"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@{selectedTab == TabType.HOME ? @drawable/bg_bottom_bar_selected_16 : null}"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_8"
+                    android:src="@{selectedTab == TabType.HOME ? @drawable/ic_home_white : @drawable/ic_home_unselected}"
+                    tools:src="@drawable/ic_home_white" />
+
+                <TextView
+                    android:id="@+id/tvHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/trang_ch"
+                    android:textColor="@{selectedTab == TabType.HOME ? @color/green_36 : @color/black}"
+                    tools:textColor="@color/green_36" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llHistory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{selectedTab == TabType.HISTORY ? @drawable/bg_no_border_green_10_per : @drawable/bg_no_border_white_80_per}"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/size_6">
+
+                <ImageView
+                    android:id="@+id/ivHistory"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@{selectedTab == TabType.HISTORY ? @drawable/bg_bottom_bar_selected_16 : null}"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_8"
+                    android:src="@{selectedTab == TabType.HISTORY ? @drawable/ic_history_selected : @drawable/ic_history_unselected}"
+                    tools:src="@drawable/ic_history_unselected" />
+
+                <TextView
+                    android:id="@+id/tvHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/history"
+                    android:textColor="@{selectedTab == TabType.HISTORY ? @color/green_36 : @color/black}"
+                    tools:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{selectedTab == TabType.MESSAGE ? @drawable/bg_no_border_green_10_per : @drawable/bg_no_border_white_80_per}"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/size_6">
+
+                <ImageView
+                    android:id="@+id/ivMessage"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@{selectedTab == TabType.MESSAGE ? @drawable/bg_bottom_bar_selected_16 : null}"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_8"
+                    android:src="@{selectedTab == TabType.MESSAGE ?@drawable/ic_mess_selected : @drawable/ic_mess_unselected}"
+                    tools:src="@drawable/ic_mess" />
+
+                <TextView
+                    android:id="@+id/tvMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/tin_nh_n"
+                    android:textColor="@{selectedTab == TabType.MESSAGE ? @color/green_36 : @color/black}"
+                    tools:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llWallet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{selectedTab == TabType.WALLET ? @drawable/bg_no_border_green_10_per : @drawable/bg_no_border_white_80_per}"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/size_6">
+
+                <ImageView
+                    android:id="@+id/ivWallet"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@{selectedTab == TabType.WALLET ? @drawable/bg_bottom_bar_selected_16 : null}"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_8"
+                    android:src="@{selectedTab == TabType.WALLET ? @drawable/ic_wallet_selected : @drawable/ic_wallet_unselected}"
+                    tools:src="@drawable/ic_wallet_unselected" />
+
+                <TextView
+                    android:id="@+id/tvWallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/wallet"
+                    android:textColor="@{selectedTab == TabType.WALLET ? @color/green_36 : @color/black}"
+                    tools:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{selectedTab == TabType.PROFILE ? @drawable/bg_no_border_green_10_per : @drawable/bg_no_border_white_80_per}"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/size_6">
+
+                <ImageView
+                    android:id="@+id/ivProfile"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@{selectedTab == TabType.PROFILE ? @drawable/bg_bottom_bar_selected_16 : null}"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_8"
+                    android:src="@{selectedTab == TabType.PROFILE ? @drawable/ic_profile_selected : @drawable/ic_profile_unselected}"
+                    tools:src="@drawable/ic_profile_unselected" />
+
+                <TextView
+                    android:id="@+id/tvProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/profile"
+                    android:textColor="@{selectedTab == TabType.PROFILE ? @color/green_36 : @color/black}"
+                    tools:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
