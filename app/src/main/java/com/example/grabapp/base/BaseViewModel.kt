@@ -21,10 +21,12 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     internal val getMessage: SharedFlow<Message> get() = _message
 
     fun showLoading() {
+        if(_isLoading.value) return
         _isLoading.value = true
     }
 
     fun hideLoading() {
+        if(_isLoading.value) false
         _isLoading.value = false
     }
 
