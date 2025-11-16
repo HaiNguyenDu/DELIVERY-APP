@@ -37,12 +37,6 @@ abstract class BaseFragment<T : ViewBinding, V : BaseViewModel> : Fragment() {
             val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
             val bottomInset = maxOf(systemBarInsets.bottom, imeInsets.bottom)
-            binding.root.setPadding(
-                0,
-                0,
-                0,
-                bottomInset
-            )
             handleInset(binding.root, systemBarInsets, bottomInset)
             WindowInsetsCompat.CONSUMED
         }

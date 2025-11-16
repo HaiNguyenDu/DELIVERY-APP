@@ -39,8 +39,8 @@
 
                     <ImageView
                         android:id="@+id/ic_drop_off_location"
-                        android:layout_width="@dimen/size_16"
-                        android:layout_height="@dimen/size_16"
+                        android:layout_width="@dimen/size_12"
+                        android:layout_height="@dimen/size_12"
                         android:src="@drawable/ic_now_location_red"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_dr_address"
                         app:layout_constraintStart_toStartOf="parent"
@@ -48,8 +48,8 @@
 
                     <ImageView
                         android:id="@+id/ic_pick_up_location"
-                        android:layout_width="@dimen/size_16"
-                        android:layout_height="@dimen/size_16"
+                        android:layout_width="@dimen/size_12"
+                        android:layout_height="@dimen/size_12"
                         android:src="@drawable/ic_now_location_blue"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_pu_address"
                         app:layout_constraintStart_toStartOf="parent"
@@ -66,8 +66,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/dot1"
-                            android:layout_width="@dimen/size_5"
-                            android:layout_height="@dimen/size_5"
+                            android:layout_width="@dimen/size_3"
+                            android:layout_height="@dimen/size_3"
                             android:backgroundTint="@color/text_color"
                             app:cardCornerRadius="@dimen/size_5"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -76,8 +76,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/dot2"
-                            android:layout_width="@dimen/size_5"
-                            android:layout_height="@dimen/size_5"
+                            android:layout_width="@dimen/size_3"
+                            android:layout_height="@dimen/size_3"
                             android:backgroundTint="@color/text_color"
                             app:cardCornerRadius="@dimen/size_5"
                             app:layout_constraintBottom_toTopOf="@id/dot3"
@@ -88,8 +88,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/dot3"
-                            android:layout_width="@dimen/size_5"
-                            android:layout_height="@dimen/size_5"
+                            android:layout_width="@dimen/size_3"
+                            android:layout_height="@dimen/size_3"
                             android:backgroundTint="@color/text_color"
                             app:cardCornerRadius="@dimen/size_5"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -125,7 +125,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/medium"
+                            android:fontFamily="@font/regular"
                             android:maxLines="1"
                             android:text="Nguyễn Duy Hải"
                             android:textColor="@color/grey"
@@ -147,7 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/medium"
+                            android:fontFamily="@font/regular"
                             android:maxLines="1"
                             android:text="0914103372"
                             android:textColor="@color/grey"
@@ -185,7 +185,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/medium"
+                            android:fontFamily="@font/regular"
                             android:maxLines="1"
                             android:text="Nguyễn Duy Hải"
                             android:textColor="@color/grey"
@@ -207,7 +207,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/medium"
+                            android:fontFamily="@font/regular"
                             android:maxLines="1"
                             android:text="0914103372"
                             android:textColor="@color/grey"
@@ -445,10 +445,9 @@
                 android:buttonTint="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/btn_voucher"
                 android:layout_marginTop="30dp"
-                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginStart="@dimen/size_10"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <!-- Checkbox 2 -->
             <CheckBox
                 android:id="@+id/checkbox2"
                 android:layout_width="wrap_content"
@@ -458,7 +457,6 @@
                 app:layout_constraintStart_toStartOf="@id/checkbox1"
                 android:layout_marginTop="12dp" />
 
-            <!-- Checkbox 3 -->
             <CheckBox
                 android:id="@+id/checkbox3"
                 android:layout_width="wrap_content"

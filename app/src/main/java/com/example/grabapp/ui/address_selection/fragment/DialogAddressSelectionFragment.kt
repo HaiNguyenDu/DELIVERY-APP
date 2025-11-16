@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -20,10 +21,12 @@ import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressAdapter
 import com.example.grabapp.ui.address_selection.adapter.AddressAdapterListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
 import org.maplibre.android.MapLibre
+import java.io.File
 
 class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
     private var _binding: DialogBottomAddressSelectionBinding? = null
@@ -57,15 +60,13 @@ class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
         setupSearchListener()
     }
 
-    fun setDismissListener(listener: () -> Unit): DialogAddressSelectionFragment {
-        onItemSelected = listener
-        return this
-    }
-
     private fun initView() {
         addressAdapter = AddressAdapter(mutableListOf(), object : AddressAdapterListener {
             override fun onClickItem(prediction: Prediction) {
-                viewModel.setAddress(prediction)
+                viewModel.setAddress(prediction) {
+                    onDestroyView()
+                    dismiss()
+                }
             }
         })
 
@@ -143,21 +144,11 @@ class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
         lifecycleScope.launch {
             viewModel.dropOffAddress.collect {
                 binding.edtDropOff.setText(it.getFormattedAddress())
-                if (viewModel.isGoDetail()) {
-                    dismiss()
-                    onDestroyView()
-                    onItemSelected.invoke()
-                }
             }
         }
         lifecycleScope.launch {
             viewModel.pickUpAddress.collect {
                 binding.edtPickUp.setText(it.getFormattedAddress())
-                if (viewModel.isGoDetail()) {
-                    dismiss()
-                    onDestroyView()
-                    onItemSelected.invoke()
-                }
             }
         }
     }
@@ -188,8 +179,8 @@ class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
     private fun setupFullHeight() {
         dialog?.setOnShowListener { dialogInterface ->
             val bottomSheet =
-                (dialogInterface as? com.google.android.material.bottomsheet.BottomSheetDialog)
-                    ?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                (dialogInterface as BottomSheetDialog)
+                    .findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.let {
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED

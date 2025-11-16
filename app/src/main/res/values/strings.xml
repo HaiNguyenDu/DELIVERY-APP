@@ -94,4 +94,13 @@
     <string name="giao_n_u">Giao đến đâu?</string>
     <string name="giao_den_dau">Giao đến đâu ?</string>
     <string name="default_detail_info">Thêm chi tiết món hàng</string>
+    <string name="mat_hang_nao_bi_cam">Mặt hàng nào bị cấm?</string>
+    <string name="package_type">Loại hàng hoá*</string>
+    <string name="clothes">Quần áo</string>
+    <string name="equipment">Điện tử</string>
+    <string name="fragile">Dễ vỡ</string>
+    <string name="other">Khác</string>
+    <string name="detail_package">Chi tiết món hàng</string>
+    <string name="description_detail_package">Thông tin này giúp tài xế sắp xếp và bảo quản hàng đúng cách.</string>
+    <string name="add_image">Thêm ảnh (Không bắt buộc)</string>
 </resources>

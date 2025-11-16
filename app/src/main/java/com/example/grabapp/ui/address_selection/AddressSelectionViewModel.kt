@@ -2,6 +2,7 @@ package com.example.grabapp.ui.address_selection
 
 import android.Manifest
 import android.app.Application
+import android.net.Uri
 import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.lifecycle.viewModelScope
@@ -9,10 +10,12 @@ import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.model.Address
 import com.example.grabapp.model.EditTextEnum
+import com.example.grabapp.model.PackageInfo
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.respone.Prediction
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
+import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter.Companion.FRAGMENT_DETAIL_ORDER
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -36,15 +39,25 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     val dropOffAddress: StateFlow<Address> = _dropOffAddress
     val _directionResponse = MutableStateFlow<GoongDirectionApiResponse?>(null)
     val directionResponse: StateFlow<GoongDirectionApiResponse?> = _directionResponse
-    private fun setFragment() {
-
-    }
 
     private var _edtLastTextEnumClicked = EditTextEnum.NOT_THING
+    private var _imageUri = MutableStateFlow<Uri?>(null)
+    val imageUri: StateFlow<Uri?> = _imageUri
 
+    private val _packageInfo = MutableStateFlow<PackageInfo?>(null)
+    val packageInfo: StateFlow<PackageInfo?> = _packageInfo
 
     init {
         repository = AddressRepository.getInstance(application)
+    }
+
+    fun setPackageInfo(packageInfo: PackageInfo) {
+        _packageInfo.value = packageInfo
+    }
+
+    fun setImageUri(uri: Uri?, onSuccess: (() -> Unit) = {}) {
+        _imageUri.value = uri
+        onSuccess()
     }
 
     fun setPage(index: Int) {
@@ -60,16 +73,31 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
         return _edtLastTextEnumClicked
     }
 
-    fun setAddress(prediction: Prediction) {
+    fun setAddress(prediction: Prediction, onSuccess: () -> Unit) {
         prediction.place_id?.let { id ->
             repository.getDetailAddressById(id, {
                 when (_lastFocusEdt) {
-                    EditTextEnum.DROP_OFF -> _dropOffAddress.value = it.result.toAddress()
-                    EditTextEnum.PICK_UP -> _pickUpAddress.value = it.result.toAddress()
+                    EditTextEnum.DROP_OFF -> {
+                        _dropOffAddress.value = it.result.toAddress()
+                        if (_pickUpAddress.value.address.isNotEmpty() && pagePosition.value == AddressSelectionPageAdapter.FRAGMENT_MAIN) {
+                            _pagePosition.value = FRAGMENT_DETAIL_ORDER
+                            onSuccess()
+                        }
+                    }
+
+                    EditTextEnum.PICK_UP -> {
+                        _pickUpAddress.value = it.result.toAddress()
+                        if (_dropOffAddress.value.address.isNotEmpty() && pagePosition.value == AddressSelectionPageAdapter.FRAGMENT_MAIN) {
+                            _pagePosition.value = FRAGMENT_DETAIL_ORDER
+                            onSuccess()
+                        }
+                    }
+
                     else -> {
 
                     }
                 }
+
             }, {
 
             })
@@ -112,11 +140,6 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
 
             })
         }
-    }
-
-    fun isGoDetail(): Boolean {
-        return dropOffAddress.value.address.isNotEmpty() && pickUpAddress.value.address.isNotEmpty() &&
-                pagePosition.value == AddressSelectionPageAdapter.FRAGMENT_MAIN
     }
 
     fun getDirection() {

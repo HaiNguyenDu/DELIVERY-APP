@@ -34,9 +34,7 @@ class MainOrderFragment : BaseFragment<FragmentMainOrderBinding, AddressSelectio
     override fun setUpClick() {
         binding.tvDropOffLocation.setOnClickListener {
             viewModel.setLastEdtTextClicked(EditTextEnum.NOT_THING)
-            DialogAddressSelectionFragment().setDismissListener{
-                viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_DETAIL_ORDER)
-            }.show(requireActivity().supportFragmentManager,"AddressSelection")
+            DialogAddressSelectionFragment().show(requireActivity().supportFragmentManager,"AddressSelection")
         }
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()

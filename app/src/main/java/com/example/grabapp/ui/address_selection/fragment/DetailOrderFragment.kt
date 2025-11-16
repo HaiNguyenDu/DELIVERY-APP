@@ -1,6 +1,5 @@
 package com.example.grabapp.ui.address_selection.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +41,12 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         binding.btnNext.setOnClickListener {
-              viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_CHECK_DIRECTION)
+            viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_CHECK_DIRECTION)
+        }
+        binding.tvDetailPackage.setOnClickListener {
+            DetailPackageFragment().show(
+                childFragmentManager, "Detail package"
+            )
         }
     }
 
@@ -68,6 +72,14 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
         lifecycleScope.launch {
             viewModel.dropOffAddress.collect {
                 binding.tvDrAddress.text = it.getFormattedAddress()
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.packageInfo.collect { packageInfo ->
+                packageInfo?.let {
+                    val detailText = packageInfo.toString()
+                    binding.tvDetailPackage.text = detailText
+                }
             }
         }
     }

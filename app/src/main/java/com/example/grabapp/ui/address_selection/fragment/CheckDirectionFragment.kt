@@ -61,7 +61,7 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
         }
         binding.btnNext.layoutParams.let {
             if (it is ViewGroup.MarginLayoutParams)
-                it.topMargin =
+                it.bottomMargin =
                     requireContext().resources.getDimension(R.dimen.size_20).toInt() + inset.bottom
         }
     }
