@@ -23,6 +23,7 @@ import com.example.grabapp.ui.home.MainActivity
 import com.example.grabapp.ui.login.LoginViewModel
 import com.example.grabapp.ui.login.adapter.LoginPageAdapter
 import com.example.grabapp.view.ExitConfirmDialog
+import com.example.grabapp.view.SnackBarCustom
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -161,9 +162,21 @@ class EnterNameFragment : BaseFragment<FragmentEnterNameBinding, LoginViewModel>
             hideKeyboard()
             CoroutineScope(Dispatchers.Main).launch {
                 viewModel.showLoading()
-                delay(5000)
+                delay(4000)
                 viewModel.hideLoading()
-                startActivity(Intent(context, MainActivity::class.java))
+                val userName = binding.textInput.text
+                if (userName == null || userName.length <= 3) {
+                    SnackBarCustom(
+                        view = binding.root,
+                        message = getString(R.string.entry_username_request),
+                        backgroundColor = context?.getColor(R.color.white)!!,
+                        textColor = context?.getColor(R.color.green)!!,
+                        bottomMarginDp = 100f,
+                    ).show()
+                }
+                else {
+                    startActivity(Intent(context, MainActivity::class.java))
+                }
             }
         }
     }

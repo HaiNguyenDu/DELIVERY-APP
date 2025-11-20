@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
+import com.example.grabapp.R
 import com.example.grabapp.extention.setPadding
 
 abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity() {
@@ -41,7 +42,7 @@ abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActiv
         val controller = WindowCompat.getInsetsController(window, window.decorView.rootView)
         controller.isAppearanceLightStatusBars = value
         controller.isAppearanceLightNavigationBars = value
-        window.decorView.setBackgroundColor("#F8F8F8".toColorInt())
+        window.decorView.setBackgroundColor(getColor(R.color.white))
     }
 
     open fun handleInsets(v: View, insets: Insets) {
