@@ -7,6 +7,7 @@ import com.example.grabapp.driver.register.data.DrivingLicenseData
 import com.example.grabapp.driver.register.data.EmergencyContactData
 import com.example.grabapp.driver.register.data.IdentificationCard
 import com.example.grabapp.driver.register.data.VehicleConfirmData
+import com.example.grabapp.driver.register.data.VehicleRegistrationData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -19,6 +20,7 @@ class RegisterViewModel(
     val emergencyContact = EmergencyContactData()
     val bankAccount = BankAccountData()
     val vehicleConfirm = VehicleConfirmData()
+    val vehicleRegistration = VehicleRegistrationData()
     
     private val _isIdentificationCardValid = MutableStateFlow(false)
     val isIdentificationCardValid: StateFlow<Boolean> = _isIdentificationCardValid
