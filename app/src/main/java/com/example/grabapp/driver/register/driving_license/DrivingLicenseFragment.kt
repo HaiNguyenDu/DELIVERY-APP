@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.Insets
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentDrivingLicenseBinding
@@ -43,7 +44,7 @@ class DrivingLicenseFragment : BaseFragment<FragmentDrivingLicenseBinding, Regis
         lazy { FragmentDrivingLicenseBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel(): Lazy<RegisterViewModel> =
-        lazy { RegisterViewModel(requireActivity().application) }
+        lazy { ViewModelProvider(requireActivity())[RegisterViewModel::class.java] }
 
     override fun setUpClick() {
         binding.apply {

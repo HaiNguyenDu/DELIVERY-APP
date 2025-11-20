@@ -77,6 +77,13 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 }
             }
         }
+        lifecycleScope.launch {
+            viewModel.isEmergencyContactValid.collect { isValid ->
+                if (currentStep == RegisterStep.EMERGENCY_CONTACT) {
+                    updateNextButtonState(isValid)
+                }
+            }
+        }
     }
 
     fun updateNextButtonState(isEnabled: Boolean) {
@@ -116,6 +123,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                         RegisterStep.DRIVING_LICENSE -> {
                             updateNextButtonState(viewModel.isDrivingLicenseValid.value)
                         }
+                        RegisterStep.EMERGENCY_CONTACT -> {
+                            updateNextButtonState(viewModel.isEmergencyContactValid.value)
+                        }
                         else -> {
                             updateNextButtonState(true)
                         }
@@ -149,6 +159,13 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 viewModel.updateDrivingLicenseValidation()
                 if (!viewModel.isDrivingLicenseValid.value) {
                     showDrivingLicenseValidationErrors()
+                    return
+                }
+            }
+            RegisterStep.EMERGENCY_CONTACT -> {
+                viewModel.updateEmergencyContactValidation()
+                if (!viewModel.isEmergencyContactValid.value) {
+                    showEmergencyContactValidationErrors()
                     return
                 }
             }
@@ -197,6 +214,23 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 missingFields.contains("Hạng bằng lái") -> "Vui lòng chọn hạng bằng lái"
                 missingFields.contains("Ngày cấp") -> "Vui lòng chọn ngày cấp"
                 missingFields.contains("Ngày cấp phải trước ngày hiện tại") -> "Ngày cấp phải trước ngày hiện tại"
+                else -> "Vui lòng điền đầy đủ thông tin"
+            }
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showEmergencyContactValidationErrors() {
+        val missingFields = viewModel.emergencyContact.getMissingFields()
+        if (missingFields.isNotEmpty()) {
+            val errorMessage = when {
+                missingFields.contains("Tên người liên hệ") -> "Vui lòng nhập tên người liên hệ"
+                missingFields.contains("Mối quan hệ") -> "Vui lòng chọn mối quan hệ"
+                missingFields.contains("Số điện thoại") -> "Vui lòng nhập số điện thoại"
+                missingFields.contains("Số điện thoại không được quá 10 ký tự") -> "Số điện thoại không được quá 10 ký tự"
+                missingFields.contains("Địa chỉ") -> "Vui lòng nhập địa chỉ"
+                missingFields.contains("Xã/Phường") -> "Vui lòng nhập xã/phường"
+                missingFields.contains("Tỉnh/Thành phố") -> "Vui lòng chọn tỉnh/thành phố"
                 else -> "Vui lòng điền đầy đủ thông tin"
             }
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
