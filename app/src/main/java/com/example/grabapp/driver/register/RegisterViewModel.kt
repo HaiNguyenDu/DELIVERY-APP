@@ -2,6 +2,7 @@ package com.example.grabapp.driver.register
 
 import android.app.Application
 import com.example.grabapp.base.BaseViewModel
+import com.example.grabapp.driver.register.data.BankAccountData
 import com.example.grabapp.driver.register.data.DrivingLicenseData
 import com.example.grabapp.driver.register.data.EmergencyContactData
 import com.example.grabapp.driver.register.data.IdentificationCard
@@ -15,6 +16,7 @@ class RegisterViewModel(
     val identificationCard = IdentificationCard()
     val drivingLicense = DrivingLicenseData()
     val emergencyContact = EmergencyContactData()
+    val bankAccount = BankAccountData()
     
     private val _isIdentificationCardValid = MutableStateFlow(false)
     val isIdentificationCardValid: StateFlow<Boolean> = _isIdentificationCardValid
@@ -24,6 +26,9 @@ class RegisterViewModel(
     
     private val _isEmergencyContactValid = MutableStateFlow(false)
     val isEmergencyContactValid: StateFlow<Boolean> = _isEmergencyContactValid
+    
+    private val _isBankAccountValid = MutableStateFlow(false)
+    val isBankAccountValid: StateFlow<Boolean> = _isBankAccountValid
     
     fun updateIdentificationCardValidation() {
         _isIdentificationCardValid.value = identificationCard.isFullyValid()
@@ -35,5 +40,9 @@ class RegisterViewModel(
     
     fun updateEmergencyContactValidation() {
         _isEmergencyContactValid.value = emergencyContact.isFullyValid()
+    }
+    
+    fun updateBankAccountValidation() {
+        _isBankAccountValid.value = bankAccount.isFullyValid()
     }
 }

@@ -84,6 +84,13 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 }
             }
         }
+        lifecycleScope.launch {
+            viewModel.isBankAccountValid.collect { isValid ->
+                if (currentStep == RegisterStep.BANK_ACCOUNT) {
+                    updateNextButtonState(isValid)
+                }
+            }
+        }
     }
 
     fun updateNextButtonState(isEnabled: Boolean) {
@@ -126,6 +133,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                         RegisterStep.EMERGENCY_CONTACT -> {
                             updateNextButtonState(viewModel.isEmergencyContactValid.value)
                         }
+                        RegisterStep.BANK_ACCOUNT -> {
+                            updateNextButtonState(viewModel.isBankAccountValid.value)
+                        }
                         else -> {
                             updateNextButtonState(true)
                         }
@@ -166,6 +176,13 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 viewModel.updateEmergencyContactValidation()
                 if (!viewModel.isEmergencyContactValid.value) {
                     showEmergencyContactValidationErrors()
+                    return
+                }
+            }
+            RegisterStep.BANK_ACCOUNT -> {
+                viewModel.updateBankAccountValidation()
+                if (!viewModel.isBankAccountValid.value) {
+                    showBankAccountValidationErrors()
                     return
                 }
             }
@@ -231,6 +248,22 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 missingFields.contains("Địa chỉ") -> "Vui lòng nhập địa chỉ"
                 missingFields.contains("Xã/Phường") -> "Vui lòng nhập xã/phường"
                 missingFields.contains("Tỉnh/Thành phố") -> "Vui lòng chọn tỉnh/thành phố"
+                else -> "Vui lòng điền đầy đủ thông tin"
+            }
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showBankAccountValidationErrors() {
+        val missingFields = viewModel.bankAccount.getMissingFields()
+        if (missingFields.isNotEmpty()) {
+            val errorMessage = when {
+                missingFields.contains("Tên tài khoản") -> "Vui lòng nhập tên tài khoản"
+                missingFields.contains("Tên tài khoản chỉ được chứa chữ cái") -> "Tên tài khoản chỉ được chứa chữ cái"
+                missingFields.contains("Số tài khoản") -> "Vui lòng nhập số tài khoản"
+                missingFields.contains("Số tài khoản phải là số và nhiều hơn 9 chữ số") -> "Số tài khoản phải là số và nhiều hơn 9 chữ số"
+                missingFields.contains("Tên ngân hàng") -> "Vui lòng chọn tên ngân hàng"
+                missingFields.contains("Xác nhận thông tin") -> "Vui lòng xác nhận thông tin tài khoản"
                 else -> "Vui lòng điền đầy đủ thông tin"
             }
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
