@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -49,7 +48,7 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
                             "${requireActivity().packageName}.provider",
                             photoFile
                         )
-                    ){
+                    ) {
                         binding.iv.setImageURI(viewModel.imageUri.value)
                         setUpBtnCamera(true)
                     }
@@ -128,52 +127,14 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
             false
         }
         binding.edtWeight.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                p0: CharSequence?,
-                p1: Int,
-                p2: Int,
-                p3: Int
-            ) {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                validateData()
             }
 
-            override fun onTextChanged(
-                p0: CharSequence?,
-                p1: Int,
-                p2: Int,
-                p3: Int
-            ) {
-                p0.toString().toIntOrNull()?.let {
-                    val background = AppCompatResources.getDrawable(
-                        requireContext(),
-                        if (it > 10) R.drawable.bg_edt_rounded_red else
-                            R.drawable.bg_edit_rounded
-                    )
-                    binding.edtWeight.setBackgroundDrawable(background)
-                }
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                val kg = p0.toString().toIntOrNull()
-                if (kg != null && kg <= 10) {
-                    binding.btnConfirm.alpha = 1f
-                    binding.btnConfirm.isEnabled = true
-                } else {
-                    binding.btnConfirm.alpha = 0.6f
-                    binding.btnConfirm.isEnabled = false
-                }
-            }
+            override fun afterTextChanged(p0: Editable?) {}
         })
-    }
-
-    private fun hideKeyboardAndClearFocus() {
-        val currentFocus = dialog?.currentFocus
-        if (currentFocus != null) {
-            val imm =
-                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
-            currentFocus.clearFocus()
-        }
     }
 
     private fun onChipItemClick(checkedIds: List<Int>, group: ChipGroup) {
@@ -189,6 +150,47 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
             Glide.with(binding.ivDelivery)
                 .load(imgId)
                 .into(binding.ivDelivery)
+
+            validateData()
+        }
+    }
+
+    private fun validateData() {
+        val selectedChipId = binding.chipGroupSize.checkedChipId
+        val maxWeight = when (selectedChipId) {
+            R.id.chip_s -> 5
+            R.id.chip_m -> 10
+            R.id.chip_l -> 15
+            R.id.chip_xl -> 20
+            else -> 5
+        }
+
+        val weightText = binding.edtWeight.text.toString()
+        val weight = weightText.toIntOrNull()
+        val isValid = weight != null && weight in 1..maxWeight
+
+        binding.tvErrorWeight.isVisible = !isValid
+        binding.tvErrorWeight.text = "Tối đa là $maxWeight kg"
+        val backgroundRes =
+            if (isValid || weightText.isEmpty()) R.drawable.bg_edit_rounded else R.drawable.bg_edt_rounded_red
+        binding.edtWeight.setBackgroundResource(backgroundRes)
+
+        if (isValid) {
+            binding.btnConfirm.alpha = 1f
+            binding.btnConfirm.isEnabled = true
+        } else {
+            binding.btnConfirm.alpha = 0.6f
+            binding.btnConfirm.isEnabled = false
+        }
+    }
+
+    private fun hideKeyboardAndClearFocus() {
+        val currentFocus = dialog?.currentFocus
+        if (currentFocus != null) {
+            val imm =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+            currentFocus.clearFocus()
         }
     }
 

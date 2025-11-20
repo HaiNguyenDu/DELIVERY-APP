@@ -235,4 +235,5 @@
     <string name="second_count">%1$ds</string>
     <string name="giao_gi_h_nh_ch_nh">Giao giờ hành chính</string>
     <string name="nh_n_tin">Nhắn tin</string>
+    <string name="entry_username_request">Tên người dùng tối thiểu là 4 ký tự</string>
 </resources>
