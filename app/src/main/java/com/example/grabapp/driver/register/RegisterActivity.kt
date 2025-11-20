@@ -70,6 +70,13 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 }
             }
         }
+        lifecycleScope.launch {
+            viewModel.isDrivingLicenseValid.collect { isValid ->
+                if (currentStep == RegisterStep.DRIVING_LICENSE) {
+                    updateNextButtonState(isValid)
+                }
+            }
+        }
     }
 
     fun updateNextButtonState(isEnabled: Boolean) {
@@ -102,10 +109,16 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     currentStep = RegisterStep.entries[position]
-                    if (currentStep == RegisterStep.IDENTIFICATION_CARD) {
-                        updateNextButtonState(viewModel.isIdentificationCardValid.value)
-                    } else {
-                        updateNextButtonState(true)
+                    when (currentStep) {
+                        RegisterStep.IDENTIFICATION_CARD -> {
+                            updateNextButtonState(viewModel.isIdentificationCardValid.value)
+                        }
+                        RegisterStep.DRIVING_LICENSE -> {
+                            updateNextButtonState(viewModel.isDrivingLicenseValid.value)
+                        }
+                        else -> {
+                            updateNextButtonState(true)
+                        }
                     }
                 }
             })
@@ -124,12 +137,22 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
     }
 
     private fun handleNextClick() {
-        if (currentStep == RegisterStep.IDENTIFICATION_CARD) {
-            viewModel.updateIdentificationCardValidation()
-            if (!viewModel.isIdentificationCardValid.value) {
-                showValidationErrors()
-                return
+        when (currentStep) {
+            RegisterStep.IDENTIFICATION_CARD -> {
+                viewModel.updateIdentificationCardValidation()
+                if (!viewModel.isIdentificationCardValid.value) {
+                    showIdentificationCardValidationErrors()
+                    return
+                }
             }
+            RegisterStep.DRIVING_LICENSE -> {
+                viewModel.updateDrivingLicenseValidation()
+                if (!viewModel.isDrivingLicenseValid.value) {
+                    showDrivingLicenseValidationErrors()
+                    return
+                }
+            }
+            else -> {}
         }
 
         if (currentStep.isLastStep()) {
@@ -140,7 +163,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         }
     }
 
-    private fun showValidationErrors() {
+    private fun showIdentificationCardValidationErrors() {
         val missingFields = viewModel.identificationCard.getMissingFields()
         if (missingFields.isNotEmpty()) {
             val errorMessage = when {
@@ -158,6 +181,22 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 missingFields.contains("Ngày hết hạn phải sau ngày cấp") -> "Ngày hết hạn phải sau ngày cấp"
                 missingFields.contains("Tỉnh") -> "Vui lòng chọn tỉnh"
                 missingFields.contains("Giới tính") -> "Vui lòng chọn giới tính"
+                else -> "Vui lòng điền đầy đủ thông tin"
+            }
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showDrivingLicenseValidationErrors() {
+        val missingFields = viewModel.drivingLicense.getMissingFields()
+        if (missingFields.isNotEmpty()) {
+            val errorMessage = when {
+                missingFields.contains("Ảnh mặt trước") -> "Vui lòng upload ảnh mặt trước"
+                missingFields.contains("Ảnh mặt sau") -> "Vui lòng upload ảnh mặt sau"
+                missingFields.contains("Số bằng lái xe") -> "Vui lòng nhập số bằng lái xe (chỉ số hoặc chữ in hoa, tối đa 12 ký tự)"
+                missingFields.contains("Hạng bằng lái") -> "Vui lòng chọn hạng bằng lái"
+                missingFields.contains("Ngày cấp") -> "Vui lòng chọn ngày cấp"
+                missingFields.contains("Ngày cấp phải trước ngày hiện tại") -> "Ngày cấp phải trước ngày hiện tại"
                 else -> "Vui lòng điền đầy đủ thông tin"
             }
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
