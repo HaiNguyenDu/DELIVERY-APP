@@ -45,7 +45,7 @@ class ActivityUser : BaseActivity<ActivityUserBinding, NoViewModel>() {
     private fun observeView() {
         binding.apply {
             tvSwitchToDriver.onClickWithScale {
-                startActivity<TransportationActivity> {
+                startActivity<DriverHomeActivity> {
                     /*no-op*/
                 }
             }
