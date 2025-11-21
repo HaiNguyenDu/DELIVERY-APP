@@ -162,6 +162,9 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         binding.tvDeliveryComplete.onClickWithScale {
             moveToNextState()
         }
+        binding.ivLocatedFixed.onClickWithScale {
+            moveCameraToStartPosition()
+        }
         binding.mapView.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN,
@@ -396,6 +399,13 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             .color(getColor(R.color.main_blue))
 
         routePolyline = map.addPolyline(lineOptions)
+    }
+
+    private fun moveCameraToStartPosition() {
+        positioning?.let { startAddress ->
+            val startLatLng = LatLng(startAddress.coordinates.lat, startAddress.coordinates.lng)
+            mapLibreMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(startLatLng, 15.0))
+        }
     }
 
     private fun updateMapForState() {

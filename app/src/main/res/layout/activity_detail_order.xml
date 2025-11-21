@@ -138,6 +138,16 @@
                 app:maplibre_uiTiltGestures="true"
                 app:maplibre_uiZoomGestures="true" />
 
+            <ImageView
+                android:id="@+id/ivLocatedFixed"
+                android:layout_width="@dimen/size_28"
+                android:layout_height="@dimen/size_28"
+                android:layout_margin="@dimen/size_16"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_locate_fixed"
+                app:layout_constraintBottom_toBottomOf="@id/mapView"
+                app:layout_constraintEnd_toEndOf="@id/mapView" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctlOrderProgress"
                 android:layout_width="match_parent"
