@@ -1,6 +1,7 @@
 package com.example.grabapp.driver.order_detail
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -18,6 +19,7 @@ import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.model.Address
 import com.example.grabapp.model.Order
 import android.os.Parcelable
+import android.view.MotionEvent
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.respone.Coordinates
 import kotlinx.coroutines.launch
@@ -141,9 +143,25 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupClickListeners() {
         binding.tvDeliveryComplete.onClickWithScale {
             moveToNextState()
+        }
+        binding.mapView.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN,
+                MotionEvent.ACTION_MOVE,
+                MotionEvent.ACTION_POINTER_DOWN -> {
+                    binding.nestedScrollView.requestDisallowInterceptTouchEvent(true)
+                }
+
+                MotionEvent.ACTION_UP,
+                MotionEvent.ACTION_CANCEL -> {
+                    binding.nestedScrollView.requestDisallowInterceptTouchEvent(false)
+                }
+            }
+            false
         }
     }
 
