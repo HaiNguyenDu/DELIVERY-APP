@@ -15,6 +15,7 @@ import com.example.grabapp.driver.register.adapter.RegisterPageAdapter
 import com.example.grabapp.driver.register.data.RegisterStep
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
+import com.example.grabapp.ui.user.ActivityUser
 import kotlinx.coroutines.launch
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>() {
@@ -57,7 +58,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             }
 
             toolbar.setNavigationOnClickListener {
-                onBackPressedDispatcher.onBackPressed()
+                handleToolbarNavigationClick()
             }
         }
     }
@@ -98,6 +99,12 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         binding.tvNext.isEnabled = isEnabled
     }
 
+    private fun updateUIForCurrentStep() {
+        val isVehicleRegistration = currentStep == RegisterStep.VEHICLE_INSURANCE
+        binding.indicator.visibility = if (isVehicleRegistration) View.GONE else View.VISIBLE
+        binding.llAction.visibility = if (isVehicleRegistration) View.GONE else View.VISIBLE
+    }
+
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
@@ -106,6 +113,14 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             title = ""
         }
         binding.toolbar.setNavigationOnClickListener {
+            handleToolbarNavigationClick()
+        }
+    }
+
+    private fun handleToolbarNavigationClick() {
+        if (currentStep == RegisterStep.VEHICLE_INSURANCE) {
+            startActivity<ActivityUser>()
+        } else {
             onBackPressedDispatcher.onBackPressed()
         }
     }
@@ -123,6 +138,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     currentStep = RegisterStep.entries[position]
+                    updateUIForCurrentStep()
                     when (currentStep) {
                         RegisterStep.IDENTIFICATION_CARD -> {
                             updateNextButtonState(viewModel.isIdentificationCardValid.value)
@@ -155,9 +171,11 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         } else {
             val savedStepOrdinal =
                 savedInstanceState.getInt(CURRENT_STEP, RegisterStep.AVATAR.ordinal)
-            currentStep = RegisterStep.entries.getOrElse(savedStepOrdinal) { RegisterStep.AVATAR }
+            currentStep =
+                RegisterStep.entries.getOrElse(savedStepOrdinal) { RegisterStep.AVATAR }
             binding.viewPager2.setCurrentItem(currentStep.ordinal, false)
         }
+        updateUIForCurrentStep()
     }
 
     private fun handleNextClick() {

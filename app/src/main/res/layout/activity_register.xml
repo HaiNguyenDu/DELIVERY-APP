@@ -33,11 +33,11 @@
         <ImageView
             android:layout_width="@dimen/size_24"
             android:layout_height="@dimen/size_24"
-            android:visibility="gone"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/size_12"
             android:contentDescription="@null"
             android:src="@drawable/ic_logout"
+            android:visibility="gone"
             app:tint="@color/red" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_12"
         android:layout_marginBottom="@dimen/size_20"
+        android:visibility="visible"
         app:dotsColor="#2C000000"
         app:dotsSize="@dimen/size_8"
         app:dotsSpacing="@dimen/size_4"
@@ -70,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_12"
         android:layout_marginBottom="@dimen/size_36"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
