@@ -1,15 +1,34 @@
 package com.example.grabapp.driver.order_detail
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
+import androidx.core.graphics.scale
+import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
+import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.databinding.ActivityDetailOrderBinding
 import com.example.grabapp.extention.onClickWithScale
+import com.example.grabapp.model.Address
 import com.example.grabapp.model.Order
 import android.os.Parcelable
 import com.example.grabapp.model.OrderState
+import com.example.grabapp.respone.Coordinates
+import kotlinx.coroutines.launch
+import com.example.grabapp.respone.GoongDirectionApiResponse
+import org.maplibre.android.annotations.IconFactory
+import org.maplibre.android.annotations.MarkerOptions
+import org.maplibre.android.annotations.PolylineOptions
+import org.maplibre.android.camera.CameraUpdateFactory
+import org.maplibre.android.geometry.LatLng
+import org.maplibre.android.geometry.LatLngBounds
+import org.maplibre.android.maps.MapLibreMap
 
 class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetailViewModel>() {
 
@@ -20,6 +39,35 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     private lateinit var order: Order
     private var currentState: OrderState = OrderState.RECEIVED_ORDER
 
+    private var positioning: Address? = null
+
+    private val pickUpAddress: Address = Address(
+        coordinates = Coordinates(16.07367333700006, 108.14992938100005),
+        name = "DUT",
+        address = "Đại học Bách khoa Đà Nẵng, 54 Nguyễn Lương Bằng, Hòa Khánh Bắc, Liên Chiểu, Đà Nẵng"
+    )
+
+    private val dropOffAddress: Address = Address(
+        coordinates = Coordinates(16.07079150000004, 108.14888825800006),
+        name = "Chợ Hòa Khánh",
+        address = "Chợ Hòa Khánh, Âu Cơ, Hòa Khánh Bắc, Liên Chiểu, Đà Nẵng"
+    )
+
+    private var mapLibreMap: MapLibreMap? = null
+    private lateinit var repository: AddressRepository
+    private var directionResponse: GoongDirectionApiResponse? = null
+
+    private val locationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val fineLocationPermission = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+        val coarseLocationPermission =
+            permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+        if (fineLocationPermission && coarseLocationPermission) {
+            getCurrentLocation()
+        }
+    }
+
     override fun getLazyBinding(): Lazy<ActivityDetailOrderBinding> =
         lazy { ActivityDetailOrderBinding.inflate(layoutInflater) }
 
@@ -28,11 +76,69 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        repository = AddressRepository.getInstance(this)
         setupClickListeners()
         getOrderFromIntent()
         setupToolbar()
         setupOrderInformation()
         setupStateManagement()
+        requestLocationPermission()
+    }
+
+    private fun requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            locationPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        } else {
+            getCurrentLocation()
+        }
+    }
+
+    private fun getCurrentLocation() {
+        lifecycleScope.launch {
+            try {
+                repository.getCurrentLocation()?.let { location ->
+                    positioning = Address(
+                        coordinates = Coordinates(location.latitude, location.longitude),
+                        name = "Vị trí hiện tại",
+                        address = "Vị trí hiện tại của tài xế"
+                    )
+                    getDirection()
+                }
+            } catch (e: Exception) {
+            } finally {
+                setUpMap()
+            }
+        }
+    }
+
+    private fun getDirection() {
+        positioning?.let { startAddress ->
+            repository.getDirectionData(
+                dropOff = pickUpAddress,
+                pickUp = startAddress,
+                onSuccess = { response ->
+                    directionResponse = response
+                    mapLibreMap?.let { map ->
+                        drawRoute(map, response)
+                    }
+                },
+                onError = { error ->
+                }
+            )
+        }
     }
 
     private fun setupClickListeners() {
@@ -154,7 +260,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                     tvDeliveryComplete.text = getString(R.string.chi_ti_t_n_h_ng)
                 }
             }
-            
+
             OrderState.CANCELED -> {
             }
         }
@@ -162,5 +268,153 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
     override fun handleInsets(v: View, insets: Insets) {
         binding.toolbar.setPadding(0, insets.top, 0, 0)
+    }
+
+    private fun setUpMap() {
+        binding.mapView.getMapAsync { map ->
+            mapLibreMap = map
+            map.setStyle(
+                "https://tiles.goong.io/assets/goong_map_web.json?api_key=${AddressRepository.MAP_KEY}"
+            ) {
+                val iconFactory = IconFactory.getInstance(this)
+
+                val driverBitmap =
+                    BitmapFactory.decodeResource(resources, R.drawable.ic_driver_delivering)
+                        .scale(80, 80, false)
+                val driverIcon = iconFactory.fromBitmap(driverBitmap)
+
+                val endBitmap =
+                    BitmapFactory.decodeResource(resources, R.drawable.ic_map)
+                        .scale(80, 80, false)
+                val endIcon = iconFactory.fromBitmap(endBitmap)
+
+                val startLatLng = positioning?.let {
+                    LatLng(it.coordinates.lat, it.coordinates.lng)
+                }
+                val endLatLng = LatLng(pickUpAddress.coordinates.lat, pickUpAddress.coordinates.lng)
+
+                if (startLatLng != null) {
+                    map.addMarker(
+                        MarkerOptions().position(startLatLng).icon(driverIcon)
+                            .title("Vị trí hiện tại")
+                    )
+                }
+                map.addMarker(
+                    MarkerOptions().position(endLatLng).icon(endIcon).title("Điểm lấy hàng")
+                )
+
+                if (startLatLng != null) {
+                    val bounds = LatLngBounds.Builder()
+                        .include(startLatLng)
+                        .include(endLatLng)
+                        .build()
+                    binding.mapView.post {
+                        try {
+                            val padding = 150
+
+                            val cameraUpdate =
+                                CameraUpdateFactory.newLatLngBounds(bounds, padding)
+                            map.animateCamera(cameraUpdate)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLng, 12.0))
+                        }
+                    }
+
+                } else {
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(endLatLng, 15.0))
+                }
+
+                directionResponse?.let { response ->
+                    drawRoute(map, response)
+                }
+            }
+        }
+    }
+
+    private fun drawRoute(map: MapLibreMap, response: GoongDirectionApiResponse) {
+        val route = response.routes?.firstOrNull() ?: return
+        val encodedPolyline = route.overview_polyline?.points ?: return
+
+        val decodedPath = decodePolyline(encodedPolyline)
+
+        val lineOptions = PolylineOptions()
+            .addAll(decodedPath)
+            .width(6f)
+            .color(getColor(R.color.main_blue))
+
+        map.addPolyline(lineOptions)
+    }
+
+    private fun decodePolyline(encoded: String): List<LatLng> {
+        val poly = ArrayList<LatLng>()
+        var index = 0
+        val len = encoded.length
+        var lat = 0
+        var lng = 0
+
+        while (index < len) {
+            var b: Int
+            var shift = 0
+            var result = 0
+            do {
+                b = encoded[index++].code - 63
+                result = result or ((b and 0x1f) shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlat = if ((result and 1) != 0) (result shr 1).inv() else (result shr 1)
+            lat += dlat
+
+            shift = 0
+            result = 0
+            do {
+                b = encoded[index++].code - 63
+                result = result or ((b and 0x1f) shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlng = if ((result and 1) != 0) (result shr 1).inv() else (result shr 1)
+            lng += dlng
+
+            val latLng = LatLng(lat.toDouble() / 1E5, lng.toDouble() / 1E5)
+            poly.add(latLng)
+        }
+
+        return poly
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.mapView.onResume()
+    }
+
+    override fun onPause() {
+        binding.mapView.onPause()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        binding.mapView.onStop()
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        binding.mapView.onDestroy()
+        super.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        binding.mapView.onLowMemory()
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        binding.mapView.onSaveInstanceState(outState)
     }
 }

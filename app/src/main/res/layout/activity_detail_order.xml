@@ -110,16 +110,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/ivMap"
+            <org.maplibre.android.maps.MapView
+                android:id="@+id/mapView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_300"
                 android:layout_marginHorizontal="@dimen/size_16"
                 android:layout_marginTop="@dimen/size_16"
-                android:background="@color/black"
-                android:contentDescription="@null"
-                android:visibility="visible"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:maplibre_apiBaseUri="https://api.maplibre.org"
+                app:maplibre_cameraBearing="0.0"
+                app:maplibre_cameraPitchMax="90.0"
+                app:maplibre_cameraPitchMin="0.0"
+                app:maplibre_cameraTargetLat="16.07367333700006"
+                app:maplibre_cameraTargetLng="108.14992938100005"
+                app:maplibre_cameraTilt="0.0"
+                app:maplibre_cameraZoom="15.0"
+                app:maplibre_cameraZoomMax="26.0"
+                app:maplibre_cameraZoomMin="2.0"
+                app:maplibre_localIdeographFontFamily="Droid Sans"
+                app:maplibre_uiCompass="true"
+                app:maplibre_uiCompassFadeFacingNorth="true"
+                app:maplibre_uiCompassGravity="top|end"
+                app:maplibre_uiDoubleTapGestures="true"
+                app:maplibre_uiHorizontalScrollGestures="true"
+                app:maplibre_uiRotateGestures="true"
+                app:maplibre_uiScrollGestures="true"
+                app:maplibre_uiTiltGestures="true"
+                app:maplibre_uiZoomGestures="true" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctlOrderProgress"
@@ -130,7 +147,7 @@
                 android:background="@drawable/bg_border_stroke_white_12_80_per"
                 android:padding="@dimen/size_16"
                 android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@id/ivMap">
+                app:layout_constraintTop_toBottomOf="@id/mapView">
 
                 <TextView
                     android:id="@+id/textView2"

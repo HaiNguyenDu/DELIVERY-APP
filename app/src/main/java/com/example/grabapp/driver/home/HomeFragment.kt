@@ -64,7 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
 
     private fun startCountdownToShowDialog() {
         countdownJob = lifecycleScope.launch {
-            delay(5000)
+            delay(2000)
             if (connectionState == ConnectionState.CONNECTED) {
                 showNewOrderDialog()
             }
