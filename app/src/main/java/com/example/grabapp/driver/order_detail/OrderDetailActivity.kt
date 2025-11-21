@@ -25,7 +25,9 @@ import com.example.grabapp.respone.Coordinates
 import kotlinx.coroutines.launch
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import org.maplibre.android.annotations.IconFactory
+import org.maplibre.android.annotations.Marker
 import org.maplibre.android.annotations.MarkerOptions
+import org.maplibre.android.annotations.Polyline
 import org.maplibre.android.annotations.PolylineOptions
 import org.maplibre.android.camera.CameraUpdateFactory
 import org.maplibre.android.geometry.LatLng
@@ -58,6 +60,10 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     private var mapLibreMap: MapLibreMap? = null
     private lateinit var repository: AddressRepository
     private var directionResponse: GoongDirectionApiResponse? = null
+
+    private var startMarker: Marker? = null
+    private var endMarker: Marker? = null
+    private var routePolyline: Polyline? = null
 
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -127,9 +133,17 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     }
 
     private fun getDirection() {
+        getDirectionToAddress(pickUpAddress)
+    }
+
+    private fun getDirectionToDropOff() {
+        getDirectionToAddress(dropOffAddress)
+    }
+
+    private fun getDirectionToAddress(destination: Address) {
         positioning?.let { startAddress ->
             repository.getDirectionData(
-                dropOff = pickUpAddress,
+                dropOff = destination,
                 pickUp = startAddress,
                 onSuccess = { response ->
                     directionResponse = response
@@ -253,6 +267,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
                     tvDeliveryComplete.text = getString(R.string.ang_giao_h_ng)
                 }
+                updateMapForState()
             }
 
             OrderState.DELIVERING -> {
@@ -309,27 +324,45 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                 val startLatLng = positioning?.let {
                     LatLng(it.coordinates.lat, it.coordinates.lng)
                 }
-                val endLatLng = LatLng(pickUpAddress.coordinates.lat, pickUpAddress.coordinates.lng)
+
+                val destinationAddress = if (currentState >= OrderState.RECEIVED_GOODS) {
+                    dropOffAddress
+                } else {
+                    pickUpAddress
+                }
+                val destinationLatLng = LatLng(
+                    destinationAddress.coordinates.lat,
+                    destinationAddress.coordinates.lng
+                )
+                val destinationTitle = if (currentState >= OrderState.RECEIVED_GOODS) {
+                    "Điểm giao hàng"
+                } else {
+                    "Điểm lấy hàng"
+                }
+
+                startMarker?.remove()
+                endMarker?.remove()
 
                 if (startLatLng != null) {
-                    map.addMarker(
+                    startMarker = map.addMarker(
                         MarkerOptions().position(startLatLng).icon(driverIcon)
                             .title("Vị trí hiện tại")
                     )
                 }
-                map.addMarker(
-                    MarkerOptions().position(endLatLng).icon(endIcon).title("Điểm lấy hàng")
+
+                endMarker = map.addMarker(
+                    MarkerOptions().position(destinationLatLng).icon(endIcon)
+                        .title(destinationTitle)
                 )
 
                 if (startLatLng != null) {
                     val bounds = LatLngBounds.Builder()
                         .include(startLatLng)
-                        .include(endLatLng)
+                        .include(destinationLatLng)
                         .build()
                     binding.mapView.post {
                         try {
                             val padding = 150
-
                             val cameraUpdate =
                                 CameraUpdateFactory.newLatLngBounds(bounds, padding)
                             map.animateCamera(cameraUpdate)
@@ -338,9 +371,8 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLng, 12.0))
                         }
                     }
-
                 } else {
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(endLatLng, 15.0))
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(destinationLatLng, 15.0))
                 }
 
                 directionResponse?.let { response ->
@@ -351,6 +383,8 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     }
 
     private fun drawRoute(map: MapLibreMap, response: GoongDirectionApiResponse) {
+        routePolyline?.remove()
+
         val route = response.routes?.firstOrNull() ?: return
         val encodedPolyline = route.overview_polyline?.points ?: return
 
@@ -361,7 +395,65 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             .width(6f)
             .color(getColor(R.color.main_blue))
 
-        map.addPolyline(lineOptions)
+        routePolyline = map.addPolyline(lineOptions)
+    }
+
+    private fun updateMapForState() {
+        mapLibreMap?.let { map ->
+            val destinationAddress = if (currentState >= OrderState.RECEIVED_GOODS) {
+                dropOffAddress
+            } else {
+                pickUpAddress
+            }
+
+            val startLatLng = positioning?.let {
+                LatLng(it.coordinates.lat, it.coordinates.lng)
+            } ?: return
+
+            val destinationLatLng = LatLng(
+                destinationAddress.coordinates.lat,
+                destinationAddress.coordinates.lng
+            )
+
+            endMarker?.remove()
+
+            val iconFactory = IconFactory.getInstance(this)
+            val endBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_map)
+                .scale(80, 80, false)
+            val endIcon = iconFactory.fromBitmap(endBitmap)
+
+            val destinationTitle = if (currentState >= OrderState.RECEIVED_GOODS) {
+                "Điểm giao hàng"
+            } else {
+                "Điểm lấy hàng"
+            }
+
+            endMarker = map.addMarker(
+                MarkerOptions().position(destinationLatLng).icon(endIcon).title(destinationTitle)
+            )
+
+            val bounds = LatLngBounds.Builder()
+                .include(startLatLng)
+                .include(destinationLatLng)
+                .build()
+
+            binding.mapView.post {
+                try {
+                    val padding = 150
+                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+                    map.animateCamera(cameraUpdate)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLng, 12.0))
+                }
+            }
+
+            if (currentState >= OrderState.RECEIVED_GOODS) {
+                getDirectionToDropOff()
+            } else {
+                getDirection()
+            }
+        }
     }
 
     private fun decodePolyline(encoded: String): List<LatLng> {
