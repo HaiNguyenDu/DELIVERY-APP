@@ -33,6 +33,7 @@
         <ImageView
             android:layout_width="@dimen/size_24"
             android:layout_height="@dimen/size_24"
+            android:visibility="gone"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/size_12"
             android:contentDescription="@null"

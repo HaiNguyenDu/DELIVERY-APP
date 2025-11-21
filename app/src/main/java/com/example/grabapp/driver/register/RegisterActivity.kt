@@ -127,15 +127,19 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                         RegisterStep.IDENTIFICATION_CARD -> {
                             updateNextButtonState(viewModel.isIdentificationCardValid.value)
                         }
+
                         RegisterStep.DRIVING_LICENSE -> {
                             updateNextButtonState(viewModel.isDrivingLicenseValid.value)
                         }
+
                         RegisterStep.EMERGENCY_CONTACT -> {
                             updateNextButtonState(viewModel.isEmergencyContactValid.value)
                         }
+
                         RegisterStep.BANK_ACCOUNT -> {
                             updateNextButtonState(viewModel.isBankAccountValid.value)
                         }
+
                         else -> {
                             updateNextButtonState(true)
                         }
@@ -165,6 +169,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     return
                 }
             }
+
             RegisterStep.DRIVING_LICENSE -> {
                 viewModel.updateDrivingLicenseValidation()
                 if (!viewModel.isDrivingLicenseValid.value) {
@@ -172,6 +177,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     return
                 }
             }
+
             RegisterStep.EMERGENCY_CONTACT -> {
                 viewModel.updateEmergencyContactValidation()
                 if (!viewModel.isEmergencyContactValid.value) {
@@ -179,6 +185,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     return
                 }
             }
+
             RegisterStep.BANK_ACCOUNT -> {
                 viewModel.updateBankAccountValidation()
                 if (!viewModel.isBankAccountValid.value) {
@@ -186,6 +193,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     return
                 }
             }
+
             else -> {}
         }
 
