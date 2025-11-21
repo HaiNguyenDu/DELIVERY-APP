@@ -6,9 +6,6 @@ import androidx.core.graphics.Insets
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityUserBinding
-import com.example.grabapp.driver.home.DriverHomeActivity
-import com.example.grabapp.extention.onClickWithScale
-import com.example.grabapp.extention.startActivity
 import com.example.grabapp.ui.splash.NoViewModel
 import com.example.grabapp.view.DialogEditUser
 import com.example.grabapp.view.DialogEditUserListener
@@ -43,11 +40,6 @@ class ActivityUser : BaseActivity<ActivityUserBinding, NoViewModel>() {
 
     private fun observeView() {
         binding.apply {
-            tvSwitchToDriver.onClickWithScale {
-                startActivity<DriverHomeActivity> {
-                    /*no-op*/
-                }
-            }
             btnBack.setOnClickListener {
                 finish()
             }

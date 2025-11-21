@@ -7,165 +7,26 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.home.MainActivity">
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        app:shimmer_base_alpha="1"
-        app:layout_constraintBaseline_toTopOf="parent"
-        android:layout_height="wrap_content">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_header"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_green"
-        android:layout_marginTop="-10dp"
-        android:paddingHorizontal="@dimen/size_20"
-        android:paddingVertical="10dp"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv_hello"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_20"
-            android:fontFamily="@font/regular"
-            android:text="Xin Chào"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/medium"
-            android:text="@string/nguy_n_duy_h_i"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_16"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_hello" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_button_white"
-            android:drawableStart="@drawable/ic_search_black"
-            android:drawablePadding="@dimen/size_20"
-            android:fontFamily="@font/regular"
-            android:hint="@string/tra_c_u_b_ng_m_v_n_n"
-            android:maxLines="1"
-            android:paddingHorizontal="@dimen/size_20"
-            android:textSize="@dimen/font_16"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username" />
-
-        <TextView
-            android:id="@+id/tv_ship_now"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
-            android:text="Giao Hàng Ngay"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt" />
-
-        <TextView
-            android:id="@+id/tv_vourcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size_60"
-            android:fontFamily="@font/regular"
-            android:maxWidth="180dp"
-            android:text="Nhận ngay hàng ngàn vourcher mỗi ngày"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_12"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_ship_now" />
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_green_car"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_ship_now" />
-
-        <FrameLayout
-            android:id="@+id/btn_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_circle_white_opacity"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_username"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_hello">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_user" />
-        </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.facebook.shimmer.ShimmerFrameLayout>
-    <LinearLayout
-        android:id="@+id/btn_shipping"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:elevation="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shimmer"
-        app:layout_constraintEnd_toStartOf="@+id/btn_voucher"
-        android:layout_marginStart="@dimen/size_20"
-        android:layout_marginTop="@dimen/size_20"
-
-        android:background="@drawable/bg_button_green_main_screen"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_width="@dimen/size_24"
-            android:layout_height="@dimen/size_24"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_car" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/medium"
-            android:text="Giao hàng"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_14" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/btn_voucher"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_shipping"
-        app:layout_constraintTop_toBottomOf="@id/shimmer"
-        android:layout_marginStart="@dimen/size_20"
-        android:layout_marginTop="@dimen/size_20"
-        android:elevation="8dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/bg_button_light_white"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_width="@dimen/size_24"
-            android:layout_height="@dimen/size_24"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_voucher" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/medium"
-            android:text="Voucher"
-            android:textColor="@color/dark_green"
-            android:textSize="@dimen/font_14" />
-    </LinearLayout>
+        android:background="@color/white"
+        android:elevation="@dimen/_2dp"
+        app:tabIndicatorHeight="0dp"
+        app:tabIndicatorColor="@color/black"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/dark_green"
+        app:tabTextAppearance="@style/MainTextTabItem"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabIconTint="@color/nav_icon_color"
+        app:tabTextColor="@color/black" />
 </androidx.constraintlayout.widget.ConstraintLayout>

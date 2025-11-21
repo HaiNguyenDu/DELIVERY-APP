@@ -1,240 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_history"
-    tools:context=".driver.home.history.HistoryFragment">
-
-    <View
-        android:id="@+id/emptyView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="-24dp"
-        android:background="@drawable/bg_gradient_green_no_border"
-        app:layout_constraintBottom_toBottomOf="@id/textView2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_24"
-        android:layout_marginTop="@dimen/size_24"
-        android:layout_weight="1"
+        android:textSize="@dimen/font_24"
+        android:text="Hoạt động"
         android:fontFamily="@font/bold"
-        android:text="@string/l_ch_s_n_h_ng"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_22"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/size_20"
+        />
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_recent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_24"
-        android:layout_marginTop="@dimen/size_8"
-        android:fontFamily="@font/regular"
-        android:gravity="start"
-        android:text="@string/xem_l_i_c_c_chuy_n_giao"
-        android:textColor="@color/grey_93"
         android:textSize="@dimen/font_16"
-        app:layout_constraintTop_toBottomOf="@id/textView1" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ctlAnalyst"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_16"
-        android:background="@drawable/bg_border_bottom_white_16"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/size_18"
-        app:layout_constraintTop_toBottomOf="@id/emptyView">
-
-        <LinearLayout
-            android:id="@+id/llTotalOrders"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/emptyView1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tvTotalOrders"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/bold"
-                android:text="@string/_3"
-                android:textSize="@dimen/font_24" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:text="@string/t_ng_n"
-                android:textSize="@dimen/font_13" />
-        </LinearLayout>
-
-        <View
-            android:id="@+id/emptyView1"
-            android:layout_width="@dimen/size_1"
-            android:layout_height="0dp"
-            android:background="@color/grey_46"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/llCompletedOrders"
-            app:layout_constraintStart_toEndOf="@id/llTotalOrders"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/llCompletedOrders"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/emptyView2"
-            app:layout_constraintStart_toEndOf="@id/emptyView1"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tvCompletedOrders"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/bold"
-                android:text="@string/_3"
-                android:textColor="@color/green_36"
-                android:textSize="@dimen/font_24" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:text="@string/ho_n_th_nh"
-                android:textSize="@dimen/font_13" />
-        </LinearLayout>
-
-        <View
-            android:id="@+id/emptyView2"
-            android:layout_width="@dimen/size_1"
-            android:layout_height="0dp"
-            android:background="@color/grey_46"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/llIncome"
-            app:layout_constraintStart_toEndOf="@id/llCompletedOrders"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/llIncome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/emptyView2"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tvIncome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/bold"
-                android:text="@string/_75k"
-                android:textColor="@color/azure_53"
-                android:textSize="@dimen/font_24" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:text="@string/income"
-                android:textSize="@dimen/font_13" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-        android:id="@+id/llTab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_16"
-        android:layout_marginTop="@dimen/size_16"
-        android:background="@drawable/bg_border_white_8"
-        android:elevation="@dimen/size_10"
-        app:layout_constraintTop_toBottomOf="@id/ctlAnalyst">
-
-        <TextView
-            android:id="@+id/tvAll"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/size_4"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_weight="1"
-            android:background="@drawable/bg_border_white_6"
-            android:elevation="@dimen/size_4"
-            android:fontFamily="@font/medium"
-            android:gravity="center"
-            android:paddingVertical="@dimen/size_4"
-            android:text="@string/t_t_c" />
-
-        <TextView
-            android:id="@+id/tvCompleted"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/size_4"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_weight="1"
-            android:elevation="@dimen/size_4"
-            android:fontFamily="@font/medium"
-            android:gravity="center"
-            android:paddingVertical="@dimen/size_4"
-            android:text="@string/ho_n_th_nh"
-            android:textColor="@color/grey_45" />
-
-        <TextView
-            android:id="@+id/tvDelivering"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/size_4"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_weight="1"
-            android:elevation="@dimen/size_4"
-            android:fontFamily="@font/medium"
-            android:gravity="center"
-            android:paddingVertical="@dimen/size_4"
-            android:text="@string/ang_giao"
-            android:textColor="@color/grey_45" />
-
-        <TextView
-            android:id="@+id/tvCanceled"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/size_4"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_weight="1"
-            android:elevation="@dimen/size_4"
-            android:fontFamily="@font/medium"
-            android:gravity="center"
-            android:paddingVertical="@dimen/size_4"
-            android:text="@string/h_y"
-            android:textColor="@color/grey_45" />
-
-    </LinearLayout>
+        android:text="Gần đây"
+        android:fontFamily="@font/bold"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/size_20"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvOrderHistory"
+        android:id="@+id/rcv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/size_16"
-        android:paddingTop="@dimen/size_4"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginTop="@dimen/size_20"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llTab"
-        tools:listitem="@layout/item_order_history" />
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recent"
+        android:layout_marginHorizontal="@dimen/size_20"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
