@@ -1,13 +1,13 @@
-package com.example.grabapp.model
+package com.example.grabapp.domain.enum
 
-enum class PackageType(val value: String) {
+enum class PackageTypeEnum(val value: String) {
     Clothes("Quần áo"),
     Electronic("Điện tử"),
     Fragile("Dễ vỡ"),
     Other("Khác");
 
     companion object {
-        fun getPackageTypeByString(text: String): PackageType {
+        fun getPackageTypeByString(text: String): PackageTypeEnum {
             return when (text) {
                 Clothes.value -> Clothes
                 Electronic.value -> Electronic

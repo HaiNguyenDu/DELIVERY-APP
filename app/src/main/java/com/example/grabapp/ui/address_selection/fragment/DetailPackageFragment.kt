@@ -16,10 +16,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.grabapp.R
 import com.example.grabapp.databinding.DialogDetailPackageBinding
-import com.example.grabapp.model.PackageInfo
-import com.example.grabapp.model.PackageType
-import com.example.grabapp.model.SizeEnum
-import com.example.grabapp.model.getSizeEnum
+import com.example.grabapp.domain.model.order.PackageInfo
+import com.example.grabapp.domain.enum.PackageTypeEnum
+import com.example.grabapp.domain.enum.SizeEnum
+import com.example.grabapp.domain.enum.getSizeEnum
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -203,7 +203,7 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
         val newPackageInfo = PackageInfo(
             weight = kg,
             size = getSizeEnum(selectedText ?: ""),
-            typePackage = PackageType.getPackageTypeByString(selectedType ?: ""),
+            typePackage = PackageTypeEnum.getPackageTypeByString(selectedType ?: ""),
             imageUri = viewModel.imageUri.value
         )
         viewModel.setPackageInfo(newPackageInfo)

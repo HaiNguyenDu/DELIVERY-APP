@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentDetailOrderBinding
-import com.example.grabapp.model.EditTextEnum
+import com.example.grabapp.domain.enum.EditTextEnum
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
 import kotlinx.coroutines.launch
