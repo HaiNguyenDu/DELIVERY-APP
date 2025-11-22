@@ -11,11 +11,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentMainBinding
 import com.example.grabapp.ui.address_selection.AddressSelectionActivity
 import com.example.grabapp.ui.home.MainViewModel
+import com.example.grabapp.ui.home.adapter.ADSAdapter
 import com.example.grabapp.ui.user.ActivityUser
 import com.facebook.shimmer.Shimmer
 
@@ -46,11 +48,19 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     override fun setUpClick() {
 
     }
-
+    private fun initView(){
+        binding.rcvQc.adapter = ADSAdapter()
+        binding.rcvQc.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rcvQc2.adapter = ADSAdapter()
+        binding.rcvQc2.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         shimmer()
         observeView()
+        initView()
     }
 
     fun shimmer() {
@@ -81,7 +91,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     }
 
     override fun handleInset(v: View, insets: Insets, bottomInset: Int) {
-        v.setPadding(insets.left, 0, insets.right, insets.bottom)
+        v.setPadding(insets.left, 0, insets.right, 0)
         binding.layoutHeader.setPadding(
             binding.layoutHeader.paddingLeft,
             insets.top,

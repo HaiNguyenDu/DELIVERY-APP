@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentMainOrderBinding
@@ -13,6 +14,7 @@ import com.example.grabapp.model.EditTextEnum
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressAdapterListener
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
+import com.example.grabapp.ui.address_selection.adapter.HistoryNearAdapter
 import kotlinx.coroutines.launch
 
 class MainOrderFragment : BaseFragment<FragmentMainOrderBinding, AddressSelectionViewModel>() {
@@ -44,8 +46,13 @@ class MainOrderFragment : BaseFragment<FragmentMainOrderBinding, AddressSelectio
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observerData()
+        initView()
     }
 
+    private fun initView(){
+        binding.rcvHistory.adapter = HistoryNearAdapter()
+        binding.rcvHistory.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
+    }
     private fun observerData(){
         lifecycleScope.launch {
             viewModel.pickUpAddress.collect {

@@ -2,10 +2,13 @@ package com.example.grabapp.ui.home.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentHistoryBinding
 import com.example.grabapp.ui.home.MainViewModel
+import com.example.grabapp.ui.home.adapter.HistoryAdapter
 
 class HistoryFragment: BaseFragment<FragmentHistoryBinding, MainViewModel>() {
     override fun getLazyBinding(): Lazy<FragmentHistoryBinding> = lazy {
@@ -22,7 +25,16 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, MainViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
     }
 
+    override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
+        view.setPadding(inset.left, inset.top, inset.right, 0)
 
+    }
+    private fun initView(){
+        binding.rcv.adapter = HistoryAdapter()
+        binding.rcv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
+
+    }
 }

@@ -58,7 +58,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:paddingVertical="@dimen/size_10"
+                        android:paddingVertical="@dimen/size_15"
                         app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
                         app:layout_constraintEnd_toEndOf="@id/ic_pick_up_location"
                         app:layout_constraintStart_toStartOf="@id/ic_pick_up_location"
@@ -66,8 +66,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/dot1"
-                            android:layout_width="@dimen/size_3"
-                            android:layout_height="@dimen/size_3"
+                            android:layout_width="@dimen/size_2"
+                            android:layout_height="@dimen/size_2"
                             android:backgroundTint="@color/text_color"
                             app:cardCornerRadius="@dimen/size_5"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -76,8 +76,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/dot2"
-                            android:layout_width="@dimen/size_3"
-                            android:layout_height="@dimen/size_3"
+                            android:layout_width="@dimen/size_2"
+                            android:layout_height="@dimen/size_2"
                             android:backgroundTint="@color/text_color"
                             app:cardCornerRadius="@dimen/size_5"
                             app:layout_constraintBottom_toTopOf="@id/dot3"
@@ -88,8 +88,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/dot3"
-                            android:layout_width="@dimen/size_3"
-                            android:layout_height="@dimen/size_3"
+                            android:layout_width="@dimen/size_1"
+                            android:layout_height="@dimen/size_1"
                             android:backgroundTint="@color/text_color"
                             app:cardCornerRadius="@dimen/size_5"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -125,15 +125,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/regular"
+                            android:fontFamily="@font/medium"
                             android:maxLines="1"
                             android:text="Nguyễn Duy Hải"
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/font_14" />
+                            android:textSize="@dimen/font_12" />
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/size_5"
-                            android:layout_height="@dimen/size_5"
+                            android:layout_width="@dimen/size_3"
+                            android:layout_height="@dimen/size_3"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="@dimen/size_5"
                             android:backgroundTint="@color/text_color"
@@ -147,11 +147,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/regular"
+                            android:fontFamily="@font/medium"
                             android:maxLines="1"
                             android:text="0914103372"
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/font_14"
+                            android:textSize="@dimen/font_12"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -185,15 +185,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/regular"
+                            android:fontFamily="@font/medium"
                             android:maxLines="1"
                             android:text="Nguyễn Duy Hải"
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/font_14" />
+                            android:textSize="@dimen/font_12" />
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/size_5"
-                            android:layout_height="@dimen/size_5"
+                            android:layout_width="@dimen/size_3"
+                            android:layout_height="@dimen/size_3"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="@dimen/size_5"
                             android:backgroundTint="@color/text_color"
@@ -207,11 +207,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/regular"
+                            android:fontFamily="@font/medium"
                             android:maxLines="1"
                             android:text="0914103372"
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/font_14"
+                            android:textSize="@dimen/font_12"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -257,11 +257,11 @@
                             android:maxLines="1"
                             android:text="Giao vào 00:22"
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/font_14" />
+                            android:textSize="@dimen/font_12" />
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/size_5"
-                            android:layout_height="@dimen/size_5"
+                            android:layout_width="@dimen/size_3"
+                            android:layout_height="@dimen/size_3"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="@dimen/size_5"
                             android:backgroundTint="@color/text_color"
@@ -279,7 +279,7 @@
                             android:maxLines="1"
                             android:text="Siêu tốc"
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/font_14"
+                            android:textSize="@dimen/font_12"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -316,7 +316,7 @@
                         android:maxLines="1"
                         android:text="Đề xuất dựa trên chi tiết món hàng "
                         android:textColor="@color/grey"
-                        android:textSize="@dimen/font_14"
+                        android:textSize="@dimen/font_12"
                         app:layout_constraintStart_toStartOf="@+id/tv_type_bike"
                         app:layout_constraintTop_toBottomOf="@+id/tv_type_bike" />
 
@@ -360,7 +360,7 @@
                             android:maxLines="1"
                             android:text="Đảm bảo hàng hóa"
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/font_14" />
+                            android:textSize="@dimen/font_12" />
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="@dimen/size_5"
@@ -382,7 +382,7 @@
                             android:maxLines="1"
                             android:text="Siêu tốc"
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/font_14"
+                            android:textSize="@dimen/font_12"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -438,34 +438,104 @@
                     android:textSize="@dimen/font_16" />
             </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/checkbox1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/black"
+            <LinearLayout
+                android:id="@+id/layout_cod"
+                android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_voucher"
                 android:layout_marginTop="30dp"
                 android:layout_marginStart="@dimen/size_10"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/checkbox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black" />
 
-            <CheckBox
-                android:id="@+id/checkbox2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/checkbox1"
-                app:layout_constraintStart_toStartOf="@id/checkbox1"
-                android:layout_marginTop="12dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_14"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/medium"
+                    android:text="Thu tiền hộ (COD)"
+                    />
 
-            <CheckBox
-                android:id="@+id/checkbox3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:buttonTint="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/checkbox2"
-                app:layout_constraintStart_toStartOf="@id/checkbox1"
-                android:layout_marginTop="12dp" />
+                <TextView
+                    android:id="@+id/tv_cod_cost_1"
+                    android:layout_width="match_parent"
+                    android:textAlignment="textEnd"
+                    android:paddingEnd="@dimen/size_20"
+                    android:layout_gravity="center_vertical|end"
+                    android:text="5.000D"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_ship_near"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_cod"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/size_10"
+                app:layout_constraintStart_toStartOf="@+id/layout_cod"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/checkbox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_14"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/medium"
+                    android:text="Giao tận tay"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_ship_near_cost"
+                    android:layout_width="match_parent"
+                    android:textAlignment="textEnd"
+                    android:paddingEnd="@dimen/size_20"
+                    android:layout_gravity="center_vertical|end"
+                    android:text="10.000D"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_ship_big_size"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_ship_near"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/size_10"
+                app:layout_constraintStart_toStartOf="@+id/layout_ship_near"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/checkbox3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_14"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/medium"
+                    android:text="Thu tiền hộ (COD)"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_cod_cost"
+                    android:layout_width="match_parent"
+                    android:textAlignment="textEnd"
+                    android:paddingEnd="@dimen/size_20"
+                    android:layout_gravity="center_vertical|end"
+                    android:text="5.000D"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

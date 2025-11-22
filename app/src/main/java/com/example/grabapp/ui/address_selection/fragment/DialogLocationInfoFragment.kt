@@ -3,7 +3,9 @@ package com.example.grabapp.ui.address_selection.fragment
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.graphics.scale
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +44,7 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
         setupUI()
         setupFullHeight()
         setupMap()
+        setupValidateRealtime()
     }
 
     private fun setupUI() = with(binding) {
@@ -97,8 +100,10 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
 
     private fun setupFullHeight() {
         dialog?.setOnShowListener { dialogInterface ->
-            val bottomSheetDialog = dialogInterface as? com.google.android.material.bottomsheet.BottomSheetDialog
-            val bottomSheet = bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            val bottomSheetDialog =
+                dialogInterface as? com.google.android.material.bottomsheet.BottomSheetDialog
+            val bottomSheet =
+                bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.let {
                 val behavior = BottomSheetBehavior.from(it).apply {
                     state = BottomSheetBehavior.STATE_EXPANDED
@@ -113,7 +118,17 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
                         val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
-                        binding.scrollView.setPadding(0, 0, 0, systemInsets.bottom + imeInsets.bottom)
+                        val isImeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+                        if (isImeVisible)
+                            hideMapSmooth()
+                        else
+                            showMapSmooth()
+                        binding.scrollView.setPadding(
+                            0,
+                            0,
+                            0,
+                            systemInsets.bottom + imeInsets.bottom
+                        )
                     }
                     insets
                 }
@@ -121,7 +136,65 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
         }
     }
 
-    // region Map Lifecycle
+    private fun hideMapSmooth() {
+        binding.mapView.animate()
+            .alpha(0f)
+            .scaleX(0.8f)
+            .scaleY(0.8f)
+            .setDuration(220)
+            .withEndAction {
+                binding.mapView.visibility = View.GONE
+            }
+            .start()
+    }
+
+    private fun showMapSmooth() {
+        binding.mapView.visibility = View.VISIBLE
+        binding.mapView.alpha = 0f
+        binding.mapView.scaleX = 0.8f
+        binding.mapView.scaleY = 0.8f
+
+        binding.mapView.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(220)
+            .start()
+    }
+
+
+    private fun setupValidateRealtime() = with(binding) {
+
+        edtDetailAddress.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus && edtDetailAddress.text.isEmpty()) {
+                edtDetailAddress.error = "Vui lòng nhập số tầng / số nhà"
+            }
+        }
+
+        edtName.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus && edtName.text.isEmpty()) {
+                edtName.error = "Vui lòng nhập tên"
+            }
+        }
+
+        edtPhone.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val phone = edtPhone.text.toString().trim()
+                if (phone.isEmpty()) {
+                    edtPhone.error = "Vui lòng nhập số điện thoại"
+                } else if (!phone.matches(Regex("^(0|\\+84)[0-9]{9,10}$"))) {
+                    edtPhone.error = "Số điện thoại không hợp lệ"
+                }
+            }
+        }
+
+        edtNote.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus && edtNote.text.isEmpty()) {
+                edtNote.error = "Vui lòng nhập ghi chú"
+            }
+        }
+    }
+
     override fun onStart() = super.onStart().also { binding.mapView.onStart() }
     override fun onResume() = super.onResume().also { binding.mapView.onResume() }
     override fun onPause() = super.onPause().also { binding.mapView.onPause() }
@@ -129,7 +202,6 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
     override fun onLowMemory() = super.onLowMemory().also { binding.mapView.onLowMemory() }
     override fun onSaveInstanceState(outState: Bundle) =
         super.onSaveInstanceState(outState).also { binding.mapView.onSaveInstanceState(outState) }
-    // endregion
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -138,6 +210,6 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
             setLastFocusEdt(EditTextEnum.NOT_THING)
             setListAddress(emptyList())
         }
-        _binding = null // tránh memory leak
+        _binding = null
     }
 }

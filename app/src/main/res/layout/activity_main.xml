@@ -7,11 +7,11 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.home.MainActivity">
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,13 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:elevation="@dimen/_2dp"
-        app:tabIndicatorHeight="0dp"
+        android:elevation="@dimen/size_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabIconTint="@color/nav_icon_color"
         app:tabIndicatorColor="@color/black"
+        app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/dark_green"
         app:tabTextAppearance="@style/MainTextTabItem"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:tabIconTint="@color/nav_icon_color"
         app:tabTextColor="@color/black" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,9 +6,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.WindowInsets
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.data.repository.AddressRepository
@@ -33,7 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(binding.root)
         super.onCreate(savedInstanceState)
-        setIsLightThemeStatusBar(false)
+        setIsLightThemeStatusBar(true )
         MapLibre.getInstance(
             this,
             AddressRepository.API_KEY,
@@ -42,6 +46,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         initView()
     }
 
+    override fun handleInsets(v: View, insets: Insets) {
+        binding.root.setPadding(0,0,0,insets.bottom)
+    }
     private fun initView(){
         binding.viewPager.adapter = MainPageAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.viewPager){tab,position ->
@@ -56,6 +63,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
             }
         }.attach()
+        binding.viewPager.isUserInputEnabled = false
+
     }
 
 }
