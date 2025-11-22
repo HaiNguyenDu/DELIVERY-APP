@@ -258,4 +258,6 @@
     <string name="b_n_ang_ng_k_d_ch_v_grabbike">Bạn đang đăng ký dịch vụ GrabBike</string>
     <string name="entry_username_request">Tên người dùng tối thiểu là 4 ký tự</string>
     <string name="ch_n_h_ng_b_ng_l_i">Chọn hạng bằng lái</string>
+    <string name="ti_n_v_o">Tiền vào</string>
+    <string name="ti_n_ra">Tiền ra</string>
 </resources>

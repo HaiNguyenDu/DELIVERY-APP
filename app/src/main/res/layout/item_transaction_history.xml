@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_border_stroke_white_12_80_per"
+    android:padding="@dimen/size_16">
+
+    <ImageView
+        android:id="@+id/ivTransactionIcon"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_currency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/blue_500" />
+
+    <TextView
+        android:id="@+id/tvTransactionType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:fontFamily="@font/bold"
+        android:text="@string/ti_n_v_o"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintEnd_toStartOf="@id/tvAmount"
+        app:layout_constraintStart_toEndOf="@id/ivTransactionIcon"
+        app:layout_constraintTop_toTopOf="@id/ivTransactionIcon" />
+
+    <TextView
+        android:id="@+id/tvAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        tools:text="+75.000đ"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivTransactionIcon" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:fontFamily="@font/regular"
+        tools:text="Thu nhập từ đơn hàng DH001234"
+        android:textColor="@color/grey_46"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvTransactionType"
+        app:layout_constraintTop_toBottomOf="@id/tvTransactionType" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:fontFamily="@font/regular"
+        tools:text="14/06/2025, 14:24"
+        android:textColor="@color/grey_46"
+        android:textSize="@dimen/font_12"
+        app:layout_constraintStart_toStartOf="@id/tvDescription"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
