@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/size_36"
-    tools:context=".ui.driver.confirm_driver.ConfirmDriverActivity">
+    android:paddingBottom="@dimen/size_8"
+    tools:context=".driver.confirm_driver.ConfirmDriverActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -26,6 +26,7 @@
             android:layout_marginEnd="@dimen/size_12"
             android:contentDescription="@null"
             android:src="@drawable/ic_logout"
+            android:visibility="gone"
             app:tint="@color/red" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -76,6 +77,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tvTransportationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/font_16"
@@ -95,6 +97,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:id="@+id/tvNext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_12"

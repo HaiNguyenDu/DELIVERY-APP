@@ -5,13 +5,25 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.driver.register.RegisterActivity">
+    android:background="@color/white"
+    tools:context=".driver.register.RegisterActivity">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/img_delivery_service"
+        android:contentDescription="@null"
+        android:elevation="@dimen/size_10"
+        app:layout_constraintDimensionRatio="16:8"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/ToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="@dimen/font_30"
         android:paddingStart="@dimen/size_12"
         android:paddingEnd="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,15 +37,16 @@
             android:layout_marginEnd="@dimen/size_12"
             android:contentDescription="@null"
             android:src="@drawable/ic_logout"
+            android:visibility="gone"
             app:tint="@color/red" />
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainer"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/indicator"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/imageView1" />
 
     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
         android:id="@+id/indicator"
@@ -41,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_12"
         android:layout_marginBottom="@dimen/size_20"
+        android:visibility="visible"
         app:dotsColor="#2C000000"
         app:dotsSize="@dimen/size_8"
         app:dotsSpacing="@dimen/size_4"
@@ -48,7 +62,7 @@
         app:layout_constraintBottom_toTopOf="@id/llAction"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragmentContainer"
+        app:layout_constraintTop_toBottomOf="@id/viewPager2"
         app:selectedDotColor="@color/green" />
 
     <LinearLayout
@@ -57,10 +71,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_12"
         android:layout_marginBottom="@dimen/size_36"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/tvNo"
+            android:id="@+id/tvPrevious"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -68,12 +83,12 @@
             android:fontFamily="@font/medium"
             android:gravity="center"
             android:paddingVertical="@dimen/size_10"
-            android:text="@string/save"
+            android:text="@string/tr_c"
             android:textColor="@color/white"
             android:textSize="@dimen/font_16" />
 
         <TextView
-            android:id="@+id/tvYes"
+            android:id="@+id/tvNext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_16"

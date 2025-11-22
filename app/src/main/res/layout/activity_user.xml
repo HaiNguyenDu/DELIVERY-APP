@@ -32,12 +32,14 @@
                 android:id="@+id/tvSwitchToDriver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_margin="@dimen/size_20"
-                android:background="@drawable/bg_button_green"
-                android:padding="@dimen/size_8"
+                android:background="@drawable/bg_gradient_green_border_12"
+                android:fontFamily="@font/medium"
+                android:paddingHorizontal="@dimen/size_16"
+                android:paddingVertical="@dimen/size_8"
                 android:text="@string/driver_app"
-                android:textColor="@color/white"
-                android:layout_gravity="end"/>
+                android:textColor="@color/white" />
         </FrameLayout>
 
         <androidx.cardview.widget.CardView

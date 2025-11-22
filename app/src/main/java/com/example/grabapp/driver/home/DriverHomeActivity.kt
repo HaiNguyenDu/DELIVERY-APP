@@ -8,6 +8,7 @@ import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityDriverHomeBinding
 import com.example.grabapp.driver.home.data.TabType
 import com.example.grabapp.extention.onClickWithScale
+import com.example.grabapp.extention.setPadding
 
 class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeViewModel>() {
 
@@ -49,6 +50,7 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
 
     override fun handleInsets(v: View, insets: Insets) {
         binding.fragmentContainer.setPadding(0, -insets.top, 0, 0)
+        binding.llBottomBar.setPadding(0, 0, 0, insets.bottom)
     }
 
     private fun setupFragment(savedInstanceState: Bundle?) {

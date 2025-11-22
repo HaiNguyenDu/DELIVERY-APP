@@ -1,4 +1,4 @@
-package com.example.grabapp.view
+package com.example.grabapp.view.dialog
 
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +20,7 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
 
     private var countdownJob: Job? = null
     private var currentCount = 15
-    private val order: Order = Order.getMockOrder()
+    private val order: Order = Order.Companion.getMockOrder()
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,

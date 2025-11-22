@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".driver.confirm_driver.pager.ConfirmPagerFragment">
+
+    <TextView
+        android:id="@+id/tvStep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:fontFamily="@font/regular"
+        android:text="@string/confirm_pager1_step"
+        android:textColor="@color/grey_46"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_4"
+        android:fontFamily="@font/bold"
+        android:lineSpacingExtra="@dimen/size_4"
+        android:minLines="4"
+        android:text="@string/confirm_pager1_title"
+        android:textSize="@dimen/font_18"
+        app:layout_constraintTop_toBottomOf="@id/tvStep" />
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_20"
+        android:background="@drawable/bg_border_light_grey_8"
+        android:fontFamily="@font/regular"
+        android:lineSpacingExtra="@dimen/size_6"
+        android:minHeight="@dimen/size_200"
+        android:padding="@dimen/size_10"
+        android:text="@string/confirm_pager4_content"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginBottom="@dimen/size_20"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tvNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_border_green_100_10_per"
+            android:ellipsize="end"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/size_10"
+            android:paddingVertical="@dimen/size_12"
+            android:text="@string/kh_ng_ng"
+            android:textColor="@color/green_20"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:id="@+id/tvYes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_12"
+            android:layout_weight="1"
+            android:background="@drawable/bg_gradient_green_100"
+            android:ellipsize="end"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/size_10"
+            android:paddingVertical="@dimen/size_12"
+            android:text="@string/ng"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

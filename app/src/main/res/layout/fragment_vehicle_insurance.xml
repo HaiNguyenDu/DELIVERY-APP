@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".driver.register.vehicle_insurance.VehicleInsuranceFragment">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_32"
+            android:fontFamily="@font/bold"
+            android:paddingHorizontal="@dimen/size_22"
+            android:text="Thông tin của bạn đang được chúng tôi kiểm duyệt. Quá trình này thường mất từ 1–2 ngày."
+            android:textColor="@color/green_20"
+            android:textSize="@dimen/font_20"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:fontFamily="@font/regular"
+            android:paddingHorizontal="@dimen/size_22"
+            android:text="Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi."
+            android:textColor="@color/green_24"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/size_60"
+            android:layout_marginTop="@dimen/size_50"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView2"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="driver_verification.json"
+            app:lottie_loop="true"
+            app:lottie_repeatMode="reverse" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

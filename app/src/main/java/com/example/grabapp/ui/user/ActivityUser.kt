@@ -7,6 +7,7 @@ import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityUserBinding
 import com.example.grabapp.driver.home.DriverHomeActivity
+import com.example.grabapp.driver.transportation.TransportationActivity
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
 import com.example.grabapp.ui.splash.NoViewModel

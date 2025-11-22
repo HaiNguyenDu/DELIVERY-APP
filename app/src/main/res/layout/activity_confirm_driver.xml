@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/size_36"
-    tools:context=".ui.driver.confirm_driver.ConfirmDriverActivity">
+    tools:context=".driver.confirm_driver.ConfirmDriverActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -21,12 +20,14 @@
         tools:navigationIcon="@drawable/ic_back">
 
         <ImageView
+            android:id="@+id/tvLogOut"
             android:layout_width="@dimen/size_24"
             android:layout_height="@dimen/size_24"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/size_12"
             android:contentDescription="@null"
             android:src="@drawable/ic_logout"
+            android:visibility="gone"
             app:tint="@color/red" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -38,9 +39,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/ivNext"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_bias="0.52"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <ImageView

@@ -1,33 +1,67 @@
 package com.example.grabapp.driver.register.avatar
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.view.View
-import android.view.ViewGroup
-import com.example.grabapp.R
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.Insets
+import com.example.grabapp.base.BaseFragment
+import com.example.grabapp.databinding.FragmentAvatarBinding
+import com.example.grabapp.driver.register.RegisterViewModel
+import com.example.grabapp.extention.onClickWithScale
+import java.io.InputStream
 
-class AvatarFragment : Fragment() {
+class AvatarFragment : BaseFragment<FragmentAvatarBinding, RegisterViewModel>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
+    private val pickVisualMediaLauncher = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        uri?.let { loadImageFromUri(it) }
+    }
+
+    override fun getLazyBinding(): Lazy<FragmentAvatarBinding> =
+        lazy { FragmentAvatarBinding.inflate(layoutInflater) }
+
+    override fun getLazyViewModel(): Lazy<RegisterViewModel> =
+        lazy { RegisterViewModel(requireActivity().application) }
+
+    override fun setUpClick() {
+        binding.ivUploadPhoto.onClickWithScale {
+            openImagePicker()
+        }
+        binding.ivAvatar.onClickWithScale {
+            openImagePicker()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_avatar, container, false)
+    override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
+        view.setPadding(0, 0, 0, 0)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AvatarFragment().apply {
-                arguments = Bundle().apply {
+    private fun openImagePicker() {
+        val request = PickVisualMediaRequest.Builder()
+            .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            .build()
+        pickVisualMediaLauncher.launch(request)
+    }
+
+    private fun loadImageFromUri(uri: Uri) {
+        try {
+            val inputStream: InputStream? = requireContext().contentResolver.openInputStream(uri)
+            val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
+            inputStream?.close()
+
+            bitmap?.let {
+                binding.apply {
+                    ivUploadPhoto.visibility = View.GONE
+                    ivAvatar.visibility = View.VISIBLE
+                    ivAvatar.setImageBitmap(it)
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

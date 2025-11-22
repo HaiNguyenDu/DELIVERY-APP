@@ -142,7 +142,7 @@
     <string name="m_o_nh">Mẹo nhỏ</string>
     <string name="trick_des">Bật trạng thái Online để bắt đầu nhận đơn hàng. Hệ thống sẽ tự động đẩy đơn phù hợp với vị trí của bạn.</string>
     <string name="ang_t_m_n_h_ng">Đang tìm đơn hàng</string>
-    <string name="finding_orders_des">Hệ thống đang tìm đơn hàng phù hợp gần vị trí của bạn...</string>
+    <string name="finding_orders_des">Hệ thống đang tìm đơn hàng phù hợp gần vị trí của bạn…</string>
     <string name="trang_ch">Trang chủ</string>
     <string name="n_h_ng_m_i">Đơn hàng mới!</string>
     <string name="m_dh001234">Mã: DH001234</string>
@@ -184,7 +184,7 @@
     <string name="th_ng_tin_r_t_ti_n">Thông tin rút tiền</string>
     <string name="s_ti_n_r_t_t_i_thi_u_50_000">Số tiền rút tối thiểu: 50.000đ</string>
     <string name="ph_r_t_ti_n_mi_n_ph">Phí rút tiền: Miễn phí</string>
-    <string name="th_i_gian_x_l_1_2_ng_y_l_m_vi_c">Thời gian xử lý: 1-2 ngày làm việc</string>
+    <string name="th_i_gian_x_l_1_2_ng_y_l_m_vi_c">Thời gian xử lý: 1–2 ngày làm việc</string>
     <string name="ti_n_s_c_chuy_n_v_t_i_kho_n_ng_n_h_ng_ng_k">Tiền sẽ được chuyển về tài khoản ngân hàng đã đăng ký</string>
     <string name="l_ch_s_giao_d_ch">Lịch sử giao dịch</string>
     <string name="ch_a_c_giao_d_ch">Chưa có giao dịch</string>
@@ -225,7 +225,7 @@
     <string name="x_c_nh_n_giao_h_ng">Xác nhận giao hàng</string>
     <string name="ch_p_nh_h_ng_h_a_giao_ho_c_v_tr_giao_h_ng_x_c_nh_n">Chụp ảnh hàng hóa đã giao hoặc vị trí giao hàng để xác nhận</string>
     <string name="tin_nh_n">Tin nhắn</string>
-    <string name="t_m_theo_t_n_ho_c_m_n">Tìm theo tên hoặc mã đơn...</string>
+    <string name="t_m_theo_t_n_ho_c_m_n">Tìm theo tên hoặc mã đơn…</string>
     <string name="t">T</string>
     <string name="tr_n_th_b">Trần thị B</string>
     <string name="dh001235">#DH001235</string>
@@ -235,5 +235,29 @@
     <string name="second_count">%1$ds</string>
     <string name="giao_gi_h_nh_ch_nh">Giao giờ hành chính</string>
     <string name="nh_n_tin">Nhắn tin</string>
+    <string name="confirm_pager1_step">Trước khi tiến hành đăng ký</string>
+    <string name="confirm_pager1_title">Đây là ứng dụng dành cho Tài xế đăng ký hoạt động với Grab. Bạn muốn đăng ký trở thành tài xế?</string>
+    <string name="confirm_pager1_content">Nếu đối tác đã từng hoạt động với Grab, cần sử dụng đúng email đã đăng ký tài khoản</string>
+    <string name="confirm_pager2_step">2 of 4</string>
+    <string name="confirm_pager2_title">Bạn có đáp ứng được các yêu cầu sau đây không?</string>
+    <string name="confirm_pager2_content">- Công dân Việt Nam trong độ tuổi: Nam từ 18 đến 60 tuổi, Nữ từ 18 đến 55 tuổi\n- Có khả năng đọc và viết</string>
+    <string name="confirm_pager3_step">3 of 4</string>
+    <string name="confirm_pager3_title">Bạn đã có lý lịch tư pháp chưa?</string>
+    <string name="confirm_pager3_content">- Lý lịch tư pháp còn hạn ít nhất 10 tháng kể từ ngày cấp\n- Bạn có thể đăng ký bằng giấy hẹn LLTP hoặc biên lai bưu điện</string>
+    <string name="confirm_pager4_step">4 of 4</string>
+    <string name="confirm_pager4_title">Bạn vui lòng xác nhận đã đọc và động ý nội dung dưới đây:</string>
+    <string name="confirm_pager4_content">- Đăng ký tham gia cung cấp các loại hình Dịch Vụ hiện có trên Ứng dụng Grab.\n- Thực hiện Khoản Ký Quỹ: 2.000.000</string>
+    <string name="kh_ng_ng">KHÔNG ĐỒNG Ý</string>
+    <string name="ng">ĐỒNG Ý</string>
+    <string name="tr_c_khi_ng_k">Trước khi đăng ký …</string>
+    <string name="eligibility_des">Vì sự an toàn của bạn và người khác, hãy chắc rằng bạn đáp ứng đủ mọi yêu cầu của Grab và có các hồ sơ cần thiết.</string>
+    <string name="b_n_c_p_ng_c_c_y_u_c_u_tr_n">Bạn có đáp ứng đủ các yêu cầu trên?</string>
+    <string name="nh_p_v_o_y_ti_p_t_c">Nhấp vào đây để tiếp tục</string>
+    <string name="profile_review">Profile Review</string>
+    <string name="tr_c">Trước đó</string>
+    <string name="b_n_ang_ng_k_d_ch_v_grabbike">Bạn đang đăng ký dịch vụ GrabBike</string>
     <string name="entry_username_request">Tên người dùng tối thiểu là 4 ký tự</string>
+    <string name="ch_n_h_ng_b_ng_l_i">Chọn hạng bằng lái</string>
+    <string name="ti_n_v_o">Tiền vào</string>
+    <string name="ti_n_ra">Tiền ra</string>
 </resources>
