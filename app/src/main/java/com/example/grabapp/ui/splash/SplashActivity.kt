@@ -3,7 +3,6 @@ package com.example.grabapp.ui.splash
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.core.graphics.Insets
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,7 +12,10 @@ import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.databinding.ActivitySplashBinding
+import com.example.grabapp.network.ApiProvider
+import com.example.grabapp.ui.home.MainActivity
 import com.example.grabapp.ui.login.LoginActivity
+import com.example.grabapp.utils.SharedPreferencesUtils
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.maplibre.android.MapLibre
@@ -30,6 +32,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initApp()
         setContentView(binding.root)
         setUpUi()
         handleForNextScreen()
@@ -45,10 +48,15 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
         }
     }
 
-    private fun setUpUi(){
-        WindowCompat.setDecorFitsSystemWindows(window,false)
-        val controller = WindowCompat.getInsetsController(window,window.decorView)
-        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    private fun initApp() {
+        ApiProvider.init(SharedPreferencesUtils.getInstance(application))
+    }
+
+    private fun setUpUi() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         controller.hide(WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.statusBars())
 
         MapLibre.getInstance(
@@ -57,8 +65,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
             WellKnownTileServer.MapLibre
         )
     }
+
     private fun funShowNextScreen() {
-        startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+        val token = SharedPreferencesUtils(this).getToken()
+        val newActivity = if (token.isNotEmpty()) MainActivity::class.java
+        else LoginActivity::class.java
+
+        startActivity(Intent(this@SplashActivity, newActivity))
         overridePendingTransition(
             R.anim.anim_translate_in_right,
             R.anim.anim_translate_out_left

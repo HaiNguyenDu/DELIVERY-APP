@@ -64,7 +64,8 @@ dependencies {
     implementation(libs.android.sdk)
     implementation(libs.android.ndk27)
     implementation(libs.glide)
-    implementation("androidx.room:room-runtime:2.8.3")
-    kapt("androidx.room:room-compiler:2.8.3")
-    implementation("androidx.room:room-ktx:2.8.3")
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.room.runtime)
+    kapt("androidx.room:room-compiler:2.8.4")
+    implementation(libs.androidx.room.ktx)
 }

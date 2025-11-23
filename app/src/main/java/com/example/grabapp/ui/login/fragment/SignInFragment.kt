@@ -119,7 +119,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, LoginViewModel>() {
                     ).show()
                 } else {
                     viewModel.setPhoneNumber(phoneNumber.toString())
-                    viewModel.replaceFragment(LoginPageAdapter.FRAGMENT_CONFIRM)
+                    viewModel.replaceFragment(LoginPageAdapter.FRAGMENT_PASSWORD)
                 }
                 viewModel.hideLoading()
             }

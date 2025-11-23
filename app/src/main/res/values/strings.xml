@@ -236,4 +236,7 @@
     <string name="giao_gi_h_nh_ch_nh">Giao giờ hành chính</string>
     <string name="nh_n_tin">Nhắn tin</string>
     <string name="entry_username_request">Tên người dùng tối thiểu là 4 ký tự</string>
+    <string name="password">Mật khẩu</string>
+    <string name="enter_password">Nhập mật khẩu của bạn</string>
+    <string name="enter_password_fail">Mật khẩu không hợp lệ</string>
 </resources>
