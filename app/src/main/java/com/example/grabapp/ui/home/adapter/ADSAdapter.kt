@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabapp.R
 import com.example.grabapp.databinding.ItemQcBinding
-import com.example.grabapp.model.ItemQC
+import com.example.grabapp.domain.model.ItemQC
 
 class ADSAdapter : RecyclerView.Adapter<ADSAdapter.ViewHolder>() {
     companion object {

@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentMainOrderBinding
-import com.example.grabapp.model.EditTextEnum
+import com.example.grabapp.domain.enum.EditTextEnum
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
-import com.example.grabapp.ui.address_selection.adapter.AddressAdapterListener
-import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
 import com.example.grabapp.ui.address_selection.adapter.HistoryNearAdapter
 import kotlinx.coroutines.launch
 

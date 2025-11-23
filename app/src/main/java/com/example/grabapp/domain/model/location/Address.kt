@@ -1,4 +1,4 @@
-package com.example.grabapp.model
+package com.example.grabapp.domain.model.location
 
 import com.example.grabapp.respone.Coordinates
 import org.maplibre.android.geometry.LatLng
@@ -17,5 +17,5 @@ class Address(
         }
     }
 
-    fun toLatLng(): LatLng = LatLng(coordinates.lat,coordinates.lng)
+    fun toLatLng(): LatLng = LatLng(coordinates.lat, coordinates.lng)
 }

@@ -1,4 +1,4 @@
-package com.example.grabapp.api
+package com.example.grabapp.data.api
 
 import com.example.grabapp.respone.AutoCompleteResponse
 import com.example.grabapp.respone.GeocodeResponse

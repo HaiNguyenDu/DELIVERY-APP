@@ -1,11 +1,13 @@
-package com.example.grabapp.model
+package com.example.grabapp.domain.model.order
 
 import android.net.Uri
+import com.example.grabapp.domain.enum.PackageTypeEnum
+import com.example.grabapp.domain.enum.SizeEnum
 
 class PackageInfo(
     private val weight: Int,
     private val size: SizeEnum,
-    private val typePackage: PackageType,
+    private val typePackage: PackageTypeEnum,
     private val imageUri: Uri?
 ) {
     fun setWeight(weight: Int) {
@@ -20,7 +22,7 @@ class PackageInfo(
         this.typePackage
     }
 
-    fun getTypePackage(): PackageType {
+    fun getTypePackage(): PackageTypeEnum {
         return typePackage
     }
 

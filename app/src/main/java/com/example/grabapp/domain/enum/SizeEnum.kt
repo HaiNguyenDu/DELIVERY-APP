@@ -1,4 +1,4 @@
-package com.example.grabapp.model
+package com.example.grabapp.domain.enum
 
 enum class SizeEnum(val value: String) {
     S("S"), M("M"), L("L"), XL("XL")

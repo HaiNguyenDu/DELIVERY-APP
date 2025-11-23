@@ -6,9 +6,9 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresPermission
 import com.example.grabapp.R
-import com.example.grabapp.api.IApiService
-import com.example.grabapp.api.RetrofitInstance
-import com.example.grabapp.model.Address
+import com.example.grabapp.data.api.IApiService
+import com.example.grabapp.data.api.RetrofitInstance
+import com.example.grabapp.domain.model.location.Address
 import com.example.grabapp.respone.AutoCompleteResponse
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.respone.GeocodeResponse

@@ -1,4 +1,4 @@
-package com.example.grabapp.model
+package com.example.grabapp.domain.model
 
 class ItemQC(
     val image: Int,

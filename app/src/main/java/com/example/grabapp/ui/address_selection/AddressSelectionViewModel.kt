@@ -8,9 +8,9 @@ import androidx.annotation.RequiresPermission
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.repository.AddressRepository
-import com.example.grabapp.model.Address
-import com.example.grabapp.model.EditTextEnum
-import com.example.grabapp.model.PackageInfo
+import com.example.grabapp.domain.model.location.Address
+import com.example.grabapp.domain.enum.EditTextEnum
+import com.example.grabapp.domain.model.order.PackageInfo
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.respone.Prediction
