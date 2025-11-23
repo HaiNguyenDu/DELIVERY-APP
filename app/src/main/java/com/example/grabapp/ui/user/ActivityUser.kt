@@ -3,12 +3,14 @@ package com.example.grabapp.ui.user
 import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
+import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityUserBinding
 import com.example.grabapp.ui.splash.NoViewModel
 import com.example.grabapp.view.DialogEditUser
 import com.example.grabapp.view.DialogEditUserListener
+import kotlinx.coroutines.launch
 
 class ActivityUser : BaseActivity<ActivityUserBinding, NoViewModel>() {
     override fun getLazyBinding(): Lazy<ActivityUserBinding> = lazy {

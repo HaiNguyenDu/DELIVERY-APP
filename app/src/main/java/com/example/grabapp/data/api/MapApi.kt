@@ -7,7 +7,7 @@ import com.example.grabapp.respone.PlaceDetailResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
-interface IApiService {
+interface MapApi {
     @GET("v2/place/autocomplete")
     fun getAutoComplete(
         @Query("input") input: String?,

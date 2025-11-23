@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentHistoryBinding
 import com.example.grabapp.ui.home.MainViewModel
 import com.example.grabapp.ui.home.adapter.HistoryAdapter
+import kotlinx.coroutines.launch
 
 class HistoryFragment: BaseFragment<FragmentHistoryBinding, MainViewModel>() {
+    private lateinit var historyAdapter: HistoryAdapter
     override fun getLazyBinding(): Lazy<FragmentHistoryBinding> = lazy {
         FragmentHistoryBinding.inflate(layoutInflater)
     }
@@ -18,7 +21,30 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, MainViewModel>() {
     override fun getLazyViewModel(): Lazy<MainViewModel> = lazy {
         ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
-
+    private fun observeData(){
+        lifecycleScope.launch {
+            viewModel.listOrder.collect{
+                if(it.isEmpty())
+                {
+                    binding.empty.visibility = View.VISIBLE
+                    binding.rcv.visibility = View.GONE
+                }
+                else {
+                    binding.empty.visibility = View.GONE
+                    binding.rcv.visibility = View.VISIBLE
+                    historyAdapter.setListOrders(it)
+                }
+            }
+        }
+        lifecycleScope.launch{
+            viewModel.isLoading.collect{
+                if(it)
+                    binding.loading.visibility = View.VISIBLE
+                else
+                    binding.loading.visibility = View.GONE
+            }
+        }
+    }
     override fun setUpClick() {
 
     }
@@ -26,6 +52,7 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, MainViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        observeData()
     }
 
     override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
@@ -33,7 +60,8 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, MainViewModel>() {
 
     }
     private fun initView(){
-        binding.rcv.adapter = HistoryAdapter()
+        historyAdapter = HistoryAdapter(emptyList())
+        binding.rcv.adapter = historyAdapter
         binding.rcv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
 
     }
