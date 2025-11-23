@@ -1,5 +1,6 @@
 package com.example.grabapp.ui.login.fragment
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
@@ -14,10 +15,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentEnterPasswordBinding
 import com.example.grabapp.extention.hideKeyboard
+import com.example.grabapp.ui.home.MainActivity
 import com.example.grabapp.ui.login.LoginViewModel
 import com.example.grabapp.ui.login.adapter.LoginPageAdapter
 import com.example.grabapp.view.ExitConfirmDialog
@@ -92,6 +95,7 @@ class EnterPasswordFragment : BaseFragment<FragmentEnterPasswordBinding, LoginVi
         setUpToolBar()
         setUpUi()
         observerData()
+        observerView()
     }
 
     private fun observerData() {
@@ -113,7 +117,16 @@ class EnterPasswordFragment : BaseFragment<FragmentEnterPasswordBinding, LoginVi
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                val length = p0?.length ?: 0
+                viewModel.setPassword(p0.toString())
+            }
+
+        })
+    }
+
+    private fun observerView(){
+        lifecycleScope.launch {
+            viewModel.password.collect {
+                val length = it.length
                 if (length > 0) {
                     binding.btnNext.alpha = 1f
                     binding.btnNext.isEnabled = true
@@ -121,13 +134,9 @@ class EnterPasswordFragment : BaseFragment<FragmentEnterPasswordBinding, LoginVi
                     binding.btnNext.alpha = 0.6f
                     binding.btnNext.isEnabled = false
                 }
-
-
             }
-
-        })
+        }
     }
-
     override fun setBackPress() {
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -170,17 +179,17 @@ class EnterPasswordFragment : BaseFragment<FragmentEnterPasswordBinding, LoginVi
                     ).show()
                 } else {
                     if (viewModel.getIsLogin()) {
-//                        viewModel.login({
-//                            startActivity(Intent(requireContext(), MainActivity::class.java))
-//                        }) {
-//                            SnackBarCustom(
-//                                view = binding.root,
-//                                message = getString(R.string.enter_password_fail),
-//                                backgroundColor = context?.getColor(R.color.white)!!,
-//                                textColor = context?.getColor(R.color.green)!!,
-//                                bottomMarginDp = 100f,
-//                            ).show()
-//                        }
+                        viewModel.login({
+                            startActivity(Intent(requireContext(), MainActivity::class.java))
+                        }) {
+                            SnackBarCustom(
+                                view = binding.root,
+                                message = getString(R.string.enter_password_fail),
+                                backgroundColor = context?.getColor(R.color.white)!!,
+                                textColor = context?.getColor(R.color.green)!!,
+                                bottomMarginDp = 100f,
+                            ).show()
+                        }
                     } else
                         viewModel.replaceFragment(LoginPageAdapter.FRAGMENT_ENTER_NAME)
                 }

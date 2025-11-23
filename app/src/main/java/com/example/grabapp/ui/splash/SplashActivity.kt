@@ -32,7 +32,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initApp()
         setContentView(binding.root)
         setUpUi()
         handleForNextScreen()
@@ -46,10 +45,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
             funShowNextScreen()
 
         }
-    }
-
-    private fun initApp() {
-        ApiProvider.init(SharedPreferencesUtils.getInstance(application))
     }
 
     private fun setUpUi() {

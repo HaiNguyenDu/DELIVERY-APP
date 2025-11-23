@@ -11,7 +11,7 @@ class ApiProvider {
         }
 
         fun init(sharedPreferencesUtils: SharedPreferencesUtils) {
-            if (apiProvider == null) apiProvider = ApiProvider().init(sharedPreferencesUtils)
+            apiProvider = ApiProvider().init(sharedPreferencesUtils)
         }
     }
 
