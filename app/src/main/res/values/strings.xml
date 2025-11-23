@@ -260,4 +260,6 @@
     <string name="ch_n_h_ng_b_ng_l_i">Chọn hạng bằng lái</string>
     <string name="ti_n_v_o">Tiền vào</string>
     <string name="ti_n_ra">Tiền ra</string>
+    <string name="s_i_n_tho_i">Số điện thoại</string>
+    <string name="m_t_kh_u">Mật khẩu</string>
 </resources>

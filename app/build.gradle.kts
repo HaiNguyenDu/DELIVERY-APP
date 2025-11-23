@@ -63,4 +63,5 @@ dependencies {
     implementation(libs.android.sdk)
     implementation(libs.android.ndk27)
     implementation(libs.glide)
+    implementation(libs.logging.interceptor)
 }

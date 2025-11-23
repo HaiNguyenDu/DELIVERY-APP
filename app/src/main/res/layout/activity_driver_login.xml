@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/size_80"
+        android:background="@drawable/background_login" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_12"
+        android:layout_marginBottom="@dimen/size_2"
+        android:text="@string/s_i_n_tho_i"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintBottom_toTopOf="@id/edtPhoneNumber" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_4"
+        android:layout_marginBottom="@dimen/size_8"
+        android:background="@drawable/bg_circle_stroke_8"
+        android:hint="@string/s_i_n_tho_i"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="@dimen/size_12"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintBottom_toTopOf="@id/textView1" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_12"
+        android:layout_marginBottom="@dimen/size_2"
+        android:text="@string/m_t_kh_u"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintBottom_toTopOf="@id/edtPassword" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_4"
+        android:layout_marginBottom="@dimen/size_30"
+        android:background="@drawable/bg_circle_stroke_8"
+        android:hint="@string/m_t_kh_u"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="@dimen/size_12"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintBottom_toTopOf="@id/flSignIn" />
+
+    <FrameLayout
+        android:id="@+id/flSignIn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_50"
+        android:layout_marginStart="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_20"
+        android:background="@drawable/bg_button_green"
+        android:elevation="@dimen/size_4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivLoginByFace"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/log_in"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/ivLoginByFace"
+        android:layout_width="@dimen/size_50"
+        android:layout_height="@dimen/size_50"
+        android:layout_marginStart="@dimen/size_16"
+        android:layout_marginEnd="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_20"
+        android:contentDescription="@null"
+        android:padding="@dimen/size_4"
+        android:src="@drawable/ic_face_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/flSignIn" />
+</androidx.constraintlayout.widget.ConstraintLayout>
