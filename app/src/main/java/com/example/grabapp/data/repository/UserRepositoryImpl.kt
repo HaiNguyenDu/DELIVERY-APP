@@ -1,7 +1,7 @@
 package com.example.grabapp.data.repository
 
 import com.example.grabapp.data.local.user.UserDao
-import com.example.grabapp.domain.UserRepository
+import com.example.grabapp.domain.repository.UserRepository
 import com.example.grabapp.domain.model.user.User
 import com.example.grabapp.domain.model.user.UserAddress
 import com.example.grabapp.domain.model.user.toDomain

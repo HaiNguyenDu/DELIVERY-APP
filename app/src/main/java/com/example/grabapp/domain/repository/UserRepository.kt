@@ -1,4 +1,4 @@
-package com.example.grabapp.domain
+package com.example.grabapp.domain.repository
 
 import com.example.grabapp.domain.model.user.User
 import com.example.grabapp.domain.model.user.UserAddress

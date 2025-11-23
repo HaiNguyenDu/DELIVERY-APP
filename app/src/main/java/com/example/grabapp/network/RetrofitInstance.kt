@@ -1,4 +1,4 @@
-package com.example.grabapp.data.api
+package com.example.grabapp.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -67,4 +67,5 @@ dependencies {
     implementation("androidx.room:room-runtime:2.8.3")
     kapt("androidx.room:room-compiler:2.8.3")
     implementation("androidx.room:room-ktx:2.8.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }
