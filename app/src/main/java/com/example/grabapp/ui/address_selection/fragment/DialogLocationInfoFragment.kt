@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.grabapp.R
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.databinding.FragmentDropOffInfoBinding
-import com.example.grabapp.model.EditTextEnum
+import com.example.grabapp.domain.enum.EditTextEnum
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

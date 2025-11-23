@@ -11,15 +11,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
+import com.example.grabapp.data.local.AppDatabase
 import com.example.grabapp.databinding.FragmentMainBinding
 import com.example.grabapp.ui.address_selection.AddressSelectionActivity
 import com.example.grabapp.ui.home.MainViewModel
+import com.example.grabapp.ui.home.MainViewModelFactory
 import com.example.grabapp.ui.home.adapter.ADSAdapter
 import com.example.grabapp.ui.user.ActivityUser
 import com.facebook.shimmer.Shimmer
+import kotlinx.coroutines.launch
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     val locationPermissionLauncher = registerForActivityResult(
@@ -42,13 +46,27 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
     }
 
     override fun getLazyViewModel(): Lazy<MainViewModel> =
-        lazy { ViewModelProvider(requireActivity())[MainViewModel::class.java] }
+        lazy {
+            val userDao = AppDatabase.getInstance(requireContext()).userDao()
+            val factory = MainViewModelFactory(userDao, requireActivity().application)
+            ViewModelProvider(requireActivity(),factory)[MainViewModel::class.java]
+        }
 
 
     override fun setUpClick() {
 
     }
-    private fun initView(){
+
+    private fun observerData() {
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            viewModel.user.collect {
+                if (it != null)
+                    binding.tvUsername.text = it.fullName
+            }
+        }
+    }
+
+    private fun initView() {
         binding.rcvQc.adapter = ADSAdapter()
         binding.rcvQc.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -56,11 +74,13 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         binding.rcvQc2.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         shimmer()
         observeView()
         initView()
+        observerData()
     }
 
     fun shimmer() {

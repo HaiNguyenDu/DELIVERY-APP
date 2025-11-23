@@ -30,8 +30,55 @@
         android:id="@+id/rcv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_recent" />
+    <LinearLayout
+        android:id="@+id/empty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recent"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/size_100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_recent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="empty_box.json"
+            app:lottie_loop="true"
+            app:lottie_repeatMode="reverse" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_16"
+            android:fontFamily="@font/medium"
+            android:textColor="@color/grey"
+            android:layout_gravity="center"
+            android:text="Hiện tại chưa có đơn hàng nào"/>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/size_150"
+            android:layout_height="@dimen/size_150"
+            app:lottie_fileName="loading_car.json"
+            android:visibility="visible"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_repeatMode="reverse" />
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

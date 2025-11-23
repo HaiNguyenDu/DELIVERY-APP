@@ -8,14 +8,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
 import com.example.grabapp.databinding.DialogBottomAddressSelectionBinding
-import com.example.grabapp.model.EditTextEnum
+import com.example.grabapp.domain.enum.EditTextEnum
 import com.example.grabapp.respone.Prediction
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressAdapter
@@ -26,7 +25,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
 import org.maplibre.android.MapLibre
-import java.io.File
 
 class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
     private var _binding: DialogBottomAddressSelectionBinding? = null

@@ -1,5 +1,6 @@
 package com.example.grabapp.base
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -11,9 +12,15 @@ import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.example.grabapp.R
 import com.example.grabapp.extention.setPadding
+import com.example.grabapp.ui.login.LoginActivity
+import com.example.grabapp.utils.SessionManager
+import kotlinx.coroutines.launch
 
 abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActivity() {
     abstract fun getLazyBinding(): Lazy<T>
@@ -26,9 +33,27 @@ abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActiv
         setIsLightThemeStatusBar()
         setContentView(binding.root)
         handleInsets()
+        observerTokenExpired()
 
     }
 
+    private fun observerTokenExpired(){
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                SessionManager.logoutEvent.collect {
+                    onTokenExpired()
+                }
+            }
+        }
+    }
+
+    private fun onTokenExpired(){
+        if (this is LoginActivity)
+            return
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
     private fun handleInsets() {
         val root = window.decorView.rootView
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->

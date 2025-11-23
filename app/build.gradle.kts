@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -10,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.grabapp"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -63,4 +64,8 @@ dependencies {
     implementation(libs.android.sdk)
     implementation(libs.android.ndk27)
     implementation(libs.glide)
+    implementation("androidx.room:room-runtime:2.8.3")
+    kapt("androidx.room:room-compiler:2.8.3")
+    implementation("androidx.room:room-ktx:2.8.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }

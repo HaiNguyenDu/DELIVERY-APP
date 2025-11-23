@@ -1,6 +1,6 @@
 package com.example.grabapp.respone
 
-import com.example.grabapp.model.Address
+import com.example.grabapp.domain.model.location.Address
 
 data class GeocodeResponse(
     val results: List<GeocodeResult>,

@@ -1,7 +1,5 @@
 package com.example.grabapp.respone
 
-import com.example.grabapp.model.Address
-
 data class Prediction(
     val description: String?,
     val matched_substrings: List<Any>?,
