@@ -37,7 +37,7 @@
         android:fontFamily="@font/medium"
         android:text="33.000D"
         android:textColor="@color/grey"
-        android:textSize="@dimen/size_12"
+        android:textSize="@dimen/size_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_address"/>
 

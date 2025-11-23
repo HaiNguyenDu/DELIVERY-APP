@@ -6,7 +6,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresPermission
 import com.example.grabapp.R
-import com.example.grabapp.data.api.IApiService
+import com.example.grabapp.data.api.MapApi
 import com.example.grabapp.network.RetrofitInstance
 import com.example.grabapp.domain.model.location.Address
 import com.example.grabapp.respone.AutoCompleteResponse
@@ -29,7 +29,7 @@ import kotlin.coroutines.suspendCoroutine
 class AddressRepository(context: Context) {
     private val apiService =
         RetrofitInstance.getInstance(context.getString(R.string.goong_api_url))
-            .create(IApiService::class.java)
+            .create(MapApi::class.java)
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
