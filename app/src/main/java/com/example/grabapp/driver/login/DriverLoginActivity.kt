@@ -50,12 +50,12 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
         lifecycleScope.launchWhenStarted {
             viewModel.errorMessage.collect { err ->
                 err?.let {
-
+                    Toast.makeText(this@DriverLoginActivity, it, Toast.LENGTH_SHORT).show()
                 }
             }
         }
         lifecycleScope.launchWhenStarted {
-            viewModel.isLoading.collect { loading ->
+            viewModel.loading.collect { loading ->
                 binding.flSignIn.isEnabled = !loading
             }
         }

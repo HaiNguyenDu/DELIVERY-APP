@@ -14,8 +14,8 @@ class DriverLoginViewModel(
     application: Application,
     private val authRepository: AuthRepository
 ) : BaseViewModel(application) {
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
 
     private val _loginEvent = MutableSharedFlow<Boolean>(replay = 0)
     val loginEvent = _loginEvent.asSharedFlow()
@@ -29,17 +29,17 @@ class DriverLoginViewModel(
             return
         }
         viewModelScope.launch {
-            _isLoading.value = true
+            _loading.value = true
             _errorMessage.value = null
 
             when (val res = authRepository.login(phone, password)) {
                 is AuthRepository.LoginResult.Success -> {
-                    _isLoading.value = false
+                    _loading.value = false
                     onLoginSuccess()
                 }
 
                 is AuthRepository.LoginResult.Error -> {
-                    _isLoading.value = false
+                    _loading.value = false
                     val msg = when (res.code) {
                         401 -> "Số điện thoại hoặc mật khẩu không đúng"
                         else -> res.message
