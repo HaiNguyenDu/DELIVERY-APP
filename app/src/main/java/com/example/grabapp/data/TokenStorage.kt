@@ -10,6 +10,7 @@ class TokenStorage(context: Context) {
         private const val KEY_ACCESS_TOKEN = "access_token"
         private const val KEY_REFRESH_TOKEN = "refresh_token"
         private const val KEY_TOKEN_TYPE = "token_type"
+        private const val KEY_USER_ID = "user_id"
     }
 
     private val prefs: SharedPreferences =
@@ -26,6 +27,13 @@ class TokenStorage(context: Context) {
     fun getAccessToken(): String? = prefs.getString(KEY_ACCESS_TOKEN, null)
     fun getRefreshToken(): String? = prefs.getString(KEY_REFRESH_TOKEN, null)
     fun getTokenType(): String? = prefs.getString(KEY_TOKEN_TYPE, null)
+    fun getUserId(): String? = prefs.getString(KEY_USER_ID, null)
+    
+    fun saveUserId(userId: String) {
+        prefs.edit {
+            putString(KEY_USER_ID, userId)
+        }
+    }
     
     fun hasToken(): Boolean = !getAccessToken().isNullOrEmpty()
     

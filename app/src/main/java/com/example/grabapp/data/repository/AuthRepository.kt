@@ -5,6 +5,7 @@ import com.example.grabapp.data.auth.AuthApi
 import com.example.grabapp.data.model.AuthRequest
 import com.example.grabapp.data.model.AuthResponse
 import com.example.grabapp.data.TokenStorage
+import com.example.grabapp.util.JwtDecoder
 import java.io.IOException
 
 class AuthRepository(
@@ -23,6 +24,13 @@ class AuthRepository(
                 val body = resp.body()
                 if (body != null && !body.accessToken.isNullOrEmpty()) {
                     tokenStorage.saveAuthTokens(body.accessToken, body.refreshToken, body.tokenType)
+                    
+                    // Decode JWT token and save user ID (UUID)
+                    val userId = JwtDecoder.extractUserId(body.accessToken)
+                    userId?.let {
+                        tokenStorage.saveUserId(it)
+                    }
+                    
                     LoginResult.Success(body)
                 } else {
                     LoginResult.Error(resp.code(), "Empty response from server")
