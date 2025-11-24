@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.grabapp.R
 import com.example.grabapp.databinding.DialogDetailPackageBinding
-import com.example.grabapp.domain.model.order.PackageInfo
 import com.example.grabapp.domain.enum.PackageTypeEnum
 import com.example.grabapp.domain.enum.SizeEnum
 import com.example.grabapp.domain.enum.getSizeEnum
+import com.example.grabapp.domain.model.order.PackageItemModel
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.PackageTypeAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -205,13 +205,12 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
         val selectedType = binding.rcvType.adapter?.let {
             (it as PackageTypeAdapter).getSelectedType()
         }?: PackageTypeEnum.KHAC
-        val newPackageInfo = PackageInfo(
-            weight = kg,
-            size = getSizeEnum(selectedText ?: ""),
-            typePackage = selectedType,
-            imageUri = viewModel.imageUri.value
+        val newPackageInfo = PackageItemModel(
+            weightKg = kg.toDouble(),
+            packageSize = getSizeEnum(selectedText ?: ""),
+            category = selectedType
         )
-        viewModel.setPackageInfo(newPackageInfo)
+        viewModel.updatePackageInfo(newPackageInfo)
         dismiss()
     }
 

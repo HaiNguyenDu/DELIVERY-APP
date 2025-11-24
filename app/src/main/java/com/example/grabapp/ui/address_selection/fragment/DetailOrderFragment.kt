@@ -64,22 +64,11 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
 
     private fun observerData() {
         lifecycleScope.launch {
-            viewModel.pickUpAddress.collect {
-                binding.tvPuAddress.text = it.getFormattedAddress()
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.dropOffAddress.collect {
-                binding.tvDrAddress.text = it.getFormattedAddress()
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.packageInfo.collect { packageInfo ->
-                packageInfo?.let {
-                    val detailText = packageInfo.toString()
-                    binding.tvDetailPackage.text = detailText
-                }
+            viewModel.orderForm.collect {
+                binding.tvPuAddress.text = it.pickupAddress.detail
+                binding.tvDrAddress.text = viewModel.getCurrentPackageInfo().dropOffAddress.detail
+                val detailText = viewModel.getCurrentPackageInfo().toString()
+                binding.tvDetailPackage.text = detailText
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.grabapp.respone
 
 import com.example.grabapp.domain.model.location.Address
+import com.example.grabapp.data.model.order.AddressInfo
 
 class PlaceDetailResponse(
     val result: PlaceDetailResult,
@@ -16,11 +17,11 @@ class PlaceDetailResult(
     val url: String = "",
     val name:String = ""
 ){
-    fun toAddress(): Address{
-        return Address(
-            this.geometry.location,
-            name,
-            formatted_address
+    fun toAddressInfo(): AddressInfo {
+        return AddressInfo(
+            latitude = this.geometry.location.lat,
+            longitude = this.geometry.location.lng,
+            detail = this.formatted_address,
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.grabapp.domain.model.order
+package com.example.grabapp.data.model.order
 
 import com.google.gson.annotations.SerializedName
 

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabapp.databinding.ItemHistoryBinding
-import com.example.grabapp.domain.model.order.OrderItem
+import com.example.grabapp.data.model.order.OrderItem
 import com.example.grabapp.extention.formatToVietNamTime
 
 class HistoryAdapter(

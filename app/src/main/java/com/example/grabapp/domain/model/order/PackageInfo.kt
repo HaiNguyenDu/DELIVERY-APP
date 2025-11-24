@@ -1,44 +1,24 @@
 package com.example.grabapp.domain.model.order
 
 import android.net.Uri
+import com.example.grabapp.data.model.order.AddressInfo
 import com.example.grabapp.domain.enum.PackageTypeEnum
+import com.example.grabapp.domain.enum.PayerTypeEnum
 import com.example.grabapp.domain.enum.SizeEnum
 
-class PackageInfo(
-    private val weight: Int,
-    private val size: SizeEnum,
-    private val typePackage: PackageTypeEnum,
-    private val imageUri: Uri?
-) {
-    fun setWeight(weight: Int) {
-        this.weight
-    }
-
-    fun setSize(size: SizeEnum) {
-        this.size
-    }
-
-    fun setTypePackage(typePackage: String) {
-        this.typePackage
-    }
-
-    fun getTypePackage(): PackageTypeEnum {
-        return typePackage
-    }
-
-    fun getWeight(): Int {
-        return weight
-    }
-
-    fun getSize(): SizeEnum {
-        return size
-    }
-
-    fun getImageUri(): Uri? {
-        return imageUri
-    }
-
+data class PackageItemModel(
+    val id: String = "",
+    val weightKg: Double = 0.0,
+    val packageSize: SizeEnum? = null,
+    val deliveryFee: Double = 0.0,
+    val codFee: Double = 0.0,
+    val payerType: PayerTypeEnum = PayerTypeEnum.SENDER,
+    val category: PackageTypeEnum = PackageTypeEnum.KHAC,
+    val description: String = "",
+    val dropOffAddress: AddressInfo = AddressInfo()
+)
+{
     override fun toString(): String {
-        return "${size.name}-$weight kg-${typePackage.value}"
+        return "${packageSize?.name}-$weightKg kg-${category.value}"
     }
 }

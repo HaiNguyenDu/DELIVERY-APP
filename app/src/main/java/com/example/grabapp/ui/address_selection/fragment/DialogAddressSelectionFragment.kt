@@ -140,13 +140,9 @@ class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
             }
         }
         lifecycleScope.launch {
-            viewModel.dropOffAddress.collect {
-                binding.edtDropOff.setText(it.getFormattedAddress())
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.pickUpAddress.collect {
-                binding.edtPickUp.setText(it.getFormattedAddress())
+            viewModel.orderForm.collect {
+                binding.edtPickUp.setText(it.pickupAddress.detail)
+                binding.edtDropOff.setText(it.listPackageInfo[viewModel.selectPackagePosition].dropOffAddress.detail)
             }
         }
     }

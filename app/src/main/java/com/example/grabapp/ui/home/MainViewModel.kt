@@ -6,7 +6,7 @@ import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.local.user.UserDao
 import com.example.grabapp.data.repository.OderRepositoryImpl
 import com.example.grabapp.data.repository.UserRepositoryImpl
-import com.example.grabapp.domain.model.order.OrderItem
+import com.example.grabapp.data.model.order.OrderItem
 import com.example.grabapp.domain.model.user.User
 import com.example.grabapp.domain.use_case.GetUserUseCase
 import com.example.grabapp.domain.use_case.InsertUserUseCase

@@ -1,6 +1,6 @@
 package com.example.grabapp.respone
 
-import com.example.grabapp.domain.model.location.Address
+import com.example.grabapp.data.model.order.AddressInfo
 
 data class GeocodeResponse(
     val results: List<GeocodeResult>,
@@ -18,12 +18,14 @@ data class GeocodeResult(
     val types: List<String>,
     val name: String?,
     val address: String?
-){
-    fun toAddress(): Address {
-        return Address(
-            this.geometry.location,
-            this.name ?: "",
-            this.address ?: ""
+) {
+    fun toAddressInfo(): AddressInfo {
+        return AddressInfo(
+            formatted_address,
+            "",
+            "",
+            this.geometry.location.lat,
+            this.geometry.location.lng
         )
     }
 }

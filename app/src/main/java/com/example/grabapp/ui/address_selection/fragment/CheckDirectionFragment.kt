@@ -75,18 +75,15 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
             ) {
                 val iconFactory = IconFactory.getInstance(requireContext())
 
-                val pickUp = viewModel.pickUpAddress.value
-                val dropOff = viewModel.dropOffAddress.value
+                val pickUp = viewModel.orderForm.value.pickupAddress
+                val dropOff = viewModel.getCurrentPackageInfo().dropOffAddress
 
-                if (pickUp == null || dropOff == null) return@setStyle
-
-                // Thêm marker
                 val startBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_map)
                     .scale(80, 80, false)
                 val startIcon = iconFactory.fromBitmap(startBitmap)
 
-                val startLatLng = LatLng(pickUp.coordinates.lat, pickUp.coordinates.lng)
-                val endLatLng = LatLng(dropOff.coordinates.lat, dropOff.coordinates.lng)
+                val startLatLng = LatLng(pickUp.latitude, pickUp.longitude)
+                val endLatLng = LatLng(dropOff.latitude, dropOff.longitude)
 
                 map.addMarker(
                     MarkerOptions().position(startLatLng).icon(startIcon).title("Điểm đi")

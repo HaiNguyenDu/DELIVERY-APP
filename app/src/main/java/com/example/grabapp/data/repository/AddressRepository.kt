@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.annotation.RequiresPermission
 import com.example.grabapp.R
 import com.example.grabapp.data.api.MapApi
+import com.example.grabapp.data.model.order.AddressInfo
 import com.example.grabapp.network.RetrofitInstance
 import com.example.grabapp.domain.model.location.Address
 import com.example.grabapp.respone.AutoCompleteResponse
@@ -136,13 +137,13 @@ class AddressRepository(context: Context) {
     }
 
     fun getDirectionData(
-        dropOff: Address,
-        pickUp: Address,
+        dropOff: AddressInfo,
+        pickUp: AddressInfo,
         onSuccess: (GoongDirectionApiResponse) -> Unit,
         onError: (String) -> Unit
     ) {
-        val origin = "${pickUp.coordinates.lat},${pickUp.coordinates.lng}"
-        val destination = "${dropOff.coordinates.lat},${dropOff.coordinates.lng}"
+        val origin = "${pickUp.latitude},${pickUp.longitude}"
+        val destination = "${dropOff.latitude},${dropOff.longitude}"
 
         Log.d("GoongAPI", "Requesting direction: origin=$origin dest=$destination")
 

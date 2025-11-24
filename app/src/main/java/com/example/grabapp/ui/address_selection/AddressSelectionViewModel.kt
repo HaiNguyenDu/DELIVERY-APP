@@ -8,9 +8,9 @@ import androidx.annotation.RequiresPermission
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.repository.AddressRepository
-import com.example.grabapp.domain.model.location.Address
 import com.example.grabapp.domain.enum.EditTextEnum
-import com.example.grabapp.domain.model.order.PackageInfo
+import com.example.grabapp.domain.model.order.OrderForm
+import com.example.grabapp.domain.model.order.PackageItemModel
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.respone.Prediction
@@ -32,11 +32,8 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     private var _lastFocusEdt: EditTextEnum = EditTextEnum.NOT_THING
     private val _lastCoordinates = MutableStateFlow(Coordinates(0.0, 0.0))
     val lastCoordinates: StateFlow<Coordinates> = _lastCoordinates
-    private val _pickUpAddress = MutableStateFlow(Address())
-    val pickUpAddress: StateFlow<Address> = _pickUpAddress
-
-    private val _dropOffAddress = MutableStateFlow(Address())
-    val dropOffAddress: StateFlow<Address> = _dropOffAddress
+    private val _orderForm = MutableStateFlow(OrderForm())
+    val orderForm: StateFlow<OrderForm> = _orderForm
     val _directionResponse = MutableStateFlow<GoongDirectionApiResponse?>(null)
     val directionResponse: StateFlow<GoongDirectionApiResponse?> = _directionResponse
 
@@ -44,16 +41,43 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     private var _imageUri = MutableStateFlow<Uri?>(null)
     val imageUri: StateFlow<Uri?> = _imageUri
 
-    private val _packageInfo = MutableStateFlow<PackageInfo?>(null)
-    val packageInfo: StateFlow<PackageInfo?> = _packageInfo
+    var selectPackagePosition = 0
 
     init {
         repository = AddressRepository.getInstance(application)
     }
 
-    fun setPackageInfo(packageInfo: PackageInfo) {
-        _packageInfo.value = packageInfo
+    fun updatePackageInfo(packageInfo: PackageItemModel) {
+        val updatedList = _orderForm.value.listPackageInfo.toMutableList()
+        if (selectPackagePosition in updatedList.indices) {
+            updatedList[selectPackagePosition] = packageInfo
+            _orderForm.value = _orderForm.value.copy(listPackageInfo = updatedList)
+        }
     }
+
+    fun addPackageInfo(packageInfo: PackageItemModel) {
+        val updatedList = _orderForm.value.listPackageInfo.toMutableList()
+        updatedList.add(packageInfo)
+        _orderForm.value = _orderForm.value.copy(listPackageInfo = updatedList)
+    }
+
+    fun deletePackageInfo(position: Int) {
+        val updatedList = _orderForm.value.listPackageInfo.toMutableList()
+        if (position in updatedList.indices) {
+            updatedList.removeAt(position)
+            _orderForm.value = _orderForm.value.copy(listPackageInfo = updatedList)
+        }
+    }
+
+    fun getPackageInfo(position: Int): PackageItemModel {
+        return _orderForm.value.listPackageInfo[position]
+    }
+
+    fun getCurrentPackageInfo(): PackageItemModel {
+        return _orderForm.value.listPackageInfo[selectPackagePosition]
+    }
+
+
 
     fun setImageUri(uri: Uri?, onSuccess: (() -> Unit) = {}) {
         _imageUri.value = uri
@@ -73,36 +97,51 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
         return _edtLastTextEnumClicked
     }
 
-    fun setAddress(prediction: Prediction, onSuccess: () -> Unit) {
+    fun setAddress(prediction: Prediction, position: Int = 0, onSuccess: () -> Unit) {
         prediction.place_id?.let { id ->
-            repository.getDetailAddressById(id, {
+            repository.getDetailAddressById(id, { detailResponse ->
                 when (_lastFocusEdt) {
                     EditTextEnum.DROP_OFF -> {
-                        _dropOffAddress.value = it.result.toAddress()
-                        if (_pickUpAddress.value.address.isNotEmpty() && pagePosition.value == AddressSelectionPageAdapter.FRAGMENT_MAIN) {
+                        val currentOrder = _orderForm.value
+                        if (currentOrder.listPackageInfo.isNotEmpty()) {
+                            val updatedPackageList = currentOrder.listPackageInfo.toMutableList()
+                            val firstPackage = updatedPackageList[position].copy(
+                                dropOffAddress = detailResponse.result.toAddressInfo()
+                            )
+                            updatedPackageList[position] = firstPackage
+                            _orderForm.value =
+                                currentOrder.copy(listPackageInfo = updatedPackageList)
+                        }
+                        if (currentOrder.pickupAddress?.detail?.isNotEmpty() == true
+                            && pagePosition.value == AddressSelectionPageAdapter.FRAGMENT_MAIN
+                        ) {
                             _pagePosition.value = FRAGMENT_DETAIL_ORDER
                             onSuccess()
                         }
                     }
 
                     EditTextEnum.PICK_UP -> {
-                        _pickUpAddress.value = it.result.toAddress()
-                        if (_dropOffAddress.value.address.isNotEmpty() && pagePosition.value == AddressSelectionPageAdapter.FRAGMENT_MAIN) {
-                            _pagePosition.value = FRAGMENT_DETAIL_ORDER
+                        val currentOrder = _orderForm.value
+                        _orderForm.value = currentOrder.copy(
+                            pickupAddress = detailResponse.result.toAddressInfo()
+                        )
+
+                        if (currentOrder.listPackageInfo.firstOrNull()?.dropOffAddress?.detail?.isNotEmpty() == true
+                            && pagePosition.value == AddressSelectionPageAdapter.FRAGMENT_MAIN
+                        ) {
+                            _pagePosition.value = AddressSelectionPageAdapter.FRAGMENT_DETAIL_ORDER
                             onSuccess()
                         }
                     }
 
-                    else -> {
-
-                    }
+                    else -> {}
                 }
-
             }, {
-
+                // Handle error
             })
         }
     }
+
 
     fun setLastFocusEdt(editText: EditTextEnum) {
         this._lastFocusEdt = editText
@@ -130,10 +169,12 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
         val coordinates = lastCoordinates.value
         viewModelScope.launch {
             repository.getAddressByCoordinates(coordinates, { response ->
-                val address = response.results.getOrNull(0)?.toAddress()
+                val address = response.results.getOrNull(0)?.toAddressInfo()
                 address?.let {
                     viewModelScope.launch {
-                        _pickUpAddress.emit(it)
+                        _orderForm.value = _orderForm.value.copy(
+                            pickupAddress = it
+                        )
                     }
                 }
             }, {
@@ -143,9 +184,10 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     }
 
     fun getDirection() {
+        if(_orderForm.value.listPackageInfo.isEmpty()) return
         repository.getDirectionData(
-            dropOffAddress.value,
-            pickUpAddress.value,
+            _orderForm.value.listPackageInfo[0].dropOffAddress,
+            _orderForm.value.pickupAddress,
             onSuccess = { data ->
                 Log.e("checkOrder", "Route count: ${data.routes?.size}")
 

@@ -54,6 +54,5 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         }.attach()
         binding.viewPager.isUserInputEnabled = false
-
     }
 }

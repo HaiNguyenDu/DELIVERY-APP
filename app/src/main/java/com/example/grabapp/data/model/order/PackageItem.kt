@@ -1,5 +1,6 @@
-package com.example.grabapp.domain.model.order
+package com.example.grabapp.data.model.order
 
+import com.example.grabapp.data.model.order.AddressInfo
 import com.google.gson.annotations.SerializedName
 
 data class PackageItem(

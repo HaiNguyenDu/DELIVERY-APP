@@ -56,8 +56,8 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
 
         edtAddress.setText(
             when (viewModel.getLastEdtTextClicked()) {
-                EditTextEnum.DROP_OFF -> viewModel.dropOffAddress.value.getFormattedAddress()
-                EditTextEnum.PICK_UP -> viewModel.pickUpAddress.value.getFormattedAddress()
+                EditTextEnum.DROP_OFF -> viewModel.getCurrentPackageInfo().dropOffAddress.detail
+                EditTextEnum.PICK_UP -> viewModel.orderForm.value.pickupAddress.detail
                 else -> ""
             }
         )
@@ -73,8 +73,8 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
 
     private fun setupMap() {
         val address = when (viewModel.getLastEdtTextClicked()) {
-            EditTextEnum.DROP_OFF -> viewModel.dropOffAddress.value
-            else -> viewModel.pickUpAddress.value
+            EditTextEnum.DROP_OFF -> viewModel.getCurrentPackageInfo().dropOffAddress
+            else -> viewModel.orderForm.value.pickupAddress
         }
 
         binding.mapView.getMapAsync { map ->
@@ -87,7 +87,7 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
                     .scale(100, 100, false)
                 val icon = iconFactory.fromBitmap(resizedBitmap)
 
-                val latLng = LatLng(address.coordinates.lat, address.coordinates.lng)
+                val latLng = LatLng(address.latitude, address.longitude)
 
                 map.addMarker(MarkerOptions().position(latLng).icon(icon))
                 map.cameraPosition = CameraPosition.Builder()
