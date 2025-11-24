@@ -3,6 +3,8 @@ package com.example.grabapp.driver.home.message
 import android.view.View
 import androidx.core.graphics.Insets
 import com.example.grabapp.base.BaseFragment
+import com.example.grabapp.data.repository.AIServiceRepository
+import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.databinding.FragmentMessageBinding
 import com.example.grabapp.driver.home.DriverHomeViewModel
 
@@ -11,7 +13,11 @@ class MessageFragment : BaseFragment<FragmentMessageBinding, DriverHomeViewModel
         lazy { FragmentMessageBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel(): Lazy<DriverHomeViewModel> =
-        lazy { DriverHomeViewModel(requireActivity().application) }
+        lazy {
+            val fileRepository = FileRepository()
+            val aiServiceRepository = AIServiceRepository()
+            DriverHomeViewModel(requireActivity().application, fileRepository, aiServiceRepository)
+        }
 
     override fun setUpClick() = Unit
 

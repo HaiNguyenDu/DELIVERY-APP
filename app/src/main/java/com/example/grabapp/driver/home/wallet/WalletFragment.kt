@@ -6,6 +6,8 @@ import androidx.core.graphics.Insets
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.base.BaseFragment
+import com.example.grabapp.data.repository.AIServiceRepository
+import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.databinding.FragmentWalletBinding
 import com.example.grabapp.driver.home.DriverHomeViewModel
 import com.example.grabapp.driver.home.wallet.adapter.TransactionHistoryAdapter
@@ -20,7 +22,11 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, DriverHomeViewModel>(
         lazy { FragmentWalletBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel(): Lazy<DriverHomeViewModel> =
-        lazy { DriverHomeViewModel(requireActivity().application) }
+        lazy {
+            val fileRepository = FileRepository()
+            val aiServiceRepository = AIServiceRepository()
+            DriverHomeViewModel(requireActivity().application, fileRepository, aiServiceRepository)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

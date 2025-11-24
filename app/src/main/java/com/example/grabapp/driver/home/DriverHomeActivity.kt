@@ -5,6 +5,8 @@ import android.view.View
 import androidx.core.graphics.Insets
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
+import com.example.grabapp.data.repository.AIServiceRepository
+import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.databinding.ActivityDriverHomeBinding
 import com.example.grabapp.driver.home.data.TabType
 import com.example.grabapp.extention.onClickWithScale
@@ -22,7 +24,11 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
         lazy { ActivityDriverHomeBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel(): Lazy<DriverHomeViewModel> =
-        lazy { DriverHomeViewModel(application) }
+        lazy {
+            val fileRepository = FileRepository()
+            val aiServiceRepository = AIServiceRepository()
+            DriverHomeViewModel(application, fileRepository, aiServiceRepository)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
