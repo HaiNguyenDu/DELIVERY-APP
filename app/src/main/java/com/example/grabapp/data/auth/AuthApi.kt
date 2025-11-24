@@ -1,5 +1,7 @@
-package com.example.grabapp.data
+package com.example.grabapp.data.auth
 
+import com.example.grabapp.data.model.AuthRequest
+import com.example.grabapp.data.model.AuthResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers

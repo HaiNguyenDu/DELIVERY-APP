@@ -5,14 +5,13 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.api.RetrofitProvider
 import com.example.grabapp.base.BaseActivity
-import com.example.grabapp.data.AuthApi
+import com.example.grabapp.data.auth.AuthApi
 import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.repository.AuthRepository
 import com.example.grabapp.databinding.ActivityDriverLoginBinding
 import com.example.grabapp.driver.home.DriverHomeActivity
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
-import retrofit2.Retrofit
 
 class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLoginViewModel>() {
     override fun getLazyBinding(): Lazy<ActivityDriverLoginBinding> =

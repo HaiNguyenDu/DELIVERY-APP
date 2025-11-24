@@ -53,14 +53,14 @@
         android:padding="@dimen/size_24"
         app:layout_constraintTop_toBottomOf="@id/textView2">
 
-        <TextView
+        <ImageView
             android:id="@+id/tvSummaryName"
             android:layout_width="@dimen/size_80"
             android:layout_height="@dimen/size_80"
             android:background="@drawable/bg_gradient_green_border_16"
+            android:contentDescription="@null"
             android:fontFamily="@font/bold"
             android:gravity="center"
-            android:text="@string/v"
             android:textColor="@color/white"
             android:textSize="@dimen/font_30"
             app:layout_constraintStart_toStartOf="parent"

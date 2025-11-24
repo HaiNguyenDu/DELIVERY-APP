@@ -1,4 +1,4 @@
-package com.example.grabapp.data
+package com.example.grabapp.data.model
 
 data class AuthRequest (
     val phone: String,

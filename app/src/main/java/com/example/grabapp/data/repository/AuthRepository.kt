@@ -1,9 +1,9 @@
 package com.example.grabapp.data.repository
 
 import retrofit2.HttpException
-import com.example.grabapp.data.AuthApi
-import com.example.grabapp.data.AuthRequest
-import com.example.grabapp.data.AuthResponse
+import com.example.grabapp.data.auth.AuthApi
+import com.example.grabapp.data.model.AuthRequest
+import com.example.grabapp.data.model.AuthResponse
 import com.example.grabapp.data.TokenStorage
 import java.io.IOException
 
