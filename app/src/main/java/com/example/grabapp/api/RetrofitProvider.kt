@@ -8,9 +8,15 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitProvider {
     fun create(baseUrl: String): Retrofit {
-        val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+        val bodyLogger = HttpLoggingInterceptor().apply { 
+            level = HttpLoggingInterceptor.Level.BODY 
+        }
+        val headersLogger = HttpLoggingInterceptor().apply { 
+            level = HttpLoggingInterceptor.Level.HEADERS 
+        }
+        val selectiveLogging = SelectiveLoggingInterceptor(bodyLogger, headersLogger)
         val client = OkHttpClient.Builder()
-            .addInterceptor(logging)
+            .addInterceptor(selectiveLogging)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .build()

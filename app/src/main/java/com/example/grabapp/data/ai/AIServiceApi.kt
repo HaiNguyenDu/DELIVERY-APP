@@ -1,6 +1,7 @@
 package com.example.grabapp.data.ai
 
 import com.example.grabapp.data.model.UploadFaceRequest
+import com.example.grabapp.data.model.VerifyFaceResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -22,5 +23,5 @@ interface AIServiceApi {
     suspend fun verifyFace(
         @Part("uid") uid: RequestBody,
         @Part file: MultipartBody.Part
-    ): Response<String>
+    ): Response<VerifyFaceResponse>
 }

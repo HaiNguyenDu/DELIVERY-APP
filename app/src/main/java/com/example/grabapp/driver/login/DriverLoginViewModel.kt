@@ -80,9 +80,14 @@ class DriverLoginViewModel(
 
                 if (response.isSuccessful) {
                     val result = response.body()
-                    if (result != null) {
-                        _faceVerifyState.value = FaceVerifyState.Success
-                        onLoginSuccess()
+                    if (result != null && result.success == true) {
+                        val match = result.data?.match == true
+                        if (match) {
+                            _faceVerifyState.value = FaceVerifyState.Success
+                            onLoginSuccess()
+                        } else {
+                            _faceVerifyState.value = FaceVerifyState.Error("Khuôn mặt không khớp. Vui lòng thử lại.")
+                        }
                     } else {
                         _faceVerifyState.value = FaceVerifyState.Error("Xác thực thất bại")
                     }

@@ -4,6 +4,7 @@ import com.example.grabapp.api.RetrofitProvider
 import com.example.grabapp.common.BASE_URL
 import com.example.grabapp.data.ai.AIServiceApi
 import com.example.grabapp.data.model.UploadFaceRequest
+import com.example.grabapp.data.model.VerifyFaceResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -23,7 +24,7 @@ class AIServiceRepository {
     suspend fun verifyFace(
         uid: RequestBody,
         file: MultipartBody.Part
-    ): Response<String> {
+    ): Response<VerifyFaceResponse> {
         return api.verifyFace(uid, file)
     }
 }

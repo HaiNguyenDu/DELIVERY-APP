@@ -25,6 +25,7 @@ import java.io.File
 class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLoginViewModel>() {
     private lateinit var photoFile: File
     private var verifyingDialog: VerifyingDialog? = null
+    private val tokenStorage by lazy { TokenStorage(applicationContext) }
 
     private val requestCameraPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -42,18 +43,14 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
     private val takePicture =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
+                val userId = tokenStorage.getUserId()
                 val uri = FileProvider.getUriForFile(
                     this,
                     "com.example.grabapp.provider",
                     photoFile
                 )
-                val phone = binding.edtPhoneNumber.text?.toString()?.trim() ?: ""
-                if (phone.isBlank()) {
-                    Toast.makeText(this, "Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show()
-                    return@registerForActivityResult
-                }
                 showVerifyingDialog()
-                viewModel.verifyFace(uri, phone)
+                viewModel.verifyFace(uri, userId!!)
             }
         }
 
@@ -94,6 +91,16 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
     }
 
     private fun checkCameraPermissionAndOpen() {
+        val userId = tokenStorage.getUserId()
+        if (userId == null) {
+            Toast.makeText(
+                this,
+                "Vui lòng đăng nhập lần đầu bằng số điện thoại và mật khẩu",
+                Toast.LENGTH_LONG
+            ).show()
+            return
+        }
+
         when {
             ContextCompat.checkSelfPermission(
                 this,
