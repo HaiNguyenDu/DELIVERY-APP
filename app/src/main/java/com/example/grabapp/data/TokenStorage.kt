@@ -25,6 +25,10 @@ class TokenStorage(context: Context) {
 
     fun getAccessToken(): String? = prefs.getString(KEY_ACCESS_TOKEN, null)
     fun getRefreshToken(): String? = prefs.getString(KEY_REFRESH_TOKEN, null)
+    fun getTokenType(): String? = prefs.getString(KEY_TOKEN_TYPE, null)
+    
+    fun hasToken(): Boolean = !getAccessToken().isNullOrEmpty()
+    
     fun clear() {
         prefs.edit { clear() }
     }
