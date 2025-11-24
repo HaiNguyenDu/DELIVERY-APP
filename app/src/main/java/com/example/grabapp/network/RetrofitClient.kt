@@ -36,7 +36,10 @@ object RetrofitClient {
             .create()
         val okHttp = OkHttpClient.Builder()
             .addInterceptor(
-                AuthInterceptor(sharedPreferencesUtils, apiAuth)
+                AuthInterceptor(sharedPreferencesUtils)
+            )
+            .authenticator(
+                TokenAuthenticator(sharedPreferencesUtils,apiAuth)
             )
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY

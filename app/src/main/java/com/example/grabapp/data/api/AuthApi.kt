@@ -4,6 +4,7 @@ import com.example.grabapp.data.model.auth.LoginRequest
 import com.example.grabapp.data.model.auth.LoginResponse
 import com.example.grabapp.data.model.auth.RefreshTokenRequest
 import com.example.grabapp.data.model.auth.RefreshTokenResponse
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -16,8 +17,5 @@ interface AuthApi {
     ): Response<LoginResponse>
 
     @POST("auth/refresh")
-    suspend fun refreshToken(@Body request: RefreshTokenRequest): Response<RefreshTokenResponse>
-
-    @GET("auth/test")
-    suspend fun test(): Response<Any>
+    fun refreshToken(@Body request: RefreshTokenRequest): Call<RefreshTokenResponse>
 }

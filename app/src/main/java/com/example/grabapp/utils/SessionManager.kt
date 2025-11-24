@@ -7,7 +7,9 @@ object SessionManager {
     private val _logoutEvent = MutableSharedFlow<Unit>(replay = 0)
     val logoutEvent: SharedFlow<Unit> = _logoutEvent
 
-    suspend fun triggerLogout() {
-        _logoutEvent.emit(Unit)
+    fun triggerLogout() {
+        runCatching {
+            _logoutEvent.tryEmit(Unit)
+        }
     }
 }
