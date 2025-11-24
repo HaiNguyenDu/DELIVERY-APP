@@ -1,19 +1,62 @@
 package com.example.grabapp.driver.login
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.api.RetrofitProvider
 import com.example.grabapp.base.BaseActivity
-import com.example.grabapp.data.auth.AuthApi
 import com.example.grabapp.data.TokenStorage
+import com.example.grabapp.data.auth.AuthApi
+import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.AuthRepository
 import com.example.grabapp.databinding.ActivityDriverLoginBinding
 import com.example.grabapp.driver.home.DriverHomeActivity
+import com.example.grabapp.model.VerifyingState
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
+import com.example.grabapp.view.dialog.VerifyingDialog
+import java.io.File
 
 class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLoginViewModel>() {
+    private lateinit var photoFile: File
+    private var verifyingDialog: VerifyingDialog? = null
+
+    private val requestCameraPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                openCamera()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Cần cấp quyền camera để đăng nhập bằng khuôn mặt",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                val uri = FileProvider.getUriForFile(
+                    this,
+                    "com.example.grabapp.provider",
+                    photoFile
+                )
+                val phone = binding.edtPhoneNumber.text?.toString()?.trim() ?: ""
+                if (phone.isBlank()) {
+                    Toast.makeText(this, "Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show()
+                    return@registerForActivityResult
+                }
+                showVerifyingDialog()
+                viewModel.verifyFace(uri, phone)
+            }
+        }
+
     override fun getLazyBinding(): Lazy<ActivityDriverLoginBinding> =
         lazy { ActivityDriverLoginBinding.inflate(layoutInflater) }
 
@@ -22,12 +65,17 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
             val retrofit = RetrofitProvider.create("https://quickdn.undo.it/")
             val api = retrofit.create(AuthApi::class.java)
             val tokenStorage = TokenStorage(applicationContext)
-            val repo = AuthRepository(api, tokenStorage)
-            DriverLoginViewModel(application, repo)
+            val authRepo = AuthRepository(api, tokenStorage)
+            val aiServiceRepo = AIServiceRepository()
+            DriverLoginViewModel(application, authRepo, aiServiceRepo)
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        photoFile = File.createTempFile(
+            "FACE_VERIFY_", ".jpg",
+            getExternalFilesDir("Pictures")
+        )
         setupListener()
         observeViewModel()
     }
@@ -40,9 +88,42 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
                 viewModel.login(phone, password)
             }
             ivLoginByFace.onClickWithScale {
-
+                checkCameraPermissionAndOpen()
             }
         }
+    }
+
+    private fun checkCameraPermissionAndOpen() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                openCamera()
+            }
+
+            else -> {
+                requestCameraPermission.launch(Manifest.permission.CAMERA)
+            }
+        }
+    }
+
+    private fun openCamera() {
+        if (::photoFile.isInitialized) {
+            val uri = FileProvider.getUriForFile(
+                this,
+                "com.example.grabapp.provider",
+                photoFile
+            )
+            takePicture.launch(uri)
+        }
+    }
+
+    private fun showVerifyingDialog() {
+        verifyingDialog = VerifyingDialog().apply {
+            isCancelable = false
+        }
+        verifyingDialog?.show(supportFragmentManager, "VerifyingDialog")
     }
 
     private fun observeViewModel() {
@@ -62,10 +143,44 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
         lifecycleScope.launchWhenStarted {
             viewModel.loginEvent.collect { success ->
                 if (success) {
+                    verifyingDialog?.dismiss()
                     startActivity<DriverHomeActivity>()
                     finish()
                 }
             }
         }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.faceVerifyState.collect { state ->
+                when (state) {
+                    is FaceVerifyState.Idle -> {
+                    }
+
+                    is FaceVerifyState.Verifying -> {
+                        verifyingDialog?.view?.post {
+                            verifyingDialog?.setState(VerifyingState.Verifying)
+                        } ?: run {
+                            window.decorView.postDelayed({
+                                verifyingDialog?.setState(VerifyingState.Verifying)
+                            }, 200)
+                        }
+                    }
+
+                    is FaceVerifyState.Success -> {
+                        verifyingDialog?.view?.post {
+                            verifyingDialog?.setState(VerifyingState.Success)
+                        }
+                    }
+
+                    is FaceVerifyState.Error -> {
+                        verifyingDialog?.dismiss()
+                        verifyingDialog = null
+                        Toast.makeText(this@DriverLoginActivity, state.message, Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+            }
+        }
     }
 }
+
