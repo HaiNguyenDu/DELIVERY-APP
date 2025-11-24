@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.grabapp.R
 import com.example.grabapp.databinding.DialogDetailPackageBinding
@@ -21,6 +22,7 @@ import com.example.grabapp.domain.enum.PackageTypeEnum
 import com.example.grabapp.domain.enum.SizeEnum
 import com.example.grabapp.domain.enum.getSizeEnum
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
+import com.example.grabapp.ui.address_selection.adapter.PackageTypeAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -100,6 +102,8 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
         } else setUpBtnCamera(false)
         binding.btnConfirm.alpha = 0.6f
         binding.btnConfirm.isEnabled = false
+        binding.rcvType.adapter = PackageTypeAdapter()
+        binding.rcvType.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     fun setUpBtnCamera(value: Boolean) {
@@ -198,12 +202,13 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
         val kg = binding.edtWeight.text.toString().toIntOrNull() ?: 1
         val selectedText =
             binding.chipGroupSize.findViewById<Chip?>(binding.chipGroupSize.checkedChipId)?.text?.toString()
-        val selectedType =
-            binding.chipGroupGoodsType.findViewById<Chip?>(binding.chipGroupGoodsType.checkedChipId)?.text?.toString()
+        val selectedType = binding.rcvType.adapter?.let {
+            (it as PackageTypeAdapter).getSelectedType()
+        }?: PackageTypeEnum.KHAC
         val newPackageInfo = PackageInfo(
             weight = kg,
             size = getSizeEnum(selectedText ?: ""),
-            typePackage = PackageTypeEnum.getPackageTypeByString(selectedType ?: ""),
+            typePackage = selectedType,
             imageUri = viewModel.imageUri.value
         )
         viewModel.setPackageInfo(newPackageInfo)
