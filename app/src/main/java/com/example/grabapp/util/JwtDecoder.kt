@@ -13,15 +13,11 @@ object JwtDecoder {
             if (parts.size != 3) {
                 return null
             }
-
-            // Decode payload (second part)
             val payload = parts[1]
 
-            // Base64 URL decode
             val decodedBytes = Base64.decode(payload, Base64.URL_SAFE or Base64.NO_WRAP)
             val decodedString = String(decodedBytes, Charsets.UTF_8)
 
-            // Parse JSON to JwtPayload
             gson.fromJson(decodedString, JwtPayload::class.java)
         } catch (e: Exception) {
             e.printStackTrace()

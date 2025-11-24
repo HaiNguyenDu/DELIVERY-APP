@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.grabapp.base.BaseFragment
+import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.databinding.FragmentDriverProfileBinding
@@ -18,6 +19,8 @@ import com.example.grabapp.extention.onClickWithScale
 import kotlinx.coroutines.launch
 
 class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverHomeViewModel>() {
+    private val tokenStorage by lazy { TokenStorage(requireContext()) }
+
     override fun getLazyBinding(): Lazy<FragmentDriverProfileBinding> =
         lazy { FragmentDriverProfileBinding.inflate(layoutInflater) }
 
@@ -35,9 +38,16 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                // TODO: Lấy UUID thực tế của driver từ TokenStorage hoặc UserInfo
-                val uid = "driver-uuid-placeholder"
-                viewModel.uploadDriverFace(uri, uid)
+                val userId = tokenStorage.getUserId()
+                if (userId != null) {
+                    viewModel.uploadDriverFace(uri, userId)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Không tìm thấy thông tin người dùng.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             } else {
                 Toast.makeText(requireContext(), "Không có ảnh nào được chọn", Toast.LENGTH_SHORT)
                     .show()
