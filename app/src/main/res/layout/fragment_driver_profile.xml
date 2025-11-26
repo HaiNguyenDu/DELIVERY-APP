@@ -12,7 +12,7 @@
         android:id="@+id/emptyView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="-24dp"
+        android:layout_marginBottom="-32dp"
         android:background="@drawable/bg_gradient_green_no_border"
         app:layout_constraintBottom_toBottomOf="@id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_12"
         android:background="@drawable/bg_border_stroke_white_12_90_per"
         android:padding="@dimen/size_24"
         app:layout_constraintTop_toBottomOf="@id/textView2">

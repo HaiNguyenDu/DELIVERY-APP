@@ -5,6 +5,66 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".driver.setting.SettingActivity">
+    android:background="@drawable/img_home_background">
+
+    <View
+        android:id="@+id/emptyView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="-24dp"
+        android:background="@drawable/bg_gradient_green_no_border"
+        app:layout_constraintBottom_toBottomOf="@id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/flBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_18"
+        android:padding="@dimen/size_6"
+        app:layout_constraintBottom_toBottomOf="@id/emptyView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_24"
+        android:layout_weight="1"
+        android:fontFamily="@font/bold"
+        android:text="@string/ch_nh_s_a_h_s"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/flBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:gravity="start"
+        android:text="@string/c_p_nh_t_th_ng_tin_c_nh_n"
+        android:textColor="@color/grey_93"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/flBack"
+        app:layout_constraintTop_toBottomOf="@id/textView1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
