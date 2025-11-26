@@ -23,4 +23,5 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="statusBarBackground">@color/white</item>
     </style>
+
 </resources>

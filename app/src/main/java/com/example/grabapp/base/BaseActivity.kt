@@ -34,7 +34,6 @@ abstract class BaseActivity<T : ViewBinding, V : BaseViewModel> : AppCompatActiv
         setContentView(binding.root)
         handleInsets()
         observerTokenExpired()
-
     }
 
     private fun observerTokenExpired(){
