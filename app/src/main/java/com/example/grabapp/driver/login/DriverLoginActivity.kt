@@ -3,6 +3,7 @@ package com.example.grabapp.driver.login
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -138,6 +139,7 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
             viewModel.errorMessage.collect { err ->
                 err?.let {
                     Toast.makeText(this@DriverLoginActivity, it, Toast.LENGTH_SHORT).show()
+                    Log.e("DriverLoginActivity", it)
                 }
             }
         }
@@ -184,6 +186,7 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
                         verifyingDialog = null
                         Toast.makeText(this@DriverLoginActivity, state.message, Toast.LENGTH_LONG)
                             .show()
+                        Log.e("DriverLoginActivity", state.message)
                     }
                 }
             }
