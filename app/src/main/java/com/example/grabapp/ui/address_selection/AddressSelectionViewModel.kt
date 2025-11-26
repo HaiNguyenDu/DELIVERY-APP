@@ -55,9 +55,20 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
         }
     }
 
+    fun isHashInfoPackage(): Boolean {
+        val listPackage = _orderForm.value.listPackageInfo
+        listPackage.forEach {
+            if (it.weightKg == 0.0 || !it.isHashInfo()) {
+                return false
+            }
+        }
+        return true
+    }
+
     fun addPackageInfo(packageInfo: PackageItemModel) {
         val updatedList = _orderForm.value.listPackageInfo.toMutableList()
         updatedList.add(packageInfo)
+        selectPackagePosition = updatedList.size - 1
         _orderForm.value = _orderForm.value.copy(listPackageInfo = updatedList)
     }
 
@@ -73,10 +84,17 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
         return _orderForm.value.listPackageInfo[position]
     }
 
+    fun clearOrderForm() {
+        _orderForm.value = OrderForm(
+            pickupAddress = _orderForm.value.pickupAddress,
+            listPackageInfo = listOf(PackageItemModel())
+        )
+        selectPackagePosition = 0
+    }
+
     fun getCurrentPackageInfo(): PackageItemModel {
         return _orderForm.value.listPackageInfo[selectPackagePosition]
     }
-
 
 
     fun setImageUri(uri: Uri?, onSuccess: (() -> Unit) = {}) {
@@ -184,7 +202,7 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     }
 
     fun getDirection() {
-        if(_orderForm.value.listPackageInfo.isEmpty()) return
+        if (_orderForm.value.listPackageInfo.isEmpty()) return
         repository.getDirectionData(
             _orderForm.value.listPackageInfo[0].dropOffAddress,
             _orderForm.value.pickupAddress,

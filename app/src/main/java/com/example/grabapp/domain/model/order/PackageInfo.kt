@@ -21,4 +21,8 @@ data class PackageItemModel(
     override fun toString(): String {
         return "${packageSize?.name}-$weightKg kg-${category.value}"
     }
+
+    fun isHashInfo(): Boolean{
+        return !(weightKg == 0.0 || dropOffAddress.name.isEmpty() || dropOffAddress.detail.isEmpty() || dropOffAddress.phone.isEmpty())
+    }
 }

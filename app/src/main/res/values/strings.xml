@@ -239,4 +239,5 @@
     <string name="password">Mật khẩu</string>
     <string name="enter_password">Nhập mật khẩu của bạn</string>
     <string name="enter_password_fail">Mật khẩu không hợp lệ</string>
+    <string name="fill_full_info">Vui lòng nhập đầy đủ thông tin đơn hàng</string>
 </resources>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/size_20"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ic_drop_off_location"
+        android:layout_width="@dimen/size_12"
+        android:layout_height="@dimen/size_12"
+        android:src="@drawable/ic_now_location_red"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_dr_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_dr_address" />
+
+    <TextView
+        android:id="@+id/tv_dr_address"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_20"
+        android:ellipsize="end"
+        android:fontFamily="@font/bold"
+        android:maxLines="1"
+        android:text="Thêm địa chỉ nhận hàng"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ic_drop_off_location"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layout_dr_info"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/tv_dr_address"
+        app:layout_constraintStart_toStartOf="@+id/tv_dr_address"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dr_address">
+
+        <TextView
+            android:id="@+id/tv_dr_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/medium"
+            android:maxLines="1"
+            android:text="Thêm Người Nhận Hàng"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/font_12" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_3"
+            android:layout_height="@dimen/size_3"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/size_5"
+            android:backgroundTint="@color/text_color"
+            app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
+            app:layout_constraintEnd_toEndOf="@+id/ic_pick_up_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location" />
+
+        <TextView
+            android:id="@+id/tv_dr_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/medium"
+            android:maxLines="1"
+            android:text="Thêm Số Điện Thoại Người Nhận"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/font_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:src="@drawable/ic_many_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_detail_package" />
+
+    <TextView
+        android:id="@+id/tv_detail_package"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_20"
+        android:ellipsize="end"
+        android:fontFamily="@font/bold"
+        android:maxLines="1"
+        android:text="@string/default_detail_info"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ic_drop_off_location"
+        app:layout_constraintTop_toBottomOf="@+id/layout_dr_info" />
+
+    <LinearLayout
+        android:id="@+id/layout_type_package"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/size_30"
+        app:layout_constraintEnd_toEndOf="@+id/tv_type_name"
+        app:layout_constraintStart_toStartOf="@+id/tv_detail_package"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_package">
+
+        <TextView
+            android:id="@+id/tv_package"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/medium"
+            android:maxLines="1"
+            android:text="Đảm bảo hàng hóa"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/font_12" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_5"
+            android:layout_height="@dimen/size_5"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/size_5"
+            android:backgroundTint="@color/text_color"
+            app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
+            app:layout_constraintEnd_toEndOf="@+id/ic_pick_up_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/medium"
+            android:maxLines="1"
+            android:text="Siêu tốc"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/font_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
