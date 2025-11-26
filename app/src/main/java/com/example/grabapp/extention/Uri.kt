@@ -10,52 +10,44 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import kotlin.math.max
 
-fun Uri.toMultipartBodyPart(context: Context, partName: String = "file"): MultipartBody.Part? {
+fun Uri.toMultipartBodyPart(
+    context: Context,
+    partName: String = "file"
+): MultipartBody.Part? {
     return try {
-        val inputStream: InputStream? = context.contentResolver.openInputStream(this)
+        val inputStream = context.contentResolver.openInputStream(this)
         val originalBitmap = BitmapFactory.decodeStream(inputStream)
         inputStream?.close()
-        
-        if (originalBitmap == null) {
-            return null
-        }
-        
-        val maxDimension = 1080
-        val minDimension = 720
-        val currentMax = maxOf(originalBitmap.width, originalBitmap.height)
-        
-        val resizedBitmap = if (currentMax > maxDimension) {
-            val scale = maxDimension.toFloat() / currentMax
-            val newWidth = (originalBitmap.width * scale).toInt()
-            val newHeight = (originalBitmap.height * scale).toInt()
-            Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true)
-        } else if (currentMax < minDimension) {
-            val scale = minDimension.toFloat() / currentMax
-            val newWidth = (originalBitmap.width * scale).toInt()
-            val newHeight = (originalBitmap.height * scale).toInt()
-            Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true)
-        } else {
-            originalBitmap
-        }
-        
+
+        if (originalBitmap == null) return null
+
+        val maxSide = max(originalBitmap.width, originalBitmap.height)
+        val targetMaxSide = 720
+
+        val scale = targetMaxSide.toFloat() / maxSide
+
+        val newWidth = (originalBitmap.width * scale).toInt()
+        val newHeight = (originalBitmap.height * scale).toInt()
+
+        val resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true)
+
         val file = File.createTempFile("face_verify_", ".jpg", context.cacheDir)
         val outputStream = FileOutputStream(file)
-        
-        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 75, outputStream)
+
+        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
         outputStream.flush()
         outputStream.close()
-        
-        if (resizedBitmap != originalBitmap) {
-            resizedBitmap.recycle()
-        }
+
+        if (resizedBitmap != originalBitmap) resizedBitmap.recycle()
         originalBitmap.recycle()
-        
+
         val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         MultipartBody.Part.createFormData(partName, file.name, requestFile)
+
     } catch (e: Exception) {
         e.printStackTrace()
         null
     }
 }
-
