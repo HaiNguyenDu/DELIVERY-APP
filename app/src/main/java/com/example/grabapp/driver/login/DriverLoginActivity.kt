@@ -2,11 +2,12 @@ package com.example.grabapp.driver.login
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.api.RetrofitProvider
 import com.example.grabapp.base.BaseActivity
@@ -19,38 +20,24 @@ import com.example.grabapp.driver.home.DriverHomeActivity
 import com.example.grabapp.model.VerifyingState
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
+import com.example.grabapp.view.dialog.FaceCaptureDialog
 import com.example.grabapp.view.dialog.VerifyingDialog
-import java.io.File
 
 class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLoginViewModel>() {
-    private lateinit var photoFile: File
     private var verifyingDialog: VerifyingDialog? = null
+    private var faceCaptureDialog: FaceCaptureDialog? = null
     private val tokenStorage by lazy { TokenStorage(applicationContext) }
 
     private val requestCameraPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
-                openCamera()
+                openFaceCaptureDialog()
             } else {
                 Toast.makeText(
                     this,
                     "Cần cấp quyền camera để đăng nhập bằng khuôn mặt",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-        }
-
-    private val takePicture =
-        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-            if (success) {
-                val userId = tokenStorage.getUserId()
-                val uri = FileProvider.getUriForFile(
-                    this,
-                    "com.example.grabapp.provider",
-                    photoFile
-                )
-                showVerifyingDialog()
-                viewModel.verifyFace(uri, userId!!)
             }
         }
 
@@ -69,10 +56,6 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        photoFile = File.createTempFile(
-            "FACE_VERIFY_", ".jpg",
-            getExternalFilesDir("Pictures")
-        )
         setupListener()
         observeViewModel()
     }
@@ -106,7 +89,7 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
                 this,
                 Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED -> {
-                openCamera()
+                openFaceCaptureDialog()
             }
 
             else -> {
@@ -115,15 +98,28 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
         }
     }
 
-    private fun openCamera() {
-        if (::photoFile.isInitialized) {
-            val uri = FileProvider.getUriForFile(
+    private fun openFaceCaptureDialog() {
+        val userId = tokenStorage.getUserId()
+        if (userId == null) {
+            Toast.makeText(
                 this,
-                "com.example.grabapp.provider",
-                photoFile
-            )
-            takePicture.launch(uri)
+                "Vui lòng đăng nhập lần đầu bằng số điện thoại và mật khẩu",
+                Toast.LENGTH_LONG
+            ).show()
+            return
         }
+
+        faceCaptureDialog = FaceCaptureDialog().apply {
+            isCancelable = false
+            setOnFaceCapturedListener { bitmap ->
+                showVerifyingDialog()
+                viewModel.verifyFace(bitmap, userId)
+            }
+            setOnDismissListener {
+                faceCaptureDialog = null
+            }
+        }
+        faceCaptureDialog?.showDialog(supportFragmentManager)
     }
 
     private fun showVerifyingDialog() {
@@ -138,6 +134,7 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
             viewModel.errorMessage.collect { err ->
                 err?.let {
                     Toast.makeText(this@DriverLoginActivity, it, Toast.LENGTH_SHORT).show()
+                    Log.e("DriverLoginActivity", it)
                 }
             }
         }
@@ -184,6 +181,7 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
                         verifyingDialog = null
                         Toast.makeText(this@DriverLoginActivity, state.message, Toast.LENGTH_LONG)
                             .show()
+                        Log.e("DriverLoginActivity", state.message)
                     }
                 }
             }

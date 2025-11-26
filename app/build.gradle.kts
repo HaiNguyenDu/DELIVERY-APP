@@ -64,4 +64,13 @@ dependencies {
     implementation(libs.android.ndk27)
     implementation(libs.glide)
     implementation(libs.logging.interceptor)
+    
+    // CameraX
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.camera2)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.view)
+    
+    // ML Kit Face Detection
+    implementation(libs.mlkit.face.detection)
 }

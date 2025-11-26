@@ -10,5 +10,5 @@ data class VerifyFaceData(
     val match: Boolean?,
     val images_processed: Int?,
     val total_images: Int?,
-    val errors: String?
+    val errors: List<String>?
 )
