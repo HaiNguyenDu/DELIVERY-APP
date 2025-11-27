@@ -276,4 +276,19 @@
     <string name="th_ng_tin_ph_ng_ti_n">Thông tin phương tiện</string>
     <string name="lo_i_ph_ng_ti_n">Loại phương tiện</string>
     <string name="bi_n_s_xe">Biển số xe</string>
+    <string name="qu_n_l_th_ng_tin_v_t_y_ch_n">Quản lý thông tin và tùy chọn</string>
+    <string name="t_i_kho_n">TÀI KHOẢN</string>
+    <string name="th_ng_tin_c_nh_n_nh_i_di_n">Thông tin cá nhân, ảnh đại diện</string>
+    <string name="gi_y_t_amp_ch_ng_nh_n"><![CDATA[Giấy tờ & chứng nhận]]></string>
+    <string name="cmnd_b_ng_l_i_ng_k_xe">CMND, bằng lái, đăng ký xe</string>
+    <string name="c_i_t_giao_h_ng">CÀI ĐẶT GIAO HÀNG</string>
+    <string name="t_y_ch_n_nh_n_n">Tùy chọn nhận đơn</string>
+    <string name="b_n_k_nh_lo_i_n_t_ng">Bán kính, loại đơn, tự động</string>
+    <string name="th_ng_b_o">Thông báo</string>
+    <string name="push_m_thanh_rung">Push, âm thanh, rung</string>
+    <string name="b_o_m_t_amp_h_tr"><![CDATA[BẢO MẬT & HỖ TRỢ]]></string>
+    <string name="b_o_m_t">Bảo mật</string>
+    <string name="m_t_kh_u_2fa_thi_t_b">Mật khẩu, 2FA, thiết bị</string>
+    <string name="h_tr_amp_fag"><![CDATA[Hỗ trợ & FAG]]></string>
+    <string name="chat_khi_u_n_i_h_ng_d_n">Chat, khiếu nại, hướng dẫn</string>
 </resources>
