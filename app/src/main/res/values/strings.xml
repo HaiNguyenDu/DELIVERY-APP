@@ -269,4 +269,11 @@
     <string name="t_n_hi_n_th">Tên hiển thị</string>
     <string name="ng_y_sinh">Ngày sinh</string>
     <string name="c_p_nh_t_th_ng_tin_c_nh_n">Cập nhật thông tin cá nhân</string>
+    <string name="th_ng_tin_li_n_h">Thông tin liên hệ</string>
+    <string name="email">Email</string>
+    <string name="thay_i">Thay đổi</string>
+    <string name="x_c_th_c">Đã xác thực</string>
+    <string name="th_ng_tin_ph_ng_ti_n">Thông tin phương tiện</string>
+    <string name="lo_i_ph_ng_ti_n">Loại phương tiện</string>
+    <string name="bi_n_s_xe">Biển số xe</string>
 </resources>

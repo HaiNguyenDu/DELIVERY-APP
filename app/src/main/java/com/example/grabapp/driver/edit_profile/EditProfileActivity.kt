@@ -9,5 +9,4 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
 
     override fun getLazyViewModel(): Lazy<EditProfileViewModel> =
         lazy { EditProfileViewModel(application) }
-
 }
