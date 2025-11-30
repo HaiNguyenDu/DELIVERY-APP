@@ -2,6 +2,7 @@ package com.example.grabapp.driver.login
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.repository.AIServiceRepository
@@ -80,20 +81,25 @@ class DriverLoginViewModel(
 
                 if (response.isSuccessful) {
                     val result = response.body()
+                    Log.d("DriverLoginViewModel", "VerifyFace Response: $result")
                     if (result != null && result.success == true) {
                         val match = result.data?.match == true
+                        Log.d("DriverLoginViewModel", "Match result: $match, Data: ${result.data}")
                         if (match) {
                             _faceVerifyState.value = FaceVerifyState.Success
                             onLoginSuccess()
                         } else {
+                            Log.d("DriverLoginViewModel", "Khuôn mặt không khớp. Result: $result")
                             _faceVerifyState.value = FaceVerifyState.Error("Khuôn mặt không khớp. Vui lòng thử lại.")
                         }
                     } else {
+                        Log.d("DriverLoginViewModel", "Xác thực thất bại. Result: $result")
                         _faceVerifyState.value = FaceVerifyState.Error("Xác thực thất bại")
                     }
                 } else {
                     val errorMsg = response.errorBody()?.string()
                         ?: "Xác thực thất bại: HTTP ${response.code()}"
+                    Log.e("DriverLoginViewModel", "Response không thành công: $errorMsg")
                     _faceVerifyState.value = FaceVerifyState.Error(errorMsg)
                 }
             } catch (e: IOException) {
