@@ -15,7 +15,9 @@ import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.databinding.FragmentDriverProfileBinding
 import com.example.grabapp.driver.home.DriverHomeViewModel
 import com.example.grabapp.driver.home.FaceUploadState
+import com.example.grabapp.driver.setting.SettingActivity
 import com.example.grabapp.extention.onClickWithScale
+import com.example.grabapp.extention.startActivity
 import kotlinx.coroutines.launch
 
 class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverHomeViewModel>() {
@@ -60,9 +62,15 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
     }
 
     override fun setUpClick() {
-        binding.tvSummaryName.onClickWithScale {
-            pickImageLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        binding.apply {
+            binding.tvSummaryName.onClickWithScale {
+                pickImageLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
+            llSetting.onClickWithScale {
+                requireContext().startActivity<SettingActivity>()
+            }
         }
+
     }
 
     override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
@@ -76,12 +84,16 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
                 when (state) {
                     is FaceUploadState.Idle -> {
                     }
+
                     is FaceUploadState.PickingImage -> {
                     }
+
                     is FaceUploadState.UploadingFile -> {
                     }
+
                     is FaceUploadState.UploadingToAI -> {
                     }
+
                     is FaceUploadState.Success -> {
                         loadImageFromUrl(state.imageUrl)
                         Toast.makeText(
@@ -90,6 +102,7 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                     is FaceUploadState.Error -> {
                         Toast.makeText(
                             requireContext(),

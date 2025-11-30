@@ -193,8 +193,7 @@
                     android:padding="@dimen/size_28"
                     android:src="@drawable/ic_camera"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imageView1"
-                    app:tint="@color/grey_46" />
+                    app:layout_constraintTop_toBottomOf="@id/imageView1" />
 
                 <ImageView
                     android:id="@+id/ivBackCard"
@@ -207,8 +206,7 @@
                     android:padding="@dimen/size_28"
                     android:src="@drawable/ic_camera"
                     app:layout_constraintStart_toEndOf="@id/ivFrontCard"
-                    app:layout_constraintTop_toBottomOf="@id/imageView1"
-                    app:tint="@color/grey_46" />
+                    app:layout_constraintTop_toBottomOf="@id/imageView1" />
 
                 <TextView
                     android:id="@+id/tvUploadedDate"
@@ -644,6 +642,7 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

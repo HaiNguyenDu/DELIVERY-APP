@@ -110,6 +110,9 @@
                     android:id="@+id/ctlEditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:padding="@dimen/size_16">
 
                     <ImageView
@@ -173,6 +176,9 @@
                     android:id="@+id/ctlDocument"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:padding="@dimen/size_16">
 
                     <ImageView
@@ -253,6 +259,9 @@
                     android:id="@+id/ctlOrderSetting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:padding="@dimen/size_16">
 
                     <ImageView
@@ -316,6 +325,9 @@
                     android:id="@+id/ctlNotification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:padding="@dimen/size_16">
 
                     <ImageView
@@ -396,6 +408,9 @@
                     android:id="@+id/ctlSecurity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:padding="@dimen/size_16">
 
                     <ImageView
@@ -459,6 +474,9 @@
                     android:id="@+id/ctlSupport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:padding="@dimen/size_16">
 
                     <ImageView

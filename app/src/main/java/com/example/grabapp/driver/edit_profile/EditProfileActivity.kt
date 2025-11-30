@@ -6,13 +6,16 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityEditProfileBinding
 import com.example.grabapp.extention.onClickWithScale
+import com.example.grabapp.extention.setPadding
 import java.io.InputStream
 
 class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfileViewModel>() {
-    
+
     private val pickAvatarLauncher = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
@@ -72,28 +75,38 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
     }
 
     private fun loadImageFromUri(uri: Uri, imageType: ImageType) {
-        try {
-            val inputStream: InputStream? = contentResolver.openInputStream(uri)
-            val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
-            inputStream?.close()
-
-            bitmap?.let {
+        val requestOption = RequestOptions()
+            .override(
                 when (imageType) {
-                    ImageType.AVATAR -> {
-                        binding.ivAvatar.setImageBitmap(it)
-                    }
-                    ImageType.FRONT_CARD -> {
-                        binding.ivFrontCard.setImageBitmap(it)
-                        binding.ivFrontCard.setPadding(0, 0, 0, 0)
-                    }
-                    ImageType.BACK_CARD -> {
-                        binding.ivBackCard.setImageBitmap(it)
-                        binding.ivBackCard.setPadding(0, 0, 0, 0)
-                    }
+                    ImageType.AVATAR -> 512
+                    else -> 1200
                 }
+            )
+            .centerCrop()
+
+        when (imageType) {
+            ImageType.AVATAR -> {
+                Glide.with(this)
+                    .load(uri)
+                    .apply(requestOption.circleCrop())
+                    .into(binding.ivAvatar)
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+
+            ImageType.FRONT_CARD -> {
+                Glide.with(this)
+                    .load(uri)
+                    .apply(requestOption)
+                    .into(binding.ivFrontCard)
+                binding.ivFrontCard.setPadding(0, 0, 0, 0)
+            }
+
+            ImageType.BACK_CARD -> {
+                Glide.with(this)
+                    .load(uri)
+                    .apply(requestOption)
+                    .into(binding.ivBackCard)
+                binding.ivBackCard.setPadding(0, 0, 0, 0)
+            }
         }
     }
 
