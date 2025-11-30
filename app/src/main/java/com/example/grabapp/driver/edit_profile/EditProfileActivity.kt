@@ -20,6 +20,8 @@ import com.example.grabapp.databinding.ActivityEditProfileBinding
 import com.example.grabapp.driver.register.bottom_sheet.GenderBottomSheet
 import com.example.grabapp.driver.register.bottom_sheet.ProvinceBottomSheet
 import com.example.grabapp.extention.onClickWithScale
+import com.example.grabapp.data.model.DriverProfile
+import com.example.grabapp.data.repository.DriverRepository
 import com.example.grabapp.model.CCCDInfo
 import com.example.grabapp.model.Transportation
 import com.example.grabapp.view.bottom_sheet.TransportationBottomSheet
@@ -83,6 +85,7 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
         setupTextWatchers()
         observeViewModel()
         loadSavedPhone()
+        loadSavedProfile()
         updateSubmitButtonState()
     }
 
@@ -102,6 +105,32 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
             viewModel.cccdInfo.collect { cccdInfo ->
                 cccdInfo?.let {
                     fillFormData(it)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.registerResult.collect { result ->
+                result?.let {
+                    when (it) {
+                        is DriverRepository.RegisterResult.Success -> {
+                            Toast.makeText(
+                                this@EditProfileActivity,
+                                "Gửi yêu cầu thành công",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            binding.tvSubmit.text = "Chờ kiểm duyệt"
+                            disableAllFields()
+                        }
+
+                        is DriverRepository.RegisterResult.Error -> {
+                            Toast.makeText(
+                                this@EditProfileActivity,
+                                "Lỗi: ${it.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
             }
         }
@@ -196,11 +225,18 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
 
             tvSubmit.onClickWithScale {
                 if (isAllFieldsFilled()) {
-                    Toast.makeText(
-                        this@EditProfileActivity,
-                        "Gửi yêu cầu thành công",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    viewModel.registerDriver(
+                        vehiclePlateNumber = binding.edtVehiclePlate.text?.toString()?.trim() ?: "",
+                        licenseNumber = binding.edtLicenseNumber.text?.toString()?.trim() ?: "",
+                        identityFullName = binding.edtName.text?.toString()?.trim() ?: "",
+                        identityNumber = binding.edtCCCD.text?.toString()?.trim() ?: "",
+                        identityIssueDate = selectedIssueDate!!,
+                        identityIssuePlace = selectedIssuePlace!!,
+                        identityAddress = binding.edtAddress.text?.toString()?.trim() ?: "",
+                        identityGender = selectedGender!!,
+                        identityBirthdate = selectedBirthDate!!,
+                        vehicleType = selectedVehicleType!!.transportationName
+                    )
                 } else {
                     Toast.makeText(
                         this@EditProfileActivity,
@@ -410,6 +446,78 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
         val savedPhone = tokenStorage.getPhone()
         savedPhone?.let {
             binding.edtPhone.setText(it)
+        }
+    }
+
+    private fun loadSavedProfile() {
+        val savedProfile = viewModel.getSavedProfile()
+        if (viewModel.isPending()) {
+            savedProfile?.let {
+                fillProfileData(it)
+                binding.tvSubmit.text = "Chờ kiểm duyệt"
+                disableAllFields()
+            }
+        } else {
+            savedProfile?.let {
+                fillProfileData(it)
+            }
+        }
+    }
+
+    private fun fillProfileData(profile: DriverProfile) {
+        binding.apply {
+            edtName.setText(profile.name)
+            edtCCCD.setText(profile.cccdNumber)
+            edtLicenseNumber.setText(profile.licenseNumber)
+            edtAddress.setText(profile.address)
+            edtVehiclePlate.setText(profile.vehiclePlate)
+
+            selectedBirthDate = profile.birthDate
+            tvBirth.text = dateFormat.format(profile.birthDate)
+
+            selectedGender = profile.gender
+            tvGender.text = profile.gender
+
+            selectedIssueDate = profile.issueDate
+            tvIssueDate.text = dateFormat.format(profile.issueDate)
+
+            selectedIssuePlace = profile.issuePlace
+            tvIssuePlace.text = profile.issuePlace
+
+            val vehicleType = try {
+                Transportation.entries.firstOrNull {
+                    it.transportationName == profile.vehicleType
+                } ?: Transportation.GRAB_BIKE
+            } catch (e: Exception) {
+                Transportation.GRAB_BIKE
+            }
+            selectedVehicleType = vehicleType
+            tvVehicleType.text = getString(vehicleType.stringResId)
+        }
+        updateSubmitButtonState()
+    }
+
+    private fun disableAllFields() {
+        binding.apply {
+            edtName.isEnabled = false
+            edtCCCD.isEnabled = false
+            edtLicenseNumber.isEnabled = false
+            edtAddress.isEnabled = false
+            edtVehiclePlate.isEnabled = false
+            edtPhone.isEnabled = false
+
+            tvBirth.isEnabled = false
+            tvGender.isEnabled = false
+            tvIssueDate.isEnabled = false
+            tvIssuePlace.isEnabled = false
+            tvVehicleType.isEnabled = false
+
+            ivUploadAvatar.isEnabled = false
+            ivAvatar.isEnabled = false
+            ivFrontCard.isEnabled = false
+            ivBackCard.isEnabled = false
+
+            tvSubmit.isEnabled = false
         }
     }
 
