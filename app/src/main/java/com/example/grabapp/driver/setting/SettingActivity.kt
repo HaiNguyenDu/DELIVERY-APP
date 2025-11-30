@@ -1,15 +1,12 @@
 package com.example.grabapp.driver.setting
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import androidx.core.graphics.Insets
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivitySettingBinding
 import com.example.grabapp.driver.edit_profile.EditProfileActivity
-import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
-import java.io.File
 
 class SettingActivity : BaseActivity<ActivitySettingBinding, SettingViewModel>() {
     override fun getLazyBinding(): Lazy<ActivitySettingBinding> =
@@ -24,7 +21,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding, SettingViewModel>()
 
     private fun initListener() {
         binding.apply {
-            ctlEditProfile.onClickWithScale {
+            ctlEditProfile.setOnClickListener {
                 startActivity<EditProfileActivity>()
             }
         }
