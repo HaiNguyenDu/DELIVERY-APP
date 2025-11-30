@@ -291,4 +291,7 @@
     <string name="m_t_kh_u_2fa_thi_t_b">Mật khẩu, 2FA, thiết bị</string>
     <string name="h_tr_amp_fag"><![CDATA[Hỗ trợ & FAG]]></string>
     <string name="chat_khi_u_n_i_h_ng_d_n">Chat, khiếu nại, hướng dẫn</string>
+    <string name="cmnd_cccd">CMND/CCCD</string>
+    <string name="_2_m_t_r_n_t">2 mặt, rõ nét</string>
+    <string name="t_i_l_n">Tải lên</string>
 </resources>

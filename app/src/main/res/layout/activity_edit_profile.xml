@@ -93,16 +93,25 @@
                 android:padding="@dimen/size_24"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/ivAvatar"
-                    android:layout_width="@dimen/size_128"
-                    android:layout_height="@dimen/size_128"
-                    android:background="@drawable/bg_circle"
-                    android:contentDescription="@null"
-                    android:elevation="@dimen/size_20"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/size_100"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="@color/green_36">
+
+                    <ImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="@dimen/size_128"
+                        android:layout_height="@dimen/size_128"
+                        android:contentDescription="@null"
+                        android:elevation="@dimen/size_20"
+                        android:src="@drawable/ic_avatar_default" />
+                </com.google.android.material.card.MaterialCardView>
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -111,10 +120,11 @@
                     android:fontFamily="@font/regular"
                     android:gravity="center"
                     android:textColor="@color/grey_46"
-                    app:layout_constraintTop_toBottomOf="@id/ivAvatar"
+                    app:layout_constraintTop_toBottomOf="@id/cvAvatar"
                     tools:text="@string/nh_n_v_o_icon_camera_thay_i_nh" />
 
                 <ImageView
+                    android:id="@+id/ivUploadAvatar"
                     android:layout_width="@dimen/size_40"
                     android:layout_height="@dimen/size_40"
                     android:background="@drawable/bg_circle_white_100"
@@ -122,9 +132,123 @@
                     android:elevation="@dimen/size_22"
                     android:padding="@dimen/size_10"
                     android:src="@drawable/ic_camera"
-                    app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
-                    app:layout_constraintEnd_toEndOf="@id/ivAvatar"
+                    app:layout_constraintBottom_toBottomOf="@id/cvAvatar"
+                    app:layout_constraintEnd_toEndOf="@id/cvAvatar"
                     app:tint="@color/green_36" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrainLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_16"
+                android:background="@drawable/bg_border_stroke_white_12_80_per"
+                android:padding="@dimen/size_16"
+                app:layout_constraintTop_toBottomOf="@id/constrainLayout1">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="@dimen/size_48"
+                    android:layout_height="@dimen/size_48"
+                    android:background="@drawable/bg_gradient_green_border_12"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_12"
+                    android:src="@drawable/ic_document"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_12"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/cmnd_cccd"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintBottom_toTopOf="@id/textView12"
+                    app:layout_constraintStart_toEndOf="@id/imageView1"
+                    app:layout_constraintTop_toTopOf="@id/imageView1" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_12"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/_2_m_t_r_n_t"
+                    android:textColor="@color/grey_46"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintBottom_toBottomOf="@id/imageView1"
+                    app:layout_constraintStart_toEndOf="@id/imageView1"
+                    app:layout_constraintTop_toBottomOf="@id/textView11" />
+
+                <ImageView
+                    android:id="@+id/ivFrontCard"
+                    android:layout_width="@dimen/size_80"
+                    android:layout_height="@dimen/size_80"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:background="@drawable/bg_border_grey_8"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_28"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView1"
+                    app:tint="@color/grey_46" />
+
+                <ImageView
+                    android:id="@+id/ivBackCard"
+                    android:layout_width="@dimen/size_80"
+                    android:layout_height="@dimen/size_80"
+                    android:layout_marginStart="@dimen/size_8"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:background="@drawable/bg_border_grey_8"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_28"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintStart_toEndOf="@id/ivFrontCard"
+                    app:layout_constraintTop_toBottomOf="@id/imageView1"
+                    app:tint="@color/grey_46" />
+
+                <TextView
+                    android:id="@+id/tvUploadedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/grey_46"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivFrontCard"
+                    tools:text="Tải lên: 30/11/2025" />
+
+                <LinearLayout
+                    android:id="@+id/llUploadIdentification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:background="@drawable/bg_border_green_6"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/size_8"
+                    app:layout_constraintTop_toBottomOf="@id/tvUploadedDate">
+
+                    <ImageView
+                        android:layout_width="@dimen/size_16"
+                        android:layout_height="@dimen/size_16"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_upload_photo"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_12"
+                        android:fontFamily="@font/medium"
+                        android:text="@string/t_i_l_n"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_14" />
+                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -136,7 +260,7 @@
                 android:background="@drawable/bg_border_stroke_white_12_80_per"
                 android:padding="@dimen/size_24"
                 android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@id/constrainLayout1">
+                app:layout_constraintTop_toBottomOf="@id/constrainLayout5">
 
                 <LinearLayout
                     android:id="@+id/linearLayout1"
@@ -515,4 +639,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
