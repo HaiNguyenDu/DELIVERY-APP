@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
+import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.AuthRepository
 import com.example.grabapp.extention.toMultipartBodyPart
@@ -20,7 +21,8 @@ import java.io.IOException
 class DriverLoginViewModel(
     application: Application,
     private val authRepository: AuthRepository,
-    private val aiServiceRepository: AIServiceRepository
+    private val aiServiceRepository: AIServiceRepository,
+    private val tokenStorage: TokenStorage
 ) : BaseViewModel(application) {
     private val _loading = MutableStateFlow(false)
     val loading = _loading.asStateFlow()
@@ -46,6 +48,7 @@ class DriverLoginViewModel(
             when (val res = authRepository.login(phone, password)) {
                 is AuthRepository.LoginResult.Success -> {
                     _loading.value = false
+                    tokenStorage.savePhone(phone)
                     onLoginSuccess()
                 }
 
@@ -90,7 +93,8 @@ class DriverLoginViewModel(
                             onLoginSuccess()
                         } else {
                             Log.d("DriverLoginViewModel", "Khuôn mặt không khớp. Result: $result")
-                            _faceVerifyState.value = FaceVerifyState.Error("Khuôn mặt không khớp. Vui lòng thử lại.")
+                            _faceVerifyState.value =
+                                FaceVerifyState.Error("Khuôn mặt không khớp. Vui lòng thử lại.")
                         }
                     } else {
                         Log.d("DriverLoginViewModel", "Xác thực thất bại. Result: $result")

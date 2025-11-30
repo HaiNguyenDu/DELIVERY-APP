@@ -65,7 +65,7 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
             val tokenStorage = TokenStorage(applicationContext)
             val authRepo = AuthRepository(api, tokenStorage)
             val aiServiceRepo = AIServiceRepository()
-            DriverLoginViewModel(application, authRepo, aiServiceRepo)
+            DriverLoginViewModel(application, authRepo, aiServiceRepo, tokenStorage)
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {

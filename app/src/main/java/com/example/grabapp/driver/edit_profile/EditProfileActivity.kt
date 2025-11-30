@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.grabapp.base.BaseActivity
+import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.databinding.ActivityEditProfileBinding
 import com.example.grabapp.driver.register.bottom_sheet.GenderBottomSheet
 import com.example.grabapp.driver.register.bottom_sheet.ProvinceBottomSheet
@@ -32,6 +33,7 @@ import java.util.Locale
 
 class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfileViewModel>() {
 
+    private val tokenStorage by lazy { TokenStorage(applicationContext) }
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     private val dateFormatInput = SimpleDateFormat("ddMMyyyy", Locale.getDefault())
 
@@ -80,6 +82,7 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
         setupClickListeners()
         setupTextWatchers()
         observeViewModel()
+        loadSavedPhone()
         updateSubmitButtonState()
     }
 
@@ -401,6 +404,13 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
         val isFilled = isAllFieldsFilled()
         binding.tvSubmit.alpha = if (isFilled) 1f else 0.5f
         binding.tvSubmit.isEnabled = isFilled
+    }
+
+    private fun loadSavedPhone() {
+        val savedPhone = tokenStorage.getPhone()
+        savedPhone?.let {
+            binding.edtPhone.setText(it)
+        }
     }
 
     private enum class ImageType {

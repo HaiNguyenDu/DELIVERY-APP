@@ -578,6 +578,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
                     android:background="@drawable/bg_circle_stroke_8"
+                    android:enabled="false"
                     android:fontFamily="@font/regular"
                     android:hint="@string/s_i_n_tho_i"
                     android:paddingHorizontal="@dimen/size_8"
