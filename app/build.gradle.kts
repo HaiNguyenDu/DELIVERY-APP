@@ -64,4 +64,5 @@ dependencies {
     implementation(libs.android.ndk27)
     implementation(libs.glide)
     implementation(libs.logging.interceptor)
+    implementation("com.google.mlkit:barcode-scanning:17.3.0")
 }
