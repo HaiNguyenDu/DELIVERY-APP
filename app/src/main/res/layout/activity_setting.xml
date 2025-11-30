@@ -42,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_32"
         android:layout_weight="1"
         android:fontFamily="@font/bold"
         android:text="@string/c_i_t"

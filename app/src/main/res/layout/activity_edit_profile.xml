@@ -73,7 +73,7 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:overScrollMode="never"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvSubmit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emptyView">
@@ -81,7 +81,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/size_32">
+            android:paddingBottom="@dimen/size_12">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_border_stroke_light_green_12_20_per"
+                app:layout_constraintBottom_toBottomOf="@id/constrainLayout1"
+                app:layout_constraintEnd_toEndOf="@id/constrainLayout1"
+                app:layout_constraintStart_toStartOf="@id/constrainLayout1"
+                app:layout_constraintTop_toTopOf="@id/constrainLayout1" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constrainLayout1"
@@ -136,6 +145,15 @@
                     app:layout_constraintEnd_toEndOf="@id/cvAvatar"
                     app:tint="@color/green_36" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_border_stroke_light_green_12_20_per"
+                app:layout_constraintBottom_toBottomOf="@id/constrainLayout5"
+                app:layout_constraintEnd_toEndOf="@id/constrainLayout5"
+                app:layout_constraintStart_toStartOf="@id/constrainLayout5"
+                app:layout_constraintTop_toTopOf="@id/constrainLayout5" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constrainLayout5"
@@ -219,35 +237,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ivFrontCard"
                     tools:text="Tải lên: 30/11/2025" />
-
-                <LinearLayout
-                    android:id="@+id/llUploadIdentification"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@drawable/bg_border_green_6"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/size_8"
-                    app:layout_constraintTop_toBottomOf="@id/tvUploadedDate">
-
-                    <ImageView
-                        android:layout_width="@dimen/size_16"
-                        android:layout_height="@dimen/size_16"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_upload_photo"
-                        app:tint="@color/white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_12"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/t_i_l_n"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_14" />
-                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_border_stroke_light_green_12_20_per"
+                app:layout_constraintBottom_toBottomOf="@id/constrainLayout2"
+                app:layout_constraintEnd_toEndOf="@id/constrainLayout2"
+                app:layout_constraintStart_toStartOf="@id/constrainLayout2"
+                app:layout_constraintTop_toTopOf="@id/constrainLayout2" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constrainLayout2"
@@ -316,13 +315,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_16"
                     android:fontFamily="@font/bold"
-                    android:text="@string/t_n_hi_n_th"
+                    android:text="@string/cmnd_cccd"
                     android:textSize="@dimen/font_14"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/edtName" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edtShowName"
+                    android:id="@+id/edtCCCD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
@@ -333,7 +332,32 @@
                     android:paddingVertical="@dimen/size_8"
                     android:textSize="@dimen/font_16"
                     app:layout_constraintTop_toBottomOf="@id/textView4"
-                    tools:text="Văn A" />
+                    tools:text="049204013728" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/driving_license_number"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edtCCCD" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtLicenseNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_6"
+                    android:background="@drawable/bg_circle_stroke_8"
+                    android:fontFamily="@font/regular"
+                    android:hint="@string/driving_license_number"
+                    android:paddingHorizontal="@dimen/size_8"
+                    android:paddingVertical="@dimen/size_8"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintTop_toBottomOf="@id/textView15"
+                    tools:text="92T1-07131" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -345,7 +369,7 @@
                     android:textSize="@dimen/font_14"
                     app:layout_constraintEnd_toStartOf="@id/textView6"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtShowName" />
+                    app:layout_constraintTop_toBottomOf="@id/edtLicenseNumber" />
 
                 <TextView
                     android:id="@+id/tvBirth"
@@ -380,11 +404,11 @@
                     android:layout_marginStart="@dimen/size_16"
                     android:layout_marginTop="@dimen/size_16"
                     android:fontFamily="@font/bold"
-                    android:text="@string/ng_y_sinh"
+                    android:text="@string/gender"
                     android:textSize="@dimen/font_14"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/textView5"
-                    app:layout_constraintTop_toBottomOf="@id/edtShowName" />
+                    app:layout_constraintTop_toBottomOf="@id/edtLicenseNumber" />
 
                 <TextView
                     android:id="@+id/tvGender"
@@ -401,7 +425,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvBirth"
                     app:layout_constraintTop_toBottomOf="@id/textView5"
-                    tools:text="01/15/1990" />
+                    tools:text="Nam" />
 
                 <ImageView
                     android:layout_width="@dimen/size_20"
@@ -413,7 +437,94 @@
                     app:layout_constraintEnd_toEndOf="@id/tvGender"
                     app:layout_constraintTop_toTopOf="@id/tvGender" />
 
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/issue_date"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintEnd_toStartOf="@id/textView14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvBirth" />
+
+                <TextView
+                    android:id="@+id/tvIssueDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_6"
+                    android:background="@drawable/bg_circle_stroke_8"
+                    android:fontFamily="@font/regular"
+                    android:hint="@string/issue_date"
+                    android:paddingHorizontal="@dimen/size_8"
+                    android:paddingVertical="@dimen/size_8"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintEnd_toStartOf="@id/tvIssuePlace"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView13"
+                    tools:text="01/15/1990" />
+
+                <ImageView
+                    android:layout_width="@dimen/size_20"
+                    android:layout_height="@dimen/size_20"
+                    android:layout_marginEnd="@dimen/size_6"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_calendar"
+                    app:layout_constraintBottom_toBottomOf="@id/tvIssueDate"
+                    app:layout_constraintEnd_toEndOf="@id/tvIssueDate"
+                    app:layout_constraintTop_toTopOf="@id/tvIssueDate" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/issue_place"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/textView13"
+                    app:layout_constraintTop_toBottomOf="@id/tvGender" />
+
+                <TextView
+                    android:id="@+id/tvIssuePlace"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16"
+                    android:layout_marginTop="@dimen/size_6"
+                    android:background="@drawable/bg_circle_stroke_8"
+                    android:fontFamily="@font/regular"
+                    android:hint="@string/issue_place"
+                    android:paddingHorizontal="@dimen/size_8"
+                    android:paddingVertical="@dimen/size_8"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvIssueDate"
+                    app:layout_constraintTop_toBottomOf="@id/textView13"
+                    tools:text="Đà Nẵng" />
+
+                <ImageView
+                    android:layout_width="@dimen/size_20"
+                    android:layout_height="@dimen/size_20"
+                    android:layout_marginEnd="@dimen/size_6"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_chevron_down"
+                    app:layout_constraintBottom_toBottomOf="@id/tvIssuePlace"
+                    app:layout_constraintEnd_toEndOf="@id/tvIssuePlace"
+                    app:layout_constraintTop_toTopOf="@id/tvIssuePlace" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_border_stroke_light_green_12_20_per"
+                app:layout_constraintBottom_toBottomOf="@id/constrainLayout3"
+                app:layout_constraintEnd_toEndOf="@id/constrainLayout3"
+                app:layout_constraintStart_toStartOf="@id/constrainLayout3"
+                app:layout_constraintTop_toTopOf="@id/constrainLayout3" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constrainLayout3"
@@ -468,45 +579,14 @@
                     android:layout_marginTop="@dimen/size_6"
                     android:background="@drawable/bg_circle_stroke_8"
                     android:fontFamily="@font/regular"
-                    android:hint="@string/license_plate"
+                    android:hint="@string/s_i_n_tho_i"
                     android:paddingHorizontal="@dimen/size_8"
                     android:paddingVertical="@dimen/size_8"
                     android:textSize="@dimen/font_16"
-                    app:layout_constraintEnd_toStartOf="@id/tvChangePhone"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textView7"
                     tools:text="0868674213" />
-
-                <TextView
-                    android:id="@+id/tvChangePhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/size_8"
-                    android:layout_marginEnd="@dimen/size_4"
-                    android:background="@drawable/bg_border_white_6"
-                    android:elevation="@dimen/size_4"
-                    android:fontFamily="@font/bold"
-                    android:gravity="center"
-                    android:paddingHorizontal="@dimen/size_16"
-                    android:text="@string/thay_i"
-                    android:textSize="@dimen/font_14"
-                    app:layout_constraintBottom_toBottomOf="@id/edtPhone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/edtPhone"
-                    app:layout_constraintTop_toTopOf="@id/edtPhone" />
-
-                <TextView
-                    android:id="@+id/tvPhoneVerifyState"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_2"
-                    android:layout_marginTop="@dimen/size_4"
-                    android:fontFamily="@font/regular"
-                    android:text="@string/x_c_th_c"
-                    android:textColor="@color/grey_46"
-                    android:textSize="@dimen/font_12"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtPhone" />
 
                 <TextView
                     android:id="@+id/textView8"
@@ -514,41 +594,34 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_14"
                     android:fontFamily="@font/bold"
-                    android:text="@string/email"
+                    android:text="@string/a_ch_th_ng_tr"
                     android:textSize="@dimen/font_14"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvPhoneVerifyState" />
+                    app:layout_constraintTop_toBottomOf="@id/edtPhone" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edtEmail"
+                    android:id="@+id/edtAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
                     android:background="@drawable/bg_circle_stroke_8"
                     android:fontFamily="@font/regular"
-                    android:hint="@string/license_plate"
+                    android:hint="@string/a_ch_th_ng_tr"
                     android:paddingHorizontal="@dimen/size_8"
                     android:paddingVertical="@dimen/size_8"
                     android:textSize="@dimen/font_16"
                     app:layout_constraintTop_toBottomOf="@id/textView8"
-                    tools:text="vana@gmail.com" />
-
-
-                <TextView
-                    android:id="@+id/tvEmailVerifyState"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_2"
-                    android:layout_marginTop="@dimen/size_4"
-                    android:fontFamily="@font/regular"
-                    android:text="@string/x_c_th_c"
-                    android:textColor="@color/grey_46"
-                    android:textSize="@dimen/font_12"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtEmail" />
-
-
+                    tools:text="Hà Nội" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_border_stroke_light_green_12_20_per"
+                app:layout_constraintBottom_toBottomOf="@id/constrainLayout4"
+                app:layout_constraintEnd_toEndOf="@id/constrainLayout4"
+                app:layout_constraintStart_toStartOf="@id/constrainLayout4"
+                app:layout_constraintTop_toTopOf="@id/constrainLayout4" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constrainLayout4"
@@ -595,14 +668,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/linearLayout3" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edtVehicleType"
+                <TextView
+                    android:id="@+id/tvVehicleType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
                     android:background="@drawable/bg_circle_stroke_8"
                     android:fontFamily="@font/regular"
-                    android:hint="@string/license_plate"
+                    android:hint="@string/lo_i_ph_ng_ti_n"
                     android:paddingHorizontal="@dimen/size_8"
                     android:paddingVertical="@dimen/size_8"
                     android:textSize="@dimen/font_16"
@@ -619,7 +692,7 @@
                     android:text="@string/bi_n_s_xe"
                     android:textSize="@dimen/font_14"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtVehicleType" />
+                    app:layout_constraintTop_toBottomOf="@id/tvVehicleType" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtVehiclePlate"
@@ -635,8 +708,29 @@
                     app:layout_constraintTop_toBottomOf="@id/textView10"
                     tools:text="29A-12345" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_18"
+        android:layout_marginTop="@dimen/size_12"
+        android:layout_marginBottom="@dimen/size_12"
+        android:alpha="0.5"
+        android:background="@drawable/bg_gradient_green_border_12"
+        android:elevation="@dimen/size_12"
+        android:enabled="false"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:paddingVertical="@dimen/size_12"
+        android:text="@string/g_i_i_ki_m_duy_t"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_18"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nestedScrollView" />
 
     <ProgressBar
         android:id="@+id/progressBar"

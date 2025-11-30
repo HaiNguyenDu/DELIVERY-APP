@@ -294,4 +294,6 @@
     <string name="cmnd_cccd">CMND/CCCD</string>
     <string name="_2_m_t_r_n_t">2 mặt, rõ nét</string>
     <string name="t_i_l_n">Tải lên</string>
+    <string name="a_ch_th_ng_tr">Địa chỉ thường trú</string>
+    <string name="g_i_i_ki_m_duy_t">Gửi đi kiểm duyệt</string>
 </resources>
