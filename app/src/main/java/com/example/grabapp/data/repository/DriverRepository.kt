@@ -2,7 +2,6 @@ package com.example.grabapp.data.repository
 
 import android.content.Context
 import com.example.grabapp.api.AuthInterceptor
-import com.example.grabapp.api.RetrofitProvider
 import com.example.grabapp.api.SelectiveLoggingInterceptor
 import com.example.grabapp.common.BASE_URL
 import com.example.grabapp.data.TokenStorage
@@ -51,6 +50,12 @@ class DriverRepository(private val context: Context) {
         data class Error(val code: Int?, val message: String) : RegisterResult()
     }
 
+    sealed class DriverInfoResult {
+        data class Success(val response: DriverRegisterResponse) : DriverInfoResult()
+        object NotFound : DriverInfoResult()
+        data class Error(val code: Int?, val message: String) : DriverInfoResult()
+    }
+
     suspend fun register(request: DriverRegisterRequest): RegisterResult {
         return try {
             val resp = api.register(request)
@@ -78,6 +83,40 @@ class DriverRepository(private val context: Context) {
             RegisterResult.Error(e.code(), e.message ?: "Server error")
         } catch (e: Exception) {
             RegisterResult.Error(null, e.message ?: "Unexpected error")
+        }
+    }
+
+    suspend fun getDriverInfo(userId: String): DriverInfoResult {
+        return try {
+            val resp = api.getDriver(userId)
+            if (resp.isSuccessful) {
+                val body = resp.body()
+                if (body != null) {
+                    DriverInfoResult.Success(body)
+                } else {
+                    DriverInfoResult.Error(resp.code(), "Empty response from server")
+                }
+            } else {
+                if (resp.code() == 404) {
+                    DriverInfoResult.NotFound
+                } else {
+                    val errorMes = try {
+                        resp.errorBody()?.string()
+                    } catch (e: Exception) {
+                        null
+                    }
+                    DriverInfoResult.Error(resp.code(), errorMes ?: "HTTP ${resp.code()}")
+                }
+            }
+        } catch (e: IOException) {
+            DriverInfoResult.Error(
+                null,
+                "Network error: ${e.localizedMessage ?: "Please check your connection"}"
+            )
+        } catch (e: HttpException) {
+            DriverInfoResult.Error(e.code(), e.message ?: "Server error")
+        } catch (e: Exception) {
+            DriverInfoResult.Error(null, e.message ?: "Unexpected error")
         }
     }
 }

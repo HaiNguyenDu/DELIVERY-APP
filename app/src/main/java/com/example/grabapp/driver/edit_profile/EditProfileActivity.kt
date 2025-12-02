@@ -23,6 +23,7 @@ import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.data.model.DriverProfile
 import com.example.grabapp.data.repository.DriverRepository
 import com.example.grabapp.model.CCCDInfo
+import com.example.grabapp.model.DriverStatus
 import com.example.grabapp.model.Transportation
 import com.example.grabapp.view.bottom_sheet.TransportationBottomSheet
 import com.google.android.material.datepicker.CalendarConstraints
@@ -85,7 +86,8 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
         setupTextWatchers()
         observeViewModel()
         loadSavedPhone()
-        loadSavedProfile()
+        // Ưu tiên luồng get driver info từ server, nếu lỗi sẽ fallback sang luồng register
+        viewModel.fetchDriverInfo()
         updateSubmitButtonState()
     }
 
@@ -130,6 +132,41 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.driverInfoState.collect { state ->
+                when (state) {
+                    is EditProfileViewModel.DriverInfoState.Existing -> {
+                        fillProfileData(state.profile)
+                        applyDriverInfoUi(state.status)
+                    }
+
+                    is EditProfileViewModel.DriverInfoState.NotFound -> {
+                        Toast.makeText(
+                            this@EditProfileActivity,
+                            "Không tìm thấy thông tin tài xế, vui lòng đăng ký.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.tvSubmit.visibility = View.VISIBLE
+                        loadSavedProfile()
+                    }
+
+                    is EditProfileViewModel.DriverInfoState.Error -> {
+                        Toast.makeText(
+                            this@EditProfileActivity,
+                            state.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.tvSubmit.visibility = View.VISIBLE
+                        loadSavedProfile()
+                    }
+
+                    null -> {
+                        // ignore
                     }
                 }
             }
@@ -495,6 +532,30 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
             tvVehicleType.text = getString(vehicleType.stringResId)
         }
         updateSubmitButtonState()
+    }
+
+    private fun applyDriverInfoUi(status: DriverStatus) {
+        binding.apply {
+            constrainLayout5.visibility = View.GONE
+            tvSubmit.visibility = View.GONE
+            constrainLayout7.visibility =
+                if (status == DriverStatus.PENDING) View.VISIBLE else View.GONE
+
+            edtName.isEnabled = false
+            edtCCCD.isEnabled = false
+            edtLicenseNumber.isEnabled = false
+            edtAddress.isEnabled = false
+            edtVehiclePlate.isEnabled = false
+            edtPhone.isEnabled = false
+            tvBirth.isEnabled = false
+            tvGender.isEnabled = false
+            tvIssueDate.isEnabled = false
+            tvIssuePlace.isEnabled = false
+            ivUploadAvatar.isEnabled = false
+            ivAvatar.isEnabled = false
+            ivFrontCard.isEnabled = false
+            ivBackCard.isEnabled = false
+        }
     }
 
     private fun disableAllFields() {
