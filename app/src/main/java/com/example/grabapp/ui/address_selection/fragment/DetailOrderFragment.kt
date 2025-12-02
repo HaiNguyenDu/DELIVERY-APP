@@ -1,6 +1,7 @@
 package com.example.grabapp.ui.address_selection.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.graphics.Insets
@@ -31,11 +32,13 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
 
     override fun setUpClick() {
         binding.tvPuAddress.setOnClickListener {
-            viewModel.setLastEdtTextClicked(EditTextEnum.PICK_UP)
+            viewModel.setLastFocusEdt(EditTextEnum.PICK_UP)
+            viewModel.setLastAddress(viewModel.orderForm.value.pickupAddress)
             DialogLocationInfoFragment().show(
                 requireActivity().supportFragmentManager,
                 "DetailPUInfo"
             )
+
         }
         binding.toolBar.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -58,6 +61,7 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
         binding.tvAddPackage.setOnClickListener {
             viewModel.addPackageInfo(PackageItemModel())
         }
+
     }
 
     fun initView() {
@@ -71,7 +75,8 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
             DetailOrderItemAdapter.DetailOrderItemAdapterListener {
             override fun onAddressClick(position: Int) {
                 viewModel.selectPackagePosition = position
-                viewModel.setLastEdtTextClicked(EditTextEnum.DROP_OFF)
+                viewModel.setLastFocusEdt(EditTextEnum.DROP_OFF)
+                viewModel.setLastAddress(viewModel.getCurrentPackageInfo().dropOffAddress)
                 DialogLocationInfoFragment().show(
                     requireActivity().supportFragmentManager,
                     "DetailDRInfo"
@@ -88,7 +93,6 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
                     childFragmentManager, "Detail package"
                 )
             }
-
         })
     }
 
@@ -105,15 +109,6 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (viewModel.isHashInfoPackage()) {
-            binding.btnNext.alpha = 1f
-        } else {
-            binding.btnNext.alpha = 0.6f
-        }
-    }
-
     private fun observerData() {
         lifecycleScope.launch {
             viewModel.orderForm.collect {
@@ -122,6 +117,11 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
                     it.listPackageInfo,
                     viewModel.selectPackagePosition
                 )
+                if (viewModel.isHashInfoPackage()) {
+                    binding.btnNext.alpha = 1f
+                } else {
+                    binding.btnNext.alpha = 0.6f
+                }
             }
         }
     }

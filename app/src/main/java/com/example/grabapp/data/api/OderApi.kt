@@ -4,6 +4,7 @@ import com.example.grabapp.data.model.order.CreateOrderRequest
 import com.example.grabapp.data.model.order.CreateOrderResponse
 import com.example.grabapp.data.model.order.GetListOrderResponse
 import com.example.grabapp.data.model.order.OrderItem
+import com.example.grabapp.data.model.order.PriceRouteItem
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -28,4 +29,9 @@ interface OderApi {
     suspend fun createOrder(
         @Body request: CreateOrderRequest
     ): Response<CreateOrderResponse>
+
+    @POST("order/price-route")
+    suspend fun getPriceRoute(
+        @Body request: CreateOrderRequest
+    ): Response<List<PriceRouteItem>>
 }

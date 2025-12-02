@@ -240,4 +240,7 @@
     <string name="enter_password">Nhập mật khẩu của bạn</string>
     <string name="enter_password_fail">Mật khẩu không hợp lệ</string>
     <string name="fill_full_info">Vui lòng nhập đầy đủ thông tin đơn hàng</string>
+    <string name="create_order_fail">Có lỗi trong khi tạo đơn hàng, vui lòng thử lại sau</string>
+    <string name="create_order_success">Tạo đơn hàng thành công</string>
+    <string name="fill_all_edt">Vui lòng nhập đầy đủ thông tin</string>
 </resources>

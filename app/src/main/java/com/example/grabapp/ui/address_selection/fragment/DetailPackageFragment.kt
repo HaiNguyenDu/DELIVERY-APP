@@ -205,7 +205,7 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
         val selectedType = binding.rcvType.adapter?.let {
             (it as PackageTypeAdapter).getSelectedType()
         }?: PackageTypeEnum.KHAC
-        val newPackageInfo = PackageItemModel(
+        val newPackageInfo = viewModel.getCurrentPackageInfo().copy(
             weightKg = kg.toDouble(),
             packageSize = getSizeEnum(selectedText ?: ""),
             category = selectedType

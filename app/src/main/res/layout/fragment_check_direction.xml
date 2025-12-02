@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:padding="@dimen/size_0"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/size_0">
 
     <org.maplibre.android.maps.MapView
         android:id="@+id/mapView"
@@ -32,14 +32,15 @@
         app:maplibre_uiZoomGestures="true" />
 
     <ImageButton
-        android:layout_marginStart="@dimen/size_20"
         android:id="@+id/btn_back"
         android:layout_width="@dimen/size_24"
         android:layout_height="@dimen/size_24"
-        android:src="@drawable/ic_back"
+        android:layout_marginStart="@dimen/size_20"
         android:background="@null"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
@@ -58,4 +59,18 @@
             android:textSize="@dimen/font_18"
             android:textStyle="bold" />
     </FrameLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
+        android:layout_width="@dimen/size_150"
+        android:layout_height="@dimen/size_150"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        android:visibility="gone"
+        app:lottie_fileName="loading.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse" />
 </androidx.constraintlayout.widget.ConstraintLayout>

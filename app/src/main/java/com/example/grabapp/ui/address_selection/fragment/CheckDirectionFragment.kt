@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.Insets
 import androidx.core.graphics.scale
+import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +19,7 @@ import com.example.grabapp.databinding.FragmentCheckOrderBinding
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
+import com.example.grabapp.view.SnackBarCustom
 import kotlinx.coroutines.launch
 import org.maplibre.android.annotations.IconFactory
 import org.maplibre.android.annotations.MarkerOptions
@@ -44,13 +46,30 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
             viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_DETAIL_ORDER)
         }
         binding.btnNext.setOnClickListener {
-            viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_CHECK_ORDER)
+            viewModel.createOrder({
+                SnackBarCustom(
+                    view = binding.root,
+                    message = getString(R.string.create_order_success),
+                    backgroundColor = context?.getColor(R.color.white)!!,
+                    textColor = context?.getColor(R.color.green)!!,
+                    bottomMarginDp = 100f,
+                ).show()
+            }){
+                SnackBarCustom(
+                    view = binding.root,
+                    message = getString(R.string.create_order_fail),
+                    backgroundColor = context?.getColor(R.color.white)!!,
+                    textColor = context?.getColor(R.color.green)!!,
+                    bottomMarginDp = 100f,
+                ).show()
+            }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpMap()
+        observerData()
     }
 
     override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
@@ -66,6 +85,13 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
         }
     }
 
+    private fun observerData(){
+        lifecycleScope.launch {
+            viewModel.isLoading.collect {
+                binding.lottie.isVisible = it
+            }
+        }
+    }
     private fun setUpMap() {
         viewModel.getDirection()
         binding.mapView.getMapAsync { map ->

@@ -1,10 +1,9 @@
 package com.example.grabapp.data.repository
 
 import com.example.grabapp.data.api.OderApi
-import com.example.grabapp.data.model.order.CreateOrderRequest
-import com.example.grabapp.data.model.order.CreateOrderResponse
-import com.example.grabapp.domain.model.order.OrderForm
 import com.example.grabapp.data.model.order.OrderItem
+import com.example.grabapp.data.model.order.PriceRouteItem
+import com.example.grabapp.domain.model.order.OrderForm
 import com.example.grabapp.domain.model.order.toCreateOrderRequest
 import com.example.grabapp.domain.repository.OrderRepository
 import com.example.grabapp.network.ApiProvider
@@ -23,7 +22,7 @@ class OderRepositoryImpl : OrderRepository {
             )
             if (data.isSuccessful && data.body() != null) {
                 val listItem = data.body()?.content
-                return Result.success(listItem?:emptyList())
+                return Result.success(listItem ?: emptyList())
             }
             return Result.failure(Exception("Fail To Get Data"))
         } catch (e: Exception) {
@@ -49,14 +48,31 @@ class OderRepositoryImpl : OrderRepository {
             val response = orderApi.createOrder(
                 createOrderRequest
             )
-            if(response.isSuccessful && response.body()?.orderId != null)
+            if (response.isSuccessful && response.body()?.orderId != null)
                 return Result.success(response.body()!!.orderId)
             return Result.failure(Exception("Fail To Create Order"))
-        }catch (e: Exception)
-        {
+        } catch (e: Exception) {
             return Result.failure(e)
         }
     }
 
+    override suspend fun getPriceAndRoute(orderForm: OrderForm): Result<PriceRouteItem> {
+        val createOrderRequest = orderForm.toCreateOrderRequest()
+        try {
+//            val respone = orderApi.getPriceRoute(createOrderRequest)
 
+        } catch (e: Exception) {
+
+        }
+        return Result.failure(Exception(""))
+    }
+
+    companion object {
+        private lateinit var orderRepository: OrderRepository
+        fun getInstance(): OrderRepository {
+            if (!::orderRepository.isInitialized)
+                orderRepository = OderRepositoryImpl()
+            return orderRepository
+        }
+    }
 }

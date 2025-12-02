@@ -3,7 +3,7 @@ data class CreateOrderRequest(
     val pickupAddress: AddressInfo,
     val packages: List<PackageItem>,
     val customerNote: String?,
-    val fragile: Boolean
+    val fragile: Boolean,
 )
 
 data class CreateOrderResponse(

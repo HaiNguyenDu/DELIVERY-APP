@@ -11,11 +11,14 @@ data class PackageItemModel(
     val weightKg: Double = 0.0,
     val packageSize: SizeEnum? = null,
     val deliveryFee: Double = 0.0,
-    val codFee: Double = 0.0,
+    val codAmount: Double = 0.0,
+    val cod: Boolean = false,
     val payerType: PayerTypeEnum = PayerTypeEnum.SENDER,
     val category: PackageTypeEnum = PackageTypeEnum.KHAC,
     val description: String = "",
-    val dropOffAddress: AddressInfo = AddressInfo()
+    val dropOffAddress: AddressInfo = AddressInfo(),
+    val detailAddress: String = "",
+    val imgUrl:String = ""
 )
 {
     override fun toString(): String {
@@ -23,6 +26,6 @@ data class PackageItemModel(
     }
 
     fun isHashInfo(): Boolean{
-        return !(weightKg == 0.0 || dropOffAddress.name.isEmpty() || dropOffAddress.detail.isEmpty() || dropOffAddress.phone.isEmpty())
+        return (weightKg >= 0.0 && dropOffAddress.name.isNotEmpty() && dropOffAddress.detail.isNotEmpty() && dropOffAddress.phone.isNotEmpty())
     }
 }

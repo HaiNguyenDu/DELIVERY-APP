@@ -333,11 +333,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_height="wrap_content">
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/checkbox1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/black" />
+                    android:button="@drawable/check_box_square"
+                    android:checked="false"
+                    android:drawablePadding="8dp"
+                    app:buttonTint="@null"
+                    android:buttonTint="@null"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -366,11 +371,16 @@
                 android:layout_marginStart="@dimen/size_10"
                 app:layout_constraintStart_toStartOf="@+id/layout_cod"
                 android:layout_height="wrap_content">
-                <RadioButton
+
+                <CheckBox
                     android:id="@+id/checkbox2"
                     android:layout_width="wrap_content"
+                    app:buttonTint="@null"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/black" />
+                    android:button="@drawable/check_box_square"
+                    android:checked="false"
+                    android:drawablePadding="8dp"
+                    android:buttonTint="@null" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -399,11 +409,16 @@
                 android:layout_marginStart="@dimen/size_10"
                 app:layout_constraintStart_toStartOf="@+id/layout_ship_near"
                 android:layout_height="wrap_content">
-                <RadioButton
+
+                <CheckBox
                     android:id="@+id/checkbox3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/black" />
+                    app:buttonTint="@null"
+                    android:button="@drawable/check_box_square"
+                    android:checked="false"
+                    android:drawablePadding="8dp"
+                    android:buttonTint="@null"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -411,17 +426,8 @@
                     android:textSize="@dimen/font_14"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/medium"
-                    android:text="Thu tiền hộ (COD)"
+                    android:text="Dễ vỡ"
                     />
-
-                <TextView
-                    android:id="@+id/tv_cod_cost"
-                    android:layout_width="match_parent"
-                    android:textAlignment="textEnd"
-                    android:paddingEnd="@dimen/size_20"
-                    android:layout_gravity="center_vertical|end"
-                    android:text="5.000D"
-                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
 
