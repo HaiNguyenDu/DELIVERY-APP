@@ -6,14 +6,17 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.Insets
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.FileRepository
+import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.FragmentDriverProfileBinding
 import com.example.grabapp.driver.home.DriverHomeViewModel
+import com.example.grabapp.driver.home.DriverHomeViewModelFactory
 import com.example.grabapp.driver.home.FaceUploadState
 import com.example.grabapp.driver.setting.SettingActivity
 import com.example.grabapp.extention.onClickWithScale
@@ -30,11 +33,14 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
         lazy {
             val fileRepository = FileRepository()
             val aiServiceRepository = AIServiceRepository()
-            DriverHomeViewModel(
+            val orderRepository = OrderRepository(requireContext())
+            val factory = DriverHomeViewModelFactory(
                 requireActivity().application,
                 fileRepository,
-                aiServiceRepository
+                aiServiceRepository,
+                orderRepository
             )
+            ViewModelProvider(requireActivity(), factory)[DriverHomeViewModel::class.java]
         }
 
     private val pickImageLauncher =

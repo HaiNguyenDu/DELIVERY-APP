@@ -3,10 +3,12 @@ package com.example.grabapp.driver.home
 import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
+import androidx.lifecycle.ViewModelProvider
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.FileRepository
+import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.ActivityDriverHomeBinding
 import com.example.grabapp.driver.home.data.TabType
 import com.example.grabapp.extention.onClickWithScale
@@ -19,16 +21,19 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
     }
 
     private var currentTab: TabType = TabType.HOME
+    
+    private val fileRepository by lazy { FileRepository() }
+    private val aiServiceRepository by lazy { AIServiceRepository() }
+    private val orderRepository by lazy { OrderRepository(this) }
+    private val viewModelFactory by lazy {
+        DriverHomeViewModelFactory(application, fileRepository, aiServiceRepository, orderRepository)
+    }
 
     override fun getLazyBinding(): Lazy<ActivityDriverHomeBinding> =
         lazy { ActivityDriverHomeBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel(): Lazy<DriverHomeViewModel> =
-        lazy {
-            val fileRepository = FileRepository()
-            val aiServiceRepository = AIServiceRepository()
-            DriverHomeViewModel(application, fileRepository, aiServiceRepository)
-        }
+        lazy { ViewModelProvider(this, viewModelFactory)[DriverHomeViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,11 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
 
         setupListener()
         setupFragment(savedInstanceState)
+        fetchOrders()
+    }
+    
+    private fun fetchOrders() {
+        viewModel.fetchOrders()
     }
 
     private fun setupListener() {

@@ -3,11 +3,13 @@ package com.example.grabapp.driver.home
 import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.FileRepository
+import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.FragmentHomeBinding
 import com.example.grabapp.driver.home.data.ConnectionState
 import com.example.grabapp.driver.order_detail.OrderDetailActivity
@@ -31,7 +33,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
         lazy {
             val fileRepository = FileRepository()
             val aiServiceRepository = AIServiceRepository()
-            DriverHomeViewModel(requireActivity().application, fileRepository, aiServiceRepository)
+            val orderRepository = OrderRepository(requireContext())
+            val factory = DriverHomeViewModelFactory(
+                requireActivity().application,
+                fileRepository,
+                aiServiceRepository,
+                orderRepository
+            )
+            ViewModelProvider(requireActivity(), factory)[DriverHomeViewModel::class.java]
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

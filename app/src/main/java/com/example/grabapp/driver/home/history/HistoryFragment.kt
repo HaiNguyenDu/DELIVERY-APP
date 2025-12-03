@@ -3,17 +3,23 @@ package com.example.grabapp.driver.home.history
 import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.FileRepository
+import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.FragmentHistoryBinding
 import com.example.grabapp.driver.home.DriverHomeViewModel
+import com.example.grabapp.driver.home.DriverHomeViewModelFactory
 import com.example.grabapp.driver.home.adapter.OrderAdapter
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.model.Order
 import com.example.grabapp.model.OrderState
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel>() {
     
@@ -35,26 +41,36 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
         lazy {
             val fileRepository = FileRepository()
             val aiServiceRepository = AIServiceRepository()
-            DriverHomeViewModel(requireActivity().application, fileRepository, aiServiceRepository)
+            val orderRepository = OrderRepository(requireContext())
+            val factory = DriverHomeViewModelFactory(
+                requireActivity().application,
+                fileRepository,
+                aiServiceRepository,
+                orderRepository
+            )
+            ViewModelProvider(requireActivity(), factory)[DriverHomeViewModel::class.java]
         }
 
     override fun setUpClick() {
         setupTabListeners()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        loadOrders()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeOrders()
         setupRecyclerView()
         updateTabBackgrounds()
+        updateStatistics()
     }
-
-    private fun loadOrders() {
-        allOrders = Order.getMockOrders()
+    
+    private fun observeOrders() {
+        lifecycleScope.launch {
+            viewModel.orders.collectLatest { orders ->
+                allOrders = orders
+                updateRecyclerView()
+                updateStatistics()
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -64,6 +80,12 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
             layoutManager = LinearLayoutManager(requireContext())
             adapter = orderAdapter
         }
+    }
+    
+    private fun updateRecyclerView() {
+        val filteredOrders = getFilteredOrders()
+        orderAdapter = OrderAdapter(items = filteredOrders)
+        binding.rvOrderHistory.adapter = orderAdapter
     }
 
     private fun setupTabListeners() {
@@ -88,10 +110,30 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
 
     private fun filterOrders(filterType: FilterType) {
         currentFilter = filterType
-        val filteredOrders = getFilteredOrders()
-        orderAdapter = OrderAdapter(items = filteredOrders)
-        binding.rvOrderHistory.adapter = orderAdapter
+        updateRecyclerView()
         updateTabBackgrounds()
+    }
+    
+    private fun updateStatistics() {
+        val totalOrders = allOrders.size
+        val completedOrders = allOrders.count { it.orderState == OrderState.DELIVERED }
+        val totalIncome = allOrders
+            .filter { it.orderState == OrderState.DELIVERED }
+            .sumOf { it.income }
+        
+        binding.apply {
+            tvTotalOrders.text = totalOrders.toString()
+            tvCompletedOrders.text = completedOrders.toString()
+            tvIncome.text = formatIncome(totalIncome)
+        }
+    }
+    
+    private fun formatIncome(amount: Long): String {
+        return when {
+            amount >= 1_000_000 -> "${amount / 1_000_000}M"
+            amount >= 1_000 -> "${amount / 1_000}K"
+            else -> amount.toString()
+        }
     }
 
     private fun getFilteredOrders(): List<Order> {

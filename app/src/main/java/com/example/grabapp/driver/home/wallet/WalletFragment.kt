@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.FileRepository
+import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.FragmentWalletBinding
 import com.example.grabapp.driver.home.DriverHomeViewModel
+import com.example.grabapp.driver.home.DriverHomeViewModelFactory
 import com.example.grabapp.driver.home.wallet.adapter.TransactionHistoryAdapter
 import com.example.grabapp.model.TransactionHistory
 
@@ -25,7 +28,14 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, DriverHomeViewModel>(
         lazy {
             val fileRepository = FileRepository()
             val aiServiceRepository = AIServiceRepository()
-            DriverHomeViewModel(requireActivity().application, fileRepository, aiServiceRepository)
+            val orderRepository = OrderRepository(requireContext())
+            val factory = DriverHomeViewModelFactory(
+                requireActivity().application,
+                fileRepository,
+                aiServiceRepository,
+                orderRepository
+            )
+            ViewModelProvider(requireActivity(), factory)[DriverHomeViewModel::class.java]
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
