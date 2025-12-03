@@ -1,0 +1,1931 @@
+{
+  "content": [
+    {
+      "id": "0079f314-a4f6-4641-9e07-e8d0a879e2b1",
+      "totalAmount": 3819000,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-12-03T05:13:31.092636",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "26 Trần Kế Xương, Hải Châu, Đà Nẵng",
+        "name": "Nguyen duy hai",
+        "phone": "0914103372",
+        "note": null,
+        "latitude": 16.067236,
+        "longitude": 108.216722
+      },
+      "packages": [
+        {
+          "id": "1a7880ab-8c37-4807-9a71-e9dc7c414498",
+          "weightKg": 5,
+          "packageSize": "XL",
+          "deliveryFee": 3819000,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": "ja",
+          "description": "v",
+          "dropoffAddress": {
+            "detail": "Hà Nội",
+            "name": "j",
+            "phone": "0914103372",
+            "note": null,
+            "latitude": 21.028195,
+            "longitude": 105.85416
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": [
+        {
+          "price": 3819000,
+          "latitude": 21.0281954,
+          "longitude": 105.8541598,
+          "routeIndex": 1,
+          "packageIndex": 1,
+          "distance": 755841,
+          "estimatedDuration": 106659
+        }
+      ]
+    },
+    {
+      "id": "be70b1cf-69a2-456a-aea3-2f35996ea70e",
+      "totalAmount": 5407000,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-12-03T04:54:13.670754",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "26 Trần Kế Xương, Hải Châu, Đà Nẵng",
+        "name": "Nguyen duy hai",
+        "phone": "0914103372",
+        "note": null,
+        "latitude": 16.067236,
+        "longitude": 108.216722
+      },
+      "packages": [
+        {
+          "id": "8e7a471e-82be-4543-bca1-bd5894a690d4",
+          "weightKg": 5,
+          "packageSize": "XL",
+          "deliveryFee": 5407000,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": "ja",
+          "description": "v",
+          "dropoffAddress": {
+            "detail": "Huyện Giồng Riềng, Kiên Giang",
+            "name": "vvvv",
+            "phone": "0914103372",
+            "note": null,
+            "latitude": 9.909577,
+            "longitude": 105.31192
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": [
+        {
+          "price": 5407000,
+          "latitude": 9.9095768,
+          "longitude": 105.3119196,
+          "routeIndex": 1,
+          "packageIndex": 1,
+          "distance": 1073437,
+          "estimatedDuration": 154808
+        }
+      ]
+    },
+    {
+      "id": "41bb193a-f93d-4ecd-81fd-cea0cfe9d5a8",
+      "totalAmount": 48000,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-12-02T22:09:56.487968",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "Quán Nhậu Minh Phượng, Yên Khê 2, Thanh Khê, Đà Nẵng",
+        "name": "Đỗ Văn Tốn",
+        "phone": "0869602032",
+        "note": null,
+        "latitude": 16.068583,
+        "longitude": 108.181052
+      },
+      "packages": [
+        {
+          "id": "98e6ac8a-2d2e-4b94-9976-8b41eb5864b9",
+          "weightKg": 1,
+          "packageSize": "S",
+          "deliveryFee": 48000,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1764688176/users/_r_d_/file__r_d__1764688194.667406.jpg",
+          "description": "áđá",
+          "dropoffAddress": {
+            "detail": "VNPT Đà Nẵng, 524 Nguyễn Lương Bằng, Phường Hòa Hiệp Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
+            "name": "Bách",
+            "phone": "0796631299",
+            "note": null,
+            "latitude": 16.095552,
+            "longitude": 108.138033
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": [
+        {
+          "price": 48000,
+          "latitude": 16.0955519,
+          "longitude": 108.138033,
+          "routeIndex": 1,
+          "packageIndex": 1,
+          "distance": 8015,
+          "estimatedDuration": 1144
+        }
+      ]
+    },
+    {
+      "id": "d0990998-2369-47a6-8fc7-ac65ac183f4b",
+      "totalAmount": 61000,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-12-02T22:03:20.26002",
+      "scheduledAt": "2025-12-01T20:00:00",
+      "pickupAddress": {
+        "detail": "Quán Nhậu Minh Phượng, Yên Khê 2, Thanh Khê, Đà Nẵng",
+        "name": "Đỗ Văn Tốn",
+        "phone": "0869602032",
+        "note": null,
+        "latitude": 16.068583,
+        "longitude": 108.181052
+      },
+      "packages": [
+        {
+          "id": "ce664efb-3260-4874-92e1-1157e98f5d9b",
+          "weightKg": 2,
+          "packageSize": "S",
+          "deliveryFee": 20000,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1764687713/users/_r_b_/file__r_b__1764687732.319653.jpg",
+          "description": null,
+          "dropoffAddress": {
+            "detail": "Ký túc xá Sinh viên Phía Tây, Hà Văn Tính, Phường Hòa Khánh Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
+            "name": "Bách",
+            "phone": "0796631299",
+            "note": null,
+            "latitude": 16.068123,
+            "longitude": 108.15416
+          }
+        },
+        {
+          "id": "f21fde00-606d-4149-b543-be2b9e32d834",
+          "weightKg": 2,
+          "packageSize": "S",
+          "deliveryFee": 41000,
+          "codFee": 10000,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1764687755/users/_r_10_/file__r_10__1764687770.987876.webp",
+          "description": null,
+          "dropoffAddress": {
+            "detail": "Đại học Bách khoa Đà Nẵng, 54 Nguyễn Lương Bằng, Phường Hòa Khánh Bắc, Quận Liên Chiểu, Thành phố Đà Nẵng",
+            "name": "hair",
+            "phone": "0897351232",
+            "note": null,
+            "latitude": 16.073673,
+            "longitude": 108.149929
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": [
+        {
+          "price": 20000,
+          "latitude": 16.0681235,
+          "longitude": 108.1541598,
+          "routeIndex": 1,
+          "packageIndex": 1,
+          "distance": 4670,
+          "estimatedDuration": 723
+        },
+        {
+          "price": 41000,
+          "latitude": 16.0736733,
+          "longitude": 108.1499294,
+          "routeIndex": 2,
+          "packageIndex": 2,
+          "distance": 5701,
+          "estimatedDuration": 997
+        }
+      ]
+    },
+    {
+      "id": "59eaebcf-165a-4256-a00d-aae3295d38a2",
+      "totalAmount": 29000,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-12-02T21:52:34.029715",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "Quán Nhậu Minh Phượng, Yên Khê 2, Thanh Khê, Đà Nẵng",
+        "name": "Đỗ Văn Tốn",
+        "phone": "0869602032",
+        "note": null,
+        "latitude": 16.068583,
+        "longitude": 108.181052
+      },
+      "packages": [
+        {
+          "id": "33896b7f-688c-4175-a525-a64e398ccc2a",
+          "weightKg": 0.1,
+          "packageSize": "S",
+          "deliveryFee": 29000,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1764687125/users/_r_tg_/file__r_tg__1764687144.691567.jpg",
+          "description": null,
+          "dropoffAddress": {
+            "detail": "Ký túc xá Sinh viên Phía Tây, Hà Văn Tính, Phường Hòa Khánh Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
+            "name": "Giáp",
+            "phone": "0796631299",
+            "note": null,
+            "latitude": 16.068123,
+            "longitude": 108.15416
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": [
+        {
+          "price": 29000,
+          "latitude": 16.0681235,
+          "longitude": 108.1541598,
+          "routeIndex": 1,
+          "packageIndex": 1,
+          "distance": 4670,
+          "estimatedDuration": 723
+        }
+      ]
+    },
+    {
+      "id": "8121b0da-2939-4fc7-b707-e83e4009eaa3",
+      "totalAmount": 67000,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-12-02T21:10:01.175646",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "Đại học Bách khoa Đà Nẵng, 54 Nguyễn Lương Bằng, Phường Hòa Khánh Bắc, Quận Liên Chiểu, Thành phố Đà Nẵng",
+        "name": "Đỗ Văn Tốn",
+        "phone": "0869602032",
+        "note": null,
+        "latitude": 16.073673,
+        "longitude": 108.149929
+      },
+      "packages": [
+        {
+          "id": "5fea769e-224a-48b6-8319-1eb0655e4bc6",
+          "weightKg": 1,
+          "packageSize": "S",
+          "deliveryFee": 20000,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1764684564/users/_r_1l5_/file__r_1l5__1764684580.363367.jpg",
+          "description": "ád",
+          "dropoffAddress": {
+            "detail": "Ký túc xá Sinh viên Phía Tây, Hà Văn Tính, Phường Hòa Khánh Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
+            "name": "Bách",
+            "phone": "0796631299",
+            "note": null,
+            "latitude": 16.068123,
+            "longitude": 108.15416
+          }
+        },
+        {
+          "id": "24a51fe5-0eba-4470-b117-dd2b470f6965",
+          "weightKg": 2,
+          "packageSize": "S",
+          "deliveryFee": 47000,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1764684577/users/_r_1lp_/file__r_1lp__1764684595.819412.jpg",
+          "description": null,
+          "dropoffAddress": {
+            "detail": "Quán nhậu Minh Phượng, 289 Yên Khê 2, Thanh Khê Tây, Thanh Khê, Đà Nẵng",
+            "name": "hair",
+            "phone": "0897351232",
+            "note": null,
+            "latitude": 16.068607,
+            "longitude": 108.180757
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": [
+        {
+          "price": 20000,
+          "latitude": 16.0681235,
+          "longitude": 108.1541598,
+          "routeIndex": 1,
+          "packageIndex": 1,
+          "distance": 1152,
+          "estimatedDuration": 1006
+        },
+        {
+          "price": 47000,
+          "latitude": 16.068607,
+          "longitude": 108.1807569,
+          "routeIndex": 2,
+          "packageIndex": 2,
+          "distance": 5976,
+          "estimatedDuration": 1857
+        }
+      ]
+    },
+    {
+      "id": "6792331c-fcce-4dbf-934d-59990075af21",
+      "totalAmount": 76000,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-12-01T02:50:01.424107",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "cc84348e-4139-4229-b502-1fb2d7243df7",
+          "weightKg": 2.5,
+          "packageSize": "M",
+          "deliveryFee": 52000,
+          "codFee": 150000,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": "https://example.com/image1.jpg",
+          "description": "Áo thun nam",
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn, Đà Nẵng",
+            "name": "Trần Thị A",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        },
+        {
+          "id": "be243741-e7e9-4a03-9efc-e14ba4c1a6ad",
+          "weightKg": 4,
+          "packageSize": "L",
+          "deliveryFee": 24000,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "QUA_TANG",
+          "imageUrl": "https://example.com/image2.jpg",
+          "description": "Hộp quà Tết",
+          "dropoffAddress": {
+            "detail": "12 Nguyễn Tri Phương, Đà Nẵng",
+            "name": "Phạm Văn B",
+            "phone": "0934567890",
+            "note": null,
+            "latitude": 16.0653,
+            "longitude": 108.2135
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": [
+        {
+          "price": 24000,
+          "latitude": 16.0653,
+          "longitude": 108.2135,
+          "routeIndex": 1,
+          "packageIndex": 2,
+          "distance": 2779,
+          "estimatedDuration": 679
+        },
+        {
+          "price": 52000,
+          "latitude": 16.0702,
+          "longitude": 108.2203,
+          "routeIndex": 2,
+          "packageIndex": 1,
+          "distance": 3923,
+          "estimatedDuration": 1017
+        }
+      ]
+    },
+    {
+      "id": "fb683a10-3461-4117-8540-6923ef0e6621",
+      "totalAmount": 76000,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-12-01T02:38:19.732014",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "a99ef0c7-b72d-4e1d-8247-4f3bf696fb76",
+          "weightKg": 2.5,
+          "packageSize": "M",
+          "deliveryFee": 52000,
+          "codFee": 150000,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": "https://example.com/image1.jpg",
+          "description": "Áo thun nam",
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn, Đà Nẵng",
+            "name": "Trần Thị A",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        },
+        {
+          "id": "a081913d-9eec-4187-ac44-f6f7d3ff216f",
+          "weightKg": 4,
+          "packageSize": "L",
+          "deliveryFee": 24000,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "QUA_TANG",
+          "imageUrl": "https://example.com/image2.jpg",
+          "description": "Hộp quà Tết",
+          "dropoffAddress": {
+            "detail": "12 Nguyễn Tri Phương, Đà Nẵng",
+            "name": "Phạm Văn B",
+            "phone": "0934567890",
+            "note": null,
+            "latitude": 16.0653,
+            "longitude": 108.2135
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "7993d36a-af0e-4773-99fc-21b5e6b7383a",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-30T22:36:54.029897",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "26 Trần Kế Xương, Hải Châu, Đà Nẵng",
+        "name": "Nguyen duy hai",
+        "phone": "0914103372",
+        "note": null,
+        "latitude": 16.067236,
+        "longitude": 108.216722
+      },
+      "packages": [
+        {
+          "id": "35c155c2-9aef-4aaf-af74-bebffca4043a",
+          "weightKg": 5,
+          "packageSize": "XL",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": "ja",
+          "description": "g",
+          "dropoffAddress": {
+            "detail": "Thành phố Vũng Tàu, Bà Rịa-Vũng Tàu",
+            "name": "d",
+            "phone": "0914103372",
+            "note": null,
+            "latitude": 10.348519,
+            "longitude": 107.07905
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "a82d4e33-1665-492f-aecf-fc0745ab0a16",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-29T09:26:21.835013",
+      "scheduledAt": "2025-11-13T21:04:04",
+      "pickupAddress": {
+        "detail": "Quán A Khôi, Hà Văn Tính, Phường Hòa Khánh Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
+        "name": "Trương Vũ Linh",
+        "phone": "0979533045",
+        "note": null,
+        "latitude": 16.069049,
+        "longitude": 108.155294
+      },
+      "packages": [
+        {
+          "id": "5047c53c-7d8c-408d-9cc0-1ff0ff94c8d9",
+          "weightKg": 12,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 6000000,
+          "payerType": "RECEIVER",
+          "category": "KHAC",
+          "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1764383109/users/_r_27_/file__r_27__1764383121.358175.jpg",
+          "description": null,
+          "dropoffAddress": {
+            "detail": "Okono Mart, 19 Lạc Trung, Vĩnh Tuy, Hai Bà Trưng, Hà Nội",
+            "name": "Trương Văn Long",
+            "phone": "0978065432",
+            "note": null,
+            "latitude": 21.002926,
+            "longitude": 105.862179
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "678ed811-27ce-4660-af0b-024aa5c08ae5",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-29T07:55:55.278645",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Le Loi",
+        "name": "Store A",
+        "phone": "0912345678",
+        "note": null,
+        "latitude": 26,
+        "longitude": 37
+      },
+      "packages": [
+        {
+          "id": "23598395-8710-4f67-a704-143a3c27002a",
+          "weightKg": 1.2,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": "https://facebook.com",
+          "description": null,
+          "dropoffAddress": {
+            "detail": "456 Nguyen Trai",
+            "name": "Customer B",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 26,
+            "longitude": 37
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "82e3bd70-be4d-472e-a0c2-727d854237a3",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-26T19:39:55.015108",
+      "scheduledAt": "2025-11-28T17:00:00",
+      "pickupAddress": {
+        "detail": "Hà Văn Tính, Phường Hòa Khánh Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
+        "name": "Trương Vũ Linh",
+        "phone": "0979533045",
+        "note": null,
+        "latitude": 16.068416,
+        "longitude": 108.154243
+      },
+      "packages": [
+        {
+          "id": "e218319f-74f2-4041-8640-80c9545a9b70",
+          "weightKg": 12,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "NUOC_HOA",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "Okono Mart, 219-221 Yên Hòa, Yên Hòa, Cầu Giấy, Hà Nội",
+            "name": "Trương Văn Long",
+            "phone": "0978065432",
+            "note": null,
+            "latitude": 21.022946,
+            "longitude": 105.792725
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "dd7ea944-d783-49d4-926a-fb5cd0428624",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-26T19:34:53.745568",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Le Loi",
+        "name": "Store A",
+        "phone": "0912345678",
+        "note": null,
+        "latitude": 45,
+        "longitude": 37
+      },
+      "packages": [
+        {
+          "id": "908f53f7-e2a9-485f-ac96-80128ce32ad9",
+          "weightKg": 1.2,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "456 Nguyen Trai",
+            "name": "Customer B",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 45,
+            "longitude": 37
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "dde420af-13c2-460e-975f-6e14a10c3dea",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-26T19:33:47.566311",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Le Loi",
+        "name": "Store A",
+        "phone": "0912345678",
+        "note": null,
+        "latitude": 45,
+        "longitude": 37
+      },
+      "packages": [
+        {
+          "id": "d9c849c6-a808-4b1a-83c9-792b2e279df8",
+          "weightKg": 1.2,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "456 Nguyen Trai",
+            "name": "Customer B",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 45,
+            "longitude": 37
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "77b497cc-b896-4791-a1fb-41a58f7a38be",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-26T19:28:19.135705",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "Quán A Khôi, Hà Văn Tính, Phường Hòa Khánh Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
+        "name": "Trương Vũ Linh",
+        "phone": "0979533045",
+        "note": null,
+        "latitude": 16.069049,
+        "longitude": 108.155294
+      },
+      "packages": [
+        {
+          "id": "3968d1d1-50d7-4112-aea4-75998420009d",
+          "weightKg": 12,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "MY_PHAM",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "Okono Mart, 219-221 Yên Hòa, Yên Hòa, Cầu Giấy, Hà Nội",
+            "name": "Trương Văn Long",
+            "phone": "0978065432",
+            "note": null,
+            "latitude": 21.022946,
+            "longitude": 105.792725
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "1c677fa2-958d-4b29-b3a5-5541069366d8",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-24T23:17:02.714371",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Le Loi",
+        "name": "Store A",
+        "phone": "0912345678",
+        "note": null,
+        "latitude": 10.762622,
+        "longitude": 106.660172
+      },
+      "packages": [
+        {
+          "id": "ae7a6eaf-dc82-4e33-ad04-0fdc2767285c",
+          "weightKg": 1.2,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "456 Nguyen Trai",
+            "name": "Customer B",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 10.765421,
+            "longitude": 106.682123
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "4be9d037-a453-4c37-9f7a-3d4483306622",
+      "totalAmount": 72,
+      "status": "DELIVERED",
+      "createdAt": "2025-11-20T21:28:22.711603",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Đỗ Văn Tuấn",
+        "phone": "0869602032",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "e0ef26c0-d378-48e0-800b-4e726b2fd762",
+          "weightKg": 2.5,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 150000,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": null,
+          "description": "Áo thun nam",
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn, Đà Nẵng",
+            "name": "Trần Thị A",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        },
+        {
+          "id": "148bf889-30bd-45ee-aff3-a1697b3b14fd",
+          "weightKg": 4,
+          "packageSize": "L",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "QUA_TANG",
+          "imageUrl": null,
+          "description": "Hộp quà Tết",
+          "dropoffAddress": {
+            "detail": "12 Nguyễn Tri Phương, Đà Nẵng",
+            "name": "Phạm Văn B",
+            "phone": "0934567890",
+            "note": null,
+            "latitude": 16.0653,
+            "longitude": 108.2135
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "1c982a5d-7051-47b9-924d-2931777e4ae1",
+      "totalAmount": 72,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-19T23:28:00.989874",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "25d9d93b-bcaf-4cb7-ad71-64cc46f9a328",
+          "weightKg": 2.5,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 150000,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": null,
+          "description": "Áo thun nam",
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn, Đà Nẵng",
+            "name": "Trần Thị A",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        },
+        {
+          "id": "25e73eac-ffe4-40e1-ae91-e397c51885e1",
+          "weightKg": 4,
+          "packageSize": "L",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "QUA_TANG",
+          "imageUrl": null,
+          "description": "Hộp quà Tết",
+          "dropoffAddress": {
+            "detail": "12 Nguyễn Tri Phương, Đà Nẵng",
+            "name": "Phạm Văn B",
+            "phone": "0934567890",
+            "note": null,
+            "latitude": 16.0653,
+            "longitude": 108.2135
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "b67bea36-3267-4a9c-8457-f6e12460d0d4",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-19T08:32:44.044058",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "16e22a3e-9eb1-48ff-bff2-624a99b43137",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "563258a7-d829-4157-97bc-06fe75a055a7",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-19T08:32:43.415858",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "689b9987-7bca-4049-9e1f-2efd38d1a2e7",
+          "weightKg": 0.5,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "DEFAULT",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "10 Trần Phú",
+            "name": "Người nhận",
+            "phone": "0977000111",
+            "note": null,
+            "latitude": 16.06,
+            "longitude": 108.21
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "fbd68ae8-70fd-4877-be7b-b83d8baa0621",
+      "totalAmount": 72,
+      "status": "RETURNED",
+      "createdAt": "2025-11-19T08:32:41.934616",
+      "scheduledAt": "2025-11-05T09:30:00",
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "f1af5bb8-f430-46f5-87fe-a0bfe3daf8e4",
+          "weightKg": 2.5,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 150000,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": null,
+          "description": "Áo thun nam",
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn, Đà Nẵng",
+            "name": "Trần Thị A",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        },
+        {
+          "id": "5deabc1a-0cc6-47dd-a101-cb061378d23b",
+          "weightKg": 4,
+          "packageSize": "L",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "QUA_TANG",
+          "imageUrl": null,
+          "description": "Hộp quà Tết",
+          "dropoffAddress": {
+            "detail": "12 Nguyễn Tri Phương, Đà Nẵng",
+            "name": "Phạm Văn B",
+            "phone": "0934567890",
+            "note": null,
+            "latitude": 16.0653,
+            "longitude": 108.2135
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "8824e32b-e3c8-43e5-afee-e50804ef81a5",
+      "totalAmount": 36,
+      "status": "RETURNING_TO_SENDER",
+      "createdAt": "2025-11-19T07:34:49.541848",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "4893a729-475c-4ab5-bc9a-6b6909f8c113",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "5e88282d-f6a1-4c7a-8f88-3bc780ad6f63",
+      "totalAmount": 36,
+      "status": "DRIVER_EN_ROUTE_PICKUP",
+      "createdAt": "2025-11-19T07:34:48.691049",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "c07e349b-6f06-4b8d-9e05-c7c83dcf2f03",
+          "weightKg": 0.5,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "DEFAULT",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "10 Trần Phú",
+            "name": "Người nhận",
+            "phone": "0977000111",
+            "note": null,
+            "latitude": 16.06,
+            "longitude": 108.21
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "fe28d8fc-d16d-4d6e-a79b-0fbb7ef77b67",
+      "totalAmount": 72,
+      "status": "PACKAGE_PICKED",
+      "createdAt": "2025-11-19T07:34:46.98003",
+      "scheduledAt": "2025-11-05T09:30:00",
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "4a29ec73-211a-4385-a8f3-9747bf225f18",
+          "weightKg": 2.5,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 150000,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": null,
+          "description": "Áo thun nam",
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn, Đà Nẵng",
+            "name": "Trần Thị A",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        },
+        {
+          "id": "e00d5a1c-3df6-46a1-ab52-26b950bf1124",
+          "weightKg": 4,
+          "packageSize": "L",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "QUA_TANG",
+          "imageUrl": null,
+          "description": "Hộp quà Tết",
+          "dropoffAddress": {
+            "detail": "12 Nguyễn Tri Phương, Đà Nẵng",
+            "name": "Phạm Văn B",
+            "phone": "0934567890",
+            "note": null,
+            "latitude": 16.0653,
+            "longitude": 108.2135
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "05901cf8-371a-4fa0-91d5-63409d196cc9",
+      "totalAmount": 36,
+      "status": "PICKUP_FAILED",
+      "createdAt": "2025-11-18T22:30:02.010152",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "3a20a93c-7a98-4689-b924-a07fae07ed7b",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "d395dbfe-8106-4ffb-a240-07746ba2b65a",
+      "totalAmount": 36,
+      "status": "DRIVER_ASSIGNED",
+      "createdAt": "2025-11-18T22:30:01.901632",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "56f64d04-97f4-41ad-ae46-8da92aa3ff3d",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "d3217178-aca0-49ba-9210-d6490543c11e",
+      "totalAmount": 36,
+      "status": "DRIVER_ASSIGNED",
+      "createdAt": "2025-11-18T22:30:01.730931",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "287e15fe-61ba-4d49-a283-d034e0ad0aa0",
+          "weightKg": 0.5,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "DEFAULT",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "10 Trần Phú",
+            "name": "Người nhận",
+            "phone": "0977000111",
+            "note": null,
+            "latitude": 16.06,
+            "longitude": 108.21
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "5e9d2284-164c-40e1-a7bb-9948d45fdf9a",
+      "totalAmount": 72,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-18T22:30:01.326931",
+      "scheduledAt": "2025-11-05T09:30:00",
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "297f0aa7-6520-4039-b0db-03eb316920c5",
+          "weightKg": 2.5,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 150000,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": null,
+          "description": "Áo thun nam",
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn, Đà Nẵng",
+            "name": "Trần Thị A",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        },
+        {
+          "id": "1af2d85e-1951-4ada-a40f-38a9b303acfc",
+          "weightKg": 4,
+          "packageSize": "L",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "QUA_TANG",
+          "imageUrl": null,
+          "description": "Hộp quà Tết",
+          "dropoffAddress": {
+            "detail": "12 Nguyễn Tri Phương, Đà Nẵng",
+            "name": "Phạm Văn B",
+            "phone": "0934567890",
+            "note": null,
+            "latitude": 16.0653,
+            "longitude": 108.2135
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "ffbf3e1e-a19b-4dc3-980d-7ec24090d105",
+      "totalAmount": 36,
+      "status": "ARRIVED_PICKUP",
+      "createdAt": "2025-11-18T22:16:23.229944",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "874b438a-802c-44f4-bab5-d56d402ffea6",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "f3a7eb31-1591-48e1-a6b3-e36662342b46",
+      "totalAmount": 36,
+      "status": "DELIVERED",
+      "createdAt": "2025-11-18T22:16:23.120065",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "6ba8f306-6078-4d48-aba7-614ea5145936",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "4a938265-d925-4920-86c0-ef6375011c49",
+      "totalAmount": 36,
+      "status": "DRIVER_ASSIGNED",
+      "createdAt": "2025-11-18T22:16:22.973673",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "3dd882db-2a47-40af-80f7-a8b208269741",
+          "weightKg": 0.5,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "DEFAULT",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "10 Trần Phú",
+            "name": "Người nhận",
+            "phone": "0977000111",
+            "note": null,
+            "latitude": 16.06,
+            "longitude": 108.21
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "6f9cb0c6-9b71-4886-a07a-32b59706cb50",
+      "totalAmount": 72,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-18T22:16:22.347032",
+      "scheduledAt": "2025-11-05T09:30:00",
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "0a218c17-da89-49a6-ac29-1be2529c022d",
+          "weightKg": 2.5,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 150000,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": null,
+          "description": "Áo thun nam",
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn, Đà Nẵng",
+            "name": "Trần Thị A",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        },
+        {
+          "id": "f6caecec-98d6-4ae5-8f2f-5fc58b6506d5",
+          "weightKg": 4,
+          "packageSize": "L",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "QUA_TANG",
+          "imageUrl": null,
+          "description": "Hộp quà Tết",
+          "dropoffAddress": {
+            "detail": "12 Nguyễn Tri Phương, Đà Nẵng",
+            "name": "Phạm Văn B",
+            "phone": "0934567890",
+            "note": null,
+            "latitude": 16.0653,
+            "longitude": 108.2135
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "27a20ddb-6c30-4ef9-ac8b-0ba399be10b9",
+      "totalAmount": 36,
+      "status": "PACKAGE_PICKED",
+      "createdAt": "2025-11-18T22:05:41.335371",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "f3be2344-3694-442e-8803-0d9ce31970fa",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "c9829b91-c8df-4bc7-9182-4b071f2243a3",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-18T22:05:41.200239",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "04b1c08f-0445-467d-a6b2-bfcc7a02b905",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "cd160401-0398-423c-8ba7-b05d70a616a4",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-18T22:05:41.025566",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "5baacc49-b6df-4eb5-8181-34dcfceaa32c",
+          "weightKg": 0.5,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "DEFAULT",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "10 Trần Phú",
+            "name": "Người nhận",
+            "phone": "0977000111",
+            "note": null,
+            "latitude": 16.06,
+            "longitude": 108.21
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "f0f9388b-fb89-46e3-8155-6592a8bc45de",
+      "totalAmount": 72,
+      "status": "CANCELLED_BY_SENDER",
+      "createdAt": "2025-11-18T22:05:40.668984",
+      "scheduledAt": "2025-11-05T09:30:00",
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "eeb26e0a-cacd-4757-81d3-5fc0671fabcd",
+          "weightKg": 2.5,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 150000,
+          "payerType": "SENDER",
+          "category": "THOI_TRANG",
+          "imageUrl": null,
+          "description": "Áo thun nam",
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn, Đà Nẵng",
+            "name": "Trần Thị A",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        },
+        {
+          "id": "e66adc42-ff2a-4708-9120-9aceef766dd3",
+          "weightKg": 4,
+          "packageSize": "L",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "QUA_TANG",
+          "imageUrl": null,
+          "description": "Hộp quà Tết",
+          "dropoffAddress": {
+            "detail": "12 Nguyễn Tri Phương, Đà Nẵng",
+            "name": "Phạm Văn B",
+            "phone": "0934567890",
+            "note": null,
+            "latitude": 16.0653,
+            "longitude": 108.2135
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "b12ed3ef-b7e5-415c-b46f-603a8261e857",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-18T22:05:09.280106",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "189a24cb-4758-4f16-8d75-2825fc0ef5f2",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "27d94a1d-1d6e-4ac5-a073-e3316d57ba97",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-18T22:05:09.078565",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "92e4c8a7-f92b-467e-b0da-e5236d2ab3a8",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "275b2758-af25-41ab-ba57-b1be40556e6f",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-18T22:05:08.877742",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "961f80c6-4ab1-4d0e-b8bb-3f493d8fef4a",
+          "weightKg": 0.5,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "DEFAULT",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "10 Trần Phú",
+            "name": "Người nhận",
+            "phone": "0977000111",
+            "note": null,
+            "latitude": 16.06,
+            "longitude": 108.21
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "a0fdd6a9-4d49-4d66-becd-a1bf98edf656",
+      "totalAmount": 36,
+      "status": "FINDING_DRIVER",
+      "createdAt": "2025-11-18T22:03:55.629589",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "d50ef557-6ccb-4e51-a661-2de88f674f46",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "50888f2f-b411-493c-9f67-c137ff867dd3",
+      "totalAmount": 36,
+      "status": "DRIVER_ASSIGNED",
+      "createdAt": "2025-11-18T22:03:55.51985",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "83b2f40f-552d-4d30-8b1c-421e836ce829",
+          "weightKg": 1,
+          "packageSize": "M",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "SENDER",
+          "category": "KHAC",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "45 Lê Duẩn",
+            "name": "Người nhận",
+            "phone": "0987654321",
+            "note": null,
+            "latitude": 16.0702,
+            "longitude": 108.2203
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    },
+    {
+      "id": "11c93366-4156-4b0b-8b63-000017f928bc",
+      "totalAmount": 36,
+      "status": "EN_ROUTE_DELIVERY",
+      "createdAt": "2025-11-18T22:03:55.188176",
+      "scheduledAt": null,
+      "pickupAddress": {
+        "detail": "123 Nguyễn Văn Linh, Đà Nẵng",
+        "name": "Nguyễn Văn Tâm",
+        "phone": "0905123456",
+        "note": null,
+        "latitude": 16.0471,
+        "longitude": 108.2068
+      },
+      "packages": [
+        {
+          "id": "812b105e-f983-43e1-9b43-93c6a440ffe8",
+          "weightKg": 0.5,
+          "packageSize": "S",
+          "deliveryFee": 36,
+          "codFee": 0,
+          "payerType": "RECEIVER",
+          "category": "DEFAULT",
+          "imageUrl": null,
+          "description": null,
+          "dropoffAddress": {
+            "detail": "10 Trần Phú",
+            "name": "Người nhận",
+            "phone": "0977000111",
+            "note": null,
+            "latitude": 16.06,
+            "longitude": 108.21
+          }
+        }
+      ],
+      "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+      "priceAndRoutes": []
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 50,
+    "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalElements": 42,
+  "totalPages": 1,
+  "size": 50,
+  "number": 0,
+  "first": true,
+  "numberOfElements": 42,
+  "sort": {
+    "empty": false,
+    "sorted": true,
+    "unsorted": false
+  },
+  "empty": false
+}
