@@ -23,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrabApp">
         <activity
+            android:name=".driver.driver_document.DriverDocumentActivity"
+            android:exported="false" />
+        <activity
             android:name=".driver.edit_profile.EditProfileActivity"
             android:exported="false" />
         <activity
