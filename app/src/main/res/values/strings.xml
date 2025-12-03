@@ -300,4 +300,7 @@
     <string name="nh_ph_i_r_r_ng_y_4_g_c">- Ảnh phải rõ ràng, đầy đủ 4 góc</string>
     <string name="nh_d_ng_jpg_png_t_i_a_5mb">- Định dạng: JPG, PNG (tối đa 5MB)</string>
     <string name="th_i_gian_duy_t_24_48_gi">- Thời gian duyệt: 24-48 giờ</string>
+    <string name="duy_t">Đã duyệt</string>
+    <string name="b_ng_l_i_xe">Bằng lái xe</string>
+    <string name="ng_k_xe">Đăng ký xe</string>
 </resources>

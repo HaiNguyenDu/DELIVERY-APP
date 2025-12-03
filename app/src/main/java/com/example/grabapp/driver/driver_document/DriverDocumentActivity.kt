@@ -16,5 +16,13 @@ class DriverDocumentActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        setupClickListener()
+    }
+    private fun setupClickListener() {
+        binding.apply {
+            flBack.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
     }
 }

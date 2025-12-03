@@ -5,6 +5,426 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".driver.driver_document.DriverDocumentActivity">
+    android:background="@drawable/img_home_background">
 
+    <View
+        android:id="@+id/emptyView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="-24dp"
+        android:background="@drawable/bg_gradient_green_no_border"
+        app:layout_constraintBottom_toBottomOf="@id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/flBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_18"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="@dimen/size_6"
+        app:layout_constraintBottom_toBottomOf="@id/emptyView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_24"
+        android:layout_weight="1"
+        android:fontFamily="@font/bold"
+        android:text="@string/ch_nh_s_a_h_s"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/flBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_12"
+        android:layout_marginTop="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:gravity="start"
+        android:text="@string/c_p_nh_t_th_ng_tin_c_nh_n"
+        android:textColor="@color/grey_93"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/flBack"
+        app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/tvSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emptyView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/size_12">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@id/constrainLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_16"
+                android:background="@drawable/bg_border_stroke_blue_8_10_per"
+                android:padding="@dimen/size_10"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_4"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/l_u_quan_tr_ng"
+                    android:textColor="@color/azure_33"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_4"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/nh_ph_i_r_r_ng_y_4_g_c"
+                    android:textColor="@color/blue_40"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintTop_toBottomOf="@id/textView3" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_2"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/nh_d_ng_jpg_png_t_i_a_5mb"
+                    android:textColor="@color/blue_40"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintTop_toBottomOf="@id/textView4" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_2"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/th_i_gian_duy_t_24_48_gi"
+                    android:textColor="@color/blue_40"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintTop_toBottomOf="@id/textView5" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_border_stroke_light_green_12_20_per"
+                app:layout_constraintBottom_toBottomOf="@id/constrainLayout5"
+                app:layout_constraintEnd_toEndOf="@id/constrainLayout5"
+                app:layout_constraintStart_toStartOf="@id/constrainLayout5"
+                app:layout_constraintTop_toTopOf="@id/constrainLayout5" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrainLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_16"
+                android:background="@drawable/bg_border_stroke_white_12_80_per"
+                android:padding="@dimen/size_16"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@id/constrainLayout1">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="@dimen/size_48"
+                    android:layout_height="@dimen/size_48"
+                    android:background="@drawable/bg_gradient_green_border_12"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_12"
+                    android:src="@drawable/ic_document"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_12"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/cmnd_cccd"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintBottom_toTopOf="@id/textView12"
+                    app:layout_constraintStart_toEndOf="@id/imageView1"
+                    app:layout_constraintTop_toTopOf="@id/imageView1" />
+
+                <TextView
+                    android:id="@+id/tvCCCDStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_8"
+                    android:background="@drawable/bg_border_stroke_green_6_20_per"
+                    android:fontFamily="@font/bold"
+                    android:paddingHorizontal="@dimen/size_10"
+                    android:paddingVertical="@dimen/size_2"
+                    android:text="@string/duy_t"
+                    android:textColor="@color/green_24"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/textView11" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_12"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/_2_m_t_r_n_t"
+                    android:textColor="@color/grey_46"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintBottom_toBottomOf="@id/imageView1"
+                    app:layout_constraintStart_toEndOf="@id/imageView1"
+                    app:layout_constraintTop_toBottomOf="@id/textView11" />
+
+                <ImageView
+                    android:id="@+id/ivFrontCard"
+                    android:layout_width="@dimen/size_80"
+                    android:layout_height="@dimen/size_80"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:background="@drawable/bg_border_grey_8"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_28"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView1" />
+
+                <ImageView
+                    android:id="@+id/ivBackCard"
+                    android:layout_width="@dimen/size_80"
+                    android:layout_height="@dimen/size_80"
+                    android:layout_marginStart="@dimen/size_8"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:background="@drawable/bg_border_grey_8"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_28"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintStart_toEndOf="@id/ivFrontCard"
+                    app:layout_constraintTop_toBottomOf="@id/imageView1" />
+
+                <TextView
+                    android:id="@+id/tvUploadedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/grey_46"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivFrontCard"
+                    tools:text="Tải lên: 30/11/2025" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrainLayout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_16"
+                android:background="@drawable/bg_border_stroke_white_12_80_per"
+                android:padding="@dimen/size_16"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@id/constrainLayout5">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="@dimen/size_48"
+                    android:layout_height="@dimen/size_48"
+                    android:background="@drawable/bg_gradient_orange_border_12"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_12"
+                    android:src="@drawable/ic_document"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_12"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/b_ng_l_i_xe"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintBottom_toTopOf="@id/textView7"
+                    app:layout_constraintStart_toEndOf="@id/imageView2"
+                    app:layout_constraintTop_toTopOf="@id/imageView2" />
+
+                <TextView
+                    android:id="@+id/tvLicensePlateStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_8"
+                    android:background="@drawable/bg_border_stroke_green_6_20_per"
+                    android:fontFamily="@font/bold"
+                    android:paddingHorizontal="@dimen/size_10"
+                    android:paddingVertical="@dimen/size_2"
+                    android:text="@string/duy_t"
+                    android:textColor="@color/green_24"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/textView7" />
+
+                <ImageView
+                    android:id="@+id/ivLicensePlateUpload"
+                    android:layout_width="@dimen/size_80"
+                    android:layout_height="@dimen/size_80"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:background="@drawable/bg_border_grey_8"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_28"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView2" />
+
+                <TextView
+                    android:id="@+id/tvLicensePlateUploadedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/grey_46"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivLicensePlateUpload"
+                    tools:text="Tải lên: 30/11/2025" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrainLayout7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_16"
+                android:background="@drawable/bg_border_stroke_white_12_80_per"
+                android:padding="@dimen/size_16"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@id/constrainLayout6">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="@dimen/size_48"
+                    android:layout_height="@dimen/size_48"
+                    android:background="@drawable/bg_gradient_purple_12"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_12"
+                    android:src="@drawable/ic_document"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_12"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/ng_k_xe"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintBottom_toTopOf="@id/textView8"
+                    app:layout_constraintStart_toEndOf="@id/imageView3"
+                    app:layout_constraintTop_toTopOf="@id/imageView3" />
+
+                <TextView
+                    android:id="@+id/tvVehicleLicenseStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_8"
+                    android:background="@drawable/bg_border_stroke_green_6_20_per"
+                    android:fontFamily="@font/bold"
+                    android:paddingHorizontal="@dimen/size_10"
+                    android:paddingVertical="@dimen/size_2"
+                    android:text="@string/duy_t"
+                    android:textColor="@color/green_24"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/textView8" />
+
+                <ImageView
+                    android:id="@+id/ivVehicleLicenseUpload"
+                    android:layout_width="@dimen/size_80"
+                    android:layout_height="@dimen/size_80"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:background="@drawable/bg_border_grey_8"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/size_28"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView3" />
+
+                <TextView
+                    android:id="@+id/tvVehicleLicenseUploadedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/grey_46"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivVehicleLicenseUpload"
+                    tools:text="Tải lên: 30/11/2025" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_18"
+        android:layout_marginTop="@dimen/size_12"
+        android:layout_marginBottom="@dimen/size_12"
+        android:alpha="0.5"
+        android:background="@drawable/bg_gradient_green_border_12"
+        android:elevation="@dimen/size_12"
+        android:enabled="false"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:paddingVertical="@dimen/size_12"
+        android:text="@string/g_i_i_ki_m_duy_t"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_18"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nestedScrollView" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

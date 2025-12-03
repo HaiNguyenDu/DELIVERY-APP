@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_home_background"
-    tools:context=".driver.driver_profile.DriverProfileActivity">
+    android:background="@drawable/img_home_background">
 
     <View
         android:id="@+id/emptyView"
