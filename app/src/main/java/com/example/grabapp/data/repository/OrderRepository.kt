@@ -1,0 +1,81 @@
+package com.example.grabapp.data.repository
+
+import android.content.Context
+import com.example.grabapp.api.AuthInterceptor
+import com.example.grabapp.api.SelectiveLoggingInterceptor
+import com.example.grabapp.common.BASE_URL
+import com.example.grabapp.data.TokenStorage
+import com.example.grabapp.data.model.OrderListResponse
+import com.example.grabapp.data.order.OrderApi
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.HttpException
+import java.io.IOException
+import java.util.concurrent.TimeUnit
+
+class OrderRepository(private val context: Context) {
+
+    private val tokenStorage = TokenStorage(context)
+    
+    private val api: OrderApi by lazy {
+        val bodyLogger = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val headersLogger = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.HEADERS
+        }
+        val selectiveLogging = SelectiveLoggingInterceptor(bodyLogger, headersLogger)
+        val authInterceptor = AuthInterceptor(tokenStorage)
+        
+        val client = OkHttpClient.Builder()
+            .addInterceptor(selectiveLogging)
+            .addInterceptor(authInterceptor)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+            
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(OrderApi::class.java)
+    }
+
+    sealed class OrderListResult {
+        data class Success(val response: OrderListResponse) : OrderListResult()
+        data class Error(val code: Int?, val message: String) : OrderListResult()
+    }
+
+    suspend fun getOrders(role: String, userId: String): OrderListResult {
+        return try {
+            val resp = api.getOrders(role, userId)
+            if (resp.isSuccessful) {
+                val body = resp.body()
+                if (body != null) {
+                    OrderListResult.Success(body)
+                } else {
+                    OrderListResult.Error(resp.code(), "Empty response from server")
+                }
+            } else {
+                val errorMes = try {
+                    resp.errorBody()?.string()
+                } catch (e: Exception) {
+                    null
+                }
+                OrderListResult.Error(resp.code(), errorMes ?: "HTTP ${resp.code()}")
+            }
+        } catch (e: IOException) {
+            OrderListResult.Error(
+                null,
+                "Network error: ${e.localizedMessage ?: "Please check your connection"}"
+            )
+        } catch (e: HttpException) {
+            OrderListResult.Error(e.code(), e.message ?: "Server error")
+        } catch (e: Exception) {
+            OrderListResult.Error(null, e.message ?: "Unexpected error")
+        }
+    }
+}
