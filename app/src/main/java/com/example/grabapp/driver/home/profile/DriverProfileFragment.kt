@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.repository.AIServiceRepository
@@ -65,6 +66,51 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
     override fun onViewCreated(view: View, savedInstanceState: android.os.Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeUploadState()
+        observeViewModel()
+        viewModel.fetchOrders()
+        viewModel.fetchDriverInfo()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.orders.collect { orders ->
+                updateStatistics()
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.driverInfo.collect { driverInfo ->
+                driverInfo?.let {
+                    updateDriverInfo(it)
+                }
+            }
+        }
+    }
+
+    private fun updateStatistics() {
+        val totalOrders = viewModel.orders.value.size
+        val totalCompletedIncome = viewModel.getTotalCompletedIncome()
+
+        binding.apply {
+            tvTotalOrders.text = totalOrders.toString()
+            tvOrderCount.text = "($totalOrders đơn)"
+            tvTotalIncome.text =
+                com.example.grabapp.util.CurrencyFormatter.formatIncome(totalCompletedIncome)
+        }
+    }
+
+    private fun updateDriverInfo(driverInfo: com.example.grabapp.data.model.DriverRegisterResponse) {
+        binding.apply {
+            tvTotalRate.text = String.format("%.1f", driverInfo.ratingAvg)
+            tvRate.text = String.format("%.1f", driverInfo.ratingAvg)
+
+            val isApproved = driverInfo.status.uppercase() == "APPROVED"
+            tvDriverStatus.text = if (isApproved) {
+                getString(R.string.t_i_x_ch_nh_th_c)
+            } else {
+                "Đang chờ phê duyệt"
+            }
+        }
     }
 
     override fun setUpClick() {

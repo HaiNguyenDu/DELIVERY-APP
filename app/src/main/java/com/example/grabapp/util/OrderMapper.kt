@@ -8,18 +8,19 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 object OrderMapper {
-    
-    private val isoDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault())
+
+    private val isoDateFormat =
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault())
     private val displayDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 
     fun mapToOrder(orderResponse: OrderResponse): Order {
         val orderState = mapStatusToOrderState(orderResponse.status)
         val formattedDate = formatDate(orderResponse.createdAt)
         val distance = formatDistance(orderResponse.priceAndRoutes)
-        
+
         val dropoffAddress = orderResponse.packages.firstOrNull()?.dropoffAddress?.detail
             ?: orderResponse.pickupAddress.detail
-        
+
         val pickupName = orderResponse.pickupAddress.name
         val dropoffName = orderResponse.packages.firstOrNull()?.dropoffAddress?.name
             ?: pickupName
@@ -51,12 +52,14 @@ object OrderMapper {
             "ARRIVED_PICKUP",
             "PACKAGE_PICKED",
             "EN_ROUTE_DELIVERY" -> OrderState.DELIVERING
+
             "CANCELLED_BY_SENDER",
             "CANCELLED_BY_DRIVER",
             "ORDER_CANCELLED",
             "DELIVERY_FAILED",
             "RETURNED",
             "PICKUP_FAILED" -> OrderState.CANCELED
+
             else -> OrderState.RECEIVED_ORDER
         }
     }
@@ -69,7 +72,7 @@ object OrderMapper {
                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()),
                 SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
             )
-            
+
             var parsedDate: java.util.Date? = null
             for (format in formats) {
                 try {
@@ -78,7 +81,7 @@ object OrderMapper {
                 } catch (e: Exception) {
                 }
             }
-            
+
             parsedDate?.let { displayDateFormat.format(it) } ?: dateString
         } catch (e: Exception) {
             dateString
@@ -87,28 +90,24 @@ object OrderMapper {
 
     private fun formatDistance(priceAndRoutes: List<com.example.grabapp.data.model.PriceAndRoute>): String {
         if (priceAndRoutes.isEmpty()) return "0 km"
-        
+
         val totalDistance = priceAndRoutes.sumOf { it.distance }
-        
+
         return when {
             totalDistance < 1000 -> "${totalDistance}m"
             else -> {
                 val km = totalDistance / 1000.0
-                if (km % 1 == 0.0) {
-                    "${km.toInt()} km"
-                } else {
-                    String.format(Locale.getDefault(), "%.1f km", km)
-                }
+                String.format(Locale.getDefault(), "%.1f km", km).replace(".", ",")
             }
         }
     }
 
     private fun formatEstimatedTime(priceAndRoutes: List<com.example.grabapp.data.model.PriceAndRoute>): String {
         if (priceAndRoutes.isEmpty()) return "0 phút"
-        
+
         val totalSeconds = priceAndRoutes.sumOf { it.estimatedDuration }
         val minutes = (totalSeconds / 60).toInt()
-        
+
         return if (minutes < 60) {
             "$minutes phút"
         } else {
@@ -124,7 +123,7 @@ object OrderMapper {
 
     private fun formatWeight(packages: List<com.example.grabapp.data.model.PackageInfo>): String {
         if (packages.isEmpty()) return "0 kg"
-        
+
         val totalWeight = packages.sumOf { it.weightKg }
         return if (totalWeight % 1 == 0.0) {
             "${totalWeight.toInt()} kg"
@@ -139,6 +138,7 @@ object OrderMapper {
             "ARRIVED_PICKUP",
             "PACKAGE_PICKED",
             "EN_ROUTE_DELIVERY" -> true
+
             else -> false
         }
     }
@@ -151,6 +151,7 @@ object OrderMapper {
             "DELIVERY_FAILED",
             "RETURNED",
             "PICKUP_FAILED" -> true
+
             else -> false
         }
     }

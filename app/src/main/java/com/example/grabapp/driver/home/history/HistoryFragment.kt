@@ -18,11 +18,12 @@ import com.example.grabapp.driver.home.adapter.OrderAdapter
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.model.Order
 import com.example.grabapp.model.OrderState
+import com.example.grabapp.util.CurrencyFormatter.formatIncome
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel>() {
-    
+
     private var allOrders: List<Order> = emptyList()
     private var currentFilter: FilterType = FilterType.ALL
     private lateinit var orderAdapter: OrderAdapter
@@ -62,7 +63,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
         updateTabBackgrounds()
         updateStatistics()
     }
-    
+
     private fun observeOrders() {
         lifecycleScope.launch {
             viewModel.orders.collectLatest { orders ->
@@ -75,13 +76,13 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
 
     private fun setupRecyclerView() {
         orderAdapter = OrderAdapter(items = getFilteredOrders())
-        
+
         binding.rvOrderHistory.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = orderAdapter
         }
     }
-    
+
     private fun updateRecyclerView() {
         val filteredOrders = getFilteredOrders()
         orderAdapter = OrderAdapter(items = filteredOrders)
@@ -93,15 +94,15 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
             tvAll.onClickWithScale {
                 filterOrders(FilterType.ALL)
             }
-            
+
             tvCompleted.onClickWithScale {
                 filterOrders(FilterType.COMPLETED)
             }
-            
+
             tvDelivering.onClickWithScale {
                 filterOrders(FilterType.DELIVERING)
             }
-            
+
             tvCanceled.onClickWithScale {
                 filterOrders(FilterType.CANCELED)
             }
@@ -113,26 +114,18 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
         updateRecyclerView()
         updateTabBackgrounds()
     }
-    
+
     private fun updateStatistics() {
         val totalOrders = allOrders.size
         val completedOrders = allOrders.count { it.orderState == OrderState.DELIVERED }
         val totalIncome = allOrders
             .filter { it.orderState == OrderState.DELIVERED }
             .sumOf { it.income }
-        
+
         binding.apply {
             tvTotalOrders.text = totalOrders.toString()
             tvCompletedOrders.text = completedOrders.toString()
             tvIncome.text = formatIncome(totalIncome)
-        }
-    }
-    
-    private fun formatIncome(amount: Long): String {
-        return when {
-            amount >= 1_000_000 -> "${amount / 1_000_000}M"
-            amount >= 1_000 -> "${amount / 1_000}K"
-            else -> amount.toString()
         }
     }
 
@@ -152,27 +145,30 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
             tvCompleted.background = null
             tvDelivering.background = null
             tvCanceled.background = null
-            
+
             // Reset all text colors
             tvAll.setTextColor(requireContext().getColor(R.color.grey_45))
             tvCompleted.setTextColor(requireContext().getColor(R.color.grey_45))
             tvDelivering.setTextColor(requireContext().getColor(R.color.grey_45))
             tvCanceled.setTextColor(requireContext().getColor(R.color.grey_45))
-            
+
             // Set selected tab background and text color
             when (currentFilter) {
                 FilterType.ALL -> {
                     tvAll.setBackgroundResource(R.drawable.bg_border_white_6)
                     tvAll.setTextColor(requireContext().getColor(R.color.black))
                 }
+
                 FilterType.COMPLETED -> {
                     tvCompleted.setBackgroundResource(R.drawable.bg_border_white_6)
                     tvCompleted.setTextColor(requireContext().getColor(R.color.black))
                 }
+
                 FilterType.DELIVERING -> {
                     tvDelivering.setBackgroundResource(R.drawable.bg_border_white_6)
                     tvDelivering.setTextColor(requireContext().getColor(R.color.black))
                 }
+
                 FilterType.CANCELED -> {
                     tvCanceled.setBackgroundResource(R.drawable.bg_border_white_6)
                     tvCanceled.setTextColor(requireContext().getColor(R.color.black))
@@ -183,6 +179,6 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
 
     override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
         binding.emptyView.setPadding(0, inset.top, 0, 0)
-        binding.textView1.setPadding(0, inset.top/2, 0, 0)
+        binding.textView1.setPadding(0, inset.top / 2, 0, 0)
     }
 }

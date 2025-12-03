@@ -47,6 +47,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         updateUIState(ConnectionState.DISCONNECTED)
+        observeViewModel()
+        viewModel.fetchOrders()
+        viewModel.fetchDriverInfo()
+    }
+    
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.orders.collect { orders ->
+                updateStatistics()
+            }
+        }
+        
+        lifecycleScope.launch {
+            viewModel.driverInfo.collect { driverInfo ->
+                driverInfo?.let {
+                    binding.tvRate.text = String.format("%.1f", it.ratingAvg)
+                }
+            }
+        }
+    }
+    
+    private fun updateStatistics() {
+        val todayOrdersCount = viewModel.getTodayOrdersCount()
+        val totalCompletedIncome = viewModel.getTotalCompletedIncome()
+        
+        binding.apply {
+            tvOrderedCount.text = todayOrdersCount.toString()
+            tvIncome.text = com.example.grabapp.util.CurrencyFormatter.formatIncome(totalCompletedIncome)
+        }
     }
 
     override fun setUpClick() {

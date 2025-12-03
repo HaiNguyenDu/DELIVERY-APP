@@ -296,4 +296,8 @@
     <string name="t_i_l_n">Tải lên</string>
     <string name="a_ch_th_ng_tr">Địa chỉ thường trú</string>
     <string name="g_i_i_ki_m_duy_t">Gửi đi kiểm duyệt</string>
+    <string name="l_u_quan_tr_ng">Lưu ý quan trọng</string>
+    <string name="nh_ph_i_r_r_ng_y_4_g_c">- Ảnh phải rõ ràng, đầy đủ 4 góc</string>
+    <string name="nh_d_ng_jpg_png_t_i_a_5mb">- Định dạng: JPG, PNG (tối đa 5MB)</string>
+    <string name="th_i_gian_duy_t_24_48_gi">- Thời gian duyệt: 24-48 giờ</string>
 </resources>

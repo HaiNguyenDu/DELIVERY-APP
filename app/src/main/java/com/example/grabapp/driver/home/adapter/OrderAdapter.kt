@@ -48,7 +48,9 @@ class OrderAdapter(
                 OrderState.DELIVERED -> binding.root.context.getString(R.string.ho_n_th_nh)
                 OrderState.DELIVERING -> binding.root.context.getString(R.string.ang_giao)
                 OrderState.CANCELED -> binding.root.context.getString(R.string.h_y)
-                else -> ""
+                OrderState.RECEIVED_ORDER -> binding.root.context.getString(R.string.received_order)
+                OrderState.COMING_TO_PICKUP -> binding.root.context.getString(R.string.ang_n_l_y_h_ng)
+                OrderState.RECEIVED_GOODS -> binding.root.context.getString(R.string.received_goods)
             }
         }
     }

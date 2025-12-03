@@ -6,11 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.model.UploadFaceRequest
+import com.example.grabapp.data.model.DriverRegisterResponse
 import com.example.grabapp.data.repository.AIServiceRepository
+import com.example.grabapp.data.repository.DriverRepository
 import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.extention.toMultipartBodyPart
 import com.example.grabapp.model.Order
+import com.example.grabapp.model.OrderState
 import com.example.grabapp.util.OrderMapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,6 +21,9 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class DriverHomeViewModel(
     application: Application,
@@ -29,11 +35,15 @@ class DriverHomeViewModel(
     val uploadState = _uploadState.asStateFlow()
     
     private val tokenStorage = TokenStorage(getApplication())
+    private val driverRepository = DriverRepository(getApplication())
     private val _orders = MutableStateFlow<List<Order>>(emptyList())
     val orders = _orders.asStateFlow()
     
     private val _orderLoadState = MutableStateFlow<OrderLoadState>(OrderLoadState.Idle)
     val orderLoadState = _orderLoadState.asStateFlow()
+    
+    private val _driverInfo = MutableStateFlow<DriverRegisterResponse?>(null)
+    val driverInfo = _driverInfo.asStateFlow()
 
     fun uploadDriverFace(uri: Uri, userId: String) {
         viewModelScope.launch {
@@ -122,6 +132,65 @@ class DriverHomeViewModel(
                 _orderLoadState.value = OrderLoadState.Error("Lỗi: ${e.message ?: "Không xác định"}")
             }
         }
+    }
+    
+    fun fetchDriverInfo() {
+        viewModelScope.launch {
+            try {
+                val userId = tokenStorage.getUserId()
+                if (userId.isNullOrBlank()) {
+                    return@launch
+                }
+
+                when (val result = driverRepository.getDriverInfo(userId)) {
+                    is DriverRepository.DriverInfoResult.Success -> {
+                        _driverInfo.value = result.response
+                    }
+                    is DriverRepository.DriverInfoResult.NotFound -> {
+                    }
+                    is DriverRepository.DriverInfoResult.Error -> {
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getTodayOrdersCount(): Int {
+        val today = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        val todayCalendar = Calendar.getInstance().apply {
+            time = today.time
+        }
+        
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        
+        return _orders.value.count { order ->
+            try {
+                val orderDate = dateFormat.parse(order.orderTime)
+                orderDate?.let {
+                    val orderCalendar = Calendar.getInstance().apply {
+                        time = it
+                    }
+                    orderCalendar.get(Calendar.YEAR) == todayCalendar.get(Calendar.YEAR) &&
+                    orderCalendar.get(Calendar.MONTH) == todayCalendar.get(Calendar.MONTH) &&
+                    orderCalendar.get(Calendar.DAY_OF_MONTH) == todayCalendar.get(Calendar.DAY_OF_MONTH)
+                } ?: false
+            } catch (e: Exception) {
+                false
+            }
+        }
+    }
+    
+    fun getTotalCompletedIncome(): Long {
+        return _orders.value
+            .filter { it.orderState == OrderState.DELIVERED }
+            .sumOf { it.income }
     }
 }
 
