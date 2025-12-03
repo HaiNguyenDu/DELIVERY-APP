@@ -137,6 +137,7 @@
                 android:src="@drawable/ic_green_award" />
 
             <TextView
+                android:id="@+id/tvDriverStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_8"
@@ -146,30 +147,6 @@
                 android:textSize="@dimen/font_12" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_24"
-            android:background="@null"
-            app:layout_constraintTop_toBottomOf="@id/tvSummaryName">
-
-            <ImageView
-                android:layout_width="@dimen/size_20"
-                android:layout_height="@dimen/size_20"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_email" />
-
-            <TextView
-                android:id="@+id/tvEmail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_12"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/truong040104_gmail_com"
-                android:textSize="@dimen/font_14" />
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llPhone"
@@ -177,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_12"
             android:background="@null"
-            app:layout_constraintTop_toBottomOf="@id/llEmail">
+            app:layout_constraintTop_toBottomOf="@id/tvSummaryName">
 
             <ImageView
                 android:layout_width="@dimen/size_20"
@@ -217,7 +194,7 @@
                 android:layout_marginStart="@dimen/size_12"
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
-                android:text="@string/xe_m_y"
+                android:text="@string/grab_bike"
                 android:textSize="@dimen/font_14" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

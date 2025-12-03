@@ -24,6 +24,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding, SettingViewModel>()
             ctlEditProfile.setOnClickListener {
                 startActivity<EditProfileActivity>()
             }
+            flBack.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
         }
     }
 

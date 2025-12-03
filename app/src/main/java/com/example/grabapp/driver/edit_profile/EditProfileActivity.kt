@@ -175,6 +175,9 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
 
     private fun setupClickListeners() {
         binding.apply {
+            flBack.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
             ivUploadAvatar.onClickWithScale {
                 if (!isScanning()) {
                     openImagePicker(ImageType.AVATAR)

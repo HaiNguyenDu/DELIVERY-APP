@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_18"
+        android:background="?android:attr/selectableItemBackground"
         android:padding="@dimen/size_6"
         app:layout_constraintBottom_toBottomOf="@id/emptyView"
         app:layout_constraintStart_toStartOf="parent"

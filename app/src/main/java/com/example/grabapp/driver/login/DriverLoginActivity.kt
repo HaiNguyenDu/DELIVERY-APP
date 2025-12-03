@@ -14,6 +14,7 @@ import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.auth.AuthApi
 import com.example.grabapp.data.repository.AIServiceRepository
+import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.data.repository.AuthRepository
 import com.example.grabapp.databinding.ActivityDriverLoginBinding
 import com.example.grabapp.driver.home.DriverHomeActivity
@@ -21,6 +22,8 @@ import com.example.grabapp.model.VerifyingState
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
 import com.example.grabapp.view.dialog.VerifyingDialog
+import org.maplibre.android.MapLibre
+import org.maplibre.android.WellKnownTileServer
 import java.io.File
 
 class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLoginViewModel>() {
@@ -76,6 +79,11 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
         )
         setupListener()
         observeViewModel()
+        MapLibre.getInstance(
+            this,
+            AddressRepository.API_KEY,
+            WellKnownTileServer.MapLibre
+        )
     }
 
     private fun setupListener() {

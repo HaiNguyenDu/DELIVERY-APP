@@ -47,11 +47,12 @@
         android:id="@+id/ctlAnalyst"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginHorizontal="@dimen/size_4"
         android:background="@drawable/bg_border_bottom_white_16"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/size_18"
-        app:layout_constraintTop_toBottomOf="@id/emptyView">
+        app:layout_constraintTop_toBottomOf="@id/emptyView"
+        tools:layout_editor_absoluteX="16dp">
 
         <LinearLayout
             android:id="@+id/llTotalOrders"
@@ -232,6 +233,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/size_16"
+        android:paddingBottom="50dp"
         android:paddingTop="@dimen/size_4"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
