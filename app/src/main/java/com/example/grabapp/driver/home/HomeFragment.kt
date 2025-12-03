@@ -51,14 +51,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
         viewModel.fetchOrders()
         viewModel.fetchDriverInfo()
     }
-    
+
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.orders.collect { orders ->
                 updateStatistics()
             }
         }
-        
+
         lifecycleScope.launch {
             viewModel.driverInfo.collect { driverInfo ->
                 driverInfo?.let {
@@ -67,14 +67,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
             }
         }
     }
-    
+
     private fun updateStatistics() {
         val todayOrdersCount = viewModel.getTodayOrdersCount()
         val totalCompletedIncome = viewModel.getTotalCompletedIncome()
-        
+
         binding.apply {
             tvOrderedCount.text = todayOrdersCount.toString()
-            tvIncome.text = com.example.grabapp.util.CurrencyFormatter.formatIncome(totalCompletedIncome)
+            tvIncome.text =
+                com.example.grabapp.util.CurrencyFormatter.formatIncome(totalCompletedIncome)
         }
     }
 
@@ -102,7 +103,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
         countdownJob = null
 
         if (state == ConnectionState.CONNECTED) {
-            startCountdownToShowDialog()
+            //startCountdownToShowDialog()
         }
     }
 

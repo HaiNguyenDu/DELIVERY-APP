@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.graphics.Insets
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivitySettingBinding
+import com.example.grabapp.driver.driver_document.DriverDocumentActivity
 import com.example.grabapp.driver.edit_profile.EditProfileActivity
 import com.example.grabapp.extention.startActivity
 
@@ -26,6 +27,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding, SettingViewModel>()
             }
             flBack.setOnClickListener {
                 onBackPressedDispatcher.onBackPressed()
+            }
+            ctlDocument.setOnClickListener {
+                startActivity<DriverDocumentActivity>()
             }
         }
     }
