@@ -2,6 +2,7 @@ package com.example.grabapp.driver.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
 import com.example.grabapp.R
@@ -28,6 +29,13 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
         DriverHomeViewModelFactory(application, fileRepository, aiServiceRepository, orderRepository)
     }
 
+    private val requestNotificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+            } else {
+            }
+        }
+
     override fun getLazyBinding(): Lazy<ActivityDriverHomeBinding> =
         lazy { ActivityDriverHomeBinding.inflate(layoutInflater) }
 
@@ -39,10 +47,19 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
         setRootColor(getColor(R.color.bg_color))
         binding.lifecycleOwner = this
 
+
+        //requestNotificationPermissionIfNeeded()
+
         setupListener()
         setupFragment(savedInstanceState)
         fetchOrders()
     }
+
+//    private fun requestNotificationPermissionIfNeeded() {
+//        if (!NotificationPermissionHelper.hasNotificationPermission(this)) {
+//            NotificationPermissionHelper.requestNotificationPermission(requestNotificationPermissionLauncher)
+//        }
+//    }
 
     override fun onStop() {
         super.onStop()
