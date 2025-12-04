@@ -2,6 +2,7 @@ package com.example.grabapp.data.auth
 
 import com.example.grabapp.data.model.DriverRegisterRequest
 import com.example.grabapp.data.model.DriverRegisterResponse
+import com.example.grabapp.data.model.UpdateDriverStatusRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,4 +19,8 @@ interface DriverApi {
     suspend fun getDriver(
         @Path("id") id: String
     ): Response<DriverRegisterResponse>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("auth/drivers/update-status")
+    suspend fun updateDriverStatus(@Body request: UpdateDriverStatusRequest): Response<Unit>
 }

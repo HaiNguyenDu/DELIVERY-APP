@@ -12,7 +12,6 @@ import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.ActivityDriverHomeBinding
 import com.example.grabapp.driver.home.data.TabType
 import com.example.grabapp.extention.onClickWithScale
-import com.example.grabapp.extention.setPadding
 
 class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeViewModel>() {
 
@@ -43,6 +42,17 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
         setupListener()
         setupFragment(savedInstanceState)
         fetchOrders()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!isChangingConfigurations) {
+            viewModel.handleAppKilled()
+        }
     }
     
     private fun fetchOrders() {

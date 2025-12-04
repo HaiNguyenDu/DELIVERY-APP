@@ -4,13 +4,17 @@ import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
+import com.example.grabapp.data.ConnectionStorage
 import com.example.grabapp.data.TokenStorage
+import com.example.grabapp.data.model.UpdateDriverStatusRequest
 import com.example.grabapp.data.model.UploadFaceRequest
 import com.example.grabapp.data.model.DriverRegisterResponse
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.DriverRepository
 import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.data.repository.OrderRepository
+import com.example.grabapp.driver.home.data.ConnectionState
+import com.example.grabapp.util.FCMTokenHelper
 import com.example.grabapp.extention.toMultipartBodyPart
 import com.example.grabapp.model.Order
 import com.example.grabapp.model.OrderState
@@ -35,6 +39,7 @@ class DriverHomeViewModel(
     val uploadState = _uploadState.asStateFlow()
     
     private val tokenStorage = TokenStorage(getApplication())
+    private val connectionStorage = ConnectionStorage(getApplication())
     private val driverRepository = DriverRepository(getApplication())
     private val _orders = MutableStateFlow<List<Order>>(emptyList())
     val orders = _orders.asStateFlow()
@@ -44,6 +49,9 @@ class DriverHomeViewModel(
     
     private val _driverInfo = MutableStateFlow<DriverRegisterResponse?>(null)
     val driverInfo = _driverInfo.asStateFlow()
+
+    private val _updateStatusState = MutableStateFlow<UpdateStatusState>(UpdateStatusState.Idle)
+    val updateStatusState = _updateStatusState.asStateFlow()
 
     fun uploadDriverFace(uri: Uri, userId: String) {
         viewModelScope.launch {
@@ -192,6 +200,69 @@ class DriverHomeViewModel(
             .filter { it.orderState == OrderState.DELIVERED }
             .sumOf { it.income }
     }
+
+    fun updateDriverStatus(isAvailable: Boolean) {
+        viewModelScope.launch {
+            try {
+                _updateStatusState.value = UpdateStatusState.Updating
+                
+                val fcmToken = FCMTokenHelper.getFCMToken(getApplication())
+                val request = UpdateDriverStatusRequest(
+                    isAvailable = isAvailable,
+                    fcmToken = fcmToken
+                )
+
+                when (val result = driverRepository.updateDriverStatus(request)) {
+                    is DriverRepository.UpdateStatusResult.Success -> {
+                        _updateStatusState.value = UpdateStatusState.Success
+                        val connectionState = if (isAvailable) ConnectionState.CONNECTED else ConnectionState.DISCONNECTED
+                        connectionStorage.saveConnectionState(connectionState)
+                    }
+                    is DriverRepository.UpdateStatusResult.Error -> {
+                        _updateStatusState.value = UpdateStatusState.Error(
+                            result.message ?: "Không thể cập nhật trạng thái"
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _updateStatusState.value = UpdateStatusState.Error(
+                    "Lỗi: ${e.message ?: "Không xác định"}"
+                )
+            }
+        }
+    }
+
+    fun getSavedConnectionState(): ConnectionState {
+        return connectionStorage.getConnectionState()
+    }
+
+    fun handleAppKilled() {
+        viewModelScope.launch {
+            try {
+                val currentState = connectionStorage.getConnectionState()
+                if (currentState == ConnectionState.CONNECTED) {
+                    val fcmToken = FCMTokenHelper.getFCMToken(getApplication())
+                    val request = UpdateDriverStatusRequest(
+                        isAvailable = false,
+                        fcmToken = fcmToken
+                    )
+                    driverRepository.updateDriverStatus(request)
+                    connectionStorage.saveConnectionState(ConnectionState.DISCONNECTED)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                connectionStorage.saveConnectionState(ConnectionState.DISCONNECTED)
+            }
+        }
+    }
+}
+
+sealed class UpdateStatusState {
+    object Idle : UpdateStatusState()
+    object Updating : UpdateStatusState()
+    object Success : UpdateStatusState()
+    data class Error(val message: String) : UpdateStatusState()
 }
 
 sealed class FaceUploadState {

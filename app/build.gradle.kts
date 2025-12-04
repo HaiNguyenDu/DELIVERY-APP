@@ -65,4 +65,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.logging.interceptor)
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-messaging:23.3.1")
 }

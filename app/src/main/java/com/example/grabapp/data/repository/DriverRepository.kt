@@ -8,6 +8,7 @@ import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.auth.DriverApi
 import com.example.grabapp.data.model.DriverRegisterRequest
 import com.example.grabapp.data.model.DriverRegisterResponse
+import com.example.grabapp.data.model.UpdateDriverStatusRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -54,6 +55,11 @@ class DriverRepository(private val context: Context) {
         data class Success(val response: DriverRegisterResponse) : DriverInfoResult()
         object NotFound : DriverInfoResult()
         data class Error(val code: Int?, val message: String) : DriverInfoResult()
+    }
+
+    sealed class UpdateStatusResult {
+        object Success : UpdateStatusResult()
+        data class Error(val code: Int?, val message: String) : UpdateStatusResult()
     }
 
     suspend fun register(request: DriverRegisterRequest): RegisterResult {
@@ -117,6 +123,31 @@ class DriverRepository(private val context: Context) {
             DriverInfoResult.Error(e.code(), e.message ?: "Server error")
         } catch (e: Exception) {
             DriverInfoResult.Error(null, e.message ?: "Unexpected error")
+        }
+    }
+
+    suspend fun updateDriverStatus(request: UpdateDriverStatusRequest): UpdateStatusResult {
+        return try {
+            val resp = api.updateDriverStatus(request)
+            if (resp.isSuccessful) {
+                UpdateStatusResult.Success
+            } else {
+                val errorMes = try {
+                    resp.errorBody()?.string()
+                } catch (e: Exception) {
+                    null
+                }
+                UpdateStatusResult.Error(resp.code(), errorMes ?: "HTTP ${resp.code()}")
+            }
+        } catch (e: IOException) {
+            UpdateStatusResult.Error(
+                null,
+                "Network error: ${e.localizedMessage ?: "Please check your connection"}"
+            )
+        } catch (e: HttpException) {
+            UpdateStatusResult.Error(e.code(), e.message ?: "Server error")
+        } catch (e: Exception) {
+            UpdateStatusResult.Error(null, e.message ?: "Unexpected error")
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.grabapp.driver.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -46,7 +47,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        updateUIState(ConnectionState.DISCONNECTED)
+        connectionState = viewModel.getSavedConnectionState()
+        updateUIState(connectionState)
         observeViewModel()
         viewModel.fetchOrders()
         viewModel.fetchDriverInfo()
@@ -66,6 +68,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.updateStatusState.collect { state ->
+                when (state) {
+                    is UpdateStatusState.Success -> {
+                    }
+                    is UpdateStatusState.Error -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Lỗi cập nhật trạng thái: ${state.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
     }
 
     private fun updateStatistics() {
@@ -81,9 +101,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
 
     override fun setUpClick() {
         binding.ivToggleConnection.onClickWithScale {
-            connectionState = connectionState.toggle()
+            val newState = connectionState.toggle()
+            connectionState = newState
             updateUIState(connectionState)
             handleConnectionStateChange(connectionState)
+            val isAvailable = newState == ConnectionState.CONNECTED
+            viewModel.updateDriverStatus(isAvailable)
         }
     }
 
