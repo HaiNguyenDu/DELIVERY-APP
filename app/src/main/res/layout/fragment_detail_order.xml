@@ -450,7 +450,7 @@
             android:layout_marginEnd="@dimen/size_20"
             android:layout_marginBottom="@dimen/size_20"
             android:fontFamily="@font/bold"
-            android:text="38.000đ"
+            android:text="30.000đ"
             android:textSize="@dimen/font_24"
             app:layout_constraintBottom_toTopOf="@+id/btn_next"
             app:layout_constraintEnd_toEndOf="parent" />

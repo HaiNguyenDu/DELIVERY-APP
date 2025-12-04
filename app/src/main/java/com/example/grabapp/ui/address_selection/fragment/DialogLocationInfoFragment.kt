@@ -66,6 +66,9 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
                 }
                 else ""
                 binding.edtAddress.setText(text)
+                binding.edtName.setText(currentPackage.dropOffAddress.name)
+                binding.edtPhone.setText(currentPackage.dropOffAddress.phone)
+                binding.edtNote.setText(currentPackage.description)
                 setupMap()
             }
         }
@@ -92,11 +95,12 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
             val currentPackage = viewModel.getCurrentPackageInfo()
             if(isHashInfo())
             {
+
                 val newPackage = currentPackage.copy(
-                    detailAddress = edtDetailAddress.text.toString(),
                     dropOffAddress = currentPackage.dropOffAddress.copy(
                         name = edtName.text.toString(),
                         phone = edtPhone.text.toString(),
+                        detail = edtDetailAddress.text.toString() + currentPackage.dropOffAddress.detail
                     ),
                     description = edtNote.text.toString()
                 )

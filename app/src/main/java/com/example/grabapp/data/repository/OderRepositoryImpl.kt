@@ -56,15 +56,19 @@ class OderRepositoryImpl : OrderRepository {
         }
     }
 
-    override suspend fun getPriceAndRoute(orderForm: OrderForm): Result<PriceRouteItem> {
+    override suspend fun getPriceAndRoute(orderForm: OrderForm): List<PriceRouteItem> {
         val createOrderRequest = orderForm.toCreateOrderRequest()
         try {
-//            val respone = orderApi.getPriceRoute(createOrderRequest)
-
+            val response = orderApi.getPriceRoute(createOrderRequest)
+            if(response.isSuccessful) {
+                val listItem = response.body()
+                if (listItem != null)
+                    return listItem
+            }
         } catch (e: Exception) {
 
         }
-        return Result.failure(Exception(""))
+        return emptyList()
     }
 
     companion object {

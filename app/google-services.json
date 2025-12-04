@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "503368343876",
+    "project_id": "pbl6-quickdn",
+    "storage_bucket": "pbl6-quickdn.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503368343876:android:829435eeb9b09f0cfdf711",
+        "android_client_info": {
+          "package_name": "com.example.grabapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWs68F3okoD8h44qX_S3rXhXTqjmQ7_c4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

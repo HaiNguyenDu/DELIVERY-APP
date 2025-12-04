@@ -243,4 +243,5 @@
     <string name="create_order_fail">Có lỗi trong khi tạo đơn hàng, vui lòng thử lại sau</string>
     <string name="create_order_success">Tạo đơn hàng thành công</string>
     <string name="fill_all_edt">Vui lòng nhập đầy đủ thông tin</string>
+    <string name="default_notification_channel_id">default_channel</string>
 </resources>

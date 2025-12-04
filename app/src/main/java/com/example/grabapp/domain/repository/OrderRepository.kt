@@ -8,5 +8,5 @@ interface OrderRepository {
     suspend fun getListOrder(page: Int, size: Int, sort: String): Result<List<OrderItem>>
     suspend fun getOrderDetail(orderId: String): OrderItem?
     suspend fun createOrder(orderForm: OrderForm): Result<String>
-    suspend fun getPriceAndRoute(orderForm: OrderForm): Result<PriceRouteItem>
+    suspend fun getPriceAndRoute(orderForm: OrderForm): List<PriceRouteItem>
 }

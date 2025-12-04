@@ -2,6 +2,7 @@ package com.example.grabapp.ui.address_selection.fragment
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,7 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
     override fun setUpClick() {
         binding.btnBack.setOnClickListener {
             viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_DETAIL_ORDER)
+
         }
         binding.btnNext.setOnClickListener {
             viewModel.createOrder({
@@ -93,45 +95,57 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
         }
     }
     private fun setUpMap() {
-        viewModel.getDirection()
         binding.mapView.getMapAsync { map ->
             mapLibreMap = map
+
             map.setStyle(
                 "https://tiles.goong.io/assets/goong_map_web.json?api_key=${AddressRepository.MAP_KEY}"
             ) {
                 val iconFactory = IconFactory.getInstance(requireContext())
-
                 val pickUp = viewModel.orderForm.value.pickupAddress
-                val dropOff = viewModel.getCurrentPackageInfo().dropOffAddress
 
                 val startBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_map)
                     .scale(80, 80, false)
                 val startIcon = iconFactory.fromBitmap(startBitmap)
 
-                val startLatLng = LatLng(pickUp.latitude, pickUp.longitude)
-                val endLatLng = LatLng(dropOff.latitude, dropOff.longitude)
-
-                map.addMarker(
-                    MarkerOptions().position(startLatLng).icon(startIcon).title("Điểm đi")
-                )
-                map.addMarker(MarkerOptions().position(endLatLng).icon(startIcon).title("Điểm đến"))
-
-                val bounds = LatLngBounds.Builder()
-                    .include(startLatLng)
-                    .include(endLatLng)
-                    .build()
-                map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 300))
-
                 lifecycleScope.launch {
-                    viewModel.directionResponse.collect { response ->
-                        if (response != null) {
-                            drawRoute(map, response)
+                    viewModel.directionResponses.collect { responses ->
+                        map.markers?.let {
+                            map.markers.forEach {
+                                it.remove()
+                            }
+                            map.polylines.forEach { map.removePolyline(it) }
+
+                        }
+
+
+                        val startLatLng = LatLng(pickUp.latitude, pickUp.longitude)
+                        map.addMarker(
+                            MarkerOptions().position(startLatLng).icon(startIcon).title("Điểm đi")
+                        )
+                        val listRoute = viewModel.getListRoute()
+                        val boundsBuilder = LatLngBounds.Builder()
+                        boundsBuilder.include(startLatLng)
+                        listRoute.forEach { item ->
+                            val latLng = LatLng(item.latitude, item.longitude)
+                            map.addMarker(
+                                MarkerOptions().position(latLng).icon(startIcon).title("Điểm đến")
+                            )
+                            boundsBuilder.include(latLng)
+                        }
+                        map.animateCamera(
+                            CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 300)
+                        )
+                        Log.d("DEBUG_ROUTE", "Response route count = ${responses?.size}")
+                        responses?.forEach { routeResponse ->
+                            drawRoute(map, routeResponse)
                         }
                     }
                 }
             }
         }
     }
+
 
     private fun drawRoute(map: MapLibreMap, response: GoongDirectionApiResponse) {
         val route = response.routes?.firstOrNull() ?: return

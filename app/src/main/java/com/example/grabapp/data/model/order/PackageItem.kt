@@ -7,7 +7,6 @@ data class PackageItem(
     @SerializedName("id") val id: String = "",
     @SerializedName("weightKg") val weightKg: Double,
     @SerializedName("size") val packageSize: String,
-    @SerializedName("deliveryFee") val deliveryFee: Double,
     @SerializedName("codAmount") val codAmount: Double,
     @SerializedName("cod") val cod: Boolean,
     @SerializedName("payerType") val payerType: String,

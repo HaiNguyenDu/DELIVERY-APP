@@ -92,7 +92,7 @@ class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
             }
         }
 
-        when (viewModel.getLastEdtTextClicked()) {
+        when (viewModel.getLastFocusEdt()) {
             EditTextEnum.DROP_OFF -> {
                 binding.edtPickUp.visibility = View.INVISIBLE
                 binding.icPickUpLocation.visibility = View.INVISIBLE

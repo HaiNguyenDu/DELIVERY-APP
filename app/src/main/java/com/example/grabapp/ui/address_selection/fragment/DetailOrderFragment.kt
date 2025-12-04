@@ -1,7 +1,6 @@
 package com.example.grabapp.ui.address_selection.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.graphics.Insets
@@ -46,9 +45,11 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
         }
 
         binding.btnNext.setOnClickListener {
-            if (viewModel.isHashInfoPackage())
+            if (viewModel.isHashInfoPackage()) {
                 viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_CHECK_DIRECTION)
-            else
+                viewModel.getDirection()
+            }
+                else
                 SnackBarCustom(
                     view = binding.root,
                     message = getString(R.string.fill_full_info),
@@ -117,6 +118,12 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
                     it.listPackageInfo,
                     viewModel.selectPackagePosition
                 )
+                if (viewModel.canCalculatePrice())
+                    binding.tvCost.text = (buildString {
+                        append(this@DetailOrderFragment.viewModel.getPriceAndRoute())
+                        append("đ")
+                    })
+
                 if (viewModel.isHashInfoPackage()) {
                     binding.btnNext.alpha = 1f
                 } else {

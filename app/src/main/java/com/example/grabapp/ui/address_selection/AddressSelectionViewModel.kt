@@ -8,6 +8,7 @@ import androidx.annotation.RequiresPermission
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.model.order.AddressInfo
+import com.example.grabapp.data.model.order.PriceRouteItem
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.data.repository.OderRepositoryImpl
 import com.example.grabapp.domain.enum.EditTextEnum
@@ -19,9 +20,11 @@ import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.respone.Prediction
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter.Companion.FRAGMENT_DETAIL_ORDER
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddressSelectionViewModel(private val application: Application) : BaseViewModel(application) {
     private var addressRepository: AddressRepository = AddressRepository.getInstance(application)
@@ -37,8 +40,8 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     val lastCoordinates: StateFlow<Coordinates> = _lastCoordinates
     private val _orderForm = MutableStateFlow(OrderForm())
     val orderForm: StateFlow<OrderForm> = _orderForm
-    val _directionResponse = MutableStateFlow<GoongDirectionApiResponse?>(null)
-    val directionResponse: StateFlow<GoongDirectionApiResponse?> = _directionResponse
+    val _directionResponses = MutableStateFlow<List<GoongDirectionApiResponse>?>(null)
+    val directionResponses: StateFlow<List<GoongDirectionApiResponse>?> = _directionResponses
 
     private var _edtLastTextEnumClicked = EditTextEnum.NOT_THING
     private var _imageUri = MutableStateFlow<Uri?>(null)
@@ -48,27 +51,38 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
 
     private var _lastAddress: AddressInfo? = null
 
-    fun setLastAddress(address: AddressInfo?)
-    {
+    fun setLastAddress(address: AddressInfo?) {
         _lastAddress = address
     }
 
-    fun onBackPressLocationInfo(){
-        if(_lastAddress==null) return
-        when(_lastFocusEdt)
-        {
+    suspend fun getPriceAndRoute(): String {
+        return withContext(Dispatchers.IO) {
+            val listData = orderRepository.getPriceAndRoute(_orderForm.value)
+            var cost = 0.0
+            listData.forEach {
+                cost += it.price
+            }
+            cost.toString()
+        }
+    }
+
+    fun onBackPressLocationInfo() {
+        if (_lastAddress == null) return
+        when (_lastFocusEdt) {
             EditTextEnum.DROP_OFF -> {
                 updatePackageInfo(getCurrentPackageInfo().copy(dropOffAddress = _lastAddress!!))
             }
 
-            EditTextEnum.PICK_UP ->{
+            EditTextEnum.PICK_UP -> {
                 _orderForm.value = _orderForm.value.copy(pickupAddress = _lastAddress!!)
             }
+
             else -> {}
         }
         _lastAddress = null
         _lastFocusEdt = EditTextEnum.NOT_THING
     }
+
     fun createOrder(onSuccess: () -> Unit, onFail: () -> Unit) {
         showLoading()
         viewModelScope.launch {
@@ -98,6 +112,18 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
                 return false
             }
         }
+        return true
+    }
+
+
+    fun canCalculatePrice(): Boolean {
+        val listPackage = _orderForm.value.listPackageInfo
+        listPackage.forEach {
+            if (!it.canCalculatePrice()) {
+                return false
+            }
+        }
+
         return true
     }
 
@@ -157,14 +183,14 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
                 Log.d("test", _lastFocusEdt.name)
                 when (_lastFocusEdt) {
                     EditTextEnum.DROP_OFF -> {
-                        Log.d("test","drop ooff")
+                        Log.d("test", "drop ooff")
                         val currentOrder = _orderForm.value
                         if (currentOrder.listPackageInfo.isNotEmpty()) {
                             val updatedPackageList = currentOrder.listPackageInfo.toMutableList()
-                            val firstPackage = updatedPackageList[position].copy(
+                            val firstPackage = updatedPackageList[selectPackagePosition].copy(
                                 dropOffAddress = detailResponse.result.toAddressInfo()
                             )
-                            updatedPackageList[position] = firstPackage
+                            updatedPackageList[selectPackagePosition] = firstPackage
                             _orderForm.value =
                                 currentOrder.copy(listPackageInfo = updatedPackageList)
                         }
@@ -240,19 +266,19 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     }
 
     fun getDirection() {
-        if (_orderForm.value.listPackageInfo.isEmpty()) return
-        addressRepository.getDirectionData(
-            _orderForm.value.listPackageInfo[0].dropOffAddress,
-            _orderForm.value.pickupAddress,
-            onSuccess = { data ->
-                Log.e("checkOrder", "Route count: ${data.routes?.size}")
+        viewModelScope.launch {
+            val listData = orderRepository.getPriceAndRoute(orderForm.value)
+            val listResponse =
+                addressRepository.getDirectionData(
+                    _orderForm.value.pickupAddress,
+                    listData
+                )
+            _directionResponses.value = listResponse
+        }
+    }
 
-                _directionResponse.value = data
-            },
-            onError = { error ->
-                Log.e("checkOrder", "Error: $error")
-            }
-        )
+    suspend fun getListRoute(): List<PriceRouteItem> = withContext(Dispatchers.IO) {
+        orderRepository.getPriceAndRoute(orderForm.value)
     }
 
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])

@@ -12,7 +12,6 @@ fun PackageItemModel.toDto(): PackageItem {
         id = "",
         weightKg = this.weightKg,
         packageSize = this.packageSize?.name ?: "",
-        deliveryFee = this.deliveryFee,
         codAmount = this.codAmount,
         cod = this.cod,
         payerType = this.payerType.name,
@@ -32,7 +31,6 @@ fun PackageItem.toDomain(): PackageItemModel {
         } catch (e: Exception) {
             null
         },
-        deliveryFee = this.deliveryFee,
         codAmount = this.codAmount,
         cod = this.cod,
         payerType = try {
