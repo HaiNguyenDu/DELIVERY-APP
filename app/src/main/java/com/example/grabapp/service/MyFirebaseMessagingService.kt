@@ -2,53 +2,107 @@ package com.example.grabapp.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.media.AudioAttributes
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.grabapp.R
+import com.example.grabapp.ui.splash.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private fun showNotification(title: String, orderID: String,message:String) {
-        val channelId = "default_channel"
-        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+    companion object {
+        private const val CHANNEL_ID = "default_channel"
+        private const val CHANNEL_NAME = "General Notifications"
+        private const val NOTIFICATION_ID = 1001
+        val defaultLink = "com.example.grabapp."
+        const val FCM_ACTIVITY = "fcm_activity"
+        const val FCM_DATA = "fcm_data"
+    }
+
+    private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            
+            // Kiểm tra xem channel đã tồn tại chưa
+            val existingChannel = manager.getNotificationChannel(CHANNEL_ID)
+            if (existingChannel != null) {
+                return // Channel đã tồn tại, không cần tạo lại
+            }
+
+            // Tạo channel với IMPORTANCE_HIGH để hiển thị heads-up notification
             val channel = NotificationChannel(
-                channelId, "General Notifications", NotificationManager.IMPORTANCE_HIGH
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
             )
             channel.description = "Notifications from GrabApp"
+            
+            // Bật sound và lights để đảm bảo hiển thị heads-up
+            channel.enableLights(true)
+            channel.enableVibration(true)
+            
+            // Thiết lập sound mặc định
+            val soundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build()
+            channel.setSound(soundUri, audioAttributes)
+            
+            // Thiết lập vibration pattern
+            channel.vibrationPattern = longArrayOf(1000, 0, 1000, 0)
+            
+            // Tạo channel
             manager.createNotificationChannel(channel)
         }
+    }
 
-//        val intent = Intent(this, SplashActivity::class.java)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//        if(screen.isNotEmpty())
-//        {
-//            val activity = defaultLink+screen
-//            intent.putExtra(FCM_ACTIVITY,activity)
-//            intent.putExtra(FCM_DATA,dataIntent)
-//        }
-//        val pendingIntent = PendingIntent.getActivity(
-//            this,
-//            0,
-//            intent,
-//            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-//        )
+    private fun showNotification(title: String, orderID: String, message: String) {
+        // Đảm bảo channel được tạo trước khi hiển thị notification
+        createNotificationChannel()
+        
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val intent = Intent(this, SplashActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         val notification =
-            NotificationCompat.Builder(this, channelId)
+            NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_vn)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_CALL)
+                .setDefaults(NotificationCompat.DEFAULT_ALL) // Bao gồm sound, vibration, lights
                 .setAutoCancel(true)
-//                .setContentIntent(pendingIntent)
-                .setOnlyAlertOnce(true)
+                .setContentIntent(pendingIntent)
+                .setOnlyAlertOnce(false) // Cho phép alert mỗi lần để đảm bảo hiển thị
                 .setVibrate(longArrayOf(1000, 0, 1000, 0))
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE) // Phân loại notification
+                .setFullScreenIntent(null, true)
                 .build()
 
-        manager.notify(System.currentTimeMillis().toInt(), notification)
+        // Sử dụng ID cố định hoặc dựa trên orderID để tránh spam
+        val notificationId = if (orderID.isNotEmpty() && orderID != "Bạn có một tin nhắn mới.") {
+            orderID.hashCode().and(0x7FFFFFFF) // Đảm bảo số dương
+        } else {
+            NOTIFICATION_ID
+        }
+        
+        manager.notify(notificationId, notification)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
@@ -64,10 +118,5 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val message = data["message"]
 
         showNotification(title, orderID,message?:"")
-    }
-    companion object{
-        val defaultLink = "com.example.grabapp."
-        const val FCM_ACTIVITY = "fcm_activity"
-        const val FCM_DATA = "fcm_data"
     }
 }
