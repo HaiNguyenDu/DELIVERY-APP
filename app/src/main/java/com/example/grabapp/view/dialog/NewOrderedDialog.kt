@@ -17,7 +17,7 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
 
     companion object {
         private const val ARG_ORDER = "arg_order"
-        
+
         fun newInstance(order: Order): NewOrderedDialog {
             return NewOrderedDialog().apply {
                 arguments = android.os.Bundle().apply {
@@ -29,7 +29,7 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
 
     var onSkipOrder: (() -> Unit)? = null
     var onAcceptOrder: (() -> Unit)? = null
-
+    override fun width(): Float = 0.7f
     private var countdownJob: Job? = null
     private var currentCount = 15
     private val order: Order by lazy {

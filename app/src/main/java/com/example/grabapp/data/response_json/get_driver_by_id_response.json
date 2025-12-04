@@ -1,0 +1,48 @@
+{
+  "id": "277208cf-6a98-4663-9238-4c5ddbeb234b",
+  "totalAmount": 20000,
+  "status": "FINDING_DRIVER",
+  "createdAt": "2025-12-05T00:52:33.299321",
+  "scheduledAt": null,
+  "pickupAddress": {
+    "detail": "Đại học Bách khoa Đà Nẵng, 54 Nguyễn Lương Bằng, Phường Hòa Khánh Bắc, Quận Liên Chiểu, Thành phố Đà Nẵng",
+    "name": "Tuan",
+    "phone": "0869602032",
+    "note": null,
+    "latitude": 16.073673,
+    "longitude": 108.149929
+  },
+  "packages": [
+    {
+      "id": "69ded902-fac8-4b63-913c-b80412d68782",
+      "weightKg": 1,
+      "packageSize": "S",
+      "deliveryFee": 20000,
+      "codFee": 100000,
+      "payerType": "SENDER",
+      "category": "THOI_TRANG",
+      "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1764610717/users/_r_b_/file__r_b__1764610732.354345.jpg",
+      "description": "",
+      "dropoffAddress": {
+        "detail": "Ký túc xá Sinh viên Phía Tây, Hà Văn Tính, Phường Hòa Khánh Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
+        "name": "Báchd",
+        "phone": "0796631299",
+        "note": null,
+        "latitude": 16.068123,
+        "longitude": 108.15416
+      }
+    }
+  ],
+  "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+  "priceAndRoutes": [
+    {
+      "price": 20000,
+      "latitude": 16.0681235,
+      "longitude": 108.1541598,
+      "routeIndex": 1,
+      "packageIndex": 1,
+      "distance": 1152,
+      "estimatedDuration": 1006
+    }
+  ]
+}

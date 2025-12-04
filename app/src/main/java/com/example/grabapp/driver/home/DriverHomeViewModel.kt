@@ -16,6 +16,7 @@ import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.driver.home.data.ConnectionState
 import com.example.grabapp.util.FCMTokenHelper
+import com.example.grabapp.util.LocationUpdateManager
 import com.example.grabapp.extention.toMultipartBodyPart
 import com.example.grabapp.model.Order
 import com.example.grabapp.model.OrderState
@@ -42,6 +43,7 @@ class DriverHomeViewModel(
     private val tokenStorage = TokenStorage(getApplication())
     private val connectionStorage = ConnectionStorage(getApplication())
     private val driverRepository = DriverRepository(getApplication())
+    private val locationUpdateManager = LocationUpdateManager.getInstance(getApplication())
     private val _orders = MutableStateFlow<List<Order>>(emptyList())
     val orders = _orders.asStateFlow()
     
@@ -218,6 +220,13 @@ class DriverHomeViewModel(
                         _updateStatusState.value = UpdateStatusState.Success
                         val connectionState = if (isAvailable) ConnectionState.CONNECTED else ConnectionState.DISCONNECTED
                         connectionStorage.saveConnectionState(connectionState)
+                        
+                        // Quản lý location updates dựa trên connection state
+                        if (isAvailable) {
+                            locationUpdateManager.startLocationUpdates()
+                        } else {
+                            locationUpdateManager.stopLocationUpdates()
+                        }
                     }
                     is DriverRepository.UpdateStatusResult.Error -> {
                         _updateStatusState.value = UpdateStatusState.Error(
@@ -312,6 +321,9 @@ class DriverHomeViewModel(
     fun handleAppKilled() {
         viewModelScope.launch {
             try {
+                // Dừng location updates khi app bị kill
+                locationUpdateManager.stopLocationUpdates()
+                
                 val currentState = connectionStorage.getConnectionState()
                 if (currentState == ConnectionState.CONNECTED) {
                     val fcmToken = FCMTokenHelper.getFCMToken(getApplication())
@@ -327,6 +339,24 @@ class DriverHomeViewModel(
                 connectionStorage.saveConnectionState(ConnectionState.DISCONNECTED)
             }
         }
+    }
+    
+    /**
+     * Khởi động location updates nếu connection state là CONNECTED
+     * Được gọi khi ViewModel được tạo hoặc khi app resume
+     */
+    fun startLocationUpdatesIfConnected() {
+        val currentState = connectionStorage.getConnectionState()
+        if (currentState == ConnectionState.CONNECTED) {
+            locationUpdateManager.startLocationUpdates()
+        }
+    }
+    
+    /**
+     * Dừng location updates
+     */
+    fun stopLocationUpdates() {
+        locationUpdateManager.stopLocationUpdates()
     }
 }
 

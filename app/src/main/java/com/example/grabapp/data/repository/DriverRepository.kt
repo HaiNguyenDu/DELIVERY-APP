@@ -8,6 +8,7 @@ import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.auth.DriverApi
 import com.example.grabapp.data.model.DriverRegisterRequest
 import com.example.grabapp.data.model.DriverRegisterResponse
+import com.example.grabapp.data.model.UpdateDriverLocationRequest
 import com.example.grabapp.data.model.UpdateDriverStatusRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -60,6 +61,11 @@ class DriverRepository(private val context: Context) {
     sealed class UpdateStatusResult {
         object Success : UpdateStatusResult()
         data class Error(val code: Int?, val message: String) : UpdateStatusResult()
+    }
+
+    sealed class UpdateLocationResult {
+        object Success : UpdateLocationResult()
+        data class Error(val code: Int?, val message: String) : UpdateLocationResult()
     }
 
     suspend fun register(request: DriverRegisterRequest): RegisterResult {
@@ -148,6 +154,37 @@ class DriverRepository(private val context: Context) {
             UpdateStatusResult.Error(e.code(), e.message ?: "Server error")
         } catch (e: Exception) {
             UpdateStatusResult.Error(null, e.message ?: "Unexpected error")
+        }
+    }
+
+    suspend fun updateDriverLocation(request: UpdateDriverLocationRequest): UpdateLocationResult {
+        return try {
+            val resp = api.updateDriverLocation(request)
+            if (resp.isSuccessful) {
+                // Đọc và đóng response body để tránh memory leak
+                resp.body()?.use { responseBody ->
+                    // API trả về string "Location updated successfully", không cần parse
+                    // Chỉ cần đọc để đóng stream
+                    responseBody.string()
+                }
+                UpdateLocationResult.Success
+            } else {
+                val errorMes = try {
+                    resp.errorBody()?.string()
+                } catch (e: Exception) {
+                    null
+                }
+                UpdateLocationResult.Error(resp.code(), errorMes ?: "HTTP ${resp.code()}")
+            }
+        } catch (e: IOException) {
+            UpdateLocationResult.Error(
+                null,
+                "Network error: ${e.localizedMessage ?: "Please check your connection"}"
+            )
+        } catch (e: HttpException) {
+            UpdateLocationResult.Error(e.code(), e.message ?: "Server error")
+        } catch (e: Exception) {
+            UpdateLocationResult.Error(null, e.message ?: "Unexpected error")
         }
     }
 }

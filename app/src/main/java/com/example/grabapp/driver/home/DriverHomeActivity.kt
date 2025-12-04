@@ -81,6 +81,15 @@ class DriverHomeActivity : BaseActivity<ActivityDriverHomeBinding, DriverHomeVie
         setupFragment(savedInstanceState)
         fetchOrders()
         registerNewOrderReceiver()
+        
+        // Khởi động location updates nếu connection state là CONNECTED
+        viewModel.startLocationUpdatesIfConnected()
+    }
+    
+    override fun onResume() {
+        super.onResume()
+        // Đảm bảo location updates được start khi resume nếu connection state là CONNECTED
+        viewModel.startLocationUpdatesIfConnected()
     }
 
 //    private fun requestNotificationPermissionIfNeeded() {
