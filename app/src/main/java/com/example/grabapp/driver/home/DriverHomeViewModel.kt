@@ -2,6 +2,7 @@ package com.example.grabapp.driver.home
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.ConnectionStorage
@@ -235,6 +236,77 @@ class DriverHomeViewModel(
 
     fun getSavedConnectionState(): ConnectionState {
         return connectionStorage.getConnectionState()
+    }
+    
+    fun findOrderById(orderId: String): Order? {
+        Log.d("DriverHomeViewModel", "=== findOrderById ===")
+        Log.d("DriverHomeViewModel", "Tìm order với ID: $orderId")
+        Log.d("DriverHomeViewModel", "Số lượng orders hiện tại: ${_orders.value.size}")
+        Log.d("DriverHomeViewModel", "Danh sách order IDs: ${_orders.value.map { it.orderId }}")
+        
+        val foundOrder = _orders.value.firstOrNull { it.orderId == orderId }
+        if (foundOrder != null) {
+            Log.d("DriverHomeViewModel", "Tìm thấy order: ${foundOrder.orderId}")
+        } else {
+            Log.w("DriverHomeViewModel", "Không tìm thấy order với ID: $orderId")
+        }
+        return foundOrder
+    }
+    
+    fun fetchOrderAndFindById(orderId: String, onOrderFound: (Order?) -> Unit) {
+        Log.d("DriverHomeViewModel", "=== fetchOrderAndFindById ===")
+        Log.d("DriverHomeViewModel", "OrderID: $orderId")
+        
+        viewModelScope.launch {
+            // Tìm trong danh sách hiện tại trước
+            val existingOrder = findOrderById(orderId)
+            if (existingOrder != null) {
+                Log.d("DriverHomeViewModel", "Tìm thấy order trong danh sách hiện tại")
+                onOrderFound(existingOrder)
+                return@launch
+            }
+            
+            Log.d("DriverHomeViewModel", "Không tìm thấy trong danh sách hiện tại, fetch lại...")
+            // Nếu không tìm thấy, fetch lại danh sách orders
+            try {
+                val userId = tokenStorage.getUserId()
+                if (userId.isNullOrEmpty()) {
+                    Log.e("DriverHomeViewModel", "UserId là null hoặc empty")
+                    onOrderFound(null)
+                    return@launch
+                }
+
+                Log.d("DriverHomeViewModel", "Fetching orders với userId: $userId")
+                val result = orderRepository.getOrders("DRIVER", userId)
+                when (result) {
+                    is OrderRepository.OrderListResult.Success -> {
+                        Log.d("DriverHomeViewModel", "Fetch thành công, số lượng orders: ${result.response.content.size}")
+                        val mappedOrders = result.response.content.map { orderResponse ->
+                            OrderMapper.mapToOrder(orderResponse)
+                        }
+                        _orders.value = mappedOrders
+                        
+                        Log.d("DriverHomeViewModel", "Danh sách order IDs sau khi fetch: ${mappedOrders.map { it.orderId }}")
+                        
+                        // Tìm lại sau khi fetch
+                        val foundOrder = mappedOrders.firstOrNull { it.orderId == orderId }
+                        if (foundOrder != null) {
+                            Log.d("DriverHomeViewModel", "Tìm thấy order sau khi fetch: ${foundOrder.orderId}")
+                        } else {
+                            Log.e("DriverHomeViewModel", "Vẫn không tìm thấy order sau khi fetch")
+                        }
+                        onOrderFound(foundOrder)
+                    }
+                    is OrderRepository.OrderListResult.Error -> {
+                        Log.e("DriverHomeViewModel", "Lỗi khi fetch orders: ${result.message}")
+                        onOrderFound(null)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("DriverHomeViewModel", "Exception khi fetch orders: ${e.message}", e)
+                onOrderFound(null)
+            }
+        }
     }
 
     fun handleAppKilled() {

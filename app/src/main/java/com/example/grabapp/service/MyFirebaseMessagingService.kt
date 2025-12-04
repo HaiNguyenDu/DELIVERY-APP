@@ -8,6 +8,7 @@ import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.grabapp.R
 import com.example.grabapp.ui.splash.SplashActivity
@@ -23,12 +24,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val defaultLink = "com.example.grabapp."
         const val FCM_ACTIVITY = "fcm_activity"
         const val FCM_DATA = "fcm_data"
+        const val ACTION_NEW_ORDER = "com.example.grabapp.NEW_ORDER"
+        const val EXTRA_ORDER_ID = "order_id"
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            
+
             // Kiểm tra xem channel đã tồn tại chưa
             val existingChannel = manager.getNotificationChannel(CHANNEL_ID)
             if (existingChannel != null) {
@@ -42,11 +45,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 NotificationManager.IMPORTANCE_HIGH
             )
             channel.description = "Notifications from GrabApp"
-            
+
             // Bật sound và lights để đảm bảo hiển thị heads-up
             channel.enableLights(true)
             channel.enableVibration(true)
-            
+
             // Thiết lập sound mặc định
             val soundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
             val audioAttributes = AudioAttributes.Builder()
@@ -54,10 +57,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                 .build()
             channel.setSound(soundUri, audioAttributes)
-            
+
             // Thiết lập vibration pattern
             channel.vibrationPattern = longArrayOf(1000, 0, 1000, 0)
-            
+
             // Tạo channel
             manager.createNotificationChannel(channel)
         }
@@ -66,7 +69,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun showNotification(title: String, orderID: String, message: String) {
         // Đảm bảo channel được tạo trước khi hiển thị notification
         createNotificationChannel()
-        
+
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         val intent = Intent(this, SplashActivity::class.java)
@@ -101,7 +104,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         } else {
             NOTIFICATION_ID
         }
-        
+
         manager.notify(notificationId, notification)
     }
 
@@ -117,6 +120,36 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val orderID = data["orderID"] ?: "Bạn có một tin nhắn mới."
         val message = data["message"]
 
-        showNotification(title, orderID,message?:"")
+        Log.d("FCM_Service", "=== Nhận notification ===")
+        Log.d("FCM_Service", "Title: $title")
+        Log.d("FCM_Service", "OrderID: $orderID")
+        Log.d("FCM_Service", "Message: $message")
+        Log.d("FCM_Service", "All data: $data")
+
+        showNotification(title, orderID, message ?: "")
+
+        // Gửi broadcast để hiển thị dialog nếu có orderID hợp lệ
+        val isValidOrderID = orderID.isNotEmpty() && orderID != "Bạn có một tin nhắn mới."
+        Log.d("FCM_Service", "OrderID hợp lệ: $isValidOrderID")
+        
+        if (isValidOrderID) {
+            sendNewOrderBroadcast(orderID)
+        } else {
+            Log.d("FCM_Service", "OrderID không hợp lệ, không gửi broadcast")
+        }
+    }
+
+    private fun sendNewOrderBroadcast(orderID: String) {
+        Log.d("FCM_Service", "=== Gửi broadcast ===")
+        Log.d("FCM_Service", "Action: $ACTION_NEW_ORDER")
+        Log.d("FCM_Service", "OrderID: $orderID")
+        Log.d("FCM_Service", "Package: $packageName")
+        
+        val intent = Intent(ACTION_NEW_ORDER).apply {
+            putExtra(EXTRA_ORDER_ID, orderID)
+            setPackage(packageName)
+        }
+        sendBroadcast(intent)
+        Log.d("FCM_Service", "Broadcast đã được gửi")
     }
 }

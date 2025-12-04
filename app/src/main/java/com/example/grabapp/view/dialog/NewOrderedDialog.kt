@@ -15,12 +15,26 @@ import kotlinx.coroutines.launch
 
 class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
 
+    companion object {
+        private const val ARG_ORDER = "arg_order"
+        
+        fun newInstance(order: Order): NewOrderedDialog {
+            return NewOrderedDialog().apply {
+                arguments = android.os.Bundle().apply {
+                    putParcelable(ARG_ORDER, order)
+                }
+            }
+        }
+    }
+
     var onSkipOrder: (() -> Unit)? = null
     var onAcceptOrder: (() -> Unit)? = null
 
     private var countdownJob: Job? = null
     private var currentCount = 15
-    private val order: Order = Order.Companion.getMockOrder()
+    private val order: Order by lazy {
+        arguments?.getParcelable<Order>(ARG_ORDER) ?: Order.Companion.getMockOrder()
+    }
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
