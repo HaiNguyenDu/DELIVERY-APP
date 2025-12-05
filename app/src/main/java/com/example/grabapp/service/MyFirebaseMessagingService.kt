@@ -117,23 +117,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val data = message.data
 
         val title = data["status"] ?: "Thông báo mới"
-        val orderID = data["orderID"] ?: "Bạn có một tin nhắn mới."
+        val orderId = data["orderId"] ?: "Bạn có một tin nhắn mới."
         val message = data["message"]
 
         Log.d("FCM_Service", "=== Nhận notification ===")
         Log.d("FCM_Service", "Title: $title")
-        Log.d("FCM_Service", "OrderID: $orderID")
+        Log.d("FCM_Service", "OrderID: $orderId")
         Log.d("FCM_Service", "Message: $message")
         Log.d("FCM_Service", "All data: $data")
 
-        showNotification(title, orderID, message ?: "")
+        showNotification(title, orderId, message ?: "")
 
-        // Gửi broadcast để hiển thị dialog nếu có orderID hợp lệ
-        val isValidOrderID = orderID.isNotEmpty() && orderID != "Bạn có một tin nhắn mới."
-        Log.d("FCM_Service", "OrderID hợp lệ: $isValidOrderID")
+        // Gửi broadcast để hiển thị dialog nếu có orderId hợp lệ
+        val isValidOrderId = orderId.isNotEmpty() && orderId != "Bạn có một tin nhắn mới."
+        Log.d("FCM_Service", "OrderID hợp lệ: $isValidOrderId")
         
-        if (isValidOrderID) {
-            sendNewOrderBroadcast(orderID)
+        if (isValidOrderId) {
+            sendNewOrderBroadcast(orderId)
         } else {
             Log.d("FCM_Service", "OrderID không hợp lệ, không gửi broadcast")
         }

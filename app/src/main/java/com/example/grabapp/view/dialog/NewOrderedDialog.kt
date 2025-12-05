@@ -59,9 +59,11 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
             tvDistance.text = order.distance
             tvTime.text = order.estimatedTime
             tvIncome.text = "${String.format("%,d", order.income)}đ"
-            tvCOD.text = if (order.hasCOD) getString(R.string.cod) else getString(R.string.kh_ng)
+            // Hiển thị "Có" nếu có COD (codFee > 0), ngược lại "Không"
+            tvCOD.text = if (order.hasCOD) "Có" else getString(R.string.kh_ng)
 
-            tvIsNotion.visibility = if (order.notion != null) View.VISIBLE else View.GONE
+            // Hiển thị tvIsNotion nếu có note ở pickupAddress hoặc dropoffAddress
+            tvIsNotion.visibility = if (order.notion != null || order.dropoffNote != null) View.VISIBLE else View.GONE
             tvFragileGoods.visibility = if (order.fragileGoods) View.VISIBLE else View.GONE
         }
     }

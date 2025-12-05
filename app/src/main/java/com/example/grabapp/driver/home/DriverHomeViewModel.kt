@@ -262,57 +262,39 @@ class DriverHomeViewModel(
         return foundOrder
     }
     
-    fun fetchOrderAndFindById(orderId: String, onOrderFound: (Order?) -> Unit) {
-        Log.d("DriverHomeViewModel", "=== fetchOrderAndFindById ===")
+    fun fetchOrderById(orderId: String, onOrderFound: (Order?) -> Unit) {
+        Log.d("DriverHomeViewModel", "=== fetchOrderById ===")
         Log.d("DriverHomeViewModel", "OrderID: $orderId")
         
         viewModelScope.launch {
-            // Tìm trong danh sách hiện tại trước
-            val existingOrder = findOrderById(orderId)
-            if (existingOrder != null) {
-                Log.d("DriverHomeViewModel", "Tìm thấy order trong danh sách hiện tại")
-                onOrderFound(existingOrder)
-                return@launch
-            }
-            
-            Log.d("DriverHomeViewModel", "Không tìm thấy trong danh sách hiện tại, fetch lại...")
-            // Nếu không tìm thấy, fetch lại danh sách orders
             try {
-                val userId = tokenStorage.getUserId()
-                if (userId.isNullOrEmpty()) {
-                    Log.e("DriverHomeViewModel", "UserId là null hoặc empty")
-                    onOrderFound(null)
-                    return@launch
-                }
-
-                Log.d("DriverHomeViewModel", "Fetching orders với userId: $userId")
-                val result = orderRepository.getOrders("DRIVER", userId)
+                Log.d("DriverHomeViewModel", "Calling API getOrderById với orderId: $orderId")
+                val result = orderRepository.getOrderById(orderId)
                 when (result) {
-                    is OrderRepository.OrderListResult.Success -> {
-                        Log.d("DriverHomeViewModel", "Fetch thành công, số lượng orders: ${result.response.content.size}")
-                        val mappedOrders = result.response.content.map { orderResponse ->
-                            OrderMapper.mapToOrder(orderResponse)
-                        }
-                        _orders.value = mappedOrders
+                    is OrderRepository.OrderResult.Success -> {
+                        Log.d("DriverHomeViewModel", "Fetch order by id thành công")
+                        val mappedOrder = OrderMapper.mapToOrder(result.response)
                         
-                        Log.d("DriverHomeViewModel", "Danh sách order IDs sau khi fetch: ${mappedOrders.map { it.orderId }}")
+                        // Cập nhật distance và estimatedTime cho dialog
+                        val dialogDistance = OrderMapper.formatDistanceForDialog(result.response.priceAndRoutes)
+                        val dialogTime = OrderMapper.formatTimeForDialog(result.response.priceAndRoutes)
                         
-                        // Tìm lại sau khi fetch
-                        val foundOrder = mappedOrders.firstOrNull { it.orderId == orderId }
-                        if (foundOrder != null) {
-                            Log.d("DriverHomeViewModel", "Tìm thấy order sau khi fetch: ${foundOrder.orderId}")
-                        } else {
-                            Log.e("DriverHomeViewModel", "Vẫn không tìm thấy order sau khi fetch")
-                        }
-                        onOrderFound(foundOrder)
+                        // Tạo Order mới với distance và time đã format cho dialog
+                        val orderForDialog = mappedOrder.copy(
+                            distance = dialogDistance,
+                            estimatedTime = dialogTime
+                        )
+                        
+                        Log.d("DriverHomeViewModel", "Order mapped thành công: ${orderForDialog.orderId}")
+                        onOrderFound(orderForDialog)
                     }
-                    is OrderRepository.OrderListResult.Error -> {
-                        Log.e("DriverHomeViewModel", "Lỗi khi fetch orders: ${result.message}")
+                    is OrderRepository.OrderResult.Error -> {
+                        Log.e("DriverHomeViewModel", "Lỗi khi fetch order by id: ${result.message}")
                         onOrderFound(null)
                     }
                 }
             } catch (e: Exception) {
-                Log.e("DriverHomeViewModel", "Exception khi fetch orders: ${e.message}", e)
+                Log.e("DriverHomeViewModel", "Exception khi fetch order by id: ${e.message}", e)
                 onOrderFound(null)
             }
         }

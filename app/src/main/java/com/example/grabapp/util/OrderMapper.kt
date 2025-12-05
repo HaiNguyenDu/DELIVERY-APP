@@ -6,6 +6,7 @@ import com.example.grabapp.model.OrderState
 import com.example.grabapp.model.OrderType
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.math.ceil
 
 object OrderMapper {
 
@@ -25,6 +26,8 @@ object OrderMapper {
         val dropoffName = orderResponse.packages.firstOrNull()?.dropoffAddress?.name
             ?: pickupName
 
+        val dropoffNote = orderResponse.packages.firstOrNull()?.dropoffAddress?.note
+
         return Order(
             orderId = orderResponse.id,
             pickerName = pickupName,
@@ -36,6 +39,7 @@ object OrderMapper {
             income = orderResponse.totalAmount,
             hasCOD = orderResponse.packages.any { it.codFee > 0 },
             notion = orderResponse.pickupAddress.note,
+            dropoffNote = dropoffNote,
             fragileGoods = false, // Not available in API response
             isBusinessHours = true, // Not available in API response
             orderType = OrderType.OTHER,
@@ -154,6 +158,31 @@ object OrderMapper {
 
             else -> false
         }
+    }
+    
+    /**
+     * Format distance cho dialog: từ mét sang km với 2 số thập phân
+     * Ví dụ: 1234m -> 1.23km
+     */
+    fun formatDistanceForDialog(priceAndRoutes: List<com.example.grabapp.data.model.PriceAndRoute>): String {
+        if (priceAndRoutes.isEmpty()) return "0.00 km"
+
+        val totalDistance = priceAndRoutes.sumOf { it.distance }
+        val km = totalDistance / 1000.0
+        return String.format(Locale.getDefault(), "%.2f km", km)
+    }
+    
+    /**
+     * Format time cho dialog: từ giây sang phút, số tròn (không thập phân)
+     * Ví dụ: 1006 giây -> 17 phút (làm tròn lên)
+     */
+    fun formatTimeForDialog(priceAndRoutes: List<com.example.grabapp.data.model.PriceAndRoute>): String {
+        if (priceAndRoutes.isEmpty()) return "0 phút"
+
+        val totalSeconds = priceAndRoutes.sumOf { it.estimatedDuration }
+        val minutes = ceil(totalSeconds / 60.0).toInt() // Làm tròn lên
+        
+        return "$minutes phút"
     }
 }
 

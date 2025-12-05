@@ -166,9 +166,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
             return
         }
         
-        Log.d("HomeFragment", "Không tìm thấy order trong danh sách, fetch lại...")
-        // Nếu không tìm thấy, fetch lại và tìm
-        viewModel.fetchOrderAndFindById(orderId) { order ->
+        Log.d("HomeFragment", "Không tìm thấy order trong danh sách, fetch order by id...")
+        // Gọi API get order by id
+        viewModel.fetchOrderById(orderId) { order ->
             Log.d("HomeFragment", "Kết quả fetch order: ${if (order != null) "Tìm thấy" else "Không tìm thấy"}")
             if (order != null) {
                 Log.d("HomeFragment", "Order tìm thấy: ${order.orderId}, ConnectionState: $connectionState")
