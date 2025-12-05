@@ -3,6 +3,7 @@ package com.example.grabapp.driver.login
 import android.app.Application
 import android.net.Uri
 import android.util.Log
+import android.graphics.Bitmap
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.TokenStorage
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import com.google.gson.JsonParser
 import java.io.IOException
 
 class DriverLoginViewModel(
@@ -64,20 +66,20 @@ class DriverLoginViewModel(
         }
     }
 
-    fun verifyFace(uri: Uri, uid: String) {
+    fun verifyFace(bitmap: Bitmap, userId: String) {
         viewModelScope.launch {
             try {
                 _faceVerifyState.value = FaceVerifyState.Verifying
                 showLoading()
 
-                val filePart = uri.toMultipartBodyPart(getApplication(), "file")
+                val filePart = bitmap.toMultipartBodyPart(getApplication(), "file")
                     ?: run {
                         _faceVerifyState.value = FaceVerifyState.Error("Không thể đọc file ảnh")
                         hideLoading()
                         return@launch
                     }
 
-                val uidRequestBody = uid.toRequestBody("text/plain".toMediaTypeOrNull())
+                val uidRequestBody = userId.toRequestBody("text/plain".toMediaTypeOrNull())
 
                 val response = aiServiceRepository.verifyFace(uidRequestBody, filePart)
                 hideLoading()
@@ -101,9 +103,25 @@ class DriverLoginViewModel(
                         _faceVerifyState.value = FaceVerifyState.Error("Xác thực thất bại")
                     }
                 } else {
-                    val errorMsg = response.errorBody()?.string()
-                        ?: "Xác thực thất bại: HTTP ${response.code()}"
-                    Log.e("DriverLoginViewModel", "Response không thành công: $errorMsg")
+                    val errorBody = response.errorBody()?.string()
+                    val errorMsg = if (!errorBody.isNullOrEmpty()) {
+                        try {
+                            // Thử parse JSON error response
+                            val jsonObject = JsonParser.parseString(errorBody).asJsonObject
+                            jsonObject.get("message")?.asString?.takeIf { it.isNotEmpty() }
+                                ?: jsonObject.get("error")?.asString
+                                ?: "Xác thực thất bại: HTTP ${response.code()}"
+                        } catch (e: Exception) {
+                            // Nếu không parse được JSON, dùng errorBody trực tiếp
+                            if (errorBody.length > 200) {
+                                "Xác thực thất bại: HTTP ${response.code()}"
+                            } else {
+                                errorBody
+                            }
+                        }
+                    } else {
+                        "Xác thực thất bại: HTTP ${response.code()}"
+                    }
                     _faceVerifyState.value = FaceVerifyState.Error(errorMsg)
                 }
             } catch (e: IOException) {
