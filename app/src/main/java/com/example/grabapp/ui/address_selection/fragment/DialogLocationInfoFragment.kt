@@ -3,33 +3,40 @@ package com.example.grabapp.ui.address_selection.fragment
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.scale
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
+import com.example.grabapp.data.model.order.AddressInfo
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.databinding.FragmentDropOffInfoBinding
 import com.example.grabapp.domain.enum.EditTextEnum
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
+import com.example.grabapp.view.SnackBarCustom
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.launch
 import org.maplibre.android.MapLibre
 import org.maplibre.android.annotations.IconFactory
+import org.maplibre.android.annotations.Marker
 import org.maplibre.android.annotations.MarkerOptions
 import org.maplibre.android.camera.CameraPosition
 import org.maplibre.android.geometry.LatLng
 import org.maplibre.android.maps.MapLibreMap
 
 class DialogLocationInfoFragment : BottomSheetDialogFragment() {
-
     private var _binding: FragmentDropOffInfoBinding? = null
     private val binding get() = _binding!!
 
     private var mapLibreMap: MapLibreMap? = null
     private lateinit var viewModel: AddressSelectionViewModel
+    private var currentMarker: Marker? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -43,24 +50,35 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
         setupFullHeight()
-        setupMap()
         setupValidateRealtime()
+        initObserver()
     }
 
+    private fun initObserver(){
+        lifecycleScope.launch {
+            viewModel.orderForm.collect {
+                val currentPackage = viewModel.getCurrentPackageInfo()
+                val text = if(viewModel.getLastFocusEdt()==EditTextEnum.DROP_OFF)
+                    currentPackage.dropOffAddress.detail
+                else if(viewModel.getLastFocusEdt()==EditTextEnum.PICK_UP)
+                {
+                    it.pickupAddress.detail
+                }
+                else ""
+                binding.edtAddress.setText(text)
+                binding.edtName.setText(currentPackage.dropOffAddress.name)
+                binding.edtPhone.setText(currentPackage.dropOffAddress.phone)
+                binding.edtNote.setText(currentPackage.description)
+                setupMap()
+            }
+        }
+    }
     private fun setupUI() = with(binding) {
-        title.text = when (viewModel.getLastEdtTextClicked()) {
+        title.text = when (viewModel.getLastFocusEdt()) {
             EditTextEnum.DROP_OFF -> "Thông tin điểm giao hàng"
             EditTextEnum.PICK_UP -> "Thông tin điểm nhận hàng"
             else -> ""
         }
-
-        edtAddress.setText(
-            when (viewModel.getLastEdtTextClicked()) {
-                EditTextEnum.DROP_OFF -> viewModel.dropOffAddress.value.getFormattedAddress()
-                EditTextEnum.PICK_UP -> viewModel.pickUpAddress.value.getFormattedAddress()
-                else -> ""
-            }
-        )
 
         edtAddress.setOnClickListener {
             DialogAddressSelectionFragment().show(
@@ -68,13 +86,53 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
             )
         }
 
-        btnBack.setOnClickListener { dismiss() }
+        btnBack.setOnClickListener {
+            viewModel.onBackPressLocationInfo()
+            dismiss()
+        }
+
+        btnConfirm.setOnClickListener {
+            val currentPackage = viewModel.getCurrentPackageInfo()
+            if(isHashInfo())
+            {
+
+                val newPackage = currentPackage.copy(
+                    dropOffAddress = currentPackage.dropOffAddress.copy(
+                        name = edtName.text.toString(),
+                        phone = edtPhone.text.toString(),
+                        detail = edtDetailAddress.text.toString() + currentPackage.dropOffAddress.detail
+                    ),
+                    description = edtNote.text.toString()
+                )
+                viewModel.updatePackageInfo(newPackage)
+                Log.d("test",newPackage.dropOffAddress.detail)
+                dismiss()
+            } else {
+                SnackBarCustom(
+                    view = binding.root,
+                    message = getString(R.string.fill_all_edt),
+                    backgroundColor = context?.getColor(R.color.white)!!,
+                    textColor = context?.getColor(R.color.green)!!,
+                    bottomMarginDp = 100f,
+                ).show()
+            }
+        }
     }
 
+    fun isHashInfo(): Boolean{
+        var data = false
+        binding.apply {
+            data = edtNote.text.isNotEmpty() &&
+            edtPhone.text.isNotEmpty() &&
+            edtName.text.isNotEmpty() &&
+            edtDetailAddress.text.isNotEmpty()
+        }
+        return data
+    }
     private fun setupMap() {
-        val address = when (viewModel.getLastEdtTextClicked()) {
-            EditTextEnum.DROP_OFF -> viewModel.dropOffAddress.value
-            else -> viewModel.pickUpAddress.value
+        val address = when (viewModel.getLastFocusEdt()) {
+            EditTextEnum.DROP_OFF -> viewModel.getCurrentPackageInfo().dropOffAddress
+            else -> viewModel.orderForm.value.pickupAddress
         }
 
         binding.mapView.getMapAsync { map ->
@@ -86,10 +144,9 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
                 val resizedBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_map)
                     .scale(100, 100, false)
                 val icon = iconFactory.fromBitmap(resizedBitmap)
-
-                val latLng = LatLng(address.coordinates.lat, address.coordinates.lng)
-
-                map.addMarker(MarkerOptions().position(latLng).icon(icon))
+                val latLng = LatLng(address.latitude, address.longitude)
+                currentMarker?.remove()
+                currentMarker = map.addMarker(MarkerOptions().position(latLng).icon(icon))
                 map.cameraPosition = CameraPosition.Builder()
                     .target(latLng)
                     .zoom(15.0)
@@ -101,7 +158,7 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
     private fun setupFullHeight() {
         dialog?.setOnShowListener { dialogInterface ->
             val bottomSheetDialog =
-                dialogInterface as? com.google.android.material.bottomsheet.BottomSheetDialog
+                dialogInterface as? BottomSheetDialog
             val bottomSheet =
                 bottomSheetDialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.let {
@@ -113,7 +170,7 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
 
                 it.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
                 it.setBackgroundColor(requireContext().getColor(R.color.white))
-
+                it.requestLayout()
                 it.setOnApplyWindowInsetsListener { _, insets ->
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -123,12 +180,8 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
                             hideMapSmooth()
                         else
                             showMapSmooth()
-                        binding.scrollView.setPadding(
-                            0,
-                            0,
-                            0,
-                            systemInsets.bottom + imeInsets.bottom
-                        )
+                        val bottom = maxOf(systemInsets.bottom, imeInsets.bottom)
+                        binding.layoutInfo.setPadding(0, 0, 0, bottom+resources.getDimensionPixelSize(R.dimen.size_20))
                     }
                     insets
                 }
@@ -196,7 +249,9 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
     }
 
     override fun onStart() = super.onStart().also { binding.mapView.onStart() }
-    override fun onResume() = super.onResume().also { binding.mapView.onResume() }
+    override fun onResume() = super.onResume().also {
+        binding.mapView.onResume()
+    }
     override fun onPause() = super.onPause().also { binding.mapView.onPause() }
     override fun onStop() = super.onStop().also { binding.mapView.onStop() }
     override fun onLowMemory() = super.onLowMemory().also { binding.mapView.onLowMemory() }
@@ -207,7 +262,6 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
         super.onDestroyView()
         binding.mapView.onDestroy()
         viewModel.apply {
-            setLastFocusEdt(EditTextEnum.NOT_THING)
             setListAddress(emptyList())
         }
         _binding = null

@@ -34,7 +34,10 @@ class MainOrderFragment : BaseFragment<FragmentMainOrderBinding, AddressSelectio
     override fun setUpClick() {
         binding.tvDropOffLocation.setOnClickListener {
             viewModel.setLastEdtTextClicked(EditTextEnum.NOT_THING)
-            DialogAddressSelectionFragment().show(requireActivity().supportFragmentManager,"AddressSelection")
+            DialogAddressSelectionFragment().show(
+                requireActivity().supportFragmentManager,
+                "AddressSelection"
+            )
         }
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -47,30 +50,25 @@ class MainOrderFragment : BaseFragment<FragmentMainOrderBinding, AddressSelectio
         initView()
     }
 
-    private fun initView(){
+    private fun initView() {
         binding.rcvHistory.adapter = HistoryNearAdapter()
-        binding.rcvHistory.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
+        binding.rcvHistory.layoutManager =
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
     }
-    private fun observerData(){
+
+    private fun observerData() {
         lifecycleScope.launch {
-            viewModel.pickUpAddress.collect {
-                binding.tvPickUpLocation.text = it.getFormattedAddress()
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.dropOffAddress.collect {
-                val text = it.getFormattedAddress()
-                if(text.isEmpty())
-                {
+            viewModel.orderForm.collect {
+                binding.tvPickUpLocation.text = it.pickupAddress.detail
+                val text = viewModel.getCurrentPackageInfo().dropOffAddress.detail
+                if (text.isEmpty()) {
                     binding.tvDropOffLocation.text = getString(R.string.giao_den_dau)
                     binding.tvDropOffLocation.setTextColor(resources.getColor(R.color.grey))
-                }
-                else{
+                } else {
                     binding.tvDropOffLocation.text = text
                     binding.tvDropOffLocation.setTextColor(resources.getColor(R.color.black))
                 }
             }
         }
     }
-
 }

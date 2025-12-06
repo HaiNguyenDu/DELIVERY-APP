@@ -2,11 +2,13 @@ package com.example.grabapp.ui.address_selection.fragment
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.Insets
 import androidx.core.graphics.scale
+import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,10 +16,11 @@ import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.databinding.FragmentCheckDirectionBinding
-import com.example.grabapp.databinding.FragmentCheckOrderBinding
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
+import com.example.grabapp.utils.CurrentOrder
+import com.example.grabapp.view.SnackBarCustom
 import kotlinx.coroutines.launch
 import org.maplibre.android.annotations.IconFactory
 import org.maplibre.android.annotations.MarkerOptions
@@ -27,7 +30,8 @@ import org.maplibre.android.geometry.LatLng
 import org.maplibre.android.geometry.LatLngBounds
 import org.maplibre.android.maps.MapLibreMap
 
-class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, AddressSelectionViewModel>() {
+class CheckDirectionFragment :
+    BaseFragment<FragmentCheckDirectionBinding, AddressSelectionViewModel>() {
 
     private var mapLibreMap: MapLibreMap? = null
 
@@ -42,15 +46,35 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
     override fun setUpClick() {
         binding.btnBack.setOnClickListener {
             viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_DETAIL_ORDER)
+
         }
         binding.btnNext.setOnClickListener {
-            viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_CHECK_ORDER)
+            viewModel.createOrder({
+                SnackBarCustom(
+                    view = binding.root,
+                    message = getString(R.string.create_order_success),
+                    backgroundColor = context?.getColor(R.color.white)!!,
+                    textColor = context?.getColor(R.color.green)!!,
+                    bottomMarginDp = 100f,
+                ).show()
+                Log.d("oderId",it)
+                CurrentOrder.setOrderId(it)
+            }) {
+                SnackBarCustom(
+                    view = binding.root,
+                    message = getString(R.string.create_order_fail),
+                    backgroundColor = context?.getColor(R.color.white)!!,
+                    textColor = context?.getColor(R.color.green)!!,
+                    bottomMarginDp = 100f,
+                ).show()
+            }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpMap()
+        observerData()
     }
 
     override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
@@ -66,49 +90,66 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
         }
     }
 
+    private fun observerData() {
+        lifecycleScope.launch {
+            viewModel.isLoading.collect {
+                binding.lottie.isVisible = it
+            }
+        }
+    }
+
     private fun setUpMap() {
-        viewModel.getDirection()
         binding.mapView.getMapAsync { map ->
             mapLibreMap = map
+
             map.setStyle(
                 "https://tiles.goong.io/assets/goong_map_web.json?api_key=${AddressRepository.MAP_KEY}"
             ) {
                 val iconFactory = IconFactory.getInstance(requireContext())
+                val pickUp = viewModel.orderForm.value.pickupAddress
 
-                val pickUp = viewModel.pickUpAddress.value
-                val dropOff = viewModel.dropOffAddress.value
-
-                if (pickUp == null || dropOff == null) return@setStyle
-
-                // Thêm marker
                 val startBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_map)
                     .scale(80, 80, false)
                 val startIcon = iconFactory.fromBitmap(startBitmap)
 
-                val startLatLng = LatLng(pickUp.coordinates.lat, pickUp.coordinates.lng)
-                val endLatLng = LatLng(dropOff.coordinates.lat, dropOff.coordinates.lng)
-
-                map.addMarker(
-                    MarkerOptions().position(startLatLng).icon(startIcon).title("Điểm đi")
-                )
-                map.addMarker(MarkerOptions().position(endLatLng).icon(startIcon).title("Điểm đến"))
-
-                val bounds = LatLngBounds.Builder()
-                    .include(startLatLng)
-                    .include(endLatLng)
-                    .build()
-                map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 300))
-
                 lifecycleScope.launch {
-                    viewModel.directionResponse.collect { response ->
-                        if (response != null) {
-                            drawRoute(map, response)
+                    viewModel.directionResponses.collect { responses ->
+                        map.markers?.let {
+                            map.markers.forEach {
+                                it.remove()
+                            }
+                            map.polylines.forEach { map.removePolyline(it) }
+
+                        }
+
+
+                        val startLatLng = LatLng(pickUp.latitude, pickUp.longitude)
+                        map.addMarker(
+                            MarkerOptions().position(startLatLng).icon(startIcon).title("Điểm đi")
+                        )
+                        val listRoute = viewModel.getListRoute()
+                        val boundsBuilder = LatLngBounds.Builder()
+                        boundsBuilder.include(startLatLng)
+                        listRoute.forEach { item ->
+                            val latLng = LatLng(item.latitude, item.longitude)
+                            map.addMarker(
+                                MarkerOptions().position(latLng).icon(startIcon).title("Điểm đến")
+                            )
+                            boundsBuilder.include(latLng)
+                        }
+                        map.animateCamera(
+                            CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 300)
+                        )
+                        Log.d("DEBUG_ROUTE", "Response route count = ${responses?.size}")
+                        responses?.forEach { routeResponse ->
+                            drawRoute(map, routeResponse)
                         }
                     }
                 }
             }
         }
     }
+
 
     private fun drawRoute(map: MapLibreMap, response: GoongDirectionApiResponse) {
         val route = response.routes?.firstOrNull() ?: return

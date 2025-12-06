@@ -1,5 +1,6 @@
 package com.example.grabapp.network
 
+import android.util.Log
 import com.example.grabapp.data.api.AuthApi
 import com.example.grabapp.data.model.auth.RefreshTokenRequest
 import com.example.grabapp.utils.SessionManager
@@ -37,6 +38,7 @@ class TokenAuthenticator(
 
             val newAccess = refreshResponse.body()?.accessToken ?: ""
             val newRefresh = refreshResponse.body()?.refreshToken ?: ""
+            Log.d("delivery_app",newAccess)
             sharedPreferences.putToken(newAccess)
             sharedPreferences.putRefreshToken(newRefresh)
             response.request.newBuilder()

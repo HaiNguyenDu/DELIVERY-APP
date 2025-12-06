@@ -6,7 +6,6 @@ import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.repository.AuthRepositoryImpl
 import com.example.grabapp.domain.repository.AuthRepository
 import com.example.grabapp.utils.SharedPreferencesUtils
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -26,11 +25,12 @@ class LoginViewModel(application: Application) :
 
     private val _isLogin = MutableStateFlow<Boolean>(true)
 
-    fun setPassword(password: String){
+    fun setPassword(password: String) {
         viewModelScope.launch {
             _password.value = password
         }
     }
+
     fun replaceFragment(index: Int) {
         viewModelScope.launch {
             _currentFragmentIndex.emit(index)

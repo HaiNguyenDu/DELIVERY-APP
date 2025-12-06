@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/iv_chevron_down"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_back"
+        app:tint="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_tag_saver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_button_green_medium_corner"
+        android:text="Đang Giao Hàng"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_chevron_down" />
+
+    <TextView
+        android:id="@+id/tv_time_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="23:25 - 23:35"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_tag_saver" />
+
+    <TextView
+        android:id="@+id/tv_status_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:text="Đang tìm tài xế"
+        android:textSize="15sp"
+        android:textColor="#555555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_illustration"
+        app:layout_constraintTop_toBottomOf="@id/tv_time_range" />
+
+    <ImageView
+        android:id="@+id/iv_illustration"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_plane_and_truck"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_time_range"
+        app:layout_constraintBottom_toBottomOf="@id/tv_status_text"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/iv_step_1"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_box_yellow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_status_text"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@+id/line_1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="100"
+        android:progressTint="#E0E0E0"
+        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+        app:layout_constraintEnd_toStartOf="@id/iv_step_2"
+        app:layout_constraintStart_toEndOf="@id/iv_step_1"
+        app:layout_constraintTop_toTopOf="@id/iv_step_1" />
+
+    <ImageView
+        android:id="@+id/iv_step_2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_car"
+        app:tint="#00B14F"
+        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+        app:layout_constraintEnd_toStartOf="@id/line_2"
+        app:layout_constraintStart_toEndOf="@id/line_1"
+        app:layout_constraintTop_toTopOf="@id/iv_step_1"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@+id/line_2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="100"
+        android:progressTint="#E0E0E0"
+        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+        app:layout_constraintEnd_toStartOf="@id/iv_step_3"
+        app:layout_constraintStart_toEndOf="@id/iv_step_2"
+        app:layout_constraintTop_toTopOf="@id/iv_step_1" />
+
+    <ImageView
+        android:id="@+id/iv_step_3"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_delivery"
+        app:tint="#CCCCCC"
+        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+        app:layout_constraintEnd_toStartOf="@id/line_3"
+        app:layout_constraintStart_toEndOf="@id/line_2"
+        app:layout_constraintTop_toTopOf="@id/iv_step_1"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@+id/line_3"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="100"
+        android:progressTint="#F0F0F0"
+        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+        app:layout_constraintEnd_toStartOf="@id/iv_step_4"
+        app:layout_constraintStart_toEndOf="@id/iv_step_3"
+        app:layout_constraintTop_toTopOf="@id/iv_step_1" />
+
+    <ImageView
+        android:id="@+id/iv_step_4"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_home"
+        app:tint="#CCCCCC"
+        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/line_3"
+        app:layout_constraintTop_toTopOf="@id/iv_step_1"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_footer_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Chúng tôi sẽ báo bạn biết khi đơn hàng đã giao thành công"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_step_1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

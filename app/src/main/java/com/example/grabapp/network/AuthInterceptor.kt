@@ -1,5 +1,6 @@
 package com.example.grabapp.network
 
+import android.util.Log
 import com.example.grabapp.data.api.AuthApi
 import com.example.grabapp.data.model.auth.RefreshTokenRequest
 import com.example.grabapp.utils.SessionManager
@@ -14,7 +15,7 @@ class AuthInterceptor(
     Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = sharedPreferencesUtils.getToken()
-
+        Log.d("delivery_app",token)
         val request = if (token.isNotEmpty()) {
             chain.request()
                 .newBuilder()

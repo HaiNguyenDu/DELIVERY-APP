@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.grabapp" />
+                  <option name="mobileSdkAppId" value="1:503368343876:android:829435eeb9b09f0cfdf711" />
+                  <option name="projectId" value="pbl6-quickdn" />
+                  <option name="projectNumber" value="503368343876" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

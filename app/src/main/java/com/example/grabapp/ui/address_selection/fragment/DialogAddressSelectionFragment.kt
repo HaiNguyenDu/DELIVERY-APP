@@ -29,14 +29,9 @@ import org.maplibre.android.MapLibre
 class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
     private var _binding: DialogBottomAddressSelectionBinding? = null
     private val binding get() = _binding!!
-    private var searchHandle = Handler(Looper.getMainLooper())
-    private var searchRunnable: Runnable? = null
     private lateinit var addressAdapter: AddressAdapter
     private lateinit var viewModel: AddressSelectionViewModel
     private lateinit var textWatcher: TextWatcher
-
-    private var onItemSelected: () -> Unit = {}
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -88,33 +83,26 @@ class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
             ) {
                 if (binding.rcvAddress.isVisible) binding.rcvAddress.isVisible = false
                 viewModel.showLoading()
-                val text = p0.toString()
-                searchRunnable?.let {
-                    searchHandle.removeCallbacks(it)
-                }
-                if (text.isEmpty()) return
-
-                searchRunnable = Runnable {
-                    viewModel.searchAddress(text)
-                }
-                searchHandle.postDelayed(searchRunnable!!, 1000)
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                val text = p0.toString()
+                if(text.isEmpty()) return viewModel.setListAddress(emptyList())
+                viewModel.searchAddress(text)
             }
         }
 
-        when (viewModel.getLastEdtTextClicked()) {
+        when (viewModel.getLastFocusEdt()) {
             EditTextEnum.DROP_OFF -> {
-                binding.edtPickUp.isVisible = false
-                binding.icPickUpLocation.isVisible = false
+                binding.edtPickUp.visibility = View.INVISIBLE
+                binding.icPickUpLocation.visibility = View.INVISIBLE
                 binding.point.isVisible = false
             }
 
             EditTextEnum.PICK_UP -> {
-                binding.edtDropOff.isVisible = false
+                binding.edtDropOff.visibility = View.INVISIBLE
                 binding.icDropOffLocation.isVisible = false
-                binding.point.isVisible = false
+                binding.point.visibility = View.INVISIBLE
             }
 
             else -> {
@@ -140,13 +128,9 @@ class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
             }
         }
         lifecycleScope.launch {
-            viewModel.dropOffAddress.collect {
-                binding.edtDropOff.setText(it.getFormattedAddress())
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.pickUpAddress.collect {
-                binding.edtPickUp.setText(it.getFormattedAddress())
+            viewModel.orderForm.collect {
+                binding.edtPickUp.setText(it.pickupAddress.detail)
+                binding.edtDropOff.setText(it.listPackageInfo[viewModel.selectPackagePosition].dropOffAddress.detail)
             }
         }
     }
@@ -192,11 +176,6 @@ class DialogAddressSelectionFragment : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        searchRunnable?.let {
-            searchHandle.removeCallbacks(it)
-        }
-        searchRunnable = null
-        viewModel.setLastFocusEdt(EditTextEnum.NOT_THING)
         viewModel.setListAddress(emptyList())
     }
 }

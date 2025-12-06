@@ -31,21 +31,10 @@
                 android:layout_marginTop="@dimen/size_20"
                 app:cardCornerRadius="@dimen/size_20"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:padding="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/size_20">
-
-                    <ImageView
-                        android:id="@+id/ic_drop_off_location"
-                        android:layout_width="@dimen/size_12"
-                        android:layout_height="@dimen/size_12"
-                        android:src="@drawable/ic_now_location_red"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_dr_address"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_dr_address" />
-
+                    android:layout_height="match_parent">
                     <ImageView
                         android:id="@+id/ic_pick_up_location"
                         android:layout_width="@dimen/size_12"
@@ -54,50 +43,6 @@
                         app:layout_constraintBottom_toBottomOf="@+id/tv_pu_address"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tv_pu_address" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:paddingVertical="@dimen/size_15"
-                        app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
-                        app:layout_constraintEnd_toEndOf="@id/ic_pick_up_location"
-                        app:layout_constraintStart_toStartOf="@id/ic_pick_up_location"
-                        app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location">
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/dot1"
-                            android:layout_width="@dimen/size_2"
-                            android:layout_height="@dimen/size_2"
-                            android:backgroundTint="@color/text_color"
-                            app:cardCornerRadius="@dimen/size_5"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/dot2"
-                            android:layout_width="@dimen/size_2"
-                            android:layout_height="@dimen/size_2"
-                            android:backgroundTint="@color/text_color"
-                            app:cardCornerRadius="@dimen/size_5"
-                            app:layout_constraintBottom_toTopOf="@id/dot3"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/dot1"
-                            app:layout_constraintVertical_chainStyle="spread" />
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/dot3"
-                            android:layout_width="@dimen/size_1"
-                            android:layout_height="@dimen/size_1"
-                            android:backgroundTint="@color/text_color"
-                            app:cardCornerRadius="@dimen/size_5"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
                     <TextView
                         android:id="@+id/tv_pu_address"
                         android:layout_width="@dimen/size_0"
@@ -156,66 +101,78 @@
                             app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
                             app:layout_constraintTop_toTopOf="parent" />
                     </LinearLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_dot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:paddingVertical="@dimen/size_15"
+                        app:layout_constraintBottom_toTopOf="@id/rcv_order"
+                        app:layout_constraintEnd_toEndOf="@id/ic_pick_up_location"
+                        app:layout_constraintStart_toStartOf="@id/ic_pick_up_location"
+                        app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location">
 
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/dot1"
+                            android:layout_width="@dimen/size_2"
+                            android:layout_height="@dimen/size_2"
+                            android:backgroundTint="@color/text_color"
+                            app:cardCornerRadius="@dimen/size_5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/dot2"
+                            android:layout_width="@dimen/size_2"
+                            android:layout_height="@dimen/size_2"
+                            android:backgroundTint="@color/text_color"
+                            app:cardCornerRadius="@dimen/size_5"
+                            app:layout_constraintBottom_toTopOf="@id/dot3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/dot1"
+                            app:layout_constraintVertical_chainStyle="spread" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/dot3"
+                            android:layout_width="@dimen/size_2"
+                            android:layout_height="@dimen/size_2"
+                            android:backgroundTint="@color/text_color"
+                            app:cardCornerRadius="@dimen/size_5"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/size_20"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_pu_info"
+                        android:scrollbars="none"/>
+
+                    <ImageView
+                        android:id="@+id/ic_drop_off_location"
+                        android:layout_width="@dimen/size_12"
+                        android:layout_height="@dimen/size_12"
+                        android:src="@drawable/ic_now_location_red"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_add_package"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_add_package" />
                     <TextView
-                        android:id="@+id/tv_dr_address"
+                        android:id="@+id/tv_add_package"
                         android:layout_width="@dimen/size_0"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_20"
-                        android:layout_marginTop="@dimen/size_20"
                         android:ellipsize="end"
                         android:fontFamily="@font/bold"
                         android:maxLines="1"
-                        android:text="32 Tran Ke Xuong. kt"
+                        android:textColor="@color/grey"
+                        android:text="Thêm địa chỉ giao"
                         android:textSize="@dimen/font_14"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/ic_drop_off_location"
-                        app:layout_constraintTop_toBottomOf="@id/layout_pu_info" />
-
-                    <LinearLayout
-                        android:id="@+id/layout_dr_info"
-                        android:layout_width="@dimen/size_0"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="@+id/tv_dr_address"
-                        app:layout_constraintStart_toStartOf="@+id/tv_dr_address"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_dr_address">
-
-                        <TextView
-                            android:id="@+id/tv_dr_username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/medium"
-                            android:maxLines="1"
-                            android:text="Nguyễn Duy Hải"
-                            android:textColor="@color/grey"
-                            android:textSize="@dimen/font_12" />
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/size_3"
-                            android:layout_height="@dimen/size_3"
-                            android:layout_gravity="center"
-                            android:layout_marginHorizontal="@dimen/size_5"
-                            android:backgroundTint="@color/text_color"
-                            app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
-                            app:layout_constraintEnd_toEndOf="@+id/ic_pick_up_location"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location" />
-
-                        <TextView
-                            android:id="@+id/tv_dr_phone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/medium"
-                            android:maxLines="1"
-                            android:text="0914103372"
-                            android:textColor="@color/grey"
-                            android:textSize="@dimen/font_12"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
+                        app:layout_constraintStart_toStartOf="@+id/tv_pu_address"
+                        app:layout_constraintTop_toBottomOf="@+id/rcv_order" />
 
                     <ImageView
                         android:layout_width="@dimen/size_24"
@@ -228,16 +185,14 @@
                         android:id="@+id/tv_type_name"
                         android:layout_width="@dimen/size_0"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_20"
                         android:layout_marginTop="@dimen/size_20"
                         android:ellipsize="end"
                         android:fontFamily="@font/bold"
                         android:maxLines="1"
                         android:text="Lấy hàng trong vòng 15 phút"
                         android:textSize="@dimen/font_14"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
-                        app:layout_constraintTop_toBottomOf="@+id/layout_dr_info" />
+                        app:layout_constraintStart_toStartOf="@+id/tv_pu_address"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_add_package" />
 
                     <LinearLayout
                         android:id="@+id/layout_type"
@@ -255,7 +210,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/medium"
                             android:maxLines="1"
-                            android:text="Giao vào 00:22"
+                            android:text="Giao hàng ưu tiên"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_12" />
 
@@ -296,7 +251,6 @@
                         android:id="@+id/tv_type_bike"
                         android:layout_width="@dimen/size_0"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_20"
                         android:layout_marginTop="@dimen/size_20"
                         android:ellipsize="end"
                         android:fontFamily="@font/bold"
@@ -304,7 +258,7 @@
                         android:text="Xe máy"
                         android:textSize="@dimen/font_14"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
+                        app:layout_constraintStart_toStartOf="@+id/tv_pu_address"
                         app:layout_constraintTop_toBottomOf="@+id/layout_type" />
 
                     <TextView
@@ -319,74 +273,6 @@
                         android:textSize="@dimen/font_12"
                         app:layout_constraintStart_toStartOf="@+id/tv_type_bike"
                         app:layout_constraintTop_toBottomOf="@+id/tv_type_bike" />
-
-                    <ImageView
-                        android:layout_width="@dimen/size_24"
-                        android:layout_height="@dimen/size_24"
-                        android:src="@drawable/ic_many_box"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_detail_package" />
-
-                    <TextView
-                        android:id="@+id/tv_detail_package"
-                        android:layout_width="@dimen/size_0"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_20"
-                        android:layout_marginTop="@dimen/size_20"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/bold"
-                        android:maxLines="1"
-                        android:text="@string/default_detail_info"
-                        android:textSize="@dimen/font_14"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_type_bike_message" />
-
-                    <LinearLayout
-                        android:id="@+id/layout_type_package"
-                        android:layout_width="@dimen/size_0"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/size_30"
-                        app:layout_constraintEnd_toEndOf="@+id/tv_type_name"
-                        app:layout_constraintStart_toStartOf="@+id/tv_type_name"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_detail_package">
-
-                        <TextView
-                            android:id="@+id/tv_package"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/medium"
-                            android:maxLines="1"
-                            android:text="Đảm bảo hàng hóa"
-                            android:textColor="@color/grey"
-                            android:textSize="@dimen/font_12" />
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/size_5"
-                            android:layout_height="@dimen/size_5"
-                            android:layout_gravity="center"
-                            android:layout_marginHorizontal="@dimen/size_5"
-                            android:backgroundTint="@color/text_color"
-                            app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
-                            app:layout_constraintEnd_toEndOf="@+id/ic_pick_up_location"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location" />
-
-                        <TextView
-                            android:id="@+id/tv_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/medium"
-                            android:maxLines="1"
-                            android:text="Siêu tốc"
-                            android:textColor="@color/grey"
-                            android:textSize="@dimen/font_12"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -446,11 +332,17 @@
                 android:layout_marginStart="@dimen/size_10"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_height="wrap_content">
+
                 <CheckBox
                     android:id="@+id/checkbox1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/black" />
+                    android:button="@drawable/check_box_square"
+                    android:checked="false"
+                    android:drawablePadding="8dp"
+                    app:buttonTint="@null"
+                    android:buttonTint="@null"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -479,11 +371,16 @@
                 android:layout_marginStart="@dimen/size_10"
                 app:layout_constraintStart_toStartOf="@+id/layout_cod"
                 android:layout_height="wrap_content">
+
                 <CheckBox
                     android:id="@+id/checkbox2"
                     android:layout_width="wrap_content"
+                    app:buttonTint="@null"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/black" />
+                    android:button="@drawable/check_box_square"
+                    android:checked="false"
+                    android:drawablePadding="8dp"
+                    android:buttonTint="@null" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -512,11 +409,16 @@
                 android:layout_marginStart="@dimen/size_10"
                 app:layout_constraintStart_toStartOf="@+id/layout_ship_near"
                 android:layout_height="wrap_content">
+
                 <CheckBox
                     android:id="@+id/checkbox3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/black" />
+                    app:buttonTint="@null"
+                    android:button="@drawable/check_box_square"
+                    android:checked="false"
+                    android:drawablePadding="8dp"
+                    android:buttonTint="@null"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -524,17 +426,8 @@
                     android:textSize="@dimen/font_14"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/medium"
-                    android:text="Thu tiền hộ (COD)"
+                    android:text="Dễ vỡ"
                     />
-
-                <TextView
-                    android:id="@+id/tv_cod_cost"
-                    android:layout_width="match_parent"
-                    android:textAlignment="textEnd"
-                    android:paddingEnd="@dimen/size_20"
-                    android:layout_gravity="center_vertical|end"
-                    android:text="5.000D"
-                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
 
@@ -557,7 +450,7 @@
             android:layout_marginEnd="@dimen/size_20"
             android:layout_marginBottom="@dimen/size_20"
             android:fontFamily="@font/bold"
-            android:text="38.000đ"
+            android:text="30.000đ"
             android:textSize="@dimen/font_24"
             app:layout_constraintBottom_toTopOf="@+id/btn_next"
             app:layout_constraintEnd_toEndOf="parent" />

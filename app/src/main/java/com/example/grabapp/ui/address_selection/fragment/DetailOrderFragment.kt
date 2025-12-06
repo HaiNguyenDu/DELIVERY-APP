@@ -6,14 +6,21 @@ import android.view.View
 import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentDetailOrderBinding
 import com.example.grabapp.domain.enum.EditTextEnum
+import com.example.grabapp.domain.model.order.PackageItemModel
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
+import com.example.grabapp.ui.address_selection.adapter.DetailOrderItemAdapter
+import com.example.grabapp.view.SnackBarCustom
 import kotlinx.coroutines.launch
 
 class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSelectionViewModel>() {
+    private lateinit var detailOrderItemAdapter: DetailOrderItemAdapter
+
     override fun getLazyBinding(): Lazy<FragmentDetailOrderBinding> = lazy {
         FragmentDetailOrderBinding.inflate(LayoutInflater.from(context))
     }
@@ -24,34 +31,75 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
 
     override fun setUpClick() {
         binding.tvPuAddress.setOnClickListener {
-            viewModel.setLastEdtTextClicked(EditTextEnum.PICK_UP)
+            viewModel.setLastFocusEdt(EditTextEnum.PICK_UP)
+            viewModel.setLastAddress(viewModel.orderForm.value.pickupAddress)
             DialogLocationInfoFragment().show(
                 requireActivity().supportFragmentManager,
                 "DetailPUInfo"
             )
-        }
-        binding.tvDrAddress.setOnClickListener {
-            viewModel.setLastEdtTextClicked(EditTextEnum.DROP_OFF)
-            DialogLocationInfoFragment().show(
-                requireActivity().supportFragmentManager,
-                "DetailDRInfo"
-            )
+
         }
         binding.toolBar.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
+            viewModel.clearOrderForm()
         }
+
         binding.btnNext.setOnClickListener {
-            viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_CHECK_DIRECTION)
+            if (viewModel.isHashInfoPackage()) {
+                viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_CHECK_DIRECTION)
+                viewModel.getDirection()
+            }
+                else
+                SnackBarCustom(
+                    view = binding.root,
+                    message = getString(R.string.fill_full_info),
+                    backgroundColor = context?.getColor(R.color.white)!!,
+                    textColor = context?.getColor(R.color.green)!!,
+                    bottomMarginDp = 100f,
+                ).show()
         }
-        binding.tvDetailPackage.setOnClickListener {
-            DetailPackageFragment().show(
-                childFragmentManager, "Detail package"
-            )
+
+        binding.tvAddPackage.setOnClickListener {
+            viewModel.addPackageInfo(PackageItemModel())
         }
+
+    }
+
+    fun initView() {
+        detailOrderItemAdapter = DetailOrderItemAdapter(viewModel.orderForm.value.listPackageInfo)
+        binding.rcvOrder.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = detailOrderItemAdapter
+            isNestedScrollingEnabled = false
+        }
+        detailOrderItemAdapter.setListener(object :
+            DetailOrderItemAdapter.DetailOrderItemAdapterListener {
+            override fun onAddressClick(position: Int) {
+                viewModel.selectPackagePosition = position
+                viewModel.setLastFocusEdt(EditTextEnum.DROP_OFF)
+                viewModel.setLastAddress(viewModel.getCurrentPackageInfo().dropOffAddress)
+                DialogLocationInfoFragment().show(
+                    requireActivity().supportFragmentManager,
+                    "DetailDRInfo"
+                )
+            }
+
+            override fun onDeleteClick(position: Int) {
+
+            }
+
+            override fun onDetailPackageClick(position: Int) {
+                viewModel.selectPackagePosition = position
+                DetailPackageFragment().show(
+                    childFragmentManager, "Detail package"
+                )
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         observerData()
     }
 
@@ -64,21 +112,22 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
 
     private fun observerData() {
         lifecycleScope.launch {
-            viewModel.pickUpAddress.collect {
-                binding.tvPuAddress.text = it.getFormattedAddress()
-            }
-        }
+            viewModel.orderForm.collect {
+                binding.tvPuAddress.text = it.pickupAddress.detail
+                detailOrderItemAdapter.setListOrder(
+                    it.listPackageInfo,
+                    viewModel.selectPackagePosition
+                )
+                if (viewModel.canCalculatePrice())
+                    binding.tvCost.text = (buildString {
+                        append(this@DetailOrderFragment.viewModel.getPriceAndRoute())
+                        append("đ")
+                    })
 
-        lifecycleScope.launch {
-            viewModel.dropOffAddress.collect {
-                binding.tvDrAddress.text = it.getFormattedAddress()
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.packageInfo.collect { packageInfo ->
-                packageInfo?.let {
-                    val detailText = packageInfo.toString()
-                    binding.tvDetailPackage.text = detailText
+                if (viewModel.isHashInfoPackage()) {
+                    binding.btnNext.alpha = 1f
+                } else {
+                    binding.btnNext.alpha = 0.6f
                 }
             }
         }

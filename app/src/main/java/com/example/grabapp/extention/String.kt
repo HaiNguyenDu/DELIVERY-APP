@@ -14,3 +14,13 @@ fun String.formatToVietNamTime(): String {
         ""
     }
 }
+
+fun String.getTime(): String {
+    return try {
+        val paresedData = LocalDateTime.parse(this, DateTimeFormatter.ISO_DATE_TIME)
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        formatter.format(paresedData)
+    } catch (e: Exception) {
+        ""
+    }
+}
