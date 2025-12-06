@@ -59,5 +59,10 @@ class AddressSelectionActivity :
                 binding.viewPage2.setCurrentItem(it,true)
             }
         }
+        lifecycleScope.launch {
+            viewModel.isCreateSuccess.collect {
+                if(it) finish()
+            }
+        }
     }
 }

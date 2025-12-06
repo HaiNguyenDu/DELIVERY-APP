@@ -8,11 +8,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentHistoryBinding
+import com.example.grabapp.domain.enum.OrderStatus
 import com.example.grabapp.ui.home.MainViewModel
 import com.example.grabapp.ui.home.adapter.HistoryAdapter
+import com.example.grabapp.ui.order.OrderDetailDialog
 import kotlinx.coroutines.launch
 
-class HistoryFragment: BaseFragment<FragmentHistoryBinding, MainViewModel>() {
+class HistoryFragment : BaseFragment<FragmentHistoryBinding, MainViewModel>() {
     private lateinit var historyAdapter: HistoryAdapter
     override fun getLazyBinding(): Lazy<FragmentHistoryBinding> = lazy {
         FragmentHistoryBinding.inflate(layoutInflater)
@@ -21,30 +23,30 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, MainViewModel>() {
     override fun getLazyViewModel(): Lazy<MainViewModel> = lazy {
         ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
-    private fun observeData(){
+
+    private fun observeData() {
         lifecycleScope.launch {
-            viewModel.listOrder.collect{
-                if(it.isEmpty())
-                {
+            viewModel.listOrder.collect {
+                if (it.isEmpty()) {
                     binding.empty.visibility = View.VISIBLE
                     binding.rcv.visibility = View.GONE
-                }
-                else {
+                } else {
                     binding.empty.visibility = View.GONE
                     binding.rcv.visibility = View.VISIBLE
                     historyAdapter.setListOrders(it)
                 }
             }
         }
-        lifecycleScope.launch{
-            viewModel.isLoading.collect{
-                if(it)
+        lifecycleScope.launch {
+            viewModel.isLoading.collect {
+                if (it)
                     binding.loading.visibility = View.VISIBLE
                 else
                     binding.loading.visibility = View.GONE
             }
         }
     }
+
     override fun setUpClick() {
 
     }
@@ -59,10 +61,22 @@ class HistoryFragment: BaseFragment<FragmentHistoryBinding, MainViewModel>() {
         view.setPadding(inset.left, inset.top, inset.right, 0)
 
     }
-    private fun initView(){
-        historyAdapter = HistoryAdapter(emptyList())
+
+    private fun initView() {
+        historyAdapter = HistoryAdapter(emptyList()) { order ->
+            when (order.status) {
+                OrderStatus.FINDING_DRIVER -> {
+                    OrderDetailDialog().setPosition(order.id).show(childFragmentManager, "ll")
+                }
+
+                else -> {
+                    OrderDetailDialog().setPosition(order.id).show(childFragmentManager, "ll")
+                }
+            }
+        }
         binding.rcv.adapter = historyAdapter
-        binding.rcv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
+        binding.rcv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
     }
 }

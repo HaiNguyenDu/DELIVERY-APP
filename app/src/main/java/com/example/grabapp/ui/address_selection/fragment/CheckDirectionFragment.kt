@@ -16,10 +16,10 @@ import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.databinding.FragmentCheckDirectionBinding
-import com.example.grabapp.databinding.FragmentCheckOrderBinding
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
+import com.example.grabapp.utils.CurrentOrder
 import com.example.grabapp.view.SnackBarCustom
 import kotlinx.coroutines.launch
 import org.maplibre.android.annotations.IconFactory
@@ -30,7 +30,8 @@ import org.maplibre.android.geometry.LatLng
 import org.maplibre.android.geometry.LatLngBounds
 import org.maplibre.android.maps.MapLibreMap
 
-class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, AddressSelectionViewModel>() {
+class CheckDirectionFragment :
+    BaseFragment<FragmentCheckDirectionBinding, AddressSelectionViewModel>() {
 
     private var mapLibreMap: MapLibreMap? = null
 
@@ -56,7 +57,9 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
                     textColor = context?.getColor(R.color.green)!!,
                     bottomMarginDp = 100f,
                 ).show()
-            }){
+                Log.d("oderId",it)
+                CurrentOrder.setOrderId(it)
+            }) {
                 SnackBarCustom(
                     view = binding.root,
                     message = getString(R.string.create_order_fail),
@@ -87,13 +90,14 @@ class CheckDirectionFragment : BaseFragment<FragmentCheckDirectionBinding, Addre
         }
     }
 
-    private fun observerData(){
+    private fun observerData() {
         lifecycleScope.launch {
             viewModel.isLoading.collect {
                 binding.lottie.isVisible = it
             }
         }
     }
+
     private fun setUpMap() {
         binding.mapView.getMapAsync { map ->
             mapLibreMap = map

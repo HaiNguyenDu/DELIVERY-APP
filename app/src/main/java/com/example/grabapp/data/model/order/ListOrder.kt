@@ -13,10 +13,10 @@ class GetListOrderResponse(
     @SerializedName("number") val currentPage: Int
 )
 
-class OrderItemResponse(
-    val id: String,
-    val totalAmount:String,
-    val status: String,
-    val createdAt:String,
-    val scheduledAt:String
-)
+//class OrderItemResponse(
+//    val id: String,
+//    val totalAmount:String,
+//    val status: String,
+//    val createdAt:String,
+//    val scheduledAt:String
+//)

@@ -20,6 +20,7 @@ import com.example.grabapp.databinding.ActivitySplashBinding
 import com.example.grabapp.service.MyFirebaseMessagingService
 import com.example.grabapp.ui.home.MainActivity
 import com.example.grabapp.ui.login.LoginActivity
+import com.example.grabapp.ui.login.LoginViewModel
 import com.example.grabapp.ui.user.ActivityUser
 import com.example.grabapp.utils.SharedPreferencesUtils
 import com.google.firebase.messaging.FirebaseMessaging
@@ -45,9 +46,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
         handleForNextScreen()
         permissionNotification()
         handleIntent()
-        FirebaseMessaging.getInstance().token.addOnCompleteListener {
-            Log.d("token",it.result)
-        }
     }
 
     override fun handleInsets(v: View, insets: Insets) {}
@@ -113,7 +111,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
         val token = SharedPreferencesUtils(this).getToken()
         val newActivity = if (token.isNotEmpty()) MainActivity::class.java
         else LoginActivity::class.java
-
         startActivity(Intent(this@SplashActivity, newActivity))
         overridePendingTransition(
             R.anim.anim_translate_in_right,

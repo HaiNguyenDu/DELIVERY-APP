@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
             android:text="Thông tin điểm giao hàng"
+            android:layout_margin="@dimen/size_20"
             android:textColor="@color/black"
             android:textSize="@dimen/font_16"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +81,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
-                android:paddingBottom="@dimen/size_20"
+                android:padding="@dimen/size_20"
                 android:layout_height="wrap_content">
 
                 <TextView

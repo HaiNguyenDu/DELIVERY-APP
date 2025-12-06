@@ -2,6 +2,7 @@ package com.example.grabapp.data.repository
 
 import com.example.grabapp.data.api.OderApi
 import com.example.grabapp.data.model.order.OrderItem
+import com.example.grabapp.data.model.order.OrderItemResponse
 import com.example.grabapp.data.model.order.PriceRouteItem
 import com.example.grabapp.domain.model.order.OrderForm
 import com.example.grabapp.domain.model.order.toCreateOrderRequest
@@ -30,7 +31,7 @@ class OderRepositoryImpl : OrderRepository {
         }
     }
 
-    override suspend fun getOrderDetail(orderId: String): OrderItem? {
+    override suspend fun getOrderDetail(orderId: String): OrderItemResponse? {
         try {
             val response = orderApi.getDetailOrder(orderId)
             if (response.isSuccessful && response.body() != null)

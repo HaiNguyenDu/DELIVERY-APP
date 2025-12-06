@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Tiếp theo"
+            android:text="Đặt đơn"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18"
             android:textStyle="bold" />

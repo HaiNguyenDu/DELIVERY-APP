@@ -21,7 +21,9 @@ import com.example.grabapp.respone.Prediction
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter.Companion.FRAGMENT_DETAIL_ORDER
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,6 +50,9 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     val imageUri: StateFlow<Uri?> = _imageUri
 
     var selectPackagePosition = 0
+
+    private val _isCreateSuccess = MutableSharedFlow<Boolean>()
+    val isCreateSuccess: SharedFlow<Boolean> = _isCreateSuccess
 
     private var _lastAddress: AddressInfo? = null
 
@@ -83,13 +88,14 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
         _lastFocusEdt = EditTextEnum.NOT_THING
     }
 
-    fun createOrder(onSuccess: () -> Unit, onFail: () -> Unit) {
+    fun createOrder(onSuccess: (String) -> Unit, onFail: () -> Unit) {
         showLoading()
         viewModelScope.launch {
             val result = orderRepository.createOrder(_orderForm.value)
             result.onSuccess {
-                onSuccess()
+                onSuccess(it)
                 hideLoading()
+                _isCreateSuccess.emit(true)
             }.onFailure {
                 onFail()
                 hideLoading()
