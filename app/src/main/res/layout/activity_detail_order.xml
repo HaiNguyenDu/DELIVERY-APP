@@ -103,7 +103,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/size_8"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/tvDeliveryComplete"
+        app:layout_constraintBottom_toTopOf="@id/llAction"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -784,19 +784,40 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <TextView
-        android:id="@+id/tvDeliveryComplete"
+    <LinearLayout
+        android:id="@+id/llAction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginBottom="@dimen/size_16"
-        android:background="@drawable/bg_gradient_red_6"
-        android:fontFamily="@font/bold"
         android:gravity="center"
-        android:paddingVertical="@dimen/size_16"
-        android:text="@string/ho_n_th_nh_giao_h_ng"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/size_80"
+            android:background="@drawable/bg_border_grey_8"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:paddingVertical="@dimen/size_6"
+            android:text="@string/h_y_n"
+            android:textColor="@color/red_51"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:id="@+id/tvDeliveryComplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginTop="@dimen/size_4"
+            android:layout_marginBottom="@dimen/size_16"
+            android:background="@drawable/bg_gradient_red_6"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:paddingVertical="@dimen/size_16"
+            android:text="@string/ho_n_th_nh_giao_h_ng"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

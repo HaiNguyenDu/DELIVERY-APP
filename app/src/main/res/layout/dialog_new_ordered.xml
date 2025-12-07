@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_circle_dialog_24"
@@ -66,6 +67,29 @@
             android:textColor="@color/green_36"
             android:textSize="@dimen/font_20" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDeliveryAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/size_300"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/ctlDistance"
+        app:layout_constraintTop_toBottomOf="@id/ctlSecondCount"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_delivery_address" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieScrollDown"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        app:layout_constraintBottom_toBottomOf="@id/rvDeliveryAddress"
+        app:layout_constraintEnd_toEndOf="@id/rvDeliveryAddress"
+        app:layout_constraintStart_toStartOf="@id/rvDeliveryAddress"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="anim_scroll_down.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -174,12 +198,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_24"
-        android:layout_marginTop="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_12"
         android:background="@drawable/bg_gradient_distance_16"
         android:padding="@dimen/size_14"
         app:layout_constraintEnd_toStartOf="@id/ctlTime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDeliveryAddress">
+        app:layout_constraintTop_toBottomOf="@id/rvDeliveryAddress">
 
         <ImageView
             android:id="@+id/imageView3"
@@ -220,13 +244,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_12"
         android:layout_marginEnd="@dimen/size_24"
         android:background="@drawable/bg_gradient_time_16"
         android:padding="@dimen/size_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ctlDistance"
-        app:layout_constraintTop_toBottomOf="@id/tvDeliveryAddress">
+        app:layout_constraintTop_toBottomOf="@id/rvDeliveryAddress">
 
         <ImageView
             android:id="@+id/imageView4"

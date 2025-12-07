@@ -304,4 +304,5 @@
     <string name="b_ng_l_i_xe">Bằng lái xe</string>
     <string name="ng_k_xe">Đăng ký xe</string>
     <string name="default_notification_channel_id">default_channel</string>
+    <string name="h_y_n">Hủy đơn</string>
 </resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginStart="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_8"
+        android:background="@drawable/bg_gradient_red_100"
+        android:contentDescription="@null"
+        android:padding="@dimen/size_10"
+        android:src="@drawable/ic_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/deliveryType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/font_12"
+        android:fontFamily="@font/medium"
+        android:text="@string/i_m_giao_h_ng"
+        android:textColor="@color/grey_46"
+        android:textSize="@dimen/font_12"
+        app:layout_constraintStart_toEndOf="@id/ivIcon"
+        app:layout_constraintTop_toTopOf="@id/ivIcon" />
+
+    <TextView
+        android:id="@+id/tvDeliveryName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:layout_marginEnd="@dimen/size_24"
+        android:fontFamily="@font/bold"
+        android:text="@string/nguy_n_v_n_a"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/deliveryType"
+        app:layout_constraintTop_toBottomOf="@id/deliveryType" />
+
+    <TextView
+        android:id="@+id/tvDeliveryAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/size_24"
+        android:layout_marginBottom="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:text="@string/_456_ng_nguy_n_hu_qu_n_1_tp_hcm"
+        android:textColor="@color/azure_34"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvDeliveryName"
+        app:layout_constraintTop_toBottomOf="@id/tvDeliveryName" />
+</androidx.constraintlayout.widget.ConstraintLayout>
