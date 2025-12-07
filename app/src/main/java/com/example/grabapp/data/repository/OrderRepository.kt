@@ -5,6 +5,7 @@ import com.example.grabapp.api.AuthInterceptor
 import com.example.grabapp.api.SelectiveLoggingInterceptor
 import com.example.grabapp.common.BASE_URL
 import com.example.grabapp.data.TokenStorage
+import com.example.grabapp.data.model.AssignShipperRequest
 import com.example.grabapp.data.model.OrderListResponse
 import com.example.grabapp.data.model.OrderResponse
 import com.example.grabapp.data.order.OrderApi
@@ -88,6 +89,37 @@ class OrderRepository(private val context: Context) {
     suspend fun getOrderById(orderId: String): OrderResult {
         return try {
             val resp = api.getOrderById(orderId)
+            if (resp.isSuccessful) {
+                val body = resp.body()
+                if (body != null) {
+                    OrderResult.Success(body)
+                } else {
+                    OrderResult.Error(resp.code(), "Empty response from server")
+                }
+            } else {
+                val errorMes = try {
+                    resp.errorBody()?.string()
+                } catch (e: Exception) {
+                    null
+                }
+                OrderResult.Error(resp.code(), errorMes ?: "HTTP ${resp.code()}")
+            }
+        } catch (e: IOException) {
+            OrderResult.Error(
+                null,
+                "Network error: ${e.localizedMessage ?: "Please check your connection"}"
+            )
+        } catch (e: HttpException) {
+            OrderResult.Error(e.code(), e.message ?: "Server error")
+        } catch (e: Exception) {
+            OrderResult.Error(null, e.message ?: "Unexpected error")
+        }
+    }
+    
+    suspend fun assignShipper(orderId: String): OrderResult {
+        return try {
+            val request = AssignShipperRequest(orderId)
+            val resp = api.assignShipper(request)
             if (resp.isSuccessful) {
                 val body = resp.body()
                 if (body != null) {

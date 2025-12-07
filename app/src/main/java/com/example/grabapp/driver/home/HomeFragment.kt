@@ -200,11 +200,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
                 Log.d("HomeFragment", "User skip order")
                 this@apply.dismiss()
             }
-            onAcceptOrder = {
-                Log.d("HomeFragment", "User accept order")
+            onAcceptOrder = { acceptedOrder ->
+                Log.d("HomeFragment", "User accept order: ${acceptedOrder.orderId}")
                 this@apply.dismiss()
                 requireContext().startActivity<OrderDetailActivity> {
-                    putExtra("extra_order", order)
+                    putExtra("extra_order", acceptedOrder)
                 }
             }
         }.show(parentFragmentManager, "NewOrderedDialog")

@@ -1,9 +1,12 @@
 package com.example.grabapp.data.order
 
+import com.example.grabapp.data.model.AssignShipperRequest
 import com.example.grabapp.data.model.OrderListResponse
 import com.example.grabapp.data.model.OrderResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -17,5 +20,10 @@ interface OrderApi {
     @GET("order/{orderId}")
     suspend fun getOrderById(
         @Path("orderId") orderId: String
+    ): Response<OrderResponse>
+    
+    @POST("order/assign-shipper")
+    suspend fun assignShipper(
+        @Body request: AssignShipperRequest
     ): Response<OrderResponse>
 }

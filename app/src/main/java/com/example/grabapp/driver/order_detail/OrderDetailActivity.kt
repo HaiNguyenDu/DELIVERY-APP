@@ -45,17 +45,33 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
     private var positioning: Address? = null
 
-    private val pickUpAddress: Address = Address(
-        coordinates = Coordinates(16.07367333700006, 108.14992938100005),
-        name = "DUT",
-        address = "Đại học Bách khoa Đà Nẵng, 54 Nguyễn Lương Bằng, Hòa Khánh Bắc, Liên Chiểu, Đà Nẵng"
-    )
+    private val pickUpAddress: Address by lazy {
+        order.pickupCoordinates?.let { coordinates ->
+            Address(
+                coordinates = coordinates,
+                name = order.pickerName,
+                address = order.pickerAddress
+            )
+        } ?: Address(
+            coordinates = Coordinates(16.07367333700006, 108.14992938100005),
+            name = order.pickerName,
+            address = order.pickerAddress
+        )
+    }
 
-    private val dropOffAddress: Address = Address(
-        coordinates = Coordinates(16.07079150000004, 108.14888825800006),
-        name = "Chợ Hòa Khánh",
-        address = "Chợ Hòa Khánh, Âu Cơ, Hòa Khánh Bắc, Liên Chiểu, Đà Nẵng"
-    )
+    private val dropOffAddress: Address by lazy {
+        order.dropoffCoordinates?.let { coordinates ->
+            Address(
+                coordinates = coordinates,
+                name = order.deliveryName,
+                address = order.deliveryAddress
+            )
+        } ?: Address(
+            coordinates = Coordinates(16.07079150000004, 108.14888825800006),
+            name = order.deliveryName,
+            address = order.deliveryAddress
+        )
+    }
 
     private var mapLibreMap: MapLibreMap? = null
     private lateinit var repository: AddressRepository

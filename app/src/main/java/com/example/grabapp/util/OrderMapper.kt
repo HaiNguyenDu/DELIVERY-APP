@@ -4,6 +4,7 @@ import com.example.grabapp.data.model.OrderResponse
 import com.example.grabapp.model.Order
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.model.OrderType
+import com.example.grabapp.respone.Coordinates
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.math.ceil
@@ -28,6 +29,18 @@ object OrderMapper {
 
         val dropoffNote = orderResponse.packages.firstOrNull()?.dropoffAddress?.note
 
+        val pickupCoordinates = Coordinates(
+            lat = orderResponse.pickupAddress.latitude,
+            lng = orderResponse.pickupAddress.longitude
+        )
+        
+        val dropoffCoordinates = orderResponse.packages.firstOrNull()?.dropoffAddress?.let {
+            Coordinates(
+                lat = it.latitude,
+                lng = it.longitude
+            )
+        }
+
         return Order(
             orderId = orderResponse.id,
             pickerName = pickupName,
@@ -45,7 +58,9 @@ object OrderMapper {
             orderType = OrderType.OTHER,
             orderState = orderState,
             goodsWeight = formatWeight(orderResponse.packages),
-            orderTime = formattedDate
+            orderTime = formattedDate,
+            pickupCoordinates = pickupCoordinates,
+            dropoffCoordinates = dropoffCoordinates
         )
     }
 

@@ -1,6 +1,7 @@
 package com.example.grabapp.model
 
 import android.os.Parcelable
+import com.example.grabapp.respone.Coordinates
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -21,7 +22,9 @@ data class Order(
     val orderType: OrderType,
     val orderState: OrderState,
     val goodsWeight: String,
-    val orderTime: String
+    val orderTime: String,
+    val pickupCoordinates: Coordinates? = null,
+    val dropoffCoordinates: Coordinates? = null
 ) : Parcelable {
     companion object {
         fun getMockOrder(): Order {

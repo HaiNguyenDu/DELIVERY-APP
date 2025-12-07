@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseDialogFragment
+import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.DialogNewOrderedBinding
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.model.Order
+import com.example.grabapp.util.OrderMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -28,12 +30,19 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
     }
 
     var onSkipOrder: (() -> Unit)? = null
-    var onAcceptOrder: (() -> Unit)? = null
-    override fun width(): Float = 0.7f
+    var onAcceptOrder: ((Order) -> Unit)? = null
     private var countdownJob: Job? = null
     private var currentCount = 15
     private val order: Order by lazy {
-        arguments?.getParcelable<Order>(ARG_ORDER) ?: Order.Companion.getMockOrder()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(ARG_ORDER, Order::class.java) ?: Order.Companion.getMockOrder()
+        } else {
+            @Suppress("DEPRECATION")
+            arguments?.getParcelable<Order>(ARG_ORDER) ?: Order.Companion.getMockOrder()
+        }
+    }
+    private val orderRepository: OrderRepository by lazy {
+        OrderRepository(requireContext())
     }
 
     override fun inflateViewBinding(
@@ -63,7 +72,8 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
             tvCOD.text = if (order.hasCOD) "Có" else getString(R.string.kh_ng)
 
             // Hiển thị tvIsNotion nếu có note ở pickupAddress hoặc dropoffAddress
-            tvIsNotion.visibility = if (order.notion != null || order.dropoffNote != null) View.VISIBLE else View.GONE
+            tvIsNotion.visibility =
+                if (order.notion != null || order.dropoffNote != null) View.VISIBLE else View.GONE
             tvFragileGoods.visibility = if (order.fragileGoods) View.VISIBLE else View.GONE
         }
     }
@@ -75,7 +85,29 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
             }
 
             tvAcceptOrder.onClickWithScale {
-                onAcceptOrder?.invoke()
+                handleAcceptOrder()
+            }
+        }
+    }
+    
+    private fun handleAcceptOrder() {
+        lifecycleScope.launch {
+            try {
+                val result = orderRepository.assignShipper(order.orderId)
+                when (result) {
+                    is OrderRepository.OrderResult.Success -> {
+                        // Map OrderResponse sang Order với đầy đủ thông tin
+                        val updatedOrder = OrderMapper.mapToOrder(result.response)
+                        onAcceptOrder?.invoke(updatedOrder)
+                    }
+                    is OrderRepository.OrderResult.Error -> {
+                        // Nếu lỗi, vẫn gọi callback với order hiện tại
+                        onAcceptOrder?.invoke(order)
+                    }
+                }
+            } catch (e: Exception) {
+                // Nếu có exception, vẫn gọi callback với order hiện tại
+                onAcceptOrder?.invoke(order)
             }
         }
     }
