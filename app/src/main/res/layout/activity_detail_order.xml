@@ -80,22 +80,23 @@
                 android:textColor="@color/green_29"
                 android:textSize="@dimen/font_10" />
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/size_16"
-            android:background="@drawable/bg_border_stroke_light_green_6_20_per"
-            android:fontFamily="@font/bold"
-            android:paddingHorizontal="@dimen/size_12"
-            android:paddingVertical="@dimen/size_4"
-            android:text="@string/received_order"
-            android:textColor="@color/green_24"
-            android:textSize="@dimen/font_12"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llLive" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_8"
+        android:layout_marginEnd="@dimen/size_16"
+        android:background="@drawable/bg_border_stroke_light_green_6_20_per"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="@dimen/size_24"
+        android:paddingVertical="@dimen/size_8"
+        android:text="@string/received_order"
+        android:textColor="@color/green_24"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nestedScrollView" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -148,209 +149,26 @@
                 app:layout_constraintBottom_toBottomOf="@id/mapView"
                 app:layout_constraintEnd_toEndOf="@id/mapView" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ctlOrderProgress"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDeliveryAddress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/size_16"
-                android:layout_marginTop="@dimen/size_16"
-                android:background="@drawable/bg_border_stroke_white_12_80_per"
-                android:padding="@dimen/size_16"
-                android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@id/mapView">
+                android:layout_height="@dimen/size_300"
+                android:layout_margin="@dimen/size_16"
+                app:layout_constraintTop_toBottomOf="@id/mapView"
+                tools:listitem="@layout/item_delivery_address" />
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/bold"
-                    android:text="@string/ti_n_tr_nh_n_h_ng"
-                    android:textColor="@color/azure_27"
-                    android:textSize="@dimen/font_14"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/textView2">
-
-                    <ImageView
-                        android:id="@+id/ivReceivedOrder"
-                        android:layout_width="@dimen/size_32"
-                        android:layout_height="@dimen/size_32"
-                        android:background="@drawable/bg_gradient_finding_orders_100"
-                        android:contentDescription="@null"
-                        android:padding="@dimen/size_8"
-                        android:src="@drawable/ic_white_tick" />
-
-                    <TextView
-                        android:id="@+id/tvReceivedOrder"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_12"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/received_order"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14" />
-
-                    <ImageView
-                        android:id="@+id/ivReceivedOrderStatus"
-                        android:layout_width="@dimen/size_8"
-                        android:layout_height="@dimen/size_8"
-                        android:background="@drawable/bg_gradient_finding_orders_100"
-                        android:contentDescription="@null" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout1">
-
-                    <ImageView
-                        android:id="@+id/ivComingTo"
-                        android:layout_width="@dimen/size_32"
-                        android:layout_height="@dimen/size_32"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_not_in_progress" />
-
-                    <TextView
-                        android:id="@+id/tvComingTo"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_12"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/ang_n_l_y_h_ng"
-                        android:textColor="@color/grey_46"
-                        android:textSize="@dimen/font_14" />
-
-                    <ImageView
-                        android:id="@+id/ivComingToStatus"
-                        android:layout_width="@dimen/size_8"
-                        android:layout_height="@dimen/size_8"
-                        android:background="@drawable/bg_gradient_orange_100"
-                        android:contentDescription="@null" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout2">
-
-                    <ImageView
-                        android:id="@+id/ivReceivedGood"
-                        android:layout_width="@dimen/size_32"
-                        android:layout_height="@dimen/size_32"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_not_in_progress" />
-
-                    <TextView
-                        android:id="@+id/tvReceivedGood"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_12"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/received_goods"
-                        android:textColor="@color/grey_46"
-                        android:textSize="@dimen/font_14" />
-
-                    <ImageView
-                        android:id="@+id/ivReceivedGoodStatus"
-                        android:layout_width="@dimen/size_8"
-                        android:layout_height="@dimen/size_8"
-                        android:background="@drawable/bg_gradient_purple_100"
-                        android:contentDescription="@null"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout3">
-
-                    <ImageView
-                        android:id="@+id/ivDelivering"
-                        android:layout_width="@dimen/size_32"
-                        android:layout_height="@dimen/size_32"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_not_in_progress" />
-
-                    <TextView
-                        android:id="@+id/tvDelivering"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_12"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/ang_giao_h_ng"
-                        android:textColor="@color/grey_46"
-                        android:textSize="@dimen/font_14" />
-
-                    <ImageView
-                        android:id="@+id/ivDeliveringStatus"
-                        android:layout_width="@dimen/size_8"
-                        android:layout_height="@dimen/size_8"
-                        android:background="@drawable/bg_gradient_red_100"
-                        android:contentDescription="@null"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout4">
-
-                    <ImageView
-                        android:id="@+id/ivDelivered"
-                        android:layout_width="@dimen/size_32"
-                        android:layout_height="@dimen/size_32"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_not_in_progress" />
-
-                    <TextView
-                        android:id="@+id/tvDelivered"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_12"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/delivered"
-                        android:textColor="@color/grey_46"
-                        android:textSize="@dimen/font_14" />
-
-                    <ImageView
-                        android:id="@+id/ivDeliveredStatus"
-                        android:layout_width="@dimen/size_8"
-                        android:layout_height="@dimen/size_8"
-                        android:background="@drawable/bg_gradient_green_100"
-                        android:contentDescription="@null"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieScrollDown"
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/rvDeliveryAddress"
+                app:layout_constraintEnd_toEndOf="@id/rvDeliveryAddress"
+                app:layout_constraintStart_toStartOf="@id/rvDeliveryAddress"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="anim_scroll_down.json"
+                app:lottie_loop="true"
+                app:lottie_repeatMode="reverse" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctlPickUpAddress"
@@ -359,7 +177,7 @@
                 android:layout_margin="@dimen/size_16"
                 android:background="@drawable/bg_border_stroke_white_12_80_per"
                 android:padding="@dimen/size_16"
-                app:layout_constraintTop_toBottomOf="@id/ctlOrderProgress">
+                app:layout_constraintTop_toBottomOf="@id/mapView">
 
                 <ImageView
                     android:id="@+id/imageView1"
@@ -409,21 +227,6 @@
                     app:layout_constraintStart_toStartOf="@id/tvPickUpName"
                     app:layout_constraintTop_toBottomOf="@id/tvPickUpName" />
 
-                <TextView
-                    android:id="@+id/tvCallInAdvance"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_4"
-                    android:background="@drawable/bg_border_stroke_yellow_8_10_per"
-                    android:fontFamily="@font/regular"
-                    android:padding="@dimen/size_8"
-                    android:text="@string/g_i_tr_c_10_ph_t"
-                    android:textColor="@color/orange_29"
-                    android:textSize="@dimen/font_12"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvPickUpAddress"
-                    app:layout_constraintTop_toBottomOf="@id/tvPickUpAddress" />
-
                 <LinearLayout
                     android:id="@+id/llCall"
                     android:layout_width="0dp"
@@ -435,7 +238,7 @@
                     android:paddingVertical="@dimen/size_8"
                     app:layout_constraintEnd_toStartOf="@id/llMess"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCallInAdvance">
+                    app:layout_constraintTop_toBottomOf="@id/tvPickUpAddress">
 
                     <ImageView
                         android:layout_width="@dimen/size_16"
@@ -466,7 +269,7 @@
                     android:paddingVertical="@dimen/size_8"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/llCall"
-                    app:layout_constraintTop_toBottomOf="@id/tvCallInAdvance">
+                    app:layout_constraintTop_toBottomOf="@id/tvPickUpAddress">
 
                     <ImageView
                         android:layout_width="@dimen/size_16"
@@ -543,21 +346,6 @@
                     app:layout_constraintStart_toStartOf="@id/tvReceiverName"
                     app:layout_constraintTop_toBottomOf="@id/tvReceiverName" />
 
-                <TextView
-                    android:id="@+id/tvCallReceiver"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_4"
-                    android:background="@drawable/bg_border_stroke_blue_8_10_per"
-                    android:fontFamily="@font/regular"
-                    android:padding="@dimen/size_8"
-                    android:text="@string/giao_gi_h_nh_ch_nh"
-                    android:textColor="@color/blue_40"
-                    android:textSize="@dimen/font_12"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvReceiverAddress"
-                    app:layout_constraintTop_toBottomOf="@id/tvReceiverAddress" />
-
                 <LinearLayout
                     android:id="@+id/llCallReceiver"
                     android:layout_width="0dp"
@@ -569,7 +357,7 @@
                     android:paddingVertical="@dimen/size_8"
                     app:layout_constraintEnd_toStartOf="@id/llMessReceiver"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCallReceiver">
+                    app:layout_constraintTop_toBottomOf="@id/tvReceiverAddress">
 
                     <ImageView
                         android:layout_width="@dimen/size_16"
@@ -600,7 +388,7 @@
                     android:paddingVertical="@dimen/size_8"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/llCallReceiver"
-                    app:layout_constraintTop_toBottomOf="@id/tvCallReceiver">
+                    app:layout_constraintTop_toBottomOf="@id/tvReceiverAddress">
 
                     <ImageView
                         android:layout_width="@dimen/size_16"
@@ -627,7 +415,7 @@
                 android:layout_margin="@dimen/size_16"
                 android:background="@drawable/bg_border_stroke_white_12_80_per"
                 android:padding="@dimen/size_16"
-                app:layout_constraintTop_toBottomOf="@id/ctlDeliverAddress">
+                app:layout_constraintTop_toBottomOf="@id/rvDeliveryAddress">
 
                 <ImageView
                     android:id="@+id/imageView3"

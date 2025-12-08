@@ -75,15 +75,6 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
             tvIsNotion.visibility =
                 if (order.notion != null || order.dropoffNote != null) View.VISIBLE else View.GONE
             tvFragileGoods.visibility = if (order.fragileGoods) View.VISIBLE else View.GONE
-
-            tvPickerName.visibility = View.GONE
-            tvPickerAddress.visibility = View.GONE
-            tvDeliveryName.visibility = View.GONE
-            tvDeliveryAddress.visibility = View.GONE
-            imageView1.visibility = View.GONE
-            imageView2.visibility = View.GONE
-            textView2.visibility = View.GONE
-            textView3.visibility = View.GONE
         }
     }
 
@@ -95,6 +86,7 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
                     is OrderRepository.OrderResult.Success -> {
                         setupDeliveryAddressList(result.response)
                     }
+
                     is OrderRepository.OrderResult.Error -> {
                         setupDeliveryAddressListFromOrder()
                     }
@@ -170,11 +162,19 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
                             lottieScrollDown.visibility = View.VISIBLE
                             var scrollListener: RecyclerView.OnScrollListener? = null
                             scrollListener = object : RecyclerView.OnScrollListener() {
-                                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                                override fun onScrolled(
+                                    recyclerView: RecyclerView,
+                                    dx: Int,
+                                    dy: Int
+                                ) {
                                     super.onScrolled(recyclerView, dx, dy)
                                     if (dy > 0) {
                                         lottieScrollDown.visibility = View.GONE
-                                        scrollListener?.let { rvDeliveryAddress.removeOnScrollListener(it) }
+                                        scrollListener?.let {
+                                            rvDeliveryAddress.removeOnScrollListener(
+                                                it
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -201,7 +201,7 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
             }
         }
     }
-    
+
     private fun handleAcceptOrder() {
         lifecycleScope.launch {
             try {
@@ -212,6 +212,7 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
                         val updatedOrder = OrderMapper.mapToOrder(result.response)
                         onAcceptOrder?.invoke(updatedOrder)
                     }
+
                     is OrderRepository.OrderResult.Error -> {
                         // Nếu lỗi, vẫn gọi callback với order hiện tại
                         onAcceptOrder?.invoke(order)

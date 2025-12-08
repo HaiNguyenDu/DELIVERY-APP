@@ -73,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_200"
         android:overScrollMode="never"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/ctlDistance"
         app:layout_constraintTop_toBottomOf="@id/ctlSecondCount"
         tools:itemCount="3"
@@ -91,108 +91,6 @@
         app:lottie_fileName="anim_scroll_down.json"
         app:lottie_loop="true"
         app:lottie_repeatMode="reverse" />
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
-        android:layout_marginStart="@dimen/size_24"
-        android:layout_marginTop="@dimen/size_40"
-        android:background="@drawable/bg_gradient_finding_orders_100"
-        android:contentDescription="@null"
-        android:padding="@dimen/size_10"
-        android:src="@drawable/ic_address"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ctlSecondCount" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/font_12"
-        android:fontFamily="@font/medium"
-        android:text="@string/i_m_l_y_h_ng"
-        android:textColor="@color/grey_46"
-        android:textSize="@dimen/font_12"
-        app:layout_constraintStart_toEndOf="@id/imageView1"
-        app:layout_constraintTop_toTopOf="@id/imageView1" />
-
-    <TextView
-        android:id="@+id/tvPickerName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_4"
-        android:layout_marginEnd="@dimen/size_24"
-        android:fontFamily="@font/bold"
-        android:text="@string/nguy_n_v_n_a"
-        android:textColor="@color/black"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/textView2"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
-
-    <TextView
-        android:id="@+id/tvPickerAddress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/size_24"
-        android:fontFamily="@font/regular"
-        android:text="@string/_123_ng_l_l_i_qu_n_1_tp_hcm"
-        android:textColor="@color/azure_34"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tvPickerName"
-        app:layout_constraintTop_toBottomOf="@id/tvPickerName" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
-        android:layout_marginStart="@dimen/size_24"
-        android:layout_marginTop="@dimen/size_16"
-        android:background="@drawable/bg_gradient_red_100"
-        android:contentDescription="@null"
-        android:padding="@dimen/size_10"
-        android:src="@drawable/ic_address"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPickerAddress" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/font_12"
-        android:fontFamily="@font/medium"
-        android:text="@string/i_m_giao_h_ng"
-        android:textColor="@color/grey_46"
-        android:textSize="@dimen/font_12"
-        app:layout_constraintStart_toEndOf="@id/imageView2"
-        app:layout_constraintTop_toTopOf="@id/imageView2" />
-
-    <TextView
-        android:id="@+id/tvDeliveryName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_4"
-        android:layout_marginEnd="@dimen/size_24"
-        android:fontFamily="@font/bold"
-        android:text="@string/nguy_n_v_n_a"
-        android:textColor="@color/black"
-        android:textSize="@dimen/font_16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/textView3"
-        app:layout_constraintTop_toBottomOf="@id/textView3" />
-
-    <TextView
-        android:id="@+id/tvDeliveryAddress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/size_24"
-        android:fontFamily="@font/regular"
-        android:text="@string/_456_ng_nguy_n_hu_qu_n_1_tp_hcm"
-        android:textColor="@color/azure_34"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tvDeliveryName"
-        app:layout_constraintTop_toBottomOf="@id/tvDeliveryName" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ctlDistance"

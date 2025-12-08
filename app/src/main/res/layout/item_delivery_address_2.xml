@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size_12"
+    android:background="@drawable/bg_border_stroke_white_12_80_per"
+    android:padding="@dimen/size_16">
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:background="@drawable/bg_gradient_finding_orders_100"
+        android:contentDescription="@null"
+        android:padding="@dimen/size_10"
+        android:src="@drawable/ic_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDeliveryType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/font_12"
+        android:fontFamily="@font/medium"
+        android:text="@string/i_m_l_y_h_ng"
+        android:textColor="@color/grey_46"
+        android:textSize="@dimen/font_12"
+        app:layout_constraintStart_toEndOf="@id/ivIcon"
+        app:layout_constraintTop_toTopOf="@id/ivIcon" />
+
+    <TextView
+        android:id="@+id/tvDeliveryName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:layout_marginEnd="@dimen/size_24"
+        android:fontFamily="@font/bold"
+        android:text="@string/nguy_n_v_n_a"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvDeliveryType"
+        app:layout_constraintTop_toBottomOf="@id/tvDeliveryType" />
+
+    <TextView
+        android:id="@+id/tvDeliveryAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/size_24"
+        android:fontFamily="@font/regular"
+        android:text="@string/_123_ng_l_l_i_qu_n_1_tp_hcm"
+        android:textColor="@color/azure_34"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvDeliveryName"
+        app:layout_constraintTop_toBottomOf="@id/tvDeliveryName" />
+
+    <LinearLayout
+        android:id="@+id/llCall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_12"
+        android:background="@drawable/bg_border_stroke_white_6_50_per"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/size_8"
+        app:layout_constraintEnd_toStartOf="@id/llMess"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDeliveryAddress">
+
+        <ImageView
+            android:layout_width="@dimen/size_16"
+            android:layout_height="@dimen/size_16"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_phone"
+            app:tint="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_16"
+            android:fontFamily="@font/medium"
+            android:text="@string/g_i"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llMess"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_marginTop="@dimen/size_12"
+        android:background="@drawable/bg_border_stroke_white_6_50_per"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/size_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/llCall"
+        app:layout_constraintTop_toBottomOf="@id/tvDeliveryAddress">
+
+        <ImageView
+            android:layout_width="@dimen/size_16"
+            android:layout_height="@dimen/size_16"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_mess"
+            app:tint="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_16"
+            android:fontFamily="@font/medium"
+            android:text="@string/nh_n_tin"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
