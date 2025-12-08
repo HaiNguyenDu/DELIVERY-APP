@@ -27,7 +27,7 @@ import android.view.MotionEvent
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.respone.Coordinates
-import com.example.grabapp.view.dialog.DeliveryAddressItem
+import com.example.grabapp.model.DeliveryAddressItem
 import kotlinx.coroutines.launch
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import org.maplibre.android.annotations.IconFactory

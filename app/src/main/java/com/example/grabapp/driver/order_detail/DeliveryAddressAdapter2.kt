@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabapp.R
 import com.example.grabapp.databinding.ItemDeliveryAddress2Binding
-import com.example.grabapp.view.dialog.DeliveryAddressItem
+import com.example.grabapp.model.DeliveryAddressItem
 
 class DeliveryAddressAdapter2(
     private val items: List<DeliveryAddressItem>,

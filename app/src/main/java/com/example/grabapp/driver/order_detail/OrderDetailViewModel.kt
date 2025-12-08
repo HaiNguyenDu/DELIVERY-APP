@@ -11,7 +11,7 @@ import com.example.grabapp.model.Order
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.respone.GoongDirectionApiResponse
-import com.example.grabapp.view.dialog.DeliveryAddressItem
+import com.example.grabapp.model.DeliveryAddressItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

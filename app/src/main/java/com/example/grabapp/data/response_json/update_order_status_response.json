@@ -1,0 +1,88 @@
+{
+  "id": "86ca71dd-802c-4205-b7fa-0a4652726238",
+  "totalAmount": 53000,
+  "status": "PACKAGE_PICKED",
+  "createdAt": "2025-12-09T00:52:11.949083",
+  "scheduledAt": null,
+  "pickupAddress": {
+    "detail": "Ký túc xá Sinh viên Phía Tây, Hà Văn Tính, Phường Hòa Khánh Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
+    "name": "Nguyễn Công Thành",
+    "phone": "0796631299",
+    "wardCode": 1,
+    "districtCode": 1,
+    "note": null,
+    "latitude": 16.068123,
+    "longitude": 108.15416
+  },
+  "packages": [
+    {
+      "id": "c75a2d50-dcc4-443a-a08e-ca6fde641f6a",
+      "weightKg": 1,
+      "packageSize": "S",
+      "deliveryFee": 20000,
+      "codFee": 0,
+      "payerType": "SENDER",
+      "category": "KHAC",
+      "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1765185989/users/_r_t_/file__r_t__1765186015.877862.png",
+      "packageStatus": "WAITING_FOR_PICKUP",
+      "statusNote": null,
+      "statusUpdatedAt": "2025-12-09T00:52:11.949316",
+      "description": null,
+      "dropoffAddress": {
+        "detail": "Đại học Bách Khoa - Đại học Đà Nẵng, 62 Ngô Sĩ Liên, Phường Hòa Khánh Bắc, Quận Liên Chiểu, Thành phố Đà Nẵng",
+        "name": "Bách",
+        "phone": "0796631299",
+        "wardCode": 1,
+        "districtCode": 1,
+        "note": null,
+        "latitude": 16.075466,
+        "longitude": 108.153601
+      }
+    },
+    {
+      "id": "82edfcbb-14a3-4677-b911-5125036793ab",
+      "weightKg": 2,
+      "packageSize": "S",
+      "deliveryFee": 33000,
+      "codFee": 0,
+      "payerType": "SENDER",
+      "category": "KHAC",
+      "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1765186236/users/_r_1i_/file__r_1i__1765186261.011067.jpg",
+      "packageStatus": "WAITING_FOR_PICKUP",
+      "statusNote": null,
+      "statusUpdatedAt": "2025-12-09T00:52:11.949418",
+      "description": null,
+      "dropoffAddress": {
+        "detail": "Bưu Cục Bách Khoa, 51, Nguyễn Lương Bằng, Phường. Hoà Khánh, Quận. Liên Chiểu, Tp. Đà Nẵng, Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng",
+        "name": "Thanh Nhã",
+        "phone": "0897351232",
+        "wardCode": 1,
+        "districtCode": 1,
+        "note": null,
+        "latitude": 16.074876,
+        "longitude": 108.14946
+      }
+    }
+  ],
+  "shipperId": "867c8938-37e3-4fa8-9805-2bccb70104f7",
+  "priceAndRoutes": [
+    {
+      "price": 20000,
+      "latitude": 16.0754661,
+      "longitude": 108.1536012,
+      "routeIndex": 1,
+      "packageIndex": 1,
+      "distance": 1469,
+      "estimatedDuration": 1166
+    },
+    {
+      "price": 33000,
+      "latitude": 16.0748757,
+      "longitude": 108.1494602,
+      "routeIndex": 2,
+      "packageIndex": 2,
+      "distance": 2440,
+      "estimatedDuration": 1910
+    }
+  ]
+}

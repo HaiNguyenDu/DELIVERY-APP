@@ -1,4 +1,4 @@
-package com.example.grabapp.view.dialog
+package com.example.grabapp.model
 
 data class DeliveryAddressItem(
     val name: String,
