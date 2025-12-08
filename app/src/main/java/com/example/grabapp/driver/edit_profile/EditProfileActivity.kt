@@ -22,6 +22,7 @@ import com.example.grabapp.driver.register.bottom_sheet.ProvinceBottomSheet
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.data.model.DriverProfile
 import com.example.grabapp.data.repository.DriverRepository
+import com.example.grabapp.driver.base.BaseDriverActivity
 import com.example.grabapp.model.CCCDInfo
 import com.example.grabapp.model.DriverStatus
 import com.example.grabapp.model.Transportation
@@ -34,7 +35,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfileViewModel>() {
+class EditProfileActivity : BaseDriverActivity<ActivityEditProfileBinding, EditProfileViewModel>() {
 
     private val tokenStorage by lazy { TokenStorage(applicationContext) }
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

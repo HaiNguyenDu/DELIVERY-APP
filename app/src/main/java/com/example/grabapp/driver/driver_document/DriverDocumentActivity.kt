@@ -11,13 +11,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityDriverDocumentBinding
+import com.example.grabapp.driver.base.BaseDriverActivity
 import com.example.grabapp.extention.onClickWithScale
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class DriverDocumentActivity :
-    BaseActivity<ActivityDriverDocumentBinding, DriverDocumentViewModel>() {
+    BaseDriverActivity<ActivityDriverDocumentBinding, DriverDocumentViewModel>() {
 
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 

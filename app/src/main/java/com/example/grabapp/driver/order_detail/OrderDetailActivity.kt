@@ -15,7 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
-import com.example.grabapp.base.BaseActivity
+import com.example.grabapp.driver.base.BaseDriverActivity
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.ActivityDetailOrderBinding
@@ -24,6 +24,7 @@ import com.example.grabapp.model.Address
 import com.example.grabapp.model.Order
 import android.os.Parcelable
 import android.view.MotionEvent
+import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.view.dialog.DeliveryAddressItem
