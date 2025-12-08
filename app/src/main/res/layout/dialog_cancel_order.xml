@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_circle_dialog_24"
+    android:paddingBottom="@dimen/size_24">
+
+    <View
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="-24dp"
+        android:background="@drawable/bg_gradient_orange_top_border"
+        app:layout_constraintBottom_toBottomOf="@id/tvOrderId"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:layout_marginStart="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_24"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:fontFamily="@font/bold"
+        android:text="@string/n_h_ng_m_i"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_22"
+        app:layout_constraintBottom_toBottomOf="@id/imageView7"
+        app:layout_constraintStart_toEndOf="@id/imageView7"
+        app:layout_constraintTop_toTopOf="@id/imageView7" />
+
+    <TextView
+        android:id="@+id/tvOrderId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:text="@string/h_nh_ng_n_y_s_nh_h_ng_n_i_m_uy_t_n"
+        android:textColor="@color/grey_93"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_16"
+        android:fontFamily="@font/bold"
+        android:text="@string/ch_n_l_do"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emptyView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDeliveryAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_12"
+        android:maxHeight="@dimen/size_300"
+        android:overScrollMode="never"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/textView2"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_delivery_address" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -305,4 +305,6 @@
     <string name="ng_k_xe">Đăng ký xe</string>
     <string name="default_notification_channel_id">default_channel</string>
     <string name="h_y_n">Hủy đơn</string>
+    <string name="h_nh_ng_n_y_s_nh_h_ng_n_i_m_uy_t_n">Hành động này sẽ ảnh hưởng đến điểm uy tín</string>
+    <string name="ch_n_l_do">Chọn lý do</string>
 </resources>

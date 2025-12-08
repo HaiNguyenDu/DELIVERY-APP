@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseDialogFragment
+import com.example.grabapp.data.model.OrderResponse
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.DialogNewOrderedBinding
 import com.example.grabapp.extention.onClickWithScale
@@ -55,16 +58,13 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
     override fun setUpInit() {
         setupOrderInform()
         setupClickListeners()
+        loadOrderDetails()
         startCountdown()
     }
 
     private fun setupOrderInform() {
         binding.apply {
             tvOrderId.text = order.orderId
-            tvPickerName.text = order.pickerName
-            tvPickerAddress.text = order.pickerAddress
-            tvDeliveryName.text = order.deliveryName
-            tvDeliveryAddress.text = order.deliveryAddress
             tvDistance.text = order.distance
             tvTime.text = order.estimatedTime
             tvIncome.text = "${String.format("%,d", order.income)}đ"
@@ -75,6 +75,118 @@ class NewOrderedDialog : BaseDialogFragment<DialogNewOrderedBinding>() {
             tvIsNotion.visibility =
                 if (order.notion != null || order.dropoffNote != null) View.VISIBLE else View.GONE
             tvFragileGoods.visibility = if (order.fragileGoods) View.VISIBLE else View.GONE
+
+            tvPickerName.visibility = View.GONE
+            tvPickerAddress.visibility = View.GONE
+            tvDeliveryName.visibility = View.GONE
+            tvDeliveryAddress.visibility = View.GONE
+            imageView1.visibility = View.GONE
+            imageView2.visibility = View.GONE
+            textView2.visibility = View.GONE
+            textView3.visibility = View.GONE
+        }
+    }
+
+    private fun loadOrderDetails() {
+        lifecycleScope.launch {
+            try {
+                val result = orderRepository.getOrderById(order.orderId)
+                when (result) {
+                    is OrderRepository.OrderResult.Success -> {
+                        setupDeliveryAddressList(result.response)
+                    }
+                    is OrderRepository.OrderResult.Error -> {
+                        setupDeliveryAddressListFromOrder()
+                    }
+                }
+            } catch (e: Exception) {
+                setupDeliveryAddressListFromOrder()
+            }
+        }
+    }
+
+    private fun setupDeliveryAddressList(orderResponse: OrderResponse) {
+        val addressItems = createAddressListFromOrderResponse(orderResponse)
+        setupRecyclerView(addressItems)
+    }
+
+    private fun setupDeliveryAddressListFromOrder() {
+        val addressItems = listOf(
+            DeliveryAddressItem(
+                name = order.pickerName,
+                address = order.pickerAddress,
+                isPickup = true
+            ),
+            DeliveryAddressItem(
+                name = order.deliveryName,
+                address = order.deliveryAddress,
+                isPickup = false
+            )
+        )
+        setupRecyclerView(addressItems)
+    }
+
+    private fun createAddressListFromOrderResponse(orderResponse: OrderResponse): List<DeliveryAddressItem> {
+        val addressItems = mutableListOf<DeliveryAddressItem>()
+
+        addressItems.add(
+            DeliveryAddressItem(
+                name = orderResponse.pickupAddress.name,
+                address = orderResponse.pickupAddress.detail,
+                isPickup = true
+            )
+        )
+
+        orderResponse.packages.forEach { packageInfo ->
+            addressItems.add(
+                DeliveryAddressItem(
+                    name = packageInfo.dropoffAddress.name,
+                    address = packageInfo.dropoffAddress.detail,
+                    isPickup = false
+                )
+            )
+        }
+
+        return addressItems
+    }
+
+    private fun setupRecyclerView(addressItems: List<DeliveryAddressItem>) {
+        binding.apply {
+            rvDeliveryAddress.visibility = View.VISIBLE
+            rvDeliveryAddress.layoutManager = LinearLayoutManager(requireContext())
+            rvDeliveryAddress.adapter = DeliveryAddressAdapter(addressItems)
+
+            setupScrollIndicator(addressItems.size)
+        }
+    }
+
+    private fun setupScrollIndicator(itemCount: Int) {
+        binding.apply {
+            if (itemCount > 2) {
+                rvDeliveryAddress.post {
+                    rvDeliveryAddress.postDelayed({
+                        val canScroll = rvDeliveryAddress.canScrollVertically(1)
+                        if (canScroll) {
+                            lottieScrollDown.visibility = View.VISIBLE
+                            var scrollListener: RecyclerView.OnScrollListener? = null
+                            scrollListener = object : RecyclerView.OnScrollListener() {
+                                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                                    super.onScrolled(recyclerView, dx, dy)
+                                    if (dy > 0) {
+                                        lottieScrollDown.visibility = View.GONE
+                                        scrollListener?.let { rvDeliveryAddress.removeOnScrollListener(it) }
+                                    }
+                                }
+                            }
+                            rvDeliveryAddress.addOnScrollListener(scrollListener)
+                        } else {
+                            lottieScrollDown.visibility = View.GONE
+                        }
+                    }, 100)
+                }
+            } else {
+                lottieScrollDown.visibility = View.GONE
+            }
         }
     }
 
