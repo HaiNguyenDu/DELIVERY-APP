@@ -11,9 +11,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
 import androidx.core.graphics.scale
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.data.repository.AddressRepository
+import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.ActivityDetailOrderBinding
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.model.Address
@@ -22,6 +26,7 @@ import android.os.Parcelable
 import android.view.MotionEvent
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.respone.Coordinates
+import com.example.grabapp.view.dialog.DeliveryAddressItem
 import kotlinx.coroutines.launch
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import org.maplibre.android.annotations.IconFactory
@@ -40,42 +45,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         private const val EXTRA_ORDER = "extra_order"
     }
 
-    private lateinit var order: Order
-    private var currentState: OrderState = OrderState.RECEIVED_ORDER
-
-    private var positioning: Address? = null
-
-    private val pickUpAddress: Address by lazy {
-        order.pickupCoordinates?.let { coordinates ->
-            Address(
-                coordinates = coordinates,
-                name = order.pickerName,
-                address = order.pickerAddress
-            )
-        } ?: Address(
-            coordinates = Coordinates(16.07367333700006, 108.14992938100005),
-            name = order.pickerName,
-            address = order.pickerAddress
-        )
-    }
-
-    private val dropOffAddress: Address by lazy {
-        order.dropoffCoordinates?.let { coordinates ->
-            Address(
-                coordinates = coordinates,
-                name = order.deliveryName,
-                address = order.deliveryAddress
-            )
-        } ?: Address(
-            coordinates = Coordinates(16.07079150000004, 108.14888825800006),
-            name = order.deliveryName,
-            address = order.deliveryAddress
-        )
-    }
-
     private var mapLibreMap: MapLibreMap? = null
-    private lateinit var repository: AddressRepository
-    private var directionResponse: GoongDirectionApiResponse? = null
 
     private var startMarker: Marker? = null
     private var endMarker: Marker? = null
@@ -96,17 +66,57 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         lazy { ActivityDetailOrderBinding.inflate(layoutInflater) }
 
     override fun getLazyViewModel(): Lazy<OrderDetailViewModel> =
-        lazy { OrderDetailViewModel(application) }
+        lazy {
+            val orderRepository = OrderRepository(this)
+            val addressRepository = AddressRepository.getInstance(this)
+            OrderDetailViewModel(application, orderRepository, addressRepository)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository = AddressRepository.getInstance(this)
         setupClickListeners()
         getOrderFromIntent()
         setupToolbar()
-        setupOrderInformation()
-        setupStateManagement()
+        observeViewModel()
         requestLocationPermission()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.order.collect { order ->
+                        order?.let {
+                            setupOrderInformation(it)
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.addressItems.collect { items ->
+                        if (items.isNotEmpty()) {
+                            setupRecyclerView(items)
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.currentState.collect { state ->
+                        updateMapForState()
+                    }
+                }
+
+                launch {
+                    viewModel.directionResponse.collect { response ->
+                        response?.let {
+                            mapLibreMap?.let { map ->
+                                drawRoute(map, it)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun requestLocationPermission() {
@@ -131,52 +141,45 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     }
 
     private fun getCurrentLocation() {
-        lifecycleScope.launch {
-            try {
-                repository.getCurrentLocation()?.let { location ->
-                    positioning = Address(
-                        coordinates = Coordinates(location.latitude, location.longitude),
-                        name = "Vị trí hiện tại",
-                        address = "Vị trí hiện tại của tài xế"
-                    )
-                    getDirection()
-                }
-            } catch (e: Exception) {
-            } finally {
-                setUpMap()
+        viewModel.getCurrentLocation(
+            onSuccess = { address ->
+                getDirection()
+            },
+            onError = { exception ->
+                // Handle error
             }
-        }
+        )
+        setUpMap()
     }
 
     private fun getDirection() {
+        val pickUpAddress = viewModel.getPickUpAddress()
         getDirectionToAddress(pickUpAddress)
     }
 
     private fun getDirectionToDropOff() {
+        val dropOffAddress = viewModel.getDropOffAddress()
         getDirectionToAddress(dropOffAddress)
     }
 
     private fun getDirectionToAddress(destination: Address) {
-        positioning?.let { startAddress ->
-            repository.getDirectionData(
-                dropOff = destination,
-                pickUp = startAddress,
-                onSuccess = { response ->
-                    directionResponse = response
-                    mapLibreMap?.let { map ->
-                        drawRoute(map, response)
-                    }
-                },
-                onError = { error ->
+        viewModel.getDirectionToAddress(
+            destination = destination,
+            onSuccess = { response ->
+                mapLibreMap?.let { map ->
+                    drawRoute(map, response)
                 }
-            )
-        }
+            },
+            onError = { error ->
+                // Handle error
+            }
+        )
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupClickListeners() {
         binding.tvDeliveryComplete.onClickWithScale {
-            moveToNextState()
+            viewModel.moveToNextState()
         }
         binding.ivLocatedFixed.onClickWithScale {
             moveCameraToStartPosition()
@@ -199,12 +202,14 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     }
 
     private fun getOrderFromIntent() {
-        order = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(EXTRA_ORDER, Order::class.java) ?: Order.getMockOrder()
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra<Parcelable>(EXTRA_ORDER) as? Order ?: Order.getMockOrder()
-        }
+        val order =
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                intent.getParcelableExtra(EXTRA_ORDER, Order::class.java) ?: Order.getMockOrder()
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getParcelableExtra<Parcelable>(EXTRA_ORDER) as? Order ?: Order.getMockOrder()
+            }
+        viewModel.initializeOrder(order)
     }
 
     private fun setupToolbar() {
@@ -212,18 +217,14 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             ivBack.onClickWithScale {
                 onBackPressedDispatcher.onBackPressed()
             }
-            tvOrderId.text = order.orderId
+            viewModel.order.value?.let { order ->
+                tvOrderId.text = order.orderId
+            }
         }
     }
 
-    private fun setupOrderInformation() {
+    private fun setupOrderInformation(order: Order) {
         binding.apply {
-            tvPickUpName.text = order.pickerName
-            tvPickUpAddress.text = order.pickerAddress
-
-            tvReceiverName.text = order.deliveryName
-            tvReceiverAddress.text = order.deliveryAddress
-
             tvGoodsDes.text = order.orderType.displayName
             tvGoodsWeight.text = order.goodsWeight
             tvDistance.text = order.distance
@@ -231,18 +232,19 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         }
     }
 
-    private fun setupStateManagement() {
-        currentState = OrderState.RECEIVED_ORDER
-    }
-
-    private fun moveToNextState() {
-        currentState = when (currentState) {
-            OrderState.RECEIVED_ORDER -> OrderState.COMING_TO_PICKUP
-            OrderState.COMING_TO_PICKUP -> OrderState.RECEIVED_GOODS
-            OrderState.RECEIVED_GOODS -> OrderState.DELIVERING
-            OrderState.DELIVERING -> OrderState.DELIVERED
-            OrderState.DELIVERED -> return
-            OrderState.CANCELED -> return
+    private fun setupRecyclerView(items: List<DeliveryAddressItem>) {
+        binding.apply {
+            rvDeliveryAddress.visibility = View.VISIBLE
+            rvDeliveryAddress.layoutManager = LinearLayoutManager(this@OrderDetailActivity)
+            rvDeliveryAddress.adapter = DeliveryAddressAdapter2(
+                items = items,
+                onCallClick = { name ->
+                    // TODO: Implement call functionality
+                },
+                onMessageClick = { name ->
+                    // TODO: Implement message functionality
+                }
+            )
         }
     }
 
@@ -268,14 +270,15 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                         .scale(80, 80, false)
                 val endIcon = iconFactory.fromBitmap(endBitmap)
 
-                val startLatLng = positioning?.let {
+                val startLatLng = viewModel.positioning.value?.let {
                     LatLng(it.coordinates.lat, it.coordinates.lng)
                 }
 
+                val currentState = viewModel.currentState.value
                 val destinationAddress = if (currentState >= OrderState.RECEIVED_GOODS) {
-                    dropOffAddress
+                    viewModel.getDropOffAddress()
                 } else {
-                    pickUpAddress
+                    viewModel.getPickUpAddress()
                 }
                 val destinationLatLng = LatLng(
                     destinationAddress.coordinates.lat,
@@ -322,7 +325,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(destinationLatLng, 15.0))
                 }
 
-                directionResponse?.let { response ->
+                viewModel.directionResponse.value?.let { response ->
                     drawRoute(map, response)
                 }
             }
@@ -346,7 +349,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     }
 
     private fun moveCameraToStartPosition() {
-        positioning?.let { startAddress ->
+        viewModel.positioning.value?.let { startAddress ->
             val startLatLng = LatLng(startAddress.coordinates.lat, startAddress.coordinates.lng)
             mapLibreMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(startLatLng, 15.0))
         }
@@ -354,13 +357,14 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
     private fun updateMapForState() {
         mapLibreMap?.let { map ->
+            val currentState = viewModel.currentState.value
             val destinationAddress = if (currentState >= OrderState.RECEIVED_GOODS) {
-                dropOffAddress
+                viewModel.getDropOffAddress()
             } else {
-                pickUpAddress
+                viewModel.getPickUpAddress()
             }
 
-            val startLatLng = positioning?.let {
+            val startLatLng = viewModel.positioning.value?.let {
                 LatLng(it.coordinates.lat, it.coordinates.lng)
             } ?: return
 

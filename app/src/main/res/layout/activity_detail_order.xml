@@ -82,22 +82,6 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_8"
-        android:layout_marginEnd="@dimen/size_16"
-        android:background="@drawable/bg_border_stroke_light_green_6_20_per"
-        android:fontFamily="@font/medium"
-        android:paddingHorizontal="@dimen/size_24"
-        android:paddingVertical="@dimen/size_8"
-        android:text="@string/received_order"
-        android:textColor="@color/green_24"
-        android:textSize="@dimen/font_14"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/nestedScrollView" />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
@@ -154,8 +138,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_300"
                 android:layout_margin="@dimen/size_16"
+                android:maxHeight="@dimen/size_300"
+                android:overScrollMode="never"
+                android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@id/mapView"
-                tools:listitem="@layout/item_delivery_address" />
+                tools:itemCount="3"
+                tools:listitem="@layout/item_delivery_address_2" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieScrollDown"
@@ -169,244 +157,6 @@
                 app:lottie_fileName="anim_scroll_down.json"
                 app:lottie_loop="true"
                 app:lottie_repeatMode="reverse" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ctlPickUpAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/size_16"
-                android:background="@drawable/bg_border_stroke_white_12_80_per"
-                android:padding="@dimen/size_16"
-                app:layout_constraintTop_toBottomOf="@id/mapView">
-
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="@dimen/size_40"
-                    android:layout_height="@dimen/size_40"
-                    android:background="@drawable/bg_gradient_finding_orders_100"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/size_10"
-                    android:src="@drawable/ic_address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/font_12"
-                    android:fontFamily="@font/medium"
-                    android:text="@string/i_m_l_y_h_ng"
-                    android:textColor="@color/grey_46"
-                    android:textSize="@dimen/font_12"
-                    app:layout_constraintStart_toEndOf="@id/imageView1"
-                    app:layout_constraintTop_toTopOf="@id/imageView1" />
-
-                <TextView
-                    android:id="@+id/tvPickUpName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_4"
-                    android:layout_marginEnd="@dimen/size_24"
-                    android:fontFamily="@font/bold"
-                    android:text="@string/nguy_n_v_n_a"
-                    android:textSize="@dimen/font_16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/textView3"
-                    app:layout_constraintTop_toBottomOf="@id/textView3" />
-
-                <TextView
-                    android:id="@+id/tvPickUpAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/size_24"
-                    android:fontFamily="@font/regular"
-                    android:text="@string/_123_ng_l_l_i_qu_n_1_tp_hcm"
-                    android:textColor="@color/azure_34"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvPickUpName"
-                    app:layout_constraintTop_toBottomOf="@id/tvPickUpName" />
-
-                <LinearLayout
-                    android:id="@+id/llCall"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@drawable/bg_border_stroke_white_6_50_per"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/size_8"
-                    app:layout_constraintEnd_toStartOf="@id/llMess"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvPickUpAddress">
-
-                    <ImageView
-                        android:layout_width="@dimen/size_16"
-                        android:layout_height="@dimen/size_16"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_phone"
-                        app:tint="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_16"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/g_i"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_12" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llMess"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_8"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@drawable/bg_border_stroke_white_6_50_per"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/size_8"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/llCall"
-                    app:layout_constraintTop_toBottomOf="@id/tvPickUpAddress">
-
-                    <ImageView
-                        android:layout_width="@dimen/size_16"
-                        android:layout_height="@dimen/size_16"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_mess"
-                        app:tint="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_16"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/nh_n_tin"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_12" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ctlDeliverAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/size_16"
-                android:background="@drawable/bg_gradient_pink_5per"
-                android:padding="@dimen/size_16"
-                app:layout_constraintTop_toBottomOf="@id/ctlPickUpAddress">
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="@dimen/size_40"
-                    android:layout_height="@dimen/size_40"
-                    android:background="@drawable/bg_gradient_dark_red_100"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/size_10"
-                    android:src="@drawable/ic_address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/font_12"
-                    android:fontFamily="@font/medium"
-                    android:text="@string/i_m_l_y_h_ng"
-                    android:textColor="@color/grey_46"
-                    android:textSize="@dimen/font_12"
-                    app:layout_constraintStart_toEndOf="@id/imageView2"
-                    app:layout_constraintTop_toTopOf="@id/imageView2" />
-
-                <TextView
-                    android:id="@+id/tvReceiverName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_4"
-                    android:layout_marginEnd="@dimen/size_24"
-                    android:fontFamily="@font/bold"
-                    android:text="@string/nguy_n_v_n_a"
-                    android:textSize="@dimen/font_16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/textView4"
-                    app:layout_constraintTop_toBottomOf="@id/textView4" />
-
-                <TextView
-                    android:id="@+id/tvReceiverAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/size_24"
-                    android:fontFamily="@font/regular"
-                    android:text="@string/_123_ng_l_l_i_qu_n_1_tp_hcm"
-                    android:textColor="@color/azure_34"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvReceiverName"
-                    app:layout_constraintTop_toBottomOf="@id/tvReceiverName" />
-
-                <LinearLayout
-                    android:id="@+id/llCallReceiver"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@drawable/bg_border_stroke_white_6_50_per"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/size_8"
-                    app:layout_constraintEnd_toStartOf="@id/llMessReceiver"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvReceiverAddress">
-
-                    <ImageView
-                        android:layout_width="@dimen/size_16"
-                        android:layout_height="@dimen/size_16"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_phone"
-                        app:tint="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_16"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/g_i"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_12" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llMessReceiver"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_8"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:background="@drawable/bg_border_stroke_white_6_50_per"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/size_8"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/llCallReceiver"
-                    app:layout_constraintTop_toBottomOf="@id/tvReceiverAddress">
-
-                    <ImageView
-                        android:layout_width="@dimen/size_16"
-                        android:layout_height="@dimen/size_16"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_mess"
-                        app:tint="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_16"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/nh_n_tin"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_12" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constrainLayout1"
@@ -571,6 +321,23 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_8"
+        android:layout_marginEnd="@dimen/size_16"
+        android:background="@drawable/bg_border_stroke_light_green_6_20_per"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="@dimen/size_24"
+        android:paddingVertical="@dimen/size_8"
+        android:text="@string/received_order"
+        android:textColor="@color/green_24"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nestedScrollView" />
 
     <LinearLayout
         android:id="@+id/llAction"
