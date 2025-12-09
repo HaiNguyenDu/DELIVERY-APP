@@ -17,6 +17,16 @@ class DeliveryAddressAdapter2(
     private val onMessageClick: (String) -> Unit,
     private val onDeliveredClick: (DeliveryAddressItem) -> Unit
 ) : RecyclerView.Adapter<DeliveryAddressAdapter2.ViewHolder>() {
+    
+    /**
+     * Tìm package đang được giao (package đầu tiên có status PICKED_UP hoặc DELIVERY_IN_PROGRESS)
+     */
+    private fun getCurrentDeliveryPackageIndex(): Int? {
+        return items.indexOfFirst { item ->
+            !item.isPickup && (item.packageStatus == PackageStatus.PICKED_UP || 
+                              item.packageStatus == PackageStatus.DELIVERY_IN_PROGRESS)
+        }.takeIf { it >= 0 }
+    }
 
     class ViewHolder(
         private val binding: ItemDeliveryAddress2Binding
@@ -24,7 +34,9 @@ class DeliveryAddressAdapter2(
 
         fun bind(
             item: DeliveryAddressItem,
+            position: Int,
             orderStatus: OrderStatus?,
+            currentDeliveryIndex: Int?,
             onCallClick: (String) -> Unit,
             onMessageClick: (String) -> Unit,
             onDeliveredClick: (DeliveryAddressItem) -> Unit
@@ -56,7 +68,7 @@ class DeliveryAddressAdapter2(
                 }
                 
                 // Handle tvDelivered visibility and text
-                updateDeliveredButton(item, orderStatus)
+                updateDeliveredButton(item, position, orderStatus, currentDeliveryIndex)
                 
                 tvDelivered.setOnClickListener {
                     onDeliveredClick(item)
@@ -64,7 +76,12 @@ class DeliveryAddressAdapter2(
             }
         }
         
-        private fun updateDeliveredButton(item: DeliveryAddressItem, orderStatus: OrderStatus?) {
+        private fun updateDeliveredButton(
+            item: DeliveryAddressItem, 
+            position: Int,
+            orderStatus: OrderStatus?,
+            currentDeliveryIndex: Int?
+        ) {
             binding.apply {
                 when {
                     item.isPickup -> {
@@ -91,22 +108,29 @@ class DeliveryAddressAdapter2(
                         }
                     }
                     else -> {
-                        // Dropoff address logic
-                        when (item.packageStatus) {
-                            PackageStatus.PICKED_UP -> {
-                                tvDelivered.visibility = View.VISIBLE
-                                tvDelivered.text = "Đến giao hàng"
+                        // Dropoff address logic - chỉ hiển thị cho package đang được giao
+                        val isCurrentDeliveryPackage = currentDeliveryIndex != null && position == currentDeliveryIndex
+                        
+                        if (isCurrentDeliveryPackage) {
+                            when (item.packageStatus) {
+                                PackageStatus.PICKED_UP -> {
+                                    tvDelivered.visibility = View.VISIBLE
+                                    tvDelivered.text = "Đến giao hàng"
+                                }
+                                PackageStatus.DELIVERY_IN_PROGRESS -> {
+                                    tvDelivered.visibility = View.VISIBLE
+                                    tvDelivered.text = "Giao hàng"
+                                }
+                                PackageStatus.DELIVERED -> {
+                                    tvDelivered.visibility = View.GONE
+                                }
+                                else -> {
+                                    tvDelivered.visibility = View.GONE
+                                }
                             }
-                            PackageStatus.DELIVERY_IN_PROGRESS -> {
-                                tvDelivered.visibility = View.VISIBLE
-                                tvDelivered.text = "Giao hàng"
-                            }
-                            PackageStatus.DELIVERED -> {
-                                tvDelivered.visibility = View.GONE
-                            }
-                            else -> {
-                                tvDelivered.visibility = View.GONE
-                            }
+                        } else {
+                            // Không phải package đang được giao -> ẩn button
+                            tvDelivered.visibility = View.GONE
                         }
                     }
                 }
@@ -124,7 +148,16 @@ class DeliveryAddressAdapter2(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position], orderStatus, onCallClick, onMessageClick, onDeliveredClick)
+        val currentDeliveryIndex = getCurrentDeliveryPackageIndex()
+        holder.bind(
+            items[position], 
+            position, 
+            orderStatus, 
+            currentDeliveryIndex,
+            onCallClick, 
+            onMessageClick, 
+            onDeliveredClick
+        )
     }
 
     override fun getItemCount(): Int = items.size

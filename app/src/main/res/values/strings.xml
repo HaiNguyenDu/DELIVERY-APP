@@ -307,4 +307,8 @@
     <string name="h_y_n">Hủy đơn</string>
     <string name="h_nh_ng_n_y_s_nh_h_ng_n_i_m_uy_t_n">Hành động này sẽ ảnh hưởng đến điểm uy tín</string>
     <string name="ch_n_l_do">Chọn lý do</string>
+    <string name="ghi_ch_th_m">Ghi chú thêm</string>
+    <string name="m_t_chi_ti_t_t_nh_hu_ng">Mô tả chi tiết tình huống...</string>
+    <string name="h_yy">Hủy</string>
+    <string name="x_c_nh_n">Xác nhận</string>
 </resources>

@@ -88,6 +88,7 @@ class OrderDetailViewModel(
     private fun createAddressListFromOrderResponse(orderResponse: OrderResponse): List<DeliveryAddressItem> {
         val items = mutableListOf<DeliveryAddressItem>()
 
+        // Add pickup address first
         items.add(
             DeliveryAddressItem(
                 name = orderResponse.pickupAddress.name,
@@ -98,7 +99,26 @@ class OrderDetailViewModel(
             )
         )
 
-        orderResponse.packages.forEach { packageInfo ->
+        // Sort packages by routeIndex from priceAndRoutes
+        val sortedPackages = if (orderResponse.priceAndRoutes.isNotEmpty()) {
+            // Sort priceAndRoutes by routeIndex to get delivery order
+            val sortedRoutes = orderResponse.priceAndRoutes.sortedBy { it.routeIndex }
+            
+            // Match each route with corresponding package by coordinates
+            sortedRoutes.mapNotNull { route ->
+                orderResponse.packages.firstOrNull { packageInfo ->
+                    // Match by coordinates with small tolerance for floating point comparison
+                    kotlin.math.abs(route.latitude - packageInfo.dropoffAddress.latitude) < 0.0001 &&
+                    kotlin.math.abs(route.longitude - packageInfo.dropoffAddress.longitude) < 0.0001
+                }
+            }
+        } else {
+            // Fallback to original order if no priceAndRoutes
+            orderResponse.packages
+        }
+
+        // Add sorted dropoff addresses
+        sortedPackages.forEach { packageInfo ->
             val packageStatus = packageInfo.packageStatus?.let { parsePackageStatus(it) }
             items.add(
                 DeliveryAddressItem(
