@@ -1,8 +1,8 @@
 {
-  "id": "4deded85-48a1-4236-8da7-61c22e49638d",
+  "id": "86ca71dd-802c-4205-b7fa-0a4652726238",
   "totalAmount": 53000,
-  "status": "DRIVER_ASSIGNED",
-  "createdAt": "2025-12-08T20:12:12.341215",
+  "status": "PACKAGE_PICKED",
+  "createdAt": "2025-12-09T00:52:11.949083",
   "scheduledAt": null,
   "pickupAddress": {
     "detail": "Ký túc xá Sinh viên Phía Tây, Hà Văn Tính, Phường Hòa Khánh Nam, Quận Liên Chiểu, Thành phố Đà Nẵng",
@@ -16,31 +16,7 @@
   },
   "packages": [
     {
-      "id": "3028e2e7-f0b8-498d-9d2e-a9d5c72119b5",
-      "weightKg": 1,
-      "packageSize": "S",
-      "deliveryFee": 20000,
-      "codFee": 0,
-      "payerType": "SENDER",
-      "category": "KHAC",
-      "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1765185989/users/_r_t_/file__r_t__1765186015.877862.png",
-      "packageStatus": "WAITING_FOR_PICKUP",
-      "statusNote": null,
-      "statusUpdatedAt": "2025-12-08T20:12:12.341379",
-      "description": null,
-      "dropoffAddress": {
-        "detail": "Đại học Bách Khoa - Đại học Đà Nẵng, 62 Ngô Sĩ Liên, Phường Hòa Khánh Bắc, Quận Liên Chiểu, Thành phố Đà Nẵng",
-        "name": "Bách",
-        "phone": "0796631299",
-        "wardCode": 1,
-        "districtCode": 1,
-        "note": null,
-        "latitude": 16.075466,
-        "longitude": 108.153601
-      }
-    },
-    {
-      "id": "21b575b2-9b29-4077-be4b-4970096103d9",
+      "id": "82edfcbb-14a3-4677-b911-5125036793ab",
       "weightKg": 2,
       "packageSize": "S",
       "deliveryFee": 33000,
@@ -50,7 +26,7 @@
       "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1765186236/users/_r_1i_/file__r_1i__1765186261.011067.jpg",
       "packageStatus": "WAITING_FOR_PICKUP",
       "statusNote": null,
-      "statusUpdatedAt": "2025-12-08T20:12:12.341434",
+      "statusUpdatedAt": "2025-12-09T00:52:11.949418",
       "description": null,
       "dropoffAddress": {
         "detail": "Bưu Cục Bách Khoa, 51, Nguyễn Lương Bằng, Phường. Hoà Khánh, Quận. Liên Chiểu, Tp. Đà Nẵng, Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng",
@@ -61,6 +37,30 @@
         "note": null,
         "latitude": 16.074876,
         "longitude": 108.14946
+      }
+    },
+    {
+      "id": "c75a2d50-dcc4-443a-a08e-ca6fde641f6a",
+      "weightKg": 1,
+      "packageSize": "S",
+      "deliveryFee": 20000,
+      "codFee": 0,
+      "payerType": "SENDER",
+      "category": "KHAC",
+      "imageUrl": "https://res.cloudinary.com/dbsgaqm3e/image/upload/v1765185989/users/_r_t_/file__r_t__1765186015.877862.png",
+      "packageStatus": "PICKED_UP",
+      "statusNote": "string",
+      "statusUpdatedAt": "2025-12-09T00:55:52.3154",
+      "description": null,
+      "dropoffAddress": {
+        "detail": "Đại học Bách Khoa - Đại học Đà Nẵng, 62 Ngô Sĩ Liên, Phường Hòa Khánh Bắc, Quận Liên Chiểu, Thành phố Đà Nẵng",
+        "name": "Bách",
+        "phone": "0796631299",
+        "wardCode": 1,
+        "districtCode": 1,
+        "note": null,
+        "latitude": 16.075466,
+        "longitude": 108.153601
       }
     }
   ],

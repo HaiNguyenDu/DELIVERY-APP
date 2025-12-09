@@ -9,6 +9,8 @@ import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.model.Address
 import com.example.grabapp.model.Order
 import com.example.grabapp.model.OrderState
+import com.example.grabapp.model.OrderStatus
+import com.example.grabapp.model.PackageStatus
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.model.DeliveryAddressItem
@@ -34,11 +36,17 @@ class OrderDetailViewModel(
     private val _orderResponse = MutableStateFlow<OrderResponse?>(null)
     val orderResponse = _orderResponse.asStateFlow()
 
+    private val _orderStatus = MutableStateFlow<OrderStatus?>(null)
+    val orderStatus = _orderStatus.asStateFlow()
+
     private val _positioning = MutableStateFlow<Address?>(null)
     val positioning = _positioning.asStateFlow()
 
     private val _directionResponse = MutableStateFlow<GoongDirectionApiResponse?>(null)
     val directionResponse = _directionResponse.asStateFlow()
+    
+    private val _isDeliveryCompleteEnabled = MutableStateFlow(false)
+    val isDeliveryCompleteEnabled = _isDeliveryCompleteEnabled.asStateFlow()
 
     fun initializeOrder(order: Order) {
         _order.value = order
@@ -54,8 +62,10 @@ class OrderDetailViewModel(
                 when (result) {
                     is OrderRepository.OrderResult.Success -> {
                         _orderResponse.value = result.response
+                        _orderStatus.value = parseOrderStatus(result.response.status)
                         val addressItems = createAddressListFromOrderResponse(result.response)
                         _addressItems.value = addressItems
+                        checkAndUpdateDeliveryCompleteButton()
                     }
                     is OrderRepository.OrderResult.Error -> {
                         _order.value?.let { order ->
@@ -82,21 +92,51 @@ class OrderDetailViewModel(
             DeliveryAddressItem(
                 name = orderResponse.pickupAddress.name,
                 address = orderResponse.pickupAddress.detail,
-                isPickup = true
+                isPickup = true,
+                packageId = null,
+                packageStatus = null
             )
         )
 
         orderResponse.packages.forEach { packageInfo ->
+            val packageStatus = packageInfo.packageStatus?.let { parsePackageStatus(it) }
             items.add(
                 DeliveryAddressItem(
                     name = packageInfo.dropoffAddress.name,
                     address = packageInfo.dropoffAddress.detail,
-                    isPickup = false
+                    isPickup = false,
+                    packageId = packageInfo.id,
+                    packageStatus = packageStatus
                 )
             )
         }
 
         return items
+    }
+    
+    private fun parseOrderStatus(status: String): OrderStatus? {
+        return try {
+            OrderStatus.valueOf(status)
+        } catch (e: IllegalArgumentException) {
+            null
+        }
+    }
+    
+    private fun parsePackageStatus(status: String): PackageStatus? {
+        return try {
+            PackageStatus.valueOf(status)
+        } catch (e: IllegalArgumentException) {
+            null
+        }
+    }
+    
+    private fun checkAndUpdateDeliveryCompleteButton() {
+        val orderResponse = _orderResponse.value ?: return
+        val allDelivered = orderResponse.packages.all { 
+            it.packageStatus == PackageStatus.DELIVERED.name 
+        }
+        _isDeliveryCompleteEnabled.value = allDelivered && 
+            _orderStatus.value != OrderStatus.DELIVERED
     }
 
     private fun createAddressListFromOrder(order: Order): List<DeliveryAddressItem> {
@@ -244,5 +284,153 @@ class OrderDetailViewModel(
                 onError(error)
             }
         )
+    }
+    
+    fun updateOrderStatus(newStatus: OrderStatus, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        val orderId = _orderResponse.value?.id ?: _order.value?.orderId
+        if (orderId == null) {
+            onError("Không tìm thấy order ID")
+            return
+        }
+        
+        viewModelScope.launch {
+            try {
+                showLoading()
+                val result = orderRepository.updateOrderStatus(orderId, newStatus.name)
+                when (result) {
+                    is OrderRepository.OrderResult.Success -> {
+                        _orderResponse.value = result.response
+                        _orderStatus.value = parseOrderStatus(result.response.status)
+                        val addressItems = createAddressListFromOrderResponse(result.response)
+                        _addressItems.value = addressItems
+                        checkAndUpdateDeliveryCompleteButton()
+                        onSuccess()
+                    }
+                    is OrderRepository.OrderResult.Error -> {
+                        onError(result.message)
+                    }
+                }
+            } catch (e: Exception) {
+                onError(e.message ?: "Lỗi không xác định")
+            } finally {
+                hideLoading()
+            }
+        }
+    }
+    
+    fun updatePackageStatus(
+        packageId: String,
+        newStatus: PackageStatus,
+        note: String? = null,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        viewModelScope.launch {
+            try {
+                showLoading()
+                val result = orderRepository.updatePackageStatus(packageId, newStatus.name, note)
+                when (result) {
+                    is OrderRepository.PackageResult.Success -> {
+                        // Reload order details to get updated status
+                        _orderResponse.value?.id?.let { orderId ->
+                            val reloadResult = orderRepository.getOrderById(orderId)
+                            when (reloadResult) {
+                                is OrderRepository.OrderResult.Success -> {
+                                    _orderResponse.value = reloadResult.response
+                                    _orderStatus.value = parseOrderStatus(reloadResult.response.status)
+                                    val addressItems = createAddressListFromOrderResponse(reloadResult.response)
+                                    _addressItems.value = addressItems
+                                    checkAndUpdateDeliveryCompleteButton()
+                                    onSuccess()
+                                }
+                                is OrderRepository.OrderResult.Error -> {
+                                    onError(reloadResult.message)
+                                }
+                            }
+                        } ?: onSuccess()
+                    }
+                    is OrderRepository.PackageResult.Error -> {
+                        onError(result.message)
+                    }
+                }
+            } catch (e: Exception) {
+                onError(e.message ?: "Lỗi không xác định")
+            } finally {
+                hideLoading()
+            }
+        }
+    }
+    
+    fun handlePickupAddressClick() {
+        val currentStatus = _orderStatus.value
+        when (currentStatus) {
+            OrderStatus.DRIVER_ASSIGNED -> {
+                updateOrderStatus(OrderStatus.DRIVER_EN_ROUTE_PICKUP, {
+                    val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+                    _addressItems.value = addressItems
+                }, {})
+            }
+            OrderStatus.DRIVER_EN_ROUTE_PICKUP -> {
+                updateOrderStatus(OrderStatus.ARRIVED_PICKUP, {
+                    val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+                    _addressItems.value = addressItems
+                }, {})
+            }
+            OrderStatus.ARRIVED_PICKUP -> {
+                updateOrderStatus(OrderStatus.PACKAGE_PICKED, {
+                    val packages = _orderResponse.value?.packages ?: emptyList()
+                    if (packages.isNotEmpty()) {
+                        var completedCount = 0
+                        packages.forEach { packageInfo ->
+                            updatePackageStatus(
+                                packageInfo.id,
+                                PackageStatus.PICKED_UP,
+                                null,
+                                {
+                                    completedCount++
+                                    if (completedCount == packages.size) {
+                                        val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+                                        _addressItems.value = addressItems
+                                    }
+                                },
+                                {}
+                            )
+                        }
+                    }
+                }, {})
+            }
+            else -> {}
+        }
+    }
+    
+    fun handleDropoffAddressClick(packageId: String, currentPackageStatus: PackageStatus?) {
+        when (currentPackageStatus) {
+            PackageStatus.PICKED_UP -> {
+                if (_orderStatus.value != OrderStatus.EN_ROUTE_DELIVERY) {
+                    updateOrderStatus(OrderStatus.EN_ROUTE_DELIVERY, {
+                        updatePackageStatus(packageId, PackageStatus.DELIVERY_IN_PROGRESS, null, {
+                            val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+                            _addressItems.value = addressItems
+                        }, {})
+                    }, {})
+                } else {
+                    updatePackageStatus(packageId, PackageStatus.DELIVERY_IN_PROGRESS, null, {
+                        val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+                        _addressItems.value = addressItems
+                    }, {})
+                }
+            }
+            PackageStatus.DELIVERY_IN_PROGRESS -> {
+                updatePackageStatus(packageId, PackageStatus.DELIVERED, null, {
+                    val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+                    _addressItems.value = addressItems
+                    checkAndUpdateDeliveryCompleteButton()
+                }, {})
+            }
+            else -> {}
+        }
+    }
+    
+    fun handleDeliveryComplete() {
     }
 }

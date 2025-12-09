@@ -1,7 +1,7 @@
 package com.example.grabapp.model
 
 enum class OrderStatus(
-    private val statuName: String
+    val statusName: String
 ) {
     // Driver assignment – Giai đoạn tìm tài xế
     FINDING_DRIVER("Đang tìm tài xế"),

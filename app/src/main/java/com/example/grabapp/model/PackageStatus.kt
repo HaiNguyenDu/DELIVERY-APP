@@ -1,7 +1,7 @@
 package com.example.grabapp.model
 
 enum class PackageStatus(
-    private val statuName: String
+    val statusName: String
 ) {
     WAITING_FOR_PICKUP("Chờ lấy đơn"),
     PICKED_UP("Đã lấy thành công"),

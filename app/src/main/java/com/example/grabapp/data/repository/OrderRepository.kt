@@ -8,6 +8,9 @@ import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.model.AssignShipperRequest
 import com.example.grabapp.data.model.OrderListResponse
 import com.example.grabapp.data.model.OrderResponse
+import com.example.grabapp.data.model.PackageInfo
+import com.example.grabapp.data.model.UpdateOrderStatusRequest
+import com.example.grabapp.data.model.UpdatePackageStatusRequest
 import com.example.grabapp.data.order.OrderApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -54,6 +57,11 @@ class OrderRepository(private val context: Context) {
     sealed class OrderResult {
         data class Success(val response: OrderResponse) : OrderResult()
         data class Error(val code: Int?, val message: String) : OrderResult()
+    }
+    
+    sealed class PackageResult {
+        data class Success(val response: PackageInfo) : PackageResult()
+        data class Error(val code: Int?, val message: String) : PackageResult()
     }
 
     suspend fun getOrders(role: String, userId: String): OrderListResult {
@@ -144,6 +152,68 @@ class OrderRepository(private val context: Context) {
             OrderResult.Error(e.code(), e.message ?: "Server error")
         } catch (e: Exception) {
             OrderResult.Error(null, e.message ?: "Unexpected error")
+        }
+    }
+    
+    suspend fun updateOrderStatus(orderId: String, newStatus: String): OrderResult {
+        return try {
+            val request = UpdateOrderStatusRequest(newStatus)
+            val resp = api.updateOrderStatus(orderId, request)
+            if (resp.isSuccessful) {
+                val body = resp.body()
+                if (body != null) {
+                    OrderResult.Success(body)
+                } else {
+                    OrderResult.Error(resp.code(), "Empty response from server")
+                }
+            } else {
+                val errorMes = try {
+                    resp.errorBody()?.string()
+                } catch (e: Exception) {
+                    null
+                }
+                OrderResult.Error(resp.code(), errorMes ?: "HTTP ${resp.code()}")
+            }
+        } catch (e: IOException) {
+            OrderResult.Error(
+                null,
+                "Network error: ${e.localizedMessage ?: "Please check your connection"}"
+            )
+        } catch (e: HttpException) {
+            OrderResult.Error(e.code(), e.message ?: "Server error")
+        } catch (e: Exception) {
+            OrderResult.Error(null, e.message ?: "Unexpected error")
+        }
+    }
+    
+    suspend fun updatePackageStatus(packageId: String, status: String, note: String? = null): PackageResult {
+        return try {
+            val request = UpdatePackageStatusRequest(status, note)
+            val resp = api.updatePackageStatus(packageId, request)
+            if (resp.isSuccessful) {
+                val body = resp.body()
+                if (body != null) {
+                    PackageResult.Success(body)
+                } else {
+                    PackageResult.Error(resp.code(), "Empty response from server")
+                }
+            } else {
+                val errorMes = try {
+                    resp.errorBody()?.string()
+                } catch (e: Exception) {
+                    null
+                }
+                PackageResult.Error(resp.code(), errorMes ?: "HTTP ${resp.code()}")
+            }
+        } catch (e: IOException) {
+            PackageResult.Error(
+                null,
+                "Network error: ${e.localizedMessage ?: "Please check your connection"}"
+            )
+        } catch (e: HttpException) {
+            PackageResult.Error(e.code(), e.message ?: "Server error")
+        } catch (e: Exception) {
+            PackageResult.Error(null, e.message ?: "Unexpected error")
         }
     }
 }

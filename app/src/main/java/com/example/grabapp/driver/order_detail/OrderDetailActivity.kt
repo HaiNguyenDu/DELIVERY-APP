@@ -5,31 +5,32 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Parcelable
+import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
 import androidx.core.graphics.scale
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
-import com.example.grabapp.driver.base.BaseDriverActivity
+import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.ActivityDetailOrderBinding
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.model.Address
-import com.example.grabapp.model.Order
-import android.os.Parcelable
-import android.view.MotionEvent
-import com.example.grabapp.base.BaseActivity
-import com.example.grabapp.model.OrderState
-import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.model.DeliveryAddressItem
-import kotlinx.coroutines.launch
+import com.example.grabapp.model.Order
+import com.example.grabapp.model.OrderState
+import com.example.grabapp.model.OrderStatus
 import com.example.grabapp.respone.GoongDirectionApiResponse
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.maplibre.android.annotations.IconFactory
 import org.maplibre.android.annotations.Marker
 import org.maplibre.android.annotations.MarkerOptions
@@ -51,6 +52,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     private var startMarker: Marker? = null
     private var endMarker: Marker? = null
     private var routePolyline: Polyline? = null
+    private var autoUpdateJob: kotlinx.coroutines.Job? = null
 
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -80,6 +82,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         setupToolbar()
         observeViewModel()
         requestLocationPermission()
+        setupAutoUpdate()
     }
 
     private fun observeViewModel() {
@@ -95,6 +98,16 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
                 launch {
                     viewModel.addressItems.collect { items ->
+                        if (items.isNotEmpty()) {
+                            setupRecyclerView(items)
+                        }
+                    }
+                }
+                
+                launch {
+                    viewModel.orderStatus.collect { status ->
+                        // Update adapter when status changes
+                        val items = viewModel.addressItems.value
                         if (items.isNotEmpty()) {
                             setupRecyclerView(items)
                         }
@@ -116,8 +129,47 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                         }
                     }
                 }
+                
+                launch {
+                    viewModel.orderStatus.collect { status ->
+                        status?.let {
+                            updateOrderStatusDisplay(it)
+                        }
+                    }
+                }
+                
+                launch {
+                    viewModel.isDeliveryCompleteEnabled.collect { enabled ->
+                        binding.tvDeliveryComplete.isEnabled = enabled
+                        binding.tvDeliveryComplete.alpha = if (enabled) 1.0f else 0.5f
+                    }
+                }
             }
         }
+    }
+    
+    private fun setupAutoUpdate() {
+        autoUpdateJob = lifecycleScope.launch {
+            delay(10000) // 10 seconds
+            val orderStatus = viewModel.orderStatus.value
+            if (orderStatus == OrderStatus.DRIVER_ASSIGNED) {
+                // Auto update to DRIVER_EN_ROUTE_PICKUP if user hasn't clicked
+                viewModel.updateOrderStatus(
+                    OrderStatus.DRIVER_EN_ROUTE_PICKUP,
+                    onSuccess = {
+                        val addressItems = viewModel.addressItems.value
+                        if (addressItems.isNotEmpty()) {
+                            setupRecyclerView(addressItems)
+                        }
+                    },
+                    onError = {}
+                )
+            }
+        }
+    }
+    
+    private fun updateOrderStatusDisplay(status: OrderStatus) {
+        binding.tvStatus.text = status.statusName
     }
 
     private fun requestLocationPermission() {
@@ -180,7 +232,25 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     @SuppressLint("ClickableViewAccessibility")
     private fun setupClickListeners() {
         binding.tvDeliveryComplete.onClickWithScale {
-            viewModel.moveToNextState()
+            if (binding.tvDeliveryComplete.isEnabled) {
+                viewModel.updateOrderStatus(
+                    OrderStatus.DELIVERED,
+                    onSuccess = {
+                        Toast.makeText(
+                            this,
+                            "Bạn đã giao hàng thành công",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
+                    onError = { error ->
+                        Toast.makeText(
+                            this,
+                            "Lỗi: $error",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
+            }
         }
         binding.ivLocatedFixed.onClickWithScale {
             moveCameraToStartPosition()
@@ -239,13 +309,27 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             rvDeliveryAddress.layoutManager = LinearLayoutManager(this@OrderDetailActivity)
             rvDeliveryAddress.adapter = DeliveryAddressAdapter2(
                 items = items,
+                orderStatus = viewModel.orderStatus.value,
                 onCallClick = { name ->
                     // TODO: Implement call functionality
                 },
                 onMessageClick = { name ->
                     // TODO: Implement message functionality
+                },
+                onDeliveredClick = { item ->
+                    handleDeliveredClick(item)
                 }
             )
+        }
+    }
+    
+    private fun handleDeliveredClick(item: DeliveryAddressItem) {
+        if (item.isPickup) {
+            viewModel.handlePickupAddressClick()
+        } else {
+            item.packageId?.let { packageId ->
+                viewModel.handleDropoffAddressClick(packageId, item.packageStatus)
+            }
         }
     }
 
@@ -472,6 +556,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     }
 
     override fun onDestroy() {
+        autoUpdateJob?.cancel()
         binding.mapView.onDestroy()
         super.onDestroy()
     }

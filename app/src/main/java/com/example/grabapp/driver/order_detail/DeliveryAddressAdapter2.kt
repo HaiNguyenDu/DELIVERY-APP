@@ -1,16 +1,21 @@
 package com.example.grabapp.driver.order_detail
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabapp.R
 import com.example.grabapp.databinding.ItemDeliveryAddress2Binding
 import com.example.grabapp.model.DeliveryAddressItem
+import com.example.grabapp.model.OrderStatus
+import com.example.grabapp.model.PackageStatus
 
 class DeliveryAddressAdapter2(
     private val items: List<DeliveryAddressItem>,
+    private val orderStatus: OrderStatus?,
     private val onCallClick: (String) -> Unit,
-    private val onMessageClick: (String) -> Unit
+    private val onMessageClick: (String) -> Unit,
+    private val onDeliveredClick: (DeliveryAddressItem) -> Unit
 ) : RecyclerView.Adapter<DeliveryAddressAdapter2.ViewHolder>() {
 
     class ViewHolder(
@@ -19,8 +24,10 @@ class DeliveryAddressAdapter2(
 
         fun bind(
             item: DeliveryAddressItem,
+            orderStatus: OrderStatus?,
             onCallClick: (String) -> Unit,
-            onMessageClick: (String) -> Unit
+            onMessageClick: (String) -> Unit,
+            onDeliveredClick: (DeliveryAddressItem) -> Unit
         ) {
             binding.apply {
                 tvDeliveryType.text = if (item.isPickup) {
@@ -47,6 +54,62 @@ class DeliveryAddressAdapter2(
                 llMess.setOnClickListener {
                     onMessageClick(item.name)
                 }
+                
+                // Handle tvDelivered visibility and text
+                updateDeliveredButton(item, orderStatus)
+                
+                tvDelivered.setOnClickListener {
+                    onDeliveredClick(item)
+                }
+            }
+        }
+        
+        private fun updateDeliveredButton(item: DeliveryAddressItem, orderStatus: OrderStatus?) {
+            binding.apply {
+                when {
+                    item.isPickup -> {
+                        // Pickup address logic
+                        when (orderStatus) {
+                            OrderStatus.DRIVER_ASSIGNED -> {
+                                tvDelivered.visibility = View.VISIBLE
+                                tvDelivered.text = "Đến lấy đơn"
+                            }
+                            OrderStatus.DRIVER_EN_ROUTE_PICKUP -> {
+                                tvDelivered.visibility = View.VISIBLE
+                                tvDelivered.text = "Đã đến điểm lấy"
+                            }
+                            OrderStatus.ARRIVED_PICKUP -> {
+                                tvDelivered.visibility = View.VISIBLE
+                                tvDelivered.text = OrderStatus.PACKAGE_PICKED.statusName
+                            }
+                            OrderStatus.PACKAGE_PICKED -> {
+                                tvDelivered.visibility = View.GONE
+                            }
+                            else -> {
+                                tvDelivered.visibility = View.GONE
+                            }
+                        }
+                    }
+                    else -> {
+                        // Dropoff address logic
+                        when (item.packageStatus) {
+                            PackageStatus.PICKED_UP -> {
+                                tvDelivered.visibility = View.VISIBLE
+                                tvDelivered.text = "Đến giao hàng"
+                            }
+                            PackageStatus.DELIVERY_IN_PROGRESS -> {
+                                tvDelivered.visibility = View.VISIBLE
+                                tvDelivered.text = "Giao hàng"
+                            }
+                            PackageStatus.DELIVERED -> {
+                                tvDelivered.visibility = View.GONE
+                            }
+                            else -> {
+                                tvDelivered.visibility = View.GONE
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -61,7 +124,7 @@ class DeliveryAddressAdapter2(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position], onCallClick, onMessageClick)
+        holder.bind(items[position], orderStatus, onCallClick, onMessageClick, onDeliveredClick)
     }
 
     override fun getItemCount(): Int = items.size

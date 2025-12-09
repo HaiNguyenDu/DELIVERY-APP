@@ -82,6 +82,12 @@ data class PackageInfo(
     val imageUrl: String?,
     @SerializedName("description")
     val description: String?,
+    @SerializedName("packageStatus")
+    val packageStatus: String?,
+    @SerializedName("statusNote")
+    val statusNote: String?,
+    @SerializedName("statusUpdatedAt")
+    val statusUpdatedAt: String?,
     @SerializedName("dropoffAddress")
     val dropoffAddress: AddressInfo
 )
