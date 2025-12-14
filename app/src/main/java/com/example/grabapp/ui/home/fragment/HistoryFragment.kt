@@ -8,10 +8,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentHistoryBinding
-import com.example.grabapp.domain.enum.OrderStatus
 import com.example.grabapp.ui.home.MainViewModel
 import com.example.grabapp.ui.home.adapter.HistoryAdapter
 import com.example.grabapp.ui.order.OrderDetailDialog
+import com.example.grabapp.ui.order.OrderPlacedDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding, MainViewModel>() {
@@ -64,9 +65,16 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, MainViewModel>() {
 
     private fun initView() {
         historyAdapter = HistoryAdapter(emptyList()) { order ->
-            when (order.status) {
-                OrderStatus.FINDING_DRIVER -> {
-                    OrderDetailDialog().setPosition(order.id).show(childFragmentManager, "ll")
+            when {
+                !order.status.isTerminal() -> {
+                    val existingFragment = childFragmentManager.findFragmentByTag("placed")
+
+                    if (existingFragment == null) {
+                        OrderPlacedDialog.getInstance(order.id).show(childFragmentManager, "placed")
+                    } else {
+                        (existingFragment as? BottomSheetDialogFragment)?.dismissAllowingStateLoss()
+                        OrderPlacedDialog.getInstance(order.id).show(childFragmentManager, "placed")
+                    }
                 }
 
                 else -> {

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.grabapp.data.model.order.OrderItem
 import com.example.grabapp.databinding.ItemHistoryBinding
 import com.example.grabapp.extention.formatToVietNamTime
+import com.example.grabapp.extention.toMoneyFormat
 
 class HistoryAdapter(
     private var listOrderItem: List<OrderItem>,
@@ -37,7 +38,7 @@ class HistoryAdapter(
             val orderItem = listOrderItem[position]
             binding.apply {
                 tvAddress.text = orderItem.pickupAddress.detail
-                tvCost.text = orderItem.totalAmount.toInt().toString() + ".000₫"
+                tvCost.text = orderItem.totalAmount.toMoneyFormat()+"₫"
                 tvDate.text = orderItem.createdAt.formatToVietNamTime()
             }
             binding.root.setOnClickListener {

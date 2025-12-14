@@ -60,7 +60,7 @@ class MainOrderFragment : BaseFragment<FragmentMainOrderBinding, AddressSelectio
         lifecycleScope.launch {
             viewModel.orderForm.collect {
                 binding.tvPickUpLocation.text = it.pickupAddress.detail
-                val text = viewModel.getCurrentPackageInfo().dropOffAddress.detail
+                val text = it.listPackageInfo[0].dropOffAddress.detail
                 if (text.isEmpty()) {
                     binding.tvDropOffLocation.text = getString(R.string.giao_den_dau)
                     binding.tvDropOffLocation.setTextColor(resources.getColor(R.color.grey))

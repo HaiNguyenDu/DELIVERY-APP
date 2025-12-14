@@ -1,7 +1,9 @@
 package com.example.grabapp.data.model.order
 
-import com.example.grabapp.domain.enum.OrderStatus
+import OrderStatus
+import com.example.grabapp.domain.enum.PackageStatus
 import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 data class OrderItem(
     @SerializedName("id") val id: String,
@@ -23,4 +25,5 @@ data class OrderItemResponse(
     @SerializedName("pickupAddress") val pickupAddress: AddressInfo,
     @SerializedName("packages") val packages: List<PackageItemResponse>,
     @SerializedName("shipperId") val shipperId: String?,
+    @SerializedName("priceAndRoutes") val priceAndRoutes: List<PriceRouteItem>?
 )

@@ -42,6 +42,7 @@ class AddressSelectionActivity :
         viewPageAdapter = AddressSelectionPageAdapter(this)
         binding.viewPage2.adapter = viewPageAdapter
         binding.viewPage2.isUserInputEnabled = false
+        binding.viewPage2.offscreenPageLimit = 1
         viewModel.getCurrentLocation()
         onBackPressedDispatcher.addCallback {
             val index = binding.viewPage2.currentItem

@@ -158,6 +158,8 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
             listPackageInfo = listOf(PackageItemModel())
         )
         selectPackagePosition = 0
+        _lastFocusEdt = EditTextEnum.NOT_THING
+        _edtLastTextEnumClicked = EditTextEnum.NOT_THING
     }
 
     fun getCurrentPackageInfo(): PackageItemModel {
