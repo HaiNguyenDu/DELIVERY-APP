@@ -2,10 +2,10 @@ package com.example.grabapp.ui.address_selection.fragment
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.graphics.Insets
 import androidx.core.graphics.scale
 import androidx.core.view.isVisible
@@ -35,36 +35,30 @@ class CheckDirectionFragment :
 
     private var mapLibreMap: MapLibreMap? = null
 
-    override fun getLazyBinding(): Lazy<FragmentCheckDirectionBinding> = lazy {
+    override fun getLazyBinding() = lazy {
         FragmentCheckDirectionBinding.inflate(LayoutInflater.from(context))
     }
 
-    override fun getLazyViewModel(): Lazy<AddressSelectionViewModel> = lazy {
+    override fun getLazyViewModel() = lazy {
         ViewModelProvider(requireActivity())[AddressSelectionViewModel::class.java]
     }
 
     override fun setUpClick() {
         binding.btnBack.setOnClickListener {
             viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_DETAIL_ORDER)
-
         }
+
         binding.btnNext.setOnClickListener {
             viewModel.createOrder({
-                SnackBarCustom(
-                    view = binding.root,
-                    message = getString(R.string.create_order_success),
-                    backgroundColor = context?.getColor(R.color.white)!!,
-                    textColor = context?.getColor(R.color.green)!!,
-                    bottomMarginDp = 100f,
-                ).show()
-                Log.d("oderId",it)
+                Toast.makeText(requireContext(), "Tạo đơn hàng thành công", Toast.LENGTH_SHORT)
+                    .show()
                 CurrentOrder.setOrderId(it)
             }) {
                 SnackBarCustom(
                     view = binding.root,
                     message = getString(R.string.create_order_fail),
-                    backgroundColor = context?.getColor(R.color.white)!!,
-                    textColor = context?.getColor(R.color.green)!!,
+                    backgroundColor = requireContext().getColor(R.color.white),
+                    textColor = requireContext().getColor(R.color.green),
                     bottomMarginDp = 100f,
                 ).show()
             }
@@ -73,129 +67,141 @@ class CheckDirectionFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpMap()
+        initMap()
         observerData()
     }
 
     override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
         binding.root.setPadding(0)
-        binding.btnBack.layoutParams.let {
-            if (it is ViewGroup.MarginLayoutParams)
-                it.topMargin = inset.top
-        }
-        binding.btnNext.layoutParams.let {
-            if (it is ViewGroup.MarginLayoutParams)
-                it.bottomMargin =
-                    requireContext().resources.getDimension(R.dimen.size_20).toInt() + inset.bottom
-        }
+        (binding.btnBack.layoutParams as? ViewGroup.MarginLayoutParams)?.topMargin = inset.top
+        (binding.btnNext.layoutParams as? ViewGroup.MarginLayoutParams)?.bottomMargin =
+            resources.getDimension(R.dimen.size_20).toInt() + inset.bottom
     }
 
     private fun observerData() {
         lifecycleScope.launch {
-            viewModel.isLoading.collect {
-                binding.lottie.isVisible = it
-            }
+            viewModel.isLoading.collect { binding.lottie.isVisible = it }
         }
     }
 
-    private fun setUpMap() {
+    private fun initMap() {
         binding.mapView.getMapAsync { map ->
             mapLibreMap = map
-
-            map.setStyle(
-                "https://tiles.goong.io/assets/goong_map_web.json?api_key=${AddressRepository.MAP_KEY}"
-            ) {
-                val iconFactory = IconFactory.getInstance(requireContext())
-                val pickUp = viewModel.orderForm.value.pickupAddress
-
-                val startBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_map)
-                    .scale(80, 80, false)
-                val startIcon = iconFactory.fromBitmap(startBitmap)
-
-                lifecycleScope.launch {
-                    viewModel.directionResponses.collect { responses ->
-                        map.markers?.let {
-                            map.markers.forEach {
-                                it.remove()
-                            }
-                            map.polylines.forEach { map.removePolyline(it) }
-
-                        }
-
-
-                        val startLatLng = LatLng(pickUp.latitude, pickUp.longitude)
-                        map.addMarker(
-                            MarkerOptions().position(startLatLng).icon(startIcon).title("Điểm đi")
-                        )
-                        val listRoute = viewModel.getListRoute()
-                        val boundsBuilder = LatLngBounds.Builder()
-                        boundsBuilder.include(startLatLng)
-                        listRoute.forEach { item ->
-                            val latLng = LatLng(item.latitude, item.longitude)
-                            map.addMarker(
-                                MarkerOptions().position(latLng).icon(startIcon).title("Điểm đến")
-                            )
-                            boundsBuilder.include(latLng)
-                        }
-                        map.animateCamera(
-                            CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 300)
-                        )
-                        Log.d("DEBUG_ROUTE", "Response route count = ${responses?.size}")
-                        responses?.forEach { routeResponse ->
-                            drawRoute(map, routeResponse)
-                        }
-                    }
-                }
+            map.setStyle("https://tiles.goong.io/assets/goong_map_web.json?api_key=${AddressRepository.MAP_KEY}") {
+                observeDirection(map)
             }
         }
     }
 
+    private fun observeDirection(map: MapLibreMap) {
+        val iconFactory = IconFactory.getInstance(requireContext())
+        val pickUp = viewModel.orderForm.value.pickupAddress
+        val startIcon = BitmapFactory.decodeResource(resources, R.drawable.ic_map)
+            .scale(80, 80, false)
+            .let { iconFactory.fromBitmap(it) }
+
+        lifecycleScope.launch {
+            viewModel.directionResponses.collect { responses ->
+
+                map.clearAll()
+
+                val startLatLng = LatLng(pickUp.latitude, pickUp.longitude)
+                map.addMarker(MarkerOptions().position(startLatLng).icon(startIcon))
+
+                val boundsBuilder = LatLngBounds.Builder().include(startLatLng)
+                val listRoute = viewModel.getListRoute()
+                binding.layoutText.isVisible = listRoute.size != 1
+                binding.tvTurn.text = listRoute.joinToString(" -> ") { "Đơn số ${it.packageIndex}" }
+
+                listRoute.forEach { item ->
+                    val latLng = LatLng(item.latitude, item.longitude)
+                    val numberIcon =
+                        iconFactory.fromBitmap(getMarkerBitmap(item.packageIndex.toString()))
+                    map.addMarker(MarkerOptions().position(latLng).icon(numberIcon))
+                    boundsBuilder.include(latLng)
+                }
+
+                if (listRoute.isNotEmpty()) {
+                    map.animateCamera(
+                        CameraUpdateFactory.newLatLngBounds(
+                            boundsBuilder.build(),
+                            300
+                        )
+                    )
+                }
+
+                responses?.forEach { drawRoute(map, it) }
+            }
+        }
+    }
+
+    private fun MapLibreMap.clearAll() {
+        markers.toList().forEach { it.remove() }
+        polylines.toList().forEach { removePolyline(it) }
+    }
 
     private fun drawRoute(map: MapLibreMap, response: GoongDirectionApiResponse) {
-        val route = response.routes?.firstOrNull() ?: return
-        val encodedPolyline = route.overview_polyline?.points ?: return
+        val encoded = response.routes?.firstOrNull()?.overview_polyline?.points ?: return
+        val decoded = decodePolyline(encoded)
 
-        val decodedPath = decodePolyline(encodedPolyline)
+        map.addPolyline(
+            PolylineOptions()
+                .addAll(decoded)
+                .width(6f)
+                .color(requireContext().getColor(R.color.main_blue))
+        )
+    }
 
-        val lineOptions = PolylineOptions()
-            .addAll(decodedPath)
-            .width(6f)
-            .color(requireActivity().getColor(R.color.main_blue))
+    private fun getMarkerBitmap(number: String): android.graphics.Bitmap {
+        val view = layoutInflater.inflate(R.layout.layout_marker_number, null)
+        view.findViewById<android.widget.TextView>(R.id.tv_index).text = number
 
-        map.addPolyline(lineOptions)
+        val size = resources.getDimension(R.dimen.size_40).toInt()
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(size, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(size, View.MeasureSpec.EXACTLY)
+        )
+        view.layout(0, 0, size, size)
+
+        return android.graphics.Bitmap.createBitmap(
+            size,
+            size,
+            android.graphics.Bitmap.Config.ARGB_8888
+        )
+            .also { view.draw(android.graphics.Canvas(it)) }
     }
 
     private fun decodePolyline(encoded: String): List<LatLng> {
         val poly = ArrayList<LatLng>()
         var index = 0
-        val len = encoded.length
         var lat = 0
         var lng = 0
 
-        while (index < len) {
-            var b: Int
+        while (index < encoded.length) {
             var shift = 0
             var result = 0
+            var b: Int
+
             do {
                 b = encoded[index++].code - 63
                 result = result or ((b and 0x1f) shl shift)
                 shift += 5
             } while (b >= 0x20)
-            val dlat = if ((result and 1) != 0) (result shr 1).inv() else (result shr 1)
-            lat += dlat
+
+            lat += if (result and 1 != 0) (result shr 1).inv() else (result shr 1)
 
             shift = 0
             result = 0
+
             do {
                 b = encoded[index++].code - 63
                 result = result or ((b and 0x1f) shl shift)
                 shift += 5
             } while (b >= 0x20)
-            val dlng = if ((result and 1) != 0) (result shr 1).inv() else (result shr 1)
-            lng += dlng
 
-            val latLng = LatLng(lat.toDouble() / 1E5, lng.toDouble() / 1E5)
-            poly.add(latLng)
+            lng += if (result and 1 != 0) (result shr 1).inv() else (result shr 1)
+
+            poly.add(LatLng(lat / 1E5, lng / 1E5))
         }
 
         return poly

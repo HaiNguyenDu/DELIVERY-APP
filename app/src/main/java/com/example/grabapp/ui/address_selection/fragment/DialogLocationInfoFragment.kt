@@ -12,7 +12,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
-import com.example.grabapp.data.model.order.AddressInfo
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.databinding.FragmentDropOffInfoBinding
 import com.example.grabapp.domain.enum.EditTextEnum
@@ -54,17 +53,15 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
         initObserver()
     }
 
-    private fun initObserver(){
+    private fun initObserver() {
         lifecycleScope.launch {
             viewModel.orderForm.collect {
                 val currentPackage = viewModel.getCurrentPackageInfo()
-                val text = if(viewModel.getLastFocusEdt()==EditTextEnum.DROP_OFF)
+                val text = if (viewModel.getLastFocusEdt() == EditTextEnum.DROP_OFF)
                     currentPackage.dropOffAddress.detail
-                else if(viewModel.getLastFocusEdt()==EditTextEnum.PICK_UP)
-                {
+                else if (viewModel.getLastFocusEdt() == EditTextEnum.PICK_UP) {
                     it.pickupAddress.detail
-                }
-                else ""
+                } else ""
                 binding.edtAddress.setText(text)
                 binding.edtName.setText(currentPackage.dropOffAddress.name)
                 binding.edtPhone.setText(currentPackage.dropOffAddress.phone)
@@ -73,6 +70,7 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
     private fun setupUI() = with(binding) {
         title.text = when (viewModel.getLastFocusEdt()) {
             EditTextEnum.DROP_OFF -> "Thông tin điểm giao hàng"
@@ -80,6 +78,8 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
             else -> ""
         }
 
+        edtAddress.isFocusable = false
+        edtAddress.isFocusableInTouchMode = false
         edtAddress.setOnClickListener {
             DialogAddressSelectionFragment().show(
                 parentFragmentManager, "ChangeAddress"
@@ -93,19 +93,18 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
 
         btnConfirm.setOnClickListener {
             val currentPackage = viewModel.getCurrentPackageInfo()
-            if(isHashInfo())
-            {
+            if (isHashInfo()) {
 
                 val newPackage = currentPackage.copy(
                     dropOffAddress = currentPackage.dropOffAddress.copy(
                         name = edtName.text.toString(),
                         phone = edtPhone.text.toString(),
-                        detail = edtDetailAddress.text.toString() + currentPackage.dropOffAddress.detail
-                    ),
-                    description = edtNote.text.toString()
+                        detail = edtDetailAddress.text.toString()+"," + currentPackage.dropOffAddress.detail,
+                        note = edtNote.text.toString()
+                    )
                 )
                 viewModel.updatePackageInfo(newPackage)
-                Log.d("test",newPackage.dropOffAddress.detail)
+                Log.d("test", newPackage.dropOffAddress.detail)
                 dismiss()
             } else {
                 SnackBarCustom(
@@ -119,16 +118,15 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
         }
     }
 
-    fun isHashInfo(): Boolean{
+    fun isHashInfo(): Boolean {
         var data = false
         binding.apply {
-            data = edtNote.text.isNotEmpty() &&
-            edtPhone.text.isNotEmpty() &&
-            edtName.text.isNotEmpty() &&
-            edtDetailAddress.text.isNotEmpty()
+            data = edtPhone.text.isNotEmpty() &&
+                    edtName.text.isNotEmpty()
         }
         return data
     }
+
     private fun setupMap() {
         val address = when (viewModel.getLastFocusEdt()) {
             EditTextEnum.DROP_OFF -> viewModel.getCurrentPackageInfo().dropOffAddress
@@ -181,7 +179,12 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
                         else
                             showMapSmooth()
                         val bottom = maxOf(systemInsets.bottom, imeInsets.bottom)
-                        binding.layoutInfo.setPadding(0, 0, 0, bottom+resources.getDimensionPixelSize(R.dimen.size_20))
+                        binding.layoutInfo.setPadding(
+                            0,
+                            0,
+                            0,
+                            bottom + resources.getDimensionPixelSize(R.dimen.size_20)
+                        )
                     }
                     insets
                 }
@@ -252,6 +255,7 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
     override fun onResume() = super.onResume().also {
         binding.mapView.onResume()
     }
+
     override fun onPause() = super.onPause().also { binding.mapView.onPause() }
     override fun onStop() = super.onStop().also { binding.mapView.onStop() }
     override fun onLowMemory() = super.onLowMemory().also { binding.mapView.onLowMemory() }

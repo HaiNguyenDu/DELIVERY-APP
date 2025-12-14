@@ -3,7 +3,7 @@ package com.example.grabapp.ui.login
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabapp.data.model.order.PackageItemResponse
-import com.example.grabapp.databinding.ItemDetailOrderBinding
+import com.example.grabapp.databinding.ItemOderMainScreenBinding
 
 class DetailOrderItemHistoryAdapter(
     var listOrder: List<PackageItemResponse>
@@ -15,7 +15,7 @@ class DetailOrderItemHistoryAdapter(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val binding = ItemDetailOrderBinding.inflate(
+        val binding = ItemOderMainScreenBinding.inflate(
             android.view.LayoutInflater.from(parent.context),
             parent,
             false
@@ -45,7 +45,7 @@ class DetailOrderItemHistoryAdapter(
         return listOrder.size
     }
 
-    inner class ViewHolder(val binding: ItemDetailOrderBinding) :
+    inner class ViewHolder(val binding: ItemOderMainScreenBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onHolder(packageItem: PackageItemResponse) {
             binding.apply {
@@ -57,6 +57,10 @@ class DetailOrderItemHistoryAdapter(
                     tvDrPhone.text = packageItem.dropoffAddress.phone
                 if (packageItem.weightKg != 0.0)
                     tvDetailPackage.text = packageItem.toString()
+                if(packageItem.packageStatus!=null){
+                    layoutPackageStatus.visibility = ViewGroup.VISIBLE
+                    tvPackageStatus.text = packageItem.packageStatus.label
+                }
                 tvDrAddress.setOnClickListener {
                     listener?.onAddressClick(adapterPosition)
                 }

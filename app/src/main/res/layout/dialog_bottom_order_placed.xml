@@ -1,179 +1,462 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:padding="16dp">
+    android:background="@color/white">
 
     <ImageView
-        android:id="@+id/iv_chevron_down"
+        android:id="@+id/btn_back"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/ic_back"
-        app:tint="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/size_16"
+        app:tint="#000000"
         tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/tv_tag_saver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/bg_button_green_medium_corner"
-        android:text="Đang Giao Hàng"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_chevron_down" />
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/btn_back"
+        android:layout_marginTop="@dimen/size_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/tv_time_range"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="23:25 - 23:35"
-        android:textColor="#000000"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_tag_saver" />
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tv_status_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:text="Đang tìm tài xế"
-        android:textSize="15sp"
-        android:textColor="#555555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_illustration"
-        app:layout_constraintTop_toBottomOf="@id/tv_time_range" />
+            <TextView
+                android:id="@+id/tv_tag_saver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_button_green_medium_corner"
+                android:fontFamily="@font/bold"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="Đang Giao Hàng"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_back" />
 
-    <ImageView
-        android:id="@+id/iv_illustration"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_plane_and_truck"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_time_range"
-        app:layout_constraintBottom_toBottomOf="@id/tv_status_text"
-        tools:ignore="ContentDescription" />
+            <TextView
+                android:id="@+id/tv_time_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/bold"
+                android:text="23:25 - 23:35"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_tag_saver" />
 
-    <ImageView
-        android:id="@+id/iv_step_1"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/ic_box_yellow"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_status_text"
-        tools:ignore="ContentDescription" />
+            <TextView
+                android:id="@+id/tv_status_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/medium"
+                android:text="Đang tìm tài xế"
+                android:textColor="#555555"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/iv_illustration"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_time_range" />
 
-    <ProgressBar
-        android:id="@+id/line_1"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="100"
-        android:progressTint="#E0E0E0"
-        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-        app:layout_constraintEnd_toStartOf="@id/iv_step_2"
-        app:layout_constraintStart_toEndOf="@id/iv_step_1"
-        app:layout_constraintTop_toTopOf="@id/iv_step_1" />
+            <ImageView
+                android:id="@+id/iv_illustration"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_plane_and_truck"
+                app:layout_constraintBottom_toBottomOf="@id/tv_status_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_time_range"
+                tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/iv_step_2"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_car"
-        app:tint="#00B14F"
-        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-        app:layout_constraintEnd_toStartOf="@id/line_2"
-        app:layout_constraintStart_toEndOf="@id/line_1"
-        app:layout_constraintTop_toTopOf="@id/iv_step_1"
-        tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/iv_step_1"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/ic_box_yellow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_status_text"
+                tools:ignore="ContentDescription" />
 
-    <ProgressBar
-        android:id="@+id/line_2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="100"
-        android:progressTint="#E0E0E0"
-        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-        app:layout_constraintEnd_toStartOf="@id/iv_step_3"
-        app:layout_constraintStart_toEndOf="@id/iv_step_2"
-        app:layout_constraintTop_toTopOf="@id/iv_step_1" />
+            <ProgressBar
+                android:id="@+id/line_1"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="100"
+                android:progressTint="@color/dark_green"
+                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                app:layout_constraintEnd_toStartOf="@id/iv_step_2"
+                app:layout_constraintStart_toEndOf="@id/iv_step_1"
+                app:layout_constraintTop_toTopOf="@id/iv_step_1" />
 
-    <ImageView
-        android:id="@+id/iv_step_3"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_delivery"
-        app:tint="#CCCCCC"
-        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-        app:layout_constraintEnd_toStartOf="@id/line_3"
-        app:layout_constraintStart_toEndOf="@id/line_2"
-        app:layout_constraintTop_toTopOf="@id/iv_step_1"
-        tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/iv_step_2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_car"
+                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                app:layout_constraintEnd_toStartOf="@id/line_2"
+                app:layout_constraintStart_toEndOf="@id/line_1"
+                app:layout_constraintTop_toTopOf="@id/iv_step_1"
+                app:tint="#00B14F"
+                tools:ignore="ContentDescription" />
 
-    <ProgressBar
-        android:id="@+id/line_3"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="100"
-        android:progressTint="#F0F0F0"
-        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-        app:layout_constraintEnd_toStartOf="@id/iv_step_4"
-        app:layout_constraintStart_toEndOf="@id/iv_step_3"
-        app:layout_constraintTop_toTopOf="@id/iv_step_1" />
+            <ProgressBar
+                android:id="@+id/line_2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="100"
+                android:progressTint="#E0E0E0"
+                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                app:layout_constraintEnd_toStartOf="@id/iv_step_3"
+                app:layout_constraintStart_toEndOf="@id/iv_step_2"
+                app:layout_constraintTop_toTopOf="@id/iv_step_1" />
 
-    <ImageView
-        android:id="@+id/iv_step_4"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_home"
-        app:tint="#CCCCCC"
-        app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/line_3"
-        app:layout_constraintTop_toTopOf="@id/iv_step_1"
-        tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/iv_step_3"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_delivery"
+                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                app:layout_constraintEnd_toStartOf="@id/line_3"
+                app:layout_constraintStart_toEndOf="@id/line_2"
+                app:layout_constraintTop_toTopOf="@id/iv_step_1"
+                app:tint="#CCCCCC"
+                tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/tv_footer_message"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Chúng tôi sẽ báo bạn biết khi đơn hàng đã giao thành công"
-        android:textColor="#555555"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_step_1" />
+            <ProgressBar
+                android:id="@+id/line_3"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="100"
+                android:progressTint="#F0F0F0"
+                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                app:layout_constraintEnd_toStartOf="@id/iv_step_4"
+                app:layout_constraintStart_toEndOf="@id/iv_step_3"
+                app:layout_constraintTop_toTopOf="@id/iv_step_1" />
 
+            <ImageView
+                android:id="@+id/iv_step_4"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home"
+                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/line_3"
+                app:layout_constraintTop_toTopOf="@id/iv_step_1"
+                app:tint="#CCCCCC"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_footer_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/medium"
+                android:text="Chúng tôi sẽ báo bạn biết khi đơn hàng đã giao thành công"
+                android:textColor="#555555"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_step_1" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_info_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@drawable/bg_text_input_corner"
+                android:padding="@dimen/size_20"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_footer_message">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardDriverAvatar"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_avatar_default" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tvDriverName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Phạm Văn Tuấn"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/cardDriverAvatar"
+                    app:layout_constraintTop_toTopOf="@+id/cardDriverAvatar" />
+
+                <ImageView
+                    android:id="@+id/btnChat"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_delivery"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvDriverName"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tvVehicleInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/regular"
+                    android:text="Honda Wave 110 • 43R2-1034"
+                    android:textColor="#616161"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tvRating"
+                    app:layout_constraintStart_toStartOf="@+id/tvDriverName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDriverName" />
+
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="5.0 ★"
+                    android:textColor="#FBC02D"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvVehicleInfo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvVehicleInfo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_pick_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/size_20"
+                android:background="@drawable/bg_text_input_corner"
+                android:padding="@dimen/size_20"
+                app:layout_constraintTop_toBottomOf="@+id/layout_info_driver">
+
+                <ImageView
+                    android:id="@+id/ic_pick_up_location"
+                    android:layout_width="@dimen/size_12"
+                    android:layout_height="@dimen/size_12"
+                    android:src="@drawable/ic_now_location_blue"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_pu_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_pu_address" />
+
+                <TextView
+                    android:id="@+id/tv_pu_address"
+                    android:layout_width="@dimen/size_0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_20"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/bold"
+                    android:maxLines="1"
+                    android:text="32 Tran Ke Xuong. kt"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/layout_pu_info"
+                    android:layout_width="@dimen/size_0"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_pu_address"
+                    app:layout_constraintStart_toStartOf="@+id/tv_pu_address"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_pu_address">
+
+                    <TextView
+                        android:id="@+id/tv_pu_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/medium"
+                        android:maxLines="1"
+                        android:text="Nguyễn Duy Hải"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_12" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/size_3"
+                        android:layout_height="@dimen/size_3"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/size_5"
+                        android:backgroundTint="@color/text_color"
+                        app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
+                        app:layout_constraintEnd_toEndOf="@+id/ic_pick_up_location"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location" />
+
+                    <TextView
+                        android:id="@+id/tv_pu_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/medium"
+                        android:maxLines="1"
+                        android:text="0914103372"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:src="@drawable/ic_box_yellow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_type_name" />
+
+                <TextView
+                    android:id="@+id/tv_type_name"
+                    android:layout_width="@dimen/size_0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/bold"
+                    android:maxLines="1"
+                    android:text="Lấy hàng trong vòng 15 phút"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintStart_toStartOf="@+id/tv_pu_address"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_pu_info" />
+
+                <LinearLayout
+                    android:id="@+id/layout_type"
+                    android:layout_width="@dimen/size_0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/size_30"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_type_name"
+                    app:layout_constraintStart_toStartOf="@+id/tv_type_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_type_name">
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/medium"
+                        android:maxLines="1"
+                        android:text="Giao hàng ưu tiên"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_12" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/size_3"
+                        android:layout_height="@dimen/size_3"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/size_5"
+                        android:backgroundTint="@color/text_color"
+                        app:layout_constraintBottom_toTopOf="@id/ic_drop_off_location"
+                        app:layout_constraintEnd_toEndOf="@+id/ic_pick_up_location"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ic_pick_up_location" />
+
+                    <TextView
+                        android:id="@+id/tv_type_ship"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/medium"
+                        android:maxLines="1"
+                        android:text="Siêu tốc"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ic_pick_up_location"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:src="@drawable/ic_delivery"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_type_bike" />
+
+                <TextView
+                    android:id="@+id/tv_type_bike"
+                    android:layout_width="@dimen/size_0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/bold"
+                    android:maxLines="1"
+                    android:text="Xe máy"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_pu_address"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_type" />
+
+                <TextView
+                    android:id="@+id/tv_type_bike_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/medium"
+                    android:maxLines="1"
+                    android:text="Đề xuất dựa trên chi tiết món hàng "
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_12"
+                    app:layout_constraintStart_toStartOf="@+id/tv_type_bike"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_type_bike" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/size_20"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@+id/layout_pick_up" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

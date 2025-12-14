@@ -60,16 +60,37 @@
             android:textStyle="bold" />
     </FrameLayout>
 
+    <LinearLayout
+        android:id="@+id/layout_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_20"
+        android:padding="20dp"
+        android:background="#99ffffff"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next">
+
+        <TextView
+            android:id="@+id/tv_turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Đơn số 1 -> Đơn số 3 -> Đơn số 4"
+            android:fontFamily="@font/medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_14" />
+    </LinearLayout>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie"
         android:layout_width="@dimen/size_150"
         android:layout_height="@dimen/size_150"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        android:visibility="gone"
         app:lottie_fileName="loading.json"
         app:lottie_loop="true"
         app:lottie_repeatMode="reverse" />

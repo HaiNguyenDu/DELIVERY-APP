@@ -12,6 +12,7 @@ import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentDetailOrderBinding
 import com.example.grabapp.domain.enum.EditTextEnum
 import com.example.grabapp.domain.model.order.PackageItemModel
+import com.example.grabapp.extention.toMoneyFormat
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
 import com.example.grabapp.ui.address_selection.adapter.DetailOrderItemAdapter
@@ -119,10 +120,7 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
                     viewModel.selectPackagePosition
                 )
                 if (viewModel.canCalculatePrice())
-                    binding.tvCost.text = (buildString {
-                        append(this@DetailOrderFragment.viewModel.getPriceAndRoute())
-                        append("đ")
-                    })
+                    binding.tvCost.text = viewModel.getPriceAndRoute().toDouble().toMoneyFormat()+"₫"
 
                 if (viewModel.isHashInfoPackage()) {
                     binding.btnNext.alpha = 1f

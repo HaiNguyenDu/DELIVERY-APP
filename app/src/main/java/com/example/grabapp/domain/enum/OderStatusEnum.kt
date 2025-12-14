@@ -1,4 +1,3 @@
-package com.example.grabapp.domain.enum
 enum class OrderStatus(val label: String) {
     FINDING_DRIVER("Đang tìm tài xế"),
     DRIVER_ASSIGNED("Đã có tài xế nhận đơn"),
@@ -20,4 +19,12 @@ enum class OrderStatus(val label: String) {
     CANCELLED_BY_DRIVER("Tài xế hủy"),
     CANCELLED_NO_DRIVER("Hệ thống không tìm được tài xế"),
     ORDER_CANCELLED("Đơn bị hủy (trạng thái kết thúc)");
+    fun isTerminal(): Boolean {
+        return this == DELIVERED ||
+                this == RETURNED ||
+                this == ORDER_CANCELLED ||
+                this == CANCELLED_NO_DRIVER ||
+                this == CANCELLED_BY_SENDER ||
+                this == CANCELLED_BY_DRIVER
+    }
 }

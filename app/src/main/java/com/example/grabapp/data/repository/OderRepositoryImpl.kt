@@ -1,5 +1,6 @@
 package com.example.grabapp.data.repository
 
+import android.util.Log
 import com.example.grabapp.data.api.OderApi
 import com.example.grabapp.data.model.order.OrderItem
 import com.example.grabapp.data.model.order.OrderItemResponse
@@ -34,10 +35,12 @@ class OderRepositoryImpl : OrderRepository {
     override suspend fun getOrderDetail(orderId: String): OrderItemResponse? {
         try {
             val response = orderApi.getDetailOrder(orderId)
+            Log.d("dsd", response.body()?.id?:""+ response.isSuccessful)
             if (response.isSuccessful && response.body() != null)
                 return response.body()!!
             return null
         } catch (e: Exception) {
+            Log.d("dsd", e.message.toString())
             return null
         }
     }

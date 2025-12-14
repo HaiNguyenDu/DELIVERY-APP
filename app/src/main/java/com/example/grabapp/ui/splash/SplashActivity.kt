@@ -44,7 +44,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
         setContentView(binding.root)
         setUpUi()
         handleForNextScreen()
-        permissionNotification()
         handleIntent()
     }
 
@@ -76,20 +75,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
             delay(3000)
             funShowNextScreen()
 
-        }
-    }
-
-    private fun permissionNotification() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-
-            } else {
-                requestPermissionLaucher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-            }
         }
     }
 

@@ -1,7 +1,14 @@
 package com.example.grabapp.respone
 
+import com.google.gson.annotations.SerializedName
+
 data class Compound(
-    val district: String?,
-    val commune: String?,
-    val province: String?
+    @SerializedName("district")
+    val district: String? = null,
+
+    @SerializedName("commune")
+    val ward: String? = null,
+
+    @SerializedName("province")
+    val province: String? = null
 )
