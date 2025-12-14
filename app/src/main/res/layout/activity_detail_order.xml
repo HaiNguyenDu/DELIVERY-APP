@@ -348,6 +348,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
+            android:id="@+id/tvCancelOrder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/size_80"

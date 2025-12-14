@@ -10,13 +10,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
+        android:background="@drawable/bg_circle_stroke_8"
         android:clickable="true"
         android:focusable="true"
         android:padding="@dimen/size_12">
 
         <TextView
-            android:id="@+id/tvGender"
+            android:id="@+id/tvReason"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
