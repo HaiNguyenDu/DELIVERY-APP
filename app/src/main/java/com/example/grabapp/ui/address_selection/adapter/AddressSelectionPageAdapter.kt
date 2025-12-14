@@ -14,17 +14,15 @@ class AddressSelectionPageAdapter(activity: FragmentActivity) : FragmentStateAda
             FRAGMENT_MAIN -> MainOrderFragment()
             FRAGMENT_DETAIL_ORDER -> DetailOrderFragment()
             FRAGMENT_CHECK_DIRECTION-> CheckDirectionFragment()
-            FRAGMENT_CHECK_ORDER -> CheckOrderFragment()
             else -> MainOrderFragment()
         }
     }
 
-    override fun getItemCount() = 4
+    override fun getItemCount() = 3
 
     companion object {
         const val FRAGMENT_MAIN = 0
         const val FRAGMENT_DETAIL_ORDER = 1
-        const val FRAGMENT_CHECK_ORDER = 3
         const val FRAGMENT_CHECK_DIRECTION = 2
     }
 }

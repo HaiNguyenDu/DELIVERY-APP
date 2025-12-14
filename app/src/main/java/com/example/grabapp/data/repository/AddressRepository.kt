@@ -7,8 +7,9 @@ import android.util.Log
 import androidx.annotation.RequiresPermission
 import com.example.grabapp.R
 import com.example.grabapp.data.api.MapApi
+import com.example.grabapp.data.model.order.AddressInfo
+import com.example.grabapp.data.model.order.PriceRouteItem
 import com.example.grabapp.network.RetrofitInstance
-import com.example.grabapp.domain.model.location.Address
 import com.example.grabapp.respone.AutoCompleteResponse
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.respone.GeocodeResponse
@@ -135,45 +136,46 @@ class AddressRepository(context: Context) {
         })
     }
 
-    fun getDirectionData(
-        dropOff: Address,
-        pickUp: Address,
-        onSuccess: (GoongDirectionApiResponse) -> Unit,
-        onError: (String) -> Unit
-    ) {
-        val origin = "${pickUp.coordinates.lat},${pickUp.coordinates.lng}"
-        val destination = "${dropOff.coordinates.lat},${dropOff.coordinates.lng}"
+    suspend fun getDirectionData(
+        pickUpAddress: AddressInfo,
+        listData: List<PriceRouteItem>
+    ): List<GoongDirectionApiResponse> {
 
-        Log.d("GoongAPI", "Requesting direction: origin=$origin dest=$destination")
+        val result = mutableListOf<GoongDirectionApiResponse>()
+        var origin = "${pickUpAddress.latitude},${pickUpAddress.longitude}"
 
-        val call = apiService.getDirections(origin, destination, "bike", API_KEY)
-        call.enqueue(object : Callback<GoongDirectionApiResponse> {
-            override fun onResponse(
-                call: Call<GoongDirectionApiResponse>,
-                response: Response<GoongDirectionApiResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    if (body != null) {
-                        Log.d("GoongAPI", "Direction success: ${body.routes?.size ?: 0} routes found")
-                        onSuccess(body)
-                    } else {
-                        Log.e("GoongAPI", "Response body is null")
-                        onError("Dữ liệu trả về rỗng")
-                    }
+        for (item in listData) {
+            val destination = "${item.latitude},${item.longitude}"
+
+            Log.d(
+                "GoongAPI",
+                "Request direction routeIndex=${item.routeIndex}: origin=$origin dest=$destination"
+            )
+
+            val response = apiService.getDirections(origin, destination, "bike", API_KEY)
+
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null) {
+                    Log.d(
+                        "GoongAPI",
+                        "Direction success routeIndex=${item.routeIndex}: ${body.routes?.size ?: 0} routes"
+                    )
+                    result.add(body)
+                    origin = destination
                 } else {
-                    Log.e("GoongAPI", "Error response: ${response.code()} ${response.message()}")
-                    onError("Lỗi server: ${response.code()}")
+                    Log.e("GoongAPI", "Body null routeIndex=${item.routeIndex}")
                 }
+            } else {
+                Log.e(
+                    "GoongAPI",
+                    "Error routeIndex=${item.routeIndex}: ${response.code()} ${response.message()}"
+                )
             }
+        }
 
-            override fun onFailure(call: Call<GoongDirectionApiResponse>, t: Throwable) {
-                Log.e("GoongAPI", "Network error: ${t.message}", t)
-                onError("Lỗi mạng: ${t.localizedMessage}")
-            }
-        })
+        return result
     }
-
 
     companion object {
         const val API_KEY = "lFHqJVvz4R97UeVo202sBed6FGh7KSi5CJZvjacg"

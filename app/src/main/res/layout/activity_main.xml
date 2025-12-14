@@ -15,6 +15,23 @@
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/btn_package"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_20"
+        android:elevation="@dimen/size_8"
+        android:background="@drawable/bg_text_input_corner"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_margin="@dimen/size_10"
+            android:layout_height="@dimen/size_24"
+            android:src="@drawable/ic_box_yellow" />
+    </FrameLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"

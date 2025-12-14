@@ -30,4 +30,10 @@ class SharedPreferencesUtils(
     fun getRefreshToken(): String {
         return BaseConfig.getInstance(context).get(KEY_REFRESH_TOKEN, String::class.java) ?: ""
     }
+
+    fun clearSession(){
+        putRefreshToken("")
+        putToken("")
+        SessionManager.triggerLogout()
+    }
 }

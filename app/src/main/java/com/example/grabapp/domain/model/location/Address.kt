@@ -1,21 +1,15 @@
 package com.example.grabapp.domain.model.location
 
 import com.example.grabapp.respone.Coordinates
+import com.google.gson.annotations.SerializedName
 import org.maplibre.android.geometry.LatLng
 
 class Address(
-    val coordinates: Coordinates = Coordinates(0.0, 0.0),
+    val detail: String = "",
     val name: String = "",
-    val address: String = "",
+    val phone: String = "",
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0
 ) {
-    fun getFormattedAddress(): String {
-        return when {
-            name.isEmpty() && address.isEmpty() -> ""
-            name.isEmpty() -> address
-            address.isEmpty() -> name
-            else -> "$name, $address"
-        }
-    }
-
-    fun toLatLng(): LatLng = LatLng(coordinates.lat, coordinates.lng)
+    fun toLatLng(): LatLng = LatLng(latitude, longitude)
 }

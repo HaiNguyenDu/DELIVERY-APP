@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:padding="@dimen/size_0"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/size_0">
 
     <org.maplibre.android.maps.MapView
         android:id="@+id/mapView"
@@ -32,14 +32,15 @@
         app:maplibre_uiZoomGestures="true" />
 
     <ImageButton
-        android:layout_marginStart="@dimen/size_20"
         android:id="@+id/btn_back"
         android:layout_width="@dimen/size_24"
         android:layout_height="@dimen/size_24"
-        android:src="@drawable/ic_back"
+        android:layout_marginStart="@dimen/size_20"
         android:background="@null"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
@@ -53,9 +54,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Tiếp theo"
+            android:text="Đặt đơn"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18"
             android:textStyle="bold" />
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_20"
+        android:padding="20dp"
+        android:background="#99ffffff"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next">
+
+        <TextView
+            android:id="@+id/tv_turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Đơn số 1 -> Đơn số 3 -> Đơn số 4"
+            android:fontFamily="@font/medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_14" />
+    </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
+        android:layout_width="@dimen/size_150"
+        android:layout_height="@dimen/size_150"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse" />
 </androidx.constraintlayout.widget.ConstraintLayout>
