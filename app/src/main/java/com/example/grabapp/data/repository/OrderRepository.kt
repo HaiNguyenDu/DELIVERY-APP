@@ -155,9 +155,9 @@ class OrderRepository(private val context: Context) {
         }
     }
     
-    suspend fun updateOrderStatus(orderId: String, newStatus: String): OrderResult {
+    suspend fun updateOrderStatus(orderId: String, newStatus: String, reasonNote: String? = null): OrderResult {
         return try {
-            val request = UpdateOrderStatusRequest(newStatus)
+            val request = UpdateOrderStatusRequest(newStatus, reasonNote)
             val resp = api.updateOrderStatus(orderId, request)
             if (resp.isSuccessful) {
                 val body = resp.body()

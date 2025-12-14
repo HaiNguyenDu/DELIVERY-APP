@@ -7,6 +7,7 @@ import com.example.grabapp.data.model.OrderResponse
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.model.Address
+import com.example.grabapp.model.CancelOrderType
 import com.example.grabapp.model.Order
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.model.OrderStatus
@@ -44,7 +45,7 @@ class OrderDetailViewModel(
 
     private val _directionResponse = MutableStateFlow<GoongDirectionApiResponse?>(null)
     val directionResponse = _directionResponse.asStateFlow()
-    
+
     private val _isDeliveryCompleteEnabled = MutableStateFlow(false)
     val isDeliveryCompleteEnabled = _isDeliveryCompleteEnabled.asStateFlow()
 
@@ -67,6 +68,7 @@ class OrderDetailViewModel(
                         _addressItems.value = addressItems
                         checkAndUpdateDeliveryCompleteButton()
                     }
+
                     is OrderRepository.OrderResult.Error -> {
                         _order.value?.let { order ->
                             val addressItems = createAddressListFromOrder(order)
@@ -103,13 +105,13 @@ class OrderDetailViewModel(
         val sortedPackages = if (orderResponse.priceAndRoutes.isNotEmpty()) {
             // Sort priceAndRoutes by routeIndex to get delivery order
             val sortedRoutes = orderResponse.priceAndRoutes.sortedBy { it.routeIndex }
-            
+
             // Match each route with corresponding package by coordinates
             sortedRoutes.mapNotNull { route ->
                 orderResponse.packages.firstOrNull { packageInfo ->
                     // Match by coordinates with small tolerance for floating point comparison
                     kotlin.math.abs(route.latitude - packageInfo.dropoffAddress.latitude) < 0.0001 &&
-                    kotlin.math.abs(route.longitude - packageInfo.dropoffAddress.longitude) < 0.0001
+                            kotlin.math.abs(route.longitude - packageInfo.dropoffAddress.longitude) < 0.0001
                 }
             }
         } else {
@@ -133,7 +135,7 @@ class OrderDetailViewModel(
 
         return items
     }
-    
+
     private fun parseOrderStatus(status: String): OrderStatus? {
         return try {
             OrderStatus.valueOf(status)
@@ -141,7 +143,7 @@ class OrderDetailViewModel(
             null
         }
     }
-    
+
     private fun parsePackageStatus(status: String): PackageStatus? {
         return try {
             PackageStatus.valueOf(status)
@@ -149,14 +151,14 @@ class OrderDetailViewModel(
             null
         }
     }
-    
+
     private fun checkAndUpdateDeliveryCompleteButton() {
         val orderResponse = _orderResponse.value ?: return
-        val allDelivered = orderResponse.packages.all { 
-            it.packageStatus == PackageStatus.DELIVERED.name 
+        val allDelivered = orderResponse.packages.all {
+            it.packageStatus == PackageStatus.DELIVERED.name
         }
-        _isDeliveryCompleteEnabled.value = allDelivered && 
-            _orderStatus.value != OrderStatus.DELIVERED
+        _isDeliveryCompleteEnabled.value = allDelivered &&
+                _orderStatus.value != OrderStatus.DELIVERED
     }
 
     private fun createAddressListFromOrder(order: Order): List<DeliveryAddressItem> {
@@ -305,18 +307,23 @@ class OrderDetailViewModel(
             }
         )
     }
-    
-    fun updateOrderStatus(newStatus: OrderStatus, onSuccess: () -> Unit, onError: (String) -> Unit) {
+
+    fun updateOrderStatus(
+        newStatus: OrderStatus,
+        reasonNote: String? = null,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
         val orderId = _orderResponse.value?.id ?: _order.value?.orderId
         if (orderId == null) {
             onError("Không tìm thấy order ID")
             return
         }
-        
+
         viewModelScope.launch {
             try {
                 showLoading()
-                val result = orderRepository.updateOrderStatus(orderId, newStatus.name)
+                val result = orderRepository.updateOrderStatus(orderId, newStatus.name, reasonNote)
                 when (result) {
                     is OrderRepository.OrderResult.Success -> {
                         _orderResponse.value = result.response
@@ -326,6 +333,7 @@ class OrderDetailViewModel(
                         checkAndUpdateDeliveryCompleteButton()
                         onSuccess()
                     }
+
                     is OrderRepository.OrderResult.Error -> {
                         onError(result.message)
                     }
@@ -337,7 +345,7 @@ class OrderDetailViewModel(
             }
         }
     }
-    
+
     fun updatePackageStatus(
         packageId: String,
         newStatus: PackageStatus,
@@ -357,18 +365,22 @@ class OrderDetailViewModel(
                             when (reloadResult) {
                                 is OrderRepository.OrderResult.Success -> {
                                     _orderResponse.value = reloadResult.response
-                                    _orderStatus.value = parseOrderStatus(reloadResult.response.status)
-                                    val addressItems = createAddressListFromOrderResponse(reloadResult.response)
+                                    _orderStatus.value =
+                                        parseOrderStatus(reloadResult.response.status)
+                                    val addressItems =
+                                        createAddressListFromOrderResponse(reloadResult.response)
                                     _addressItems.value = addressItems
                                     checkAndUpdateDeliveryCompleteButton()
                                     onSuccess()
                                 }
+
                                 is OrderRepository.OrderResult.Error -> {
                                     onError(reloadResult.message)
                                 }
                             }
                         } ?: onSuccess()
                     }
+
                     is OrderRepository.PackageResult.Error -> {
                         onError(result.message)
                     }
@@ -380,24 +392,26 @@ class OrderDetailViewModel(
             }
         }
     }
-    
+
     fun handlePickupAddressClick() {
         val currentStatus = _orderStatus.value
         when (currentStatus) {
             OrderStatus.DRIVER_ASSIGNED -> {
-                updateOrderStatus(OrderStatus.DRIVER_EN_ROUTE_PICKUP, {
+                updateOrderStatus(OrderStatus.DRIVER_EN_ROUTE_PICKUP, null, {
                     val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
                     _addressItems.value = addressItems
                 }, {})
             }
+
             OrderStatus.DRIVER_EN_ROUTE_PICKUP -> {
-                updateOrderStatus(OrderStatus.ARRIVED_PICKUP, {
+                updateOrderStatus(OrderStatus.ARRIVED_PICKUP, null, {
                     val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
                     _addressItems.value = addressItems
                 }, {})
             }
+
             OrderStatus.ARRIVED_PICKUP -> {
-                updateOrderStatus(OrderStatus.PACKAGE_PICKED, {
+                updateOrderStatus(OrderStatus.PACKAGE_PICKED, null, {
                     val packages = _orderResponse.value?.packages ?: emptyList()
                     if (packages.isNotEmpty()) {
                         var completedCount = 0
@@ -409,7 +423,8 @@ class OrderDetailViewModel(
                                 {
                                     completedCount++
                                     if (completedCount == packages.size) {
-                                        val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+                                        val addressItems =
+                                            createAddressListFromOrderResponse(_orderResponse.value!!)
                                         _addressItems.value = addressItems
                                     }
                                 },
@@ -419,27 +434,31 @@ class OrderDetailViewModel(
                     }
                 }, {})
             }
+
             else -> {}
         }
     }
-    
+
     fun handleDropoffAddressClick(packageId: String, currentPackageStatus: PackageStatus?) {
         when (currentPackageStatus) {
             PackageStatus.PICKED_UP -> {
                 if (_orderStatus.value != OrderStatus.EN_ROUTE_DELIVERY) {
-                    updateOrderStatus(OrderStatus.EN_ROUTE_DELIVERY, {
+                    updateOrderStatus(OrderStatus.EN_ROUTE_DELIVERY, null, {
                         updatePackageStatus(packageId, PackageStatus.DELIVERY_IN_PROGRESS, null, {
-                            val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+                            val addressItems =
+                                createAddressListFromOrderResponse(_orderResponse.value!!)
                             _addressItems.value = addressItems
                         }, {})
                     }, {})
                 } else {
                     updatePackageStatus(packageId, PackageStatus.DELIVERY_IN_PROGRESS, null, {
-                        val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+                        val addressItems =
+                            createAddressListFromOrderResponse(_orderResponse.value!!)
                         _addressItems.value = addressItems
                     }, {})
                 }
             }
+
             PackageStatus.DELIVERY_IN_PROGRESS -> {
                 updatePackageStatus(packageId, PackageStatus.DELIVERED, null, {
                     val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
@@ -447,10 +466,153 @@ class OrderDetailViewModel(
                     checkAndUpdateDeliveryCompleteButton()
                 }, {})
             }
+
             else -> {}
         }
     }
-    
+
     fun handleDeliveryComplete() {
+    }
+
+    fun cancelOrder(cancelType: CancelOrderType, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        val currentStatus = _orderStatus.value
+        val isBeforePickup = currentStatus == OrderStatus.ARRIVED_PICKUP ||
+                currentStatus == OrderStatus.DRIVER_EN_ROUTE_PICKUP ||
+                currentStatus == OrderStatus.DRIVER_ASSIGNED
+
+        if (isBeforePickup) {
+            val reasonNote = cancelType.cancelName
+            updateOrderStatus(OrderStatus.ORDER_CANCELLED, reasonNote, {
+                val packages = _orderResponse.value?.packages ?: emptyList()
+                if (packages.isNotEmpty()) {
+                    var completedCount = 0
+                    val totalPackages = packages.size
+                    packages.forEach { packageInfo ->
+                        updatePackageStatus(
+                            packageInfo.id,
+                            PackageStatus.CANCELLED,
+                            reasonNote,
+                            {
+                                completedCount++
+                                if (completedCount == totalPackages) {
+                                    _orderResponse.value?.id?.let { orderId ->
+                                        loadOrderDetails(orderId)
+                                    }
+                                    onSuccess()
+                                }
+                            },
+                            { error ->
+                                completedCount++
+                                if (completedCount == totalPackages) {
+                                    _orderResponse.value?.id?.let { orderId ->
+                                        loadOrderDetails(orderId)
+                                    }
+                                    onSuccess()
+                                }
+                            }
+                        )
+                    }
+                } else {
+                    onSuccess()
+                }
+            }, onError)
+        } else {
+            // Return order - order status to RETURNING_TO_SENDER
+            val reasonNote = cancelType.cancelName
+            updateOrderStatus(OrderStatus.RETURNING_TO_SENDER, reasonNote, {
+                // Update packages not DELIVERED to RETURNING
+                val packages = _orderResponse.value?.packages ?: emptyList()
+                if (packages.isNotEmpty()) {
+                    var completedCount = 0
+                    val packagesToUpdate = packages.filter {
+                        it.packageStatus != PackageStatus.DELIVERED.name
+                    }
+
+                    if (packagesToUpdate.isEmpty()) {
+                        _orderResponse.value?.id?.let { orderId ->
+                            loadOrderDetails(orderId)
+                        }
+                        onSuccess()
+                    } else {
+                        packagesToUpdate.forEach { packageInfo ->
+                            updatePackageStatus(
+                                packageInfo.id,
+                                PackageStatus.RETURNING,
+                                reasonNote,
+                                {
+                                    completedCount++
+                                    if (completedCount == packagesToUpdate.size) {
+                                        _orderResponse.value?.id?.let { orderId ->
+                                            loadOrderDetails(orderId)
+                                        }
+                                        onSuccess()
+                                    }
+                                },
+                                { error ->
+                                    completedCount++
+                                    if (completedCount == packagesToUpdate.size) {
+                                        _orderResponse.value?.id?.let { orderId ->
+                                            loadOrderDetails(orderId)
+                                        }
+                                        onSuccess()
+                                    }
+                                }
+                            )
+                        }
+                    }
+                } else {
+                    onSuccess()
+                }
+            }, onError)
+        }
+    }
+
+    fun completeReturn(onSuccess: () -> Unit, onError: (String) -> Unit) {
+        val orderId = _orderResponse.value?.id ?: _order.value?.orderId
+        if (orderId == null) {
+            onError("Không tìm thấy order ID")
+            return
+        }
+
+        // Update order status to RETURNED
+        updateOrderStatus(OrderStatus.RETURNED, null, {
+            // Update all packages with status RETURNING to RETURNED
+            val packages = _orderResponse.value?.packages ?: emptyList()
+            if (packages.isNotEmpty()) {
+                var completedCount = 0
+                val packagesToUpdate = packages.filter {
+                    it.packageStatus == PackageStatus.RETURNING.name
+                }
+
+                if (packagesToUpdate.isEmpty()) {
+                    loadOrderDetails(orderId)
+                    onSuccess()
+                } else {
+                    packagesToUpdate.forEach { packageInfo ->
+                        updatePackageStatus(
+                            packageInfo.id,
+                            PackageStatus.RETURNED,
+                            null,
+                            {
+                                completedCount++
+                                if (completedCount == packagesToUpdate.size) {
+                                    loadOrderDetails(orderId)
+                                    onSuccess()
+                                }
+                            },
+                            { error ->
+                                completedCount++
+                                if (completedCount == packagesToUpdate.size) {
+                                    loadOrderDetails(orderId)
+                                    onSuccess()
+                                }
+                            }
+                        )
+                    }
+                }
+            } else {
+                onSuccess()
+            }
+        }, onError)
     }
 }

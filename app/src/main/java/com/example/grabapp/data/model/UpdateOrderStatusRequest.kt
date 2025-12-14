@@ -4,5 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class UpdateOrderStatusRequest(
     @SerializedName("newStatus")
-    val newStatus: String
+    val newStatus: String,
+    @SerializedName("reasonNote")
+    val reasonNote: String? = null
 )

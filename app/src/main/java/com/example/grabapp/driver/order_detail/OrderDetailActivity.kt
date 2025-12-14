@@ -26,8 +26,10 @@ import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.model.Address
 import com.example.grabapp.model.DeliveryAddressItem
 import com.example.grabapp.model.Order
+import com.example.grabapp.model.CancelOrderType
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.model.OrderStatus
+import com.example.grabapp.view.dialog.CancelOrderDialog
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -134,6 +136,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                     viewModel.orderStatus.collect { status ->
                         status?.let {
                             updateOrderStatusDisplay(it)
+                            updateUIForOrderStatus(it)
                         }
                     }
                 }
@@ -156,6 +159,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                 // Auto update to DRIVER_EN_ROUTE_PICKUP if user hasn't clicked
                 viewModel.updateOrderStatus(
                     OrderStatus.DRIVER_EN_ROUTE_PICKUP,
+                    null,
                     onSuccess = {
                         val addressItems = viewModel.addressItems.value
                         if (addressItems.isNotEmpty()) {
@@ -170,6 +174,112 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     
     private fun updateOrderStatusDisplay(status: OrderStatus) {
         binding.tvStatus.text = status.statusName
+    }
+    
+    private fun updateUIForOrderStatus(status: OrderStatus) {
+        when (status) {
+            OrderStatus.ORDER_CANCELLED -> {
+                binding.tvStatus.text = "Đã Hủy"
+                binding.tvDeliveryComplete.text = "Đã Hủy"
+                binding.tvCancelOrder.visibility = View.GONE
+            }
+            OrderStatus.RETURNING_TO_SENDER -> {
+                binding.tvStatus.text = "Đang trả hàng"
+                binding.tvDeliveryComplete.text = "Trả hàng"
+                binding.tvCancelOrder.visibility = View.GONE
+                updateMapForReturning()
+            }
+            OrderStatus.RETURNED -> {
+                binding.tvStatus.text = "Đã trả hàng"
+                binding.tvDeliveryComplete.text = "Đã trả hàng"
+                binding.tvCancelOrder.visibility = View.GONE
+            }
+            else -> {
+                val canCancel = status == OrderStatus.ARRIVED_PICKUP ||
+                        status == OrderStatus.DRIVER_EN_ROUTE_PICKUP ||
+                        status == OrderStatus.DRIVER_ASSIGNED ||
+                        status == OrderStatus.PACKAGE_PICKED ||
+                        status == OrderStatus.EN_ROUTE_DELIVERY ||
+                        status == OrderStatus.ARRIVED_DELIVERY
+                binding.tvCancelOrder.visibility = if (canCancel) View.VISIBLE else View.GONE
+            }
+        }
+    }
+    
+    private fun updateMapForReturning() {
+        mapLibreMap?.let { map ->
+            val startLatLng = viewModel.positioning.value?.let {
+                LatLng(it.coordinates.lat, it.coordinates.lng)
+            } ?: return
+            
+            val pickupAddress = viewModel.getPickUpAddress()
+            val pickupLatLng = LatLng(
+                pickupAddress.coordinates.lat,
+                pickupAddress.coordinates.lng
+            )
+            
+            endMarker?.remove()
+            val iconFactory = IconFactory.getInstance(this)
+            val endBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_map)
+                .scale(80, 80, false)
+            val endIcon = iconFactory.fromBitmap(endBitmap)
+            
+            endMarker = map.addMarker(
+                MarkerOptions().position(pickupLatLng).icon(endIcon)
+                    .title("Điểm trả hàng")
+            )
+            
+            viewModel.getDirectionToAddress(
+                destination = pickupAddress,
+                onSuccess = { response ->
+                    drawRoute(map, response)
+                },
+                onError = { error ->
+                }
+            )
+            
+            val bounds = LatLngBounds.Builder()
+                .include(startLatLng)
+                .include(pickupLatLng)
+                .build()
+            
+            binding.mapView.post {
+                try {
+                    val padding = 150
+                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+                    map.animateCamera(cameraUpdate)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLng, 12.0))
+                }
+            }
+        }
+    }
+    
+    private fun showCancelOrderDialog() {
+        val currentStatus = viewModel.orderStatus.value ?: return
+        CancelOrderDialog.newInstance(
+            orderStatus = currentStatus,
+            onApplyClick = { cancelType ->
+                viewModel.cancelOrder(
+                    cancelType,
+                    onSuccess = {
+                        Toast.makeText(
+                            this@OrderDetailActivity,
+                            "Đã xử lý yêu cầu",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
+                    onError = { error ->
+                        Toast.makeText(
+                            this@OrderDetailActivity,
+                            "Lỗi: $error",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
+            }
+        ).show(supportFragmentManager, "CancelOrderDialog")
     }
 
     private fun requestLocationPermission() {
@@ -231,25 +341,50 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupClickListeners() {
+        binding.tvCancelOrder.onClickWithScale {
+            showCancelOrderDialog()
+        }
+        
         binding.tvDeliveryComplete.onClickWithScale {
             if (binding.tvDeliveryComplete.isEnabled) {
-                viewModel.updateOrderStatus(
-                    OrderStatus.DELIVERED,
-                    onSuccess = {
-                        Toast.makeText(
-                            this,
-                            "Bạn đã giao hàng thành công",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    },
-                    onError = { error ->
-                        Toast.makeText(
-                            this,
-                            "Lỗi: $error",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                )
+                val currentStatus = viewModel.orderStatus.value
+                if (currentStatus == OrderStatus.RETURNING_TO_SENDER) {
+                    viewModel.completeReturn(
+                        onSuccess = {
+                            Toast.makeText(
+                                this,
+                                "Đã trả hàng thành công",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        onError = { error ->
+                            Toast.makeText(
+                                this,
+                                "Lỗi: $error",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    )
+                } else {
+                    viewModel.updateOrderStatus(
+                        OrderStatus.DELIVERED,
+                        null,
+                        onSuccess = {
+                            Toast.makeText(
+                                this,
+                                "Bạn đã giao hàng thành công",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        onError = { error ->
+                            Toast.makeText(
+                                this,
+                                "Lỗi: $error",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    )
+                }
             }
         }
         binding.ivLocatedFixed.onClickWithScale {
