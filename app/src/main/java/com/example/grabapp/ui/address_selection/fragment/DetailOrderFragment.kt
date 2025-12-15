@@ -3,6 +3,7 @@ package com.example.grabapp.ui.address_selection.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +12,7 @@ import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.databinding.FragmentDetailOrderBinding
 import com.example.grabapp.domain.enum.EditTextEnum
+import com.example.grabapp.domain.enum.PaymentTypeEnum
 import com.example.grabapp.domain.model.order.PackageItemModel
 import com.example.grabapp.extention.toMoneyFormat
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
@@ -67,6 +69,20 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
     }
 
     fun initView() {
+        val paymentMethods = PaymentTypeEnum.entries.map {
+            it.label
+        }
+        val adapterPayment = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            paymentMethods
+        )
+
+        binding.edtPaymentMethod.setAdapter(adapterPayment)
+
+        binding.edtPaymentMethod.setOnItemClickListener { _, _, position, _ ->
+            val paymentMethod = if (position == 0) "CASH" else "ONLINE"
+        }
         detailOrderItemAdapter = DetailOrderItemAdapter(viewModel.orderForm.value.listPackageInfo)
         binding.rcvOrder.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

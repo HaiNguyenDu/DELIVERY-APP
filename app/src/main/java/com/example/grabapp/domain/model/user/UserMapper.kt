@@ -2,8 +2,9 @@ package com.example.grabapp.domain.model.user
 
 import com.example.grabapp.data.local.user.UserAddressEntity
 import com.example.grabapp.data.local.user.UserEntity
+import com.example.grabapp.data.model.user.UserResponse
 
-fun UserEntity.toDomain() = User(id, phone, fullName, avatarUrl, isActive, role, date, isAvailable)
+fun UserEntity.toDomain() = User(id, phone, fullName, avatarUrl, isActive, emptyList(), date, isAvailable)
 
 fun User.toEntity(): UserEntity {
     val now = System.currentTimeMillis()
@@ -13,7 +14,7 @@ fun User.toEntity(): UserEntity {
         fullName = fullName,
         avatarUrl = avatarUrl,
         isActive = isActive,
-        role = role,
+        role = 1,
         date = date,
         isAvailable = isAvailable,
         createdAt = now,
@@ -40,4 +41,18 @@ fun UserAddress.toEntity(): UserAddressEntity {
     )
 
 }
+
+fun UserResponse.toUser(): User {
+    return User(
+        id = id,
+        phone = phone,
+        fullName = fullName,
+        avatarUrl = avatarUrl,
+        isActive = isActive,
+        role = roles,
+        date = dob,
+        isAvailable = enabled
+    )
+}
+
 

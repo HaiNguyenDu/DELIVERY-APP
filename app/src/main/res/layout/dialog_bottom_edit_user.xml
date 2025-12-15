@@ -13,17 +13,19 @@
         android:src="@drawable/ic_exit_to_app"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Lưu"
-        android:fontFamily="@font/medium"
-        android:textSize="@dimen/font_14"
-        android:textColor="@color/grey"
-        app:layout_constraintTop_toTopOf="@+id/btn_exit"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/size_20"
-        android:layout_height="wrap_content"/>
+        android:fontFamily="@font/medium"
+        android:text="Lưu"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_exit" />
+
     <ImageView
         android:id="@+id/iv_avatar"
         android:layout_width="@dimen/size_60"
@@ -44,9 +46,9 @@
         android:layout_marginTop="@dimen/size_30"
         android:background="@drawable/bg_text_input_thin"
         android:fontFamily="@font/medium"
+        android:maxLines="1"
         android:paddingHorizontal="@dimen/size_20"
         android:text="Nguyễn Duy Hải"
-        android:maxLines="1"
         android:textSize="@dimen/font_14"
         app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
 
@@ -80,10 +82,10 @@
         android:id="@+id/edt_phone"
         android:layout_width="@dimen/size_0"
         android:layout_height="@dimen/size_40"
-        android:maxLines="1"
         android:layout_marginStart="@dimen/size_10"
         android:background="@drawable/bg_text_input_thin"
         android:fontFamily="@font/medium"
+        android:maxLines="1"
         android:paddingHorizontal="@dimen/size_20"
         android:text="914103372"
         android:textSize="@dimen/font_14"
@@ -92,19 +94,37 @@
         app:layout_constraintTop_toTopOf="@+id/flag" />
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_dob"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginEnd="@dimen/size_20"
+        android:background="@drawable/bg_text_input_thin"
+        android:editable="false"
+        android:focusable="false"
+        android:fontFamily="@font/medium"
+        android:hint="Ngày sinh"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/size_20"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/flag"
+        app:layout_constraintTop_toBottomOf="@+id/flag" />
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edt_email"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_40"
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_10"
         android:background="@drawable/bg_text_input_thin"
-        android:maxLines="1"
         android:fontFamily="@font/medium"
         android:hint="Vui lòng nhập email"
+        android:maxLines="1"
         android:paddingHorizontal="@dimen/size_20"
         android:text="nguyenduyhair2004@gmail.com"
         android:textSize="@dimen/font_14"
-        app:layout_constraintTop_toBottomOf="@+id/flag" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_dob" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edt_gender"
@@ -113,25 +133,25 @@
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_10"
         android:background="@drawable/bg_text_input_thin"
+        android:drawableRight="@drawable/ic_arrow_drop"
         android:fontFamily="@font/medium"
         android:hint="Vui lòng chọn giới tính"
-        android:paddingStart="@dimen/size_20"
         android:maxLines="1"
+        android:paddingStart="@dimen/size_20"
         android:textSize="@dimen/font_14"
-        android:drawableRight="@drawable/ic_arrow_drop"
         app:layout_constraintTop_toBottomOf="@+id/edt_email" />
 
     <TextView
         android:id="@+id/btn_log_out"
         android:layout_width="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Đăng xuất"
-        android:fontFamily="@font/medium"
-        android:textSize="@dimen/font_14"
-        android:textColor="@color/dark_green"
-        app:layout_constraintTop_toBottomOf="@+id/edt_gender"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_50"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginEnd="@dimen/size_20"
-        android:layout_height="wrap_content"/>
+        android:fontFamily="@font/medium"
+        android:text="Đăng xuất"
+        android:textColor="@color/dark_green"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_gender" />
 </androidx.constraintlayout.widget.ConstraintLayout>

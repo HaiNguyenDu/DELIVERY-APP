@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/layout_btn_next"
+        android:paddingBottom="@dimen/size_50"
         app:layout_constraintTop_toBottomOf="@+id/tool_bar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -325,51 +326,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_cod"
-                android:layout_width="match_parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_voucher"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="@dimen/size_10"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_height="wrap_content">
-
-                <CheckBox
-                    android:id="@+id/checkbox1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/check_box_square"
-                    android:checked="false"
-                    android:drawablePadding="8dp"
-                    app:buttonTint="@null"
-                    android:buttonTint="@null"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_14"
-                    android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/medium"
-                    android:text="Thu tiền hộ (COD)"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_cod_cost_1"
-                    android:layout_width="match_parent"
-                    android:textAlignment="textEnd"
-                    android:paddingEnd="@dimen/size_20"
-                    android:layout_gravity="center_vertical|end"
-                    android:text="5.000D"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/layout_ship_near"
                 android:layout_width="match_parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_cod"
+                app:layout_constraintTop_toBottomOf="@id/btn_voucher"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="@dimen/size_10"
-                app:layout_constraintStart_toStartOf="@+id/layout_cod"
+                app:layout_constraintStart_toStartOf="@+id/btn_voucher"
                 android:layout_height="wrap_content">
 
                 <CheckBox
@@ -388,21 +350,12 @@
                     android:textSize="@dimen/font_14"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/medium"
-                    android:text="Giao tận tay"
+                    android:text="Hoàn trả hàng nếu không nhận được hàng"
                     />
-
-                <TextView
-                    android:id="@+id/tv_ship_near_cost"
-                    android:layout_width="match_parent"
-                    android:textAlignment="textEnd"
-                    android:paddingEnd="@dimen/size_20"
-                    android:layout_gravity="center_vertical|end"
-                    android:text="10.000D"
-                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_ship_big_size"
+                android:id="@+id/layout_freight"
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_ship_near"
                 android:layout_marginTop="10dp"
@@ -430,7 +383,32 @@
                     />
             </LinearLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                app:boxBackgroundMode="filled"
+                android:layout_margin="@dimen/size_20"
+                app:endIconTint="@color/dark_green"
+                android:elevation="@dimen/size_8"
+                app:layout_constraintTop_toBottomOf="@+id/layout_freight"
+                app:hintTextColor="@color/dark_green"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeColor="@android:color/transparent">
 
+                <AutoCompleteTextView
+                    android:id="@+id/edtPaymentMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="@dimen/size_8"
+                    android:textColorHint="@color/dark_green"
+                    android:hint="Chọn phương thức thanh toán"
+                    android:textSize="@dimen/font_14"
+                    android:fontFamily="@font/medium"
+                    android:background="@android:color/transparent"
+                    android:popupBackground="@drawable/bg_corner_white_medium"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

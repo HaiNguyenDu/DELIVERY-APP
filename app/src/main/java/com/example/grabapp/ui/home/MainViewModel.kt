@@ -2,6 +2,7 @@ package com.example.grabapp.ui.home
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.local.user.UserDao
@@ -12,8 +13,8 @@ import com.example.grabapp.data.repository.DriverRepositoryImpl
 import com.example.grabapp.data.repository.OderRepositoryImpl
 import com.example.grabapp.data.repository.UserRepositoryImpl
 import com.example.grabapp.domain.model.user.User
-import com.example.grabapp.domain.use_case.GetUserUseCase
-import com.example.grabapp.domain.use_case.InsertUserUseCase
+import com.example.grabapp.domain.model.user.toUser
+import com.example.grabapp.utils.JwtUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -25,11 +26,9 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(userDao: UserDao, application: Application) : BaseViewModel(application) {
 
-    private val repository = UserRepositoryImpl(userDao)
+    private val repository = UserRepositoryImpl()
     private val driverRepository = DriverRepositoryImpl()
     private val orderRepository = OderRepositoryImpl()
-    private val getUserUseCase = GetUserUseCase(repository)
-    private val updateUserUseCase = InsertUserUseCase(repository)
     private val _listOrder = MutableStateFlow<List<OrderItem>>(emptyList())
     val listOrder: StateFlow<List<OrderItem>> = _listOrder
     private val _user = MutableStateFlow<User?>(null)
@@ -53,11 +52,12 @@ class MainViewModel(userDao: UserDao, application: Application) : BaseViewModel(
         }
     }
 
-    suspend fun getDriverInfo(id:String): DriverResponse?{
-        if(id.isEmpty()) return null
+    suspend fun getDriverInfo(id: String): DriverResponse? {
+        if (id.isEmpty()) return null
         val data = driverRepository.getDriverInfo(id)
         return data
     }
+
     private var pollingJob: Job? = null
 
     fun startPolling(orderId: String) {
@@ -90,14 +90,10 @@ class MainViewModel(userDao: UserDao, application: Application) : BaseViewModel(
     }
 
     fun loadUser() = viewModelScope.launch {
-        getUserUseCase().collect {
-            _user.value = it
+        application
+        repository.getUserByIdFromSever(JwtUtils.getUserId(application) ?: "")?.let {
+            _user.value = it.toUser()
         }
-    }
-
-    fun insertUser(user: User) = viewModelScope.launch {
-        updateUserUseCase(user)
-        _user.value = user
     }
 
     fun loadListOrder() {

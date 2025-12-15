@@ -1,20 +1,55 @@
 package com.example.grabapp.data.model.payment
 
+import com.google.gson.annotations.SerializedName
+
 data class PayOSPaymentRequest(
+    @SerializedName("orderCode")
     val orderCode: Long,
-    val amount: Int,
+
+    @SerializedName("amount")
+    val amount: Long,
+
+    @SerializedName("description")
     val description: String,
+
+    @SerializedName("cancelUrl")
     val cancelUrl: String,
+
+    @SerializedName("returnUrl")
     val returnUrl: String,
+
+    @SerializedName("expiredAt")
     val expiredAt: Long? = null,
-    val buyer: BuyerInfo? = null,
-    val items: List<PayOSItem>? = null,
-    val invoice: InvoiceInfo? = null
 )
 
-data class BuyerInfo(val name: String? = null, val phone: String? = null, val email: String? = null)
-data class PayOSItem(val name: String, val quantity: Int, val price: Int)
-data class InvoiceInfo(val orderCode: String? = null, val note: String? = null)
+data class PayOSPaymentResponse(
+    @SerializedName("paymentId")
+    val paymentId: Long? = null,
 
-data class PayOSPaymentResponse(val code: String, val desc: String, val result: PayOSResult?)
-data class PayOSResult(val checkoutUrl: String?, val transaction: String?, val orderCode: Long?)
+    @SerializedName("orderCode")
+    val orderCode: Long? = null,
+
+    @SerializedName("amount")
+    val amount: Long? = null,
+
+    @SerializedName("description")
+    val description: String? = null,
+
+    @SerializedName("checkoutUrl")
+    val checkoutUrl: String? = null,
+
+    @SerializedName("qrCode")
+    val qrCode: String? = null,
+
+    @SerializedName("paymentLinkId")
+    val paymentLinkId: String? = null,
+
+    @SerializedName("status")
+    val status: String? = null,
+
+    @SerializedName("expiredAt")
+    val expiredAt: Long? = null,
+
+    @SerializedName("payosData")
+    val payosData: Map<String, Any>? = null
+)

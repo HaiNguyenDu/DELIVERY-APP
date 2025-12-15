@@ -64,6 +64,7 @@ fun OrderForm.toCreateOrderRequest(): CreateOrderRequest {
         pickupAddress = pickup,
         packages = packageList,
         customerNote = this.customerNote.takeIf { it.isNotEmpty() },
-        fragile = this.fragile
+        fragile = this.fragile,
+        paymentMethod = paymentTypeEnum.name
     )
 }

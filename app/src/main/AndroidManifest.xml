@@ -25,7 +25,9 @@
         <activity
             android:name=".ui.user.ActivityUser"
             android:exported="false" />
-        <activity android:name=".ui.address_selection.AddressSelectionActivity" />
+        <activity android:name=".ui.address_selection.AddressSelectionActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true">

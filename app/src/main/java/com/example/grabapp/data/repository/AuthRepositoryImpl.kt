@@ -1,13 +1,12 @@
 package com.example.grabapp.data.repository
 
-import com.example.grabapp.data.api.FCMApi
 import com.example.grabapp.data.model.auth.LoginRequest
 import com.example.grabapp.data.model.auth.LoginResponse
 import com.example.grabapp.domain.repository.AuthRepository
 import com.example.grabapp.network.ApiProvider
 
 class AuthRepositoryImpl : AuthRepository {
-    val fcmApi = ApiProvider.getInstance().getAuthRequiredApi(FCMApi::class.java)
+
 
     override suspend fun login(
         phone: String,
@@ -23,5 +22,4 @@ class AuthRepositoryImpl : AuthRepository {
             Result.failure(e)
         }
     }
-
 }

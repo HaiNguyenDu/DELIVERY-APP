@@ -4,11 +4,13 @@ import com.example.grabapp.data.model.auth.LoginRequest
 import com.example.grabapp.data.model.auth.LoginResponse
 import com.example.grabapp.data.model.auth.RefreshTokenRequest
 import com.example.grabapp.data.model.auth.RefreshTokenResponse
+import com.example.grabapp.data.model.user.UserResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface AuthApi {
     @POST("auth/login")

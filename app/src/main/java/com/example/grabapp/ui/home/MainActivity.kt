@@ -3,6 +3,7 @@ package com.example.grabapp.ui.home
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -16,6 +17,8 @@ import com.example.grabapp.databinding.ActivityMainBinding
 import com.example.grabapp.ui.home.adapter.MainPageAdapter
 import com.example.grabapp.ui.order.OrderPlacedDialog
 import com.example.grabapp.utils.CurrentOrder
+import com.example.grabapp.utils.JwtUtils
+import com.example.grabapp.utils.SharedPreferencesUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.launch

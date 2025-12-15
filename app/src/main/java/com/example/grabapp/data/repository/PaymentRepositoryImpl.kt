@@ -22,4 +22,8 @@ class PaymentRepositoryImpl : PaymentRepository {
             Result.failure(e)
         }
     }
+
+    companion object{
+        fun getInstance(): PaymentRepository = PaymentRepositoryImpl()
+    }
 }

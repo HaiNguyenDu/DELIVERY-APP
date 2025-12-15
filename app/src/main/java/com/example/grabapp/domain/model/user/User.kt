@@ -6,7 +6,7 @@ data class User(
     val fullName: String,
     val avatarUrl: String?,
     val isActive: Boolean,
-    val role: Int,
+    val role: List<String>,
     val date: String?,
     val isAvailable: Boolean
 )

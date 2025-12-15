@@ -9,12 +9,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.model.order.AddressInfo
 import com.example.grabapp.data.model.order.PriceRouteItem
+import com.example.grabapp.data.model.payment.PayOSPaymentRequest
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.data.repository.OderRepositoryImpl
+import com.example.grabapp.data.repository.PaymentRepositoryImpl
 import com.example.grabapp.domain.enum.EditTextEnum
 import com.example.grabapp.domain.model.order.OrderForm
 import com.example.grabapp.domain.model.order.PackageItemModel
 import com.example.grabapp.domain.repository.OrderRepository
+import com.example.grabapp.domain.repository.PaymentRepository
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.respone.Prediction
@@ -31,6 +34,8 @@ import kotlinx.coroutines.withContext
 class AddressSelectionViewModel(private val application: Application) : BaseViewModel(application) {
     private var addressRepository: AddressRepository = AddressRepository.getInstance(application)
     private var orderRepository: OrderRepository = OderRepositoryImpl.getInstance()
+
+    private var paymentRepository: PaymentRepository = PaymentRepositoryImpl.getInstance()
     private val _pagePosition = MutableStateFlow<Int>(0)
 
     val pagePosition: StateFlow<Int> = _pagePosition
@@ -54,6 +59,8 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     private val _isCreateSuccess = MutableSharedFlow<Boolean>()
     val isCreateSuccess: SharedFlow<Boolean> = _isCreateSuccess
 
+    private val _isShowQrCode = MutableSharedFlow<Boolean>()
+    val isShowQrCode: SharedFlow<Boolean> = _isCreateSuccess
     private var _lastAddress: AddressInfo? = null
 
     fun setLastAddress(address: AddressInfo?) {
@@ -295,6 +302,22 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
             addressRepository.getCurrentLocation()?.let { location ->
                 _lastCoordinates.value = Coordinates(location.latitude, location.longitude)
                 getCurrentAddress()
+            }
+        }
+    }
+
+    fun createAndRedirectToPayment() {
+        viewModelScope.launch {
+            val paymentRequest = PayOSPaymentRequest(
+                orderCode = System.currentTimeMillis(),
+                amount = getPriceAndRoute().toLong(),
+                description = "Thanh toán cho đơn hàng #1234",
+                cancelUrl = "app://yourapp.com/payment/cancel",
+                returnUrl = "app://yourapp.com/payment/success",
+            )
+            val response = paymentRepository.createPayment(paymentRequest)
+            response.onSuccess {
+
             }
         }
     }

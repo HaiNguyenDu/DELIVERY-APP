@@ -2,23 +2,32 @@ package com.example.grabapp.ui.user
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.Insets
 import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityUserBinding
 import com.example.grabapp.ui.splash.NoViewModel
+import com.example.grabapp.utils.SessionManager
 import com.example.grabapp.view.DialogEditUser
 import com.example.grabapp.view.DialogEditUserListener
 import kotlinx.coroutines.launch
 
-class ActivityUser : BaseActivity<ActivityUserBinding, NoViewModel>() {
+class ActivityUser : BaseActivity<ActivityUserBinding, UserViewModel>() {
+//    private val pickImageLauncher =
+//        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+//            uri?.let {
+//                viewModel.
+//            }
+//        }
+
     override fun getLazyBinding(): Lazy<ActivityUserBinding> = lazy {
         ActivityUserBinding.inflate(layoutInflater)
     }
 
-    override fun getLazyViewModel(): Lazy<NoViewModel> = lazy {
-        NoViewModel(application)
+    override fun getLazyViewModel(): Lazy<UserViewModel> = lazy {
+        UserViewModel(application)
     }
 
     override fun handleInsets(v: View, insets: Insets) {
@@ -30,8 +39,18 @@ class ActivityUser : BaseActivity<ActivityUserBinding, NoViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         observeView()
+        observerData()
     }
 
+    private fun observerData(){
+        lifecycleScope.launch {
+            viewModel.user.collect{
+                it?.let {
+                    binding.tvUsername.text = it.fullName
+                }
+            }
+        }
+    }
     override fun finish() {
         super.finish()
         overridePendingTransition(
@@ -46,15 +65,21 @@ class ActivityUser : BaseActivity<ActivityUserBinding, NoViewModel>() {
                 finish()
             }
             btnUserDetail.setOnClickListener {
-                DialogEditUser(this@ActivityUser).setListener(
-                    object : DialogEditUserListener {
-                        override fun onSave() {
-                        }
+                viewModel.getUser()?.let {
+                    DialogEditUser(this@ActivityUser).setUser(it)
+                        .setListener(
+                            object : DialogEditUserListener {
+                                override fun onSave() {
+                                    viewModel.updateUser()
+                                }
 
-                        override fun onLogOut() {
-                        }
-                    }
-                ).show()
+                                override fun onLogOut() {
+                                    SessionManager.triggerLogout()
+                                }
+                            }
+
+                        ).show()
+                }
             }
         }
     }
