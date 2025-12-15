@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel>() {
 
     private var allOrders: List<Order> = emptyList()
+    private var orderStatusMap: Map<String, String> = emptyMap()
     private var currentFilter: FilterType = FilterType.ALL
     private lateinit var orderAdapter: OrderAdapter
 
@@ -72,10 +73,22 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
                 updateStatistics()
             }
         }
+        lifecycleScope.launch {
+            viewModel.orderStatusMap.collectLatest { statusMap ->
+                orderStatusMap = statusMap
+                updateRecyclerView()
+            }
+        }
     }
 
     private fun setupRecyclerView() {
-        orderAdapter = OrderAdapter(items = getFilteredOrders())
+        orderAdapter = OrderAdapter(
+            items = getFilteredOrders(),
+            orderStatusMap = orderStatusMap,
+            onItemClick = { order ->
+                navigateToOrderDetail(order)
+            }
+        )
 
         binding.rvOrderHistory.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -85,8 +98,26 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
 
     private fun updateRecyclerView() {
         val filteredOrders = getFilteredOrders()
-        orderAdapter = OrderAdapter(items = filteredOrders)
+        orderAdapter = OrderAdapter(
+            items = filteredOrders,
+            orderStatusMap = orderStatusMap,
+            onItemClick = { order ->
+                navigateToOrderDetail(order)
+            }
+        )
         binding.rvOrderHistory.adapter = orderAdapter
+    }
+    
+    private fun navigateToOrderDetail(order: Order) {
+        viewModel.fetchOrderById(order.orderId) { fetchedOrder ->
+            if (fetchedOrder != null) {
+                requireContext().startActivity(
+                    android.content.Intent(requireContext(), com.example.grabapp.driver.order_detail.OrderDetailActivity::class.java).apply {
+                        putExtra("extra_order", fetchedOrder)
+                    }
+                )
+            }
+        }
     }
 
     private fun setupTabListeners() {
@@ -134,7 +165,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
             FilterType.ALL -> allOrders
             FilterType.COMPLETED -> allOrders.filter { it.orderState == OrderState.DELIVERED }
             FilterType.DELIVERING -> allOrders.filter { it.orderState == OrderState.DELIVERING }
-            FilterType.CANCELED -> allOrders.filter { it.orderState == OrderState.CANCELED }
+            FilterType.CANCELED -> {
+                // Filter bao gồm cả CANCELED và RETURNED
+                allOrders.filter { order ->
+                    val status = orderStatusMap[order.orderId]
+                    // RETURNED và các status CANCELED đều được map thành OrderState.CANCELED
+                    order.orderState == OrderState.CANCELED
+                }
+            }
         }
     }
 

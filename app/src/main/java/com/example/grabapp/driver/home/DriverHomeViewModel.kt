@@ -47,6 +47,9 @@ class DriverHomeViewModel(
     private val _orders = MutableStateFlow<List<Order>>(emptyList())
     val orders = _orders.asStateFlow()
     
+    private val _orderStatusMap = MutableStateFlow<Map<String, String>>(emptyMap())
+    val orderStatusMap = _orderStatusMap.asStateFlow()
+    
     private val _orderLoadState = MutableStateFlow<OrderLoadState>(OrderLoadState.Idle)
     val orderLoadState = _orderLoadState.asStateFlow()
     
@@ -130,7 +133,9 @@ class DriverHomeViewModel(
                         val mappedOrders = result.response.content.map { orderResponse ->
                             OrderMapper.mapToOrder(orderResponse)
                         }
+                        val statusMap = result.response.content.associate { it.id to it.status }
                         _orders.value = mappedOrders
+                        _orderStatusMap.value = statusMap
                         _orderLoadState.value = OrderLoadState.Success
                     }
                     is OrderRepository.OrderListResult.Error -> {

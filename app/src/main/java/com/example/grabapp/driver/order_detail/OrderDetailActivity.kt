@@ -19,6 +19,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
+import com.example.grabapp.data.OrderStorage
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.ActivityDetailOrderBinding
@@ -55,6 +56,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     private var endMarker: Marker? = null
     private var routePolyline: Polyline? = null
     private var autoUpdateJob: kotlinx.coroutines.Job? = null
+    private lateinit var orderStorage: OrderStorage
 
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -79,6 +81,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        orderStorage = OrderStorage(this)
         setupClickListeners()
         getOrderFromIntent()
         setupToolbar()
@@ -137,6 +140,11 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                         status?.let {
                             updateOrderStatusDisplay(it)
                             updateUIForOrderStatus(it)
+                            if (it == OrderStatus.DELIVERED ||
+                                it == OrderStatus.RETURNED || 
+                                it == OrderStatus.ORDER_CANCELLED) {
+                                orderStorage.clearActiveOrder()
+                            }
                         }
                     }
                 }
@@ -416,6 +424,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                 intent.getParcelableExtra<Parcelable>(EXTRA_ORDER) as? Order ?: Order.getMockOrder()
             }
         viewModel.initializeOrder(order)
+        orderStorage.saveActiveOrderId(order.orderId)
     }
 
     private fun setupToolbar() {

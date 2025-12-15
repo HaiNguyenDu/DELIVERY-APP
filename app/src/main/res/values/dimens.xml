@@ -55,4 +55,6 @@
     <dimen name="size_52">52dp</dimen>
     <dimen name="size_28">28dp</dimen>
     <dimen name="size_128">128dp</dimen>
+    <dimen name="size_42">42dp</dimen>
+    <dimen name="size_70">70dp</dimen>
 </resources>

@@ -12,7 +12,7 @@
             type="com.example.grabapp.driver.home.data.TabType" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,7 +23,22 @@
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:layout_constraintBottom_toTopOf="@id/llBottomBar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieCurrentOrder"
+            android:layout_width="@dimen/size_70"
+            android:layout_height="@dimen/size_70"
+            android:layout_margin="@dimen/size_12"
+            android:background="@drawable/bg_gradient_green_100"
+            app:layout_constraintBottom_toTopOf="@id/llBottomBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="current_order.json"
+            app:lottie_loop="true"
+            app:lottie_repeatMode="reverse" />
 
         <LinearLayout
             android:id="@+id/llBottomBar"
@@ -31,7 +46,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_no_border_white_80_per"
             android:elevation="@dimen/size_12"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <LinearLayout
                 android:id="@+id/llHome"
@@ -99,12 +115,12 @@
                 android:id="@+id/llMessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_weight="1"
                 android:background="@{selectedTab == TabType.MESSAGE ? @drawable/bg_no_border_green_10_per : @drawable/bg_no_border_white_80_per}"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:paddingVertical="@dimen/size_6">
+                android:paddingVertical="@dimen/size_6"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/ivMessage"
@@ -189,5 +205,5 @@
                     tools:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

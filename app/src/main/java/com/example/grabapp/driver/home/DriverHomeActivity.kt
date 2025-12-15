@@ -1,19 +1,23 @@
 package com.example.grabapp.driver.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.Insets
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
+import com.example.grabapp.data.OrderStorage
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.ActivityDriverHomeBinding
 import com.example.grabapp.driver.base.BaseDriverActivity
 import com.example.grabapp.driver.home.data.TabType
+import com.example.grabapp.driver.order_detail.OrderDetailActivity
 import com.example.grabapp.extention.onClickWithScale
+import kotlinx.coroutines.launch
 
 class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverHomeViewModel>() {
 
@@ -22,6 +26,7 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
     }
 
     private var currentTab: TabType = TabType.HOME
+    private lateinit var orderStorage: OrderStorage
     
     private val fileRepository by lazy { FileRepository() }
     private val aiServiceRepository by lazy { AIServiceRepository() }
@@ -45,6 +50,7 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        orderStorage = OrderStorage(this)
         setRootColor(getColor(R.color.bg_color))
         binding.lifecycleOwner = this
 
@@ -54,15 +60,43 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
         setupListener()
         setupFragment(savedInstanceState)
         fetchOrders()
+        observeActiveOrder()
         
         // Khởi động location updates nếu connection state là CONNECTED
         viewModel.startLocationUpdatesIfConnected()
+    }
+    
+    private fun observeActiveOrder() {
+        binding.lottieCurrentOrder.onClickWithScale {
+            val orderId = orderStorage.getActiveOrderId()
+            if (!orderId.isNullOrEmpty()) {
+                viewModel.fetchOrderById(orderId) { order ->
+                    if (order != null) {
+                        navigateToOrderDetail(order)
+                    }
+                }
+            }
+        }
+        updateActiveOrderVisibility()
+    }
+    
+    private fun navigateToOrderDetail(order: com.example.grabapp.model.Order) {
+        val intent = Intent(this, OrderDetailActivity::class.java).apply {
+            putExtra("extra_order", order)
+        }
+        startActivity(intent)
     }
     
     override fun onResume() {
         super.onResume()
         // Đảm bảo location updates được start khi resume nếu connection state là CONNECTED
         viewModel.startLocationUpdatesIfConnected()
+        updateActiveOrderVisibility()
+    }
+    
+    private fun updateActiveOrderVisibility() {
+        val hasActiveOrder = orderStorage.hasActiveOrder()
+        binding.lottieCurrentOrder.visibility = if (hasActiveOrder) View.VISIBLE else View.GONE
     }
 
 //    private fun requestNotificationPermissionIfNeeded() {

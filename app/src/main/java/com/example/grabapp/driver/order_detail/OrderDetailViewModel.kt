@@ -154,11 +154,23 @@ class OrderDetailViewModel(
 
     private fun checkAndUpdateDeliveryCompleteButton() {
         val orderResponse = _orderResponse.value ?: return
-        val allDelivered = orderResponse.packages.all {
-            it.packageStatus == PackageStatus.DELIVERED.name
+        val currentStatus = _orderStatus.value
+        
+        when (currentStatus) {
+            OrderStatus.RETURNING_TO_SENDER -> {
+                _isDeliveryCompleteEnabled.value = true
+            }
+            OrderStatus.DELIVERED, OrderStatus.RETURNED, OrderStatus.ORDER_CANCELLED -> {
+                _isDeliveryCompleteEnabled.value = false
+            }
+            else -> {
+                val allDelivered = orderResponse.packages.all {
+                    it.packageStatus == PackageStatus.DELIVERED.name
+                }
+                _isDeliveryCompleteEnabled.value = allDelivered &&
+                        currentStatus != OrderStatus.DELIVERED
+            }
         }
-        _isDeliveryCompleteEnabled.value = allDelivered &&
-                _orderStatus.value != OrderStatus.DELIVERED
     }
 
     private fun createAddressListFromOrder(order: Order): List<DeliveryAddressItem> {

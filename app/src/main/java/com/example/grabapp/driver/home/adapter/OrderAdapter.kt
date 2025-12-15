@@ -9,7 +9,9 @@ import com.example.grabapp.model.OrderState
 import com.example.grabapp.R
 
 class OrderAdapter(
-    private val items: List<Order>
+    private val items: List<Order>,
+    private val orderStatusMap: Map<String, String> = emptyMap(),
+    private val onItemClick: (Order) -> Unit
 ) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -24,6 +26,10 @@ class OrderAdapter(
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         holder.bind(items[position])
     }
+    
+    fun updateItems(newItems: List<Order>) {
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int = items.size
 
@@ -34,16 +40,25 @@ class OrderAdapter(
         fun bind(order: Order) {
             binding.apply {
                 tvOrderId.text = order.orderId
-                tvOrderState.text = getOrderStateText(order.orderState)
+                tvOrderState.text = getOrderStateText(order.orderState, order.orderId)
                 tvTime.text = order.orderTime
                 tvFromAddress.text = order.pickerAddress
                 tvToAddress.text = order.deliveryAddress
                 tvDistance.text = order.distance
                 tvIncome.text = "+${String.format("%,d", order.income)}đ"
+                
+                root.setOnClickListener {
+                    onItemClick(order)
+                }
             }
         }
 
-        private fun getOrderStateText(orderState: OrderState): String {
+        private fun getOrderStateText(orderState: OrderState, orderId: String): String {
+            val actualStatus = orderStatusMap[orderId]
+            if (actualStatus == "RETURNED") {
+                return "Đã trả hàng"
+            }
+            
             return when (orderState) {
                 OrderState.DELIVERED -> binding.root.context.getString(R.string.ho_n_th_nh)
                 OrderState.DELIVERING -> binding.root.context.getString(R.string.ang_giao)
