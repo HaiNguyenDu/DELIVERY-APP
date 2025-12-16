@@ -27,12 +27,17 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
 
     private var currentTab: TabType = TabType.HOME
     private lateinit var orderStorage: OrderStorage
-    
+
     private val fileRepository by lazy { FileRepository() }
     private val aiServiceRepository by lazy { AIServiceRepository() }
     private val orderRepository by lazy { OrderRepository(this) }
     private val viewModelFactory by lazy {
-        DriverHomeViewModelFactory(application, fileRepository, aiServiceRepository, orderRepository)
+        DriverHomeViewModelFactory(
+            application,
+            fileRepository,
+            aiServiceRepository,
+            orderRepository
+        )
     }
 
     private val requestNotificationPermissionLauncher =
@@ -61,11 +66,11 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
         setupFragment(savedInstanceState)
         fetchOrders()
         observeActiveOrder()
-        
+
         // Khởi động location updates nếu connection state là CONNECTED
         viewModel.startLocationUpdatesIfConnected()
     }
-    
+
     private fun observeActiveOrder() {
         binding.lottieCurrentOrder.onClickWithScale {
             val orderId = orderStorage.getActiveOrderId()
@@ -79,24 +84,25 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
         }
         updateActiveOrderVisibility()
     }
-    
+
     private fun navigateToOrderDetail(order: com.example.grabapp.model.Order) {
         val intent = Intent(this, OrderDetailActivity::class.java).apply {
             putExtra("extra_order", order)
         }
         startActivity(intent)
     }
-    
+
     override fun onResume() {
         super.onResume()
         // Đảm bảo location updates được start khi resume nếu connection state là CONNECTED
         viewModel.startLocationUpdatesIfConnected()
         updateActiveOrderVisibility()
     }
-    
+
     private fun updateActiveOrderVisibility() {
         val hasActiveOrder = orderStorage.hasActiveOrder()
         binding.lottieCurrentOrder.visibility = if (hasActiveOrder) View.VISIBLE else View.GONE
+        binding.tvCurrentOrder.visibility = if (hasActiveOrder) View.VISIBLE else View.GONE
     }
 
 //    private fun requestNotificationPermissionIfNeeded() {
@@ -115,7 +121,7 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
             viewModel.handleAppKilled()
         }
     }
-    
+
     private fun fetchOrders() {
         viewModel.fetchOrders()
     }

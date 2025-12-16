@@ -2,8 +2,13 @@ package com.example.grabapp.driver.order_detail
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.MotionEvent
@@ -30,6 +35,7 @@ import com.example.grabapp.model.Order
 import com.example.grabapp.model.CancelOrderType
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.model.OrderStatus
+import com.example.grabapp.service.MyFirebaseMessagingService
 import com.example.grabapp.view.dialog.CancelOrderDialog
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import kotlinx.coroutines.delay
@@ -57,6 +63,21 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     private var routePolyline: Polyline? = null
     private var autoUpdateJob: kotlinx.coroutines.Job? = null
     private lateinit var orderStorage: OrderStorage
+    private var isWaitingForCancellation = false
+
+    private val orderCancelledReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == MyFirebaseMessagingService.ACTION_ORDER_CANCELLED) {
+                val orderId = intent.getStringExtra(MyFirebaseMessagingService.EXTRA_ORDER_ID)
+                orderId?.let {
+                    val currentOrderId = viewModel.order.value?.orderId ?: viewModel.orderResponse.value?.id
+                    if (currentOrderId == orderId) {
+                        handleOrderCancelledNotification()
+                    }
+                }
+            }
+        }
+    }
 
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -82,12 +103,32 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         orderStorage = OrderStorage(this)
+        registerOrderCancelledReceiver()
         setupClickListeners()
         getOrderFromIntent()
         setupToolbar()
         observeViewModel()
         requestLocationPermission()
         setupAutoUpdate()
+    }
+    
+    private fun registerOrderCancelledReceiver() {
+        val filter = IntentFilter(MyFirebaseMessagingService.ACTION_ORDER_CANCELLED)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(orderCancelledReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            @Suppress("UnspecifiedRegisterReceiverFlag")
+            registerReceiver(orderCancelledReceiver, filter)
+        }
+    }
+    
+    private fun handleOrderCancelledNotification() {
+        isWaitingForCancellation = false
+        // Reload order details để lấy status mới nhất (ORDER_CANCELLED)
+        val orderId = viewModel.orderResponse.value?.id ?: viewModel.order.value?.orderId
+        orderId?.let {
+            viewModel.loadOrderDetails(it)
+        }
     }
 
     private fun observeViewModel() {
@@ -138,12 +179,20 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                 launch {
                     viewModel.orderStatus.collect { status ->
                         status?.let {
+                            // Tự động set flag khi status là CANCELLED_BY_DRIVER (đang đợi xác nhận)
+                            if (it == OrderStatus.CANCELLED_BY_DRIVER && !isWaitingForCancellation) {
+                                isWaitingForCancellation = true
+                            }
+                            
                             updateOrderStatusDisplay(it)
                             updateUIForOrderStatus(it)
+                            
+                            // Xóa orderId khi order hoàn thành hoặc bị hủy
                             if (it == OrderStatus.DELIVERED ||
                                 it == OrderStatus.RETURNED || 
                                 it == OrderStatus.ORDER_CANCELLED) {
                                 orderStorage.clearActiveOrder()
+                                isWaitingForCancellation = false
                             }
                         }
                     }
@@ -189,6 +238,14 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             OrderStatus.ORDER_CANCELLED -> {
                 binding.tvStatus.text = "Đã Hủy"
                 binding.tvDeliveryComplete.text = "Đã Hủy"
+                binding.tvCancelOrder.visibility = View.GONE
+                isWaitingForCancellation = false
+            }
+            OrderStatus.CANCELLED_BY_DRIVER -> {
+                // Luôn hiển thị trạng thái đang đợi xác nhận hủy đơn
+                // Vì nếu đã ORDER_CANCELLED thì status sẽ không còn là CANCELLED_BY_DRIVER nữa
+                binding.tvStatus.text = "Đang đợi xác nhận hủy đơn"
+                binding.tvDeliveryComplete.text = "Đang đợi xác nhận"
                 binding.tvCancelOrder.visibility = View.GONE
             }
             OrderStatus.RETURNING_TO_SENDER -> {
@@ -269,16 +326,24 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         CancelOrderDialog.newInstance(
             orderStatus = currentStatus,
             onApplyClick = { cancelType ->
+                // Set flag để hiển thị trạng thái đang đợi xác nhận
+                isWaitingForCancellation = true
                 viewModel.cancelOrder(
                     cancelType,
                     onSuccess = {
+                        // Update UI với trạng thái đang đợi xác nhận
+                        val currentStatusAfterCancel = viewModel.orderStatus.value
+                        if (currentStatusAfterCancel == OrderStatus.CANCELLED_BY_DRIVER) {
+                            updateUIForOrderStatus(OrderStatus.CANCELLED_BY_DRIVER)
+                        }
                         Toast.makeText(
                             this@OrderDetailActivity,
-                            "Đã xử lý yêu cầu",
+                            "Đang đợi xác nhận hủy đơn",
                             Toast.LENGTH_SHORT
                         ).show()
                     },
                     onError = { error ->
+                        isWaitingForCancellation = false
                         Toast.makeText(
                             this@OrderDetailActivity,
                             "Lỗi: $error",
@@ -701,6 +766,11 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
 
     override fun onDestroy() {
         autoUpdateJob?.cancel()
+        try {
+            unregisterReceiver(orderCancelledReceiver)
+        } catch (e: Exception) {
+            // Receiver might not be registered
+        }
         binding.mapView.onDestroy()
         super.onDestroy()
     }

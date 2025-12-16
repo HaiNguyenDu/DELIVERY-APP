@@ -25,7 +25,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         const val FCM_ACTIVITY = "fcm_activity"
         const val FCM_DATA = "fcm_data"
         const val ACTION_NEW_ORDER = "com.example.grabapp.NEW_ORDER"
+        const val ACTION_ORDER_CANCELLED = "com.example.grabapp.ORDER_CANCELLED"
         const val EXTRA_ORDER_ID = "order_id"
+        const val EXTRA_EVENT_TYPE = "eventType"
     }
 
     private fun createNotificationChannel() {
@@ -116,26 +118,37 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun receiveData(message: RemoteMessage) {
         val data = message.data
 
-        val title = data["status"] ?: "Thông báo mới"
-        val orderId = data["orderId"] ?: "Bạn có một tin nhắn mới."
-        val message = data["message"]
+        val title = data["title"] ?: data["status"] ?: "Thông báo mới"
+        val orderId = data["orderID"] ?: data["orderId"] ?: "Bạn có một tin nhắn mới."
+        val messageText = data["message"]
+        val eventType = data["eventType"]
 
         Log.d("FCM_Service", "=== Nhận notification ===")
         Log.d("FCM_Service", "Title: $title")
         Log.d("FCM_Service", "OrderID: $orderId")
-        Log.d("FCM_Service", "Message: $message")
+        Log.d("FCM_Service", "Message: $messageText")
+        Log.d("FCM_Service", "EventType: $eventType")
         Log.d("FCM_Service", "All data: $data")
 
-        showNotification(title, orderId, message ?: "")
+        showNotification(title, orderId, messageText ?: "")
 
-        // Gửi broadcast để hiển thị dialog nếu có orderId hợp lệ
+        // Xử lý theo eventType
         val isValidOrderId = orderId.isNotEmpty() && orderId != "Bạn có một tin nhắn mới."
-        Log.d("FCM_Service", "OrderID hợp lệ: $isValidOrderId")
         
-        if (isValidOrderId) {
-            sendNewOrderBroadcast(orderId)
-        } else {
-            Log.d("FCM_Service", "OrderID không hợp lệ, không gửi broadcast")
+        when (eventType) {
+            "ORDER_CANCELLED" -> {
+                if (isValidOrderId) {
+                    sendOrderCancelledBroadcast(orderId)
+                }
+            }
+            else -> {
+                // Xử lý new order như cũ
+                if (isValidOrderId) {
+                    sendNewOrderBroadcast(orderId)
+                } else {
+                    Log.d("FCM_Service", "OrderID không hợp lệ, không gửi broadcast")
+                }
+            }
         }
     }
 
@@ -151,5 +164,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         sendBroadcast(intent)
         Log.d("FCM_Service", "Broadcast đã được gửi")
+    }
+    
+    private fun sendOrderCancelledBroadcast(orderID: String) {
+        Log.d("FCM_Service", "=== Gửi broadcast ORDER_CANCELLED ===")
+        Log.d("FCM_Service", "Action: $ACTION_ORDER_CANCELLED")
+        Log.d("FCM_Service", "OrderID: $orderID")
+        Log.d("FCM_Service", "Package: $packageName")
+        
+        val intent = Intent(ACTION_ORDER_CANCELLED).apply {
+            putExtra(EXTRA_ORDER_ID, orderID)
+            setPackage(packageName)
+        }
+        sendBroadcast(intent)
+        Log.d("FCM_Service", "Broadcast ORDER_CANCELLED đã được gửi")
     }
 }
