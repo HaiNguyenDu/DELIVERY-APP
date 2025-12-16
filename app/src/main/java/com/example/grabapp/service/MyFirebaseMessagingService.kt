@@ -11,7 +11,10 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.grabapp.R
-import com.example.grabapp.ui.splash.SplashActivity
+import com.example.grabapp.data.OrderStorage
+import com.example.grabapp.data.TokenStorage
+import com.example.grabapp.driver.home.DriverHomeActivity
+import com.example.grabapp.driver.login.DriverLoginActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -74,12 +77,32 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        val intent = Intent(this, SplashActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        // Navigate trực tiếp đến DriverHomeActivity nếu đã login, hoặc DriverLoginActivity nếu chưa login
+        val isValidOrderId = orderID.isNotEmpty() && orderID != "Bạn có một tin nhắn mới."
+        val tokenStorage = TokenStorage(this)
+        val targetActivity = if (tokenStorage.hasToken()) {
+            // Đã login, navigate đến DriverHomeActivity
+            DriverHomeActivity::class.java
+        } else {
+            // Chưa login, navigate đến DriverLoginActivity
+            DriverLoginActivity::class.java
+        }
+        
+        if (isValidOrderId) {
+            val orderStorage = OrderStorage(this)
+            orderStorage.saveActiveOrderId(orderID)
+        }
+        
+        val intent = Intent(this, targetActivity).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            if (isValidOrderId) {
+                putExtra("notification_order_id", orderID)
+            }
+        }
 
         val pendingIntent = PendingIntent.getActivity(
             this,
-            0,
+            if (isValidOrderId) orderID.hashCode().and(0x7FFFFFFF) else 0,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )

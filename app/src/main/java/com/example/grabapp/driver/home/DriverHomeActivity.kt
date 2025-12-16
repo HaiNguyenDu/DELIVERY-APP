@@ -66,9 +66,61 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
         setupFragment(savedInstanceState)
         fetchOrders()
         observeActiveOrder()
+        
+        // Check notification order khi onCreate (để handle khi app được mở từ notification)
+        handleNotificationOrder()
 
         // Khởi động location updates nếu connection state là CONNECTED
         viewModel.startLocationUpdatesIfConnected()
+    }
+    
+    override fun onResume() {
+        super.onResume()
+        // Đảm bảo location updates được start khi resume nếu connection state là CONNECTED
+        viewModel.startLocationUpdatesIfConnected()
+        updateActiveOrderVisibility()
+        // Check notification order khi resume (để handle khi app được mở từ notification)
+        handleNotificationOrder()
+    }
+    
+    private fun handleNotificationOrder() {
+        val orderId = intent.getStringExtra("notification_order_id")
+        if (!orderId.isNullOrEmpty()) {
+            // Clear orderId từ intent để tránh hiển thị lại khi resume
+            intent.removeExtra("notification_order_id")
+            
+            // Fetch order và hiển thị NewOrderedDialog
+            viewModel.fetchOrderById(orderId) { order ->
+                if (order != null) {
+                    showNewOrderDialogFromNotification(order)
+                }
+            }
+        }
+    }
+    
+    private fun showNewOrderDialogFromNotification(order: com.example.grabapp.model.Order) {
+        // Kiểm tra xem dialog đã được hiển thị chưa
+        val existingDialog = supportFragmentManager.findFragmentByTag("NewOrderedDialog")
+        if (existingDialog != null && existingDialog.isAdded) {
+            return
+        }
+        
+        // Kiểm tra connection state
+        val connectionStorage = com.example.grabapp.data.ConnectionStorage(this)
+        val connectionState = connectionStorage.getConnectionState()
+        if (connectionState != com.example.grabapp.driver.home.data.ConnectionState.CONNECTED) {
+            return
+        }
+        
+        com.example.grabapp.view.dialog.NewOrderedDialog.newInstance(order).apply {
+            onSkipOrder = {
+                this@apply.dismiss()
+            }
+            onAcceptOrder = { acceptedOrder ->
+                this@apply.dismiss()
+                navigateToOrderDetail(acceptedOrder)
+            }
+        }.show(supportFragmentManager, "NewOrderedDialog")
     }
 
     private fun observeActiveOrder() {
@@ -92,12 +144,6 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
         startActivity(intent)
     }
 
-    override fun onResume() {
-        super.onResume()
-        // Đảm bảo location updates được start khi resume nếu connection state là CONNECTED
-        viewModel.startLocationUpdatesIfConnected()
-        updateActiveOrderVisibility()
-    }
 
     private fun updateActiveOrderVisibility() {
         val hasActiveOrder = orderStorage.hasActiveOrder()

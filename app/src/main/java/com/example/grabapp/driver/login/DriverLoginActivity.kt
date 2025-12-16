@@ -161,7 +161,13 @@ class DriverLoginActivity : BaseActivity<ActivityDriverLoginBinding, DriverLogin
             viewModel.loginEvent.collect { success ->
                 if (success) {
                     verifyingDialog?.dismiss()
-                    startActivity<DriverHomeActivity>()
+                    // Truyền notification_order_id nếu có
+                    val notificationOrderId = intent.getStringExtra("notification_order_id")
+                    startActivity<DriverHomeActivity> {
+                        if (!notificationOrderId.isNullOrEmpty()) {
+                            putExtra("notification_order_id", notificationOrderId)
+                        }
+                    }
                     finish()
                 }
             }
