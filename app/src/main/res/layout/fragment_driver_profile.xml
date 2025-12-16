@@ -198,233 +198,253 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/llTotalOrders"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_16"
-        android:layout_marginTop="@dimen/size_16"
-        android:background="@drawable/bg_border_stroke_white_12_80_per"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingVertical="@dimen/size_16"
-        app:layout_constraintEnd_toStartOf="@id/llTotalIncome"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ctlDriverInform">
 
-        <TextView
-            android:id="@+id/tvTotalOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:text="@string/_3"
-            android:textSize="@dimen/font_24" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_4"
-            android:fontFamily="@font/regular"
-            android:text="@string/t_ng_n"
-            android:textColor="@color/azure_34"
-            android:textSize="@dimen/font_12" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llTotalIncome"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_16"
-        android:layout_marginTop="@dimen/size_16"
-        android:background="@drawable/bg_border_stroke_white_12_80_per"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingVertical="@dimen/size_16"
-        app:layout_constraintEnd_toStartOf="@id/llTotalRate"
-        app:layout_constraintStart_toEndOf="@id/llTotalOrders"
-        app:layout_constraintTop_toBottomOf="@id/ctlDriverInform">
-
-        <TextView
-            android:id="@+id/tvTotalIncome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:text="@string/_75k"
-            android:textColor="@color/green_36"
-            android:textSize="@dimen/font_24" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_4"
-            android:fontFamily="@font/regular"
-            android:text="@string/income"
-            android:textColor="@color/azure_34"
-            android:textSize="@dimen/font_12" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llTotalRate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_16"
-        android:layout_marginTop="@dimen/size_16"
-        android:layout_marginEnd="@dimen/size_16"
-        android:background="@drawable/bg_border_stroke_white_12_80_per"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingVertical="@dimen/size_16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/llTotalIncome"
-        app:layout_constraintTop_toBottomOf="@id/ctlDriverInform">
-
-        <TextView
-            android:id="@+id/tvTotalRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:text="@string/_5_0"
-            android:textColor="@color/azure_53"
-            android:textSize="@dimen/font_24" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_4"
-            android:fontFamily="@font/regular"
-            android:text="@string/nh_gi"
-            android:textColor="@color/azure_34"
-            android:textSize="@dimen/font_12" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ctlSettingOption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_18"
-        android:layout_marginTop="@dimen/size_18"
-        android:background="@drawable/bg_border_stroke_white_12_80_per"
-        app:layout_constraintTop_toBottomOf="@id/llTotalOrders">
-
-        <LinearLayout
-            android:id="@+id/llSetting"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:orientation="horizontal"
-            android:padding="@dimen/size_16"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/size_50">
 
-            <ImageView
-                android:layout_width="@dimen/size_20"
-                android:layout_height="@dimen/size_20"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_setting" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/llTotalOrders"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_12"
-                android:layout_weight="1"
-                android:fontFamily="@font/medium"
-                android:text="@string/c_i_t"
-                android:textSize="@dimen/font_16" />
-        </LinearLayout>
+                android:layout_marginStart="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_16"
+                android:background="@drawable/bg_border_stroke_white_12_80_per"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/size_16"
+                app:layout_constraintEnd_toStartOf="@id/llTotalIncome"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:id="@+id/emptyView1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_1"
-            android:background="@color/azure_84"
-            app:layout_constraintTop_toBottomOf="@id/llSetting" />
+                <TextView
+                    android:id="@+id/tvTotalOrders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/_3"
+                    android:textSize="@dimen/font_24" />
 
-        <LinearLayout
-            android:id="@+id/llEditProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:orientation="horizontal"
-            android:padding="@dimen/size_16"
-            app:layout_constraintTop_toBottomOf="@id/emptyView1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_4"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/t_ng_n"
+                    android:textColor="@color/azure_34"
+                    android:textSize="@dimen/font_12" />
+            </LinearLayout>
 
-            <ImageView
-                android:layout_width="@dimen/size_20"
-                android:layout_height="@dimen/size_20"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_edit_profile" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/llTotalIncome"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_12"
-                android:layout_weight="1"
-                android:fontFamily="@font/medium"
-                android:text="@string/ch_nh_s_a_h_s"
-                android:textSize="@dimen/font_16" />
-        </LinearLayout>
+                android:layout_marginStart="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_16"
+                android:background="@drawable/bg_border_stroke_white_12_80_per"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/size_16"
+                app:layout_constraintEnd_toStartOf="@id/llTotalRate"
+                app:layout_constraintStart_toEndOf="@id/llTotalOrders"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:id="@+id/emptyView2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_1"
-            android:background="@color/azure_84"
-            app:layout_constraintTop_toBottomOf="@id/llEditProfile" />
+                <TextView
+                    android:id="@+id/tvTotalIncome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/_75k"
+                    android:textColor="@color/green_36"
+                    android:textSize="@dimen/font_24" />
 
-        <LinearLayout
-            android:id="@+id/llLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:orientation="horizontal"
-            android:padding="@dimen/size_16"
-            app:layout_constraintTop_toBottomOf="@id/emptyView2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_4"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/income"
+                    android:textColor="@color/azure_34"
+                    android:textSize="@dimen/font_12" />
+            </LinearLayout>
 
-            <ImageView
-                android:layout_width="@dimen/size_20"
-                android:layout_height="@dimen/size_20"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_logout"
-                app:tint="@color/red_51" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/llTotalRate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_12"
-                android:layout_weight="1"
-                android:fontFamily="@font/medium"
-                android:text="@string/ng_xu_t"
-                android:textColor="@color/red_51"
-                android:textSize="@dimen/font_16" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginStart="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginEnd="@dimen/size_16"
+                android:background="@drawable/bg_border_stroke_white_12_80_per"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/size_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/llTotalIncome"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_16"
-        android:layout_marginTop="@dimen/size_18"
-        android:background="@drawable/bg_border_stroke_grey_12_10_per"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/size_16"
-        app:layout_constraintTop_toBottomOf="@id/ctlSettingOption">
+                <TextView
+                    android:id="@+id/tvTotalRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/_5_0"
+                    android:textColor="@color/azure_53"
+                    android:textSize="@dimen/font_24" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text="@string/phi_n_b_n_ng_d_ng"
-            android:textColor="@color/grey_46"
-            android:textSize="@dimen/font_12" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_4"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/nh_gi"
+                    android:textColor="@color/azure_34"
+                    android:textSize="@dimen/font_12" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_4"
-            android:fontFamily="@font/medium"
-            android:text="@string/v1_0_0"
-            android:textColor="@color/azure_27"
-            android:textSize="@dimen/font_14" />
-    </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctlSettingOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_18"
+                android:background="@drawable/bg_border_stroke_white_12_80_per"
+                app:layout_constraintTop_toBottomOf="@id/llTotalOrders">
+
+                <LinearLayout
+                    android:id="@+id/llSetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_16"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="@dimen/size_20"
+                        android:layout_height="@dimen/size_20"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_setting" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_12"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/medium"
+                        android:text="@string/c_i_t"
+                        android:textSize="@dimen/font_16" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/emptyView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_1"
+                    android:background="@color/azure_84"
+                    app:layout_constraintTop_toBottomOf="@id/llSetting" />
+
+                <LinearLayout
+                    android:id="@+id/llEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_16"
+                    app:layout_constraintTop_toBottomOf="@id/emptyView1">
+
+                    <ImageView
+                        android:layout_width="@dimen/size_20"
+                        android:layout_height="@dimen/size_20"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_edit_profile" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_12"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/medium"
+                        android:text="@string/ch_nh_s_a_h_s"
+                        android:textSize="@dimen/font_16" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/emptyView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_1"
+                    android:background="@color/azure_84"
+                    app:layout_constraintTop_toBottomOf="@id/llEditProfile" />
+
+                <LinearLayout
+                    android:id="@+id/llLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_16"
+                    app:layout_constraintTop_toBottomOf="@id/emptyView2">
+
+                    <ImageView
+                        android:layout_width="@dimen/size_20"
+                        android:layout_height="@dimen/size_20"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_logout"
+                        app:tint="@color/red_51" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_12"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/medium"
+                        android:text="@string/ng_xu_t"
+                        android:textColor="@color/red_51"
+                        android:textSize="@dimen/font_16" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_18"
+                android:background="@drawable/bg_border_stroke_grey_12_10_per"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/size_16"
+                app:layout_constraintTop_toBottomOf="@id/ctlSettingOption">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/phi_n_b_n_ng_d_ng"
+                    android:textColor="@color/grey_46"
+                    android:textSize="@dimen/font_12" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_4"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/v1_0_0"
+                    android:textColor="@color/azure_27"
+                    android:textSize="@dimen/font_14" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

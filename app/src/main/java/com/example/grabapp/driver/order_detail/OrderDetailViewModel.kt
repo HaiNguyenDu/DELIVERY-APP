@@ -155,14 +155,16 @@ class OrderDetailViewModel(
     private fun checkAndUpdateDeliveryCompleteButton() {
         val orderResponse = _orderResponse.value ?: return
         val currentStatus = _orderStatus.value
-        
+
         when (currentStatus) {
             OrderStatus.RETURNING_TO_SENDER -> {
                 _isDeliveryCompleteEnabled.value = true
             }
-            OrderStatus.DELIVERED, OrderStatus.RETURNED, OrderStatus.ORDER_CANCELLED -> {
+
+            OrderStatus.DELIVERED, OrderStatus.RETURNED, OrderStatus.ORDER_CANCELLED, OrderStatus.CANCELLED_BY_DRIVER, OrderStatus.CANCELLED_BY_SENDER -> {
                 _isDeliveryCompleteEnabled.value = false
             }
+
             else -> {
                 val allDelivered = orderResponse.packages.all {
                     it.packageStatus == PackageStatus.DELIVERED.name
@@ -494,7 +496,7 @@ class OrderDetailViewModel(
 
         if (isBeforePickup) {
             val reasonNote = cancelType.cancelName
-            updateOrderStatus(OrderStatus.ORDER_CANCELLED, reasonNote, {
+            updateOrderStatus(OrderStatus.CANCELLED_BY_DRIVER, reasonNote, {
                 val packages = _orderResponse.value?.packages ?: emptyList()
                 if (packages.isNotEmpty()) {
                     var completedCount = 0

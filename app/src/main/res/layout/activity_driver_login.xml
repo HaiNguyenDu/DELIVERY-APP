@@ -32,6 +32,7 @@
         android:layout_marginBottom="@dimen/size_8"
         android:background="@drawable/bg_circle_stroke_8"
         android:hint="@string/s_i_n_tho_i"
+        android:inputType="number"
         android:maxLines="1"
         android:paddingHorizontal="@dimen/size_8"
         android:paddingVertical="@dimen/size_12"
