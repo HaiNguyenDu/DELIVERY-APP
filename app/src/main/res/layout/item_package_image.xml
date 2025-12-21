@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/size_100"
+    android:layout_height="@dimen/size_100"
+    android:layout_marginEnd="@dimen/size_4"
+    android:src="@drawable/img_shipper">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivPackageImage"
+        android:layout_width="@dimen/size_100"
+        android:layout_height="@dimen/size_100"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_border_color="@color/green"
+        app:riv_border_width="@dimen/size_2"
+        app:riv_corner_radius="@dimen/size_10"
+        tools:src="@tools:sample/avatars" />
+</FrameLayout>

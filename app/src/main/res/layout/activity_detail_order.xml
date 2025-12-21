@@ -134,14 +134,31 @@
                 app:layout_constraintEnd_toEndOf="@id/mapView" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPackageImage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_100"
+                android:layout_marginTop="@dimen/size_8"
+                android:clipToPadding="false"
+                android:maxHeight="@dimen/size_300"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:paddingHorizontal="@dimen/size_12"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/mapView"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_package_image" />
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvDeliveryAddress"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_300"
-                android:layout_margin="@dimen/size_16"
-                android:maxHeight="@dimen/size_300"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_8"
+                android:maxHeight="@dimen/size_400"
                 android:overScrollMode="never"
                 android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@id/mapView"
+                app:layout_constraintTop_toBottomOf="@id/rvPackageImage"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_delivery_address_2" />
 
@@ -162,7 +179,8 @@
                 android:id="@+id/constrainLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/size_16"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_8"
                 android:background="@drawable/bg_border_stroke_white_12_80_per"
                 android:padding="@dimen/size_16"
                 app:layout_constraintTop_toBottomOf="@id/rvDeliveryAddress">

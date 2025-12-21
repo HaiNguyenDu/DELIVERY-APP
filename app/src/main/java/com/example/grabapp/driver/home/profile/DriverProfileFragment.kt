@@ -16,6 +16,7 @@ import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.FragmentDriverProfileBinding
+import com.example.grabapp.driver.edit_profile.EditProfileActivity
 import com.example.grabapp.driver.home.DriverHomeViewModel
 import com.example.grabapp.driver.home.DriverHomeViewModelFactory
 import com.example.grabapp.driver.home.FaceUploadState
@@ -65,6 +66,7 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
 
     override fun onViewCreated(view: View, savedInstanceState: android.os.Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.tvPhone.text = tokenStorage.getPhone()
         observeUploadState()
         observeViewModel()
         viewModel.fetchOrders()
@@ -120,6 +122,12 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
             }
             llSetting.onClickWithScale {
                 requireContext().startActivity<SettingActivity>()
+            }
+            tvPhone.onClickWithScale {
+                requireContext().startActivity<EditProfileActivity>()
+            }
+            llLogout.onClickWithScale {
+
             }
         }
 

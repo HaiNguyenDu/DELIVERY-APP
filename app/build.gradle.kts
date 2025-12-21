@@ -70,4 +70,5 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-messaging:23.3.1")
+    implementation("com.makeramen:roundedimageview:2.3.0")
 }

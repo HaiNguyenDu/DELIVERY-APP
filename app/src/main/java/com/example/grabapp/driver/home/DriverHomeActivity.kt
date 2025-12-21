@@ -14,9 +14,14 @@ import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.data.repository.OrderRepository
 import com.example.grabapp.databinding.ActivityDriverHomeBinding
 import com.example.grabapp.driver.base.BaseDriverActivity
+import com.example.grabapp.driver.home.data.ConnectionState
 import com.example.grabapp.driver.home.data.TabType
 import com.example.grabapp.driver.order_detail.OrderDetailActivity
 import com.example.grabapp.extention.onClickWithScale
+import com.example.grabapp.model.Order
+import com.example.grabapp.view.dialog.NewOrderedDialog
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverHomeViewModel>() {
@@ -66,14 +71,14 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
         setupFragment(savedInstanceState)
         fetchOrders()
         observeActiveOrder()
-        
+
         // Check notification order khi onCreate (để handle khi app được mở từ notification)
         handleNotificationOrder()
 
         // Khởi động location updates nếu connection state là CONNECTED
         viewModel.startLocationUpdatesIfConnected()
     }
-    
+
     override fun onResume() {
         super.onResume()
         // Đảm bảo location updates được start khi resume nếu connection state là CONNECTED
@@ -82,13 +87,12 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
         // Check notification order khi resume (để handle khi app được mở từ notification)
         handleNotificationOrder()
     }
-    
+
     private fun handleNotificationOrder() {
         val orderId = intent.getStringExtra("notification_order_id")
         if (!orderId.isNullOrEmpty()) {
-            // Clear orderId từ intent để tránh hiển thị lại khi resume
             intent.removeExtra("notification_order_id")
-            
+
             // Fetch order và hiển thị NewOrderedDialog
             viewModel.fetchOrderById(orderId) { order ->
                 if (order != null) {
@@ -97,22 +101,22 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
             }
         }
     }
-    
+
     private fun showNewOrderDialogFromNotification(order: com.example.grabapp.model.Order) {
         // Kiểm tra xem dialog đã được hiển thị chưa
         val existingDialog = supportFragmentManager.findFragmentByTag("NewOrderedDialog")
         if (existingDialog != null && existingDialog.isAdded) {
             return
         }
-        
+
         // Kiểm tra connection state
         val connectionStorage = com.example.grabapp.data.ConnectionStorage(this)
         val connectionState = connectionStorage.getConnectionState()
-        if (connectionState != com.example.grabapp.driver.home.data.ConnectionState.CONNECTED) {
+        if (connectionState != ConnectionState.CONNECTED) {
             return
         }
-        
-        com.example.grabapp.view.dialog.NewOrderedDialog.newInstance(order).apply {
+
+        NewOrderedDialog.newInstance(order).apply {
             onSkipOrder = {
                 this@apply.dismiss()
             }
@@ -137,7 +141,7 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
         updateActiveOrderVisibility()
     }
 
-    private fun navigateToOrderDetail(order: com.example.grabapp.model.Order) {
+    private fun navigateToOrderDetail(order: Order) {
         val intent = Intent(this, OrderDetailActivity::class.java).apply {
             putExtra("extra_order", order)
         }
