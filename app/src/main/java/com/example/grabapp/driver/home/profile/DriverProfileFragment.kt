@@ -1,6 +1,7 @@
 package com.example.grabapp.driver.home.profile
 
 import android.net.Uri
+import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
@@ -11,7 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
+import com.example.grabapp.data.OrderStorage
 import com.example.grabapp.data.TokenStorage
+import com.example.grabapp.data.model.DriverRegisterResponse
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.FileRepository
 import com.example.grabapp.data.repository.OrderRepository
@@ -20,13 +23,17 @@ import com.example.grabapp.driver.edit_profile.EditProfileActivity
 import com.example.grabapp.driver.home.DriverHomeViewModel
 import com.example.grabapp.driver.home.DriverHomeViewModelFactory
 import com.example.grabapp.driver.home.FaceUploadState
+import com.example.grabapp.driver.login.DriverLoginActivity
 import com.example.grabapp.driver.setting.SettingActivity
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.extention.startActivity
+import com.example.grabapp.util.CurrencyFormatter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverHomeViewModel>() {
     private val tokenStorage by lazy { TokenStorage(requireContext()) }
+    private val orderStorage by lazy { OrderStorage(requireContext()) }
 
     override fun getLazyBinding(): Lazy<FragmentDriverProfileBinding> =
         lazy { FragmentDriverProfileBinding.inflate(layoutInflater) }
@@ -64,7 +71,7 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
             }
         }
 
-    override fun onViewCreated(view: View, savedInstanceState: android.os.Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvPhone.text = tokenStorage.getPhone()
         observeUploadState()
@@ -97,11 +104,11 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
             tvTotalOrders.text = totalOrders.toString()
             tvOrderCount.text = "($totalOrders đơn)"
             tvTotalIncome.text =
-                com.example.grabapp.util.CurrencyFormatter.formatIncome(totalCompletedIncome)
+                CurrencyFormatter.formatIncome(totalCompletedIncome)
         }
     }
 
-    private fun updateDriverInfo(driverInfo: com.example.grabapp.data.model.DriverRegisterResponse) {
+    private fun updateDriverInfo(driverInfo: DriverRegisterResponse) {
         binding.apply {
             tvTotalRate.text = String.format("%.1f", driverInfo.ratingAvg)
             tvRate.text = String.format("%.1f", driverInfo.ratingAvg)
@@ -123,11 +130,11 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
             llSetting.onClickWithScale {
                 requireContext().startActivity<SettingActivity>()
             }
-            tvPhone.onClickWithScale {
+            llEditProfile.onClickWithScale {
                 requireContext().startActivity<EditProfileActivity>()
             }
             llLogout.onClickWithScale {
-
+                handleLogout()
             }
         }
 
@@ -180,5 +187,27 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
             .load(imageUrl)
             .centerCrop()
             .into(binding.tvSummaryName)
+    }
+
+    private fun handleLogout() {
+        if (orderStorage.hasActiveOrder()) {
+            Toast.makeText(
+                requireContext(),
+                "Bạn đang có đơn",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        lifecycleScope.launch {
+            viewModel.updateDriverStatus(false)
+            delay(500)
+            
+            // Clear token storage khi logout
+            tokenStorage.clear()
+            
+            requireActivity().finish()
+            requireContext().startActivity<DriverLoginActivity>()
+        }
     }
 }

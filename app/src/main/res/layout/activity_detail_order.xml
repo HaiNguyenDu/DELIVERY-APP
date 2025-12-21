@@ -95,33 +95,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.maplibre.android.maps.MapView
-                android:id="@+id/mapView"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_300"
                 android:layout_marginHorizontal="@dimen/size_16"
                 android:layout_marginTop="@dimen/size_16"
+
+                app:cardCornerRadius="@dimen/size_10"
+                app:cardElevation="0dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
                 app:layout_constraintTop_toTopOf="parent"
-                app:maplibre_apiBaseUri="https://api.maplibre.org"
-                app:maplibre_cameraBearing="0.0"
-                app:maplibre_cameraPitchMax="90.0"
-                app:maplibre_cameraPitchMin="0.0"
-                app:maplibre_cameraTargetLat="16.07367333700006"
-                app:maplibre_cameraTargetLng="108.14992938100005"
-                app:maplibre_cameraTilt="0.0"
-                app:maplibre_cameraZoom="15.0"
-                app:maplibre_cameraZoomMax="26.0"
-                app:maplibre_cameraZoomMin="2.0"
-                app:maplibre_localIdeographFontFamily="Droid Sans"
-                app:maplibre_uiCompass="true"
-                app:maplibre_uiCompassFadeFacingNorth="true"
-                app:maplibre_uiCompassGravity="top|end"
-                app:maplibre_uiDoubleTapGestures="true"
-                app:maplibre_uiHorizontalScrollGestures="true"
-                app:maplibre_uiRotateGestures="true"
-                app:maplibre_uiScrollGestures="true"
-                app:maplibre_uiTiltGestures="true"
-                app:maplibre_uiZoomGestures="true" />
+                app:strokeWidth="0dp">
+
+                <org.maplibre.android.maps.MapView
+                    android:id="@+id/mapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    app:maplibre_apiBaseUri="https://api.maplibre.org"
+                    app:maplibre_cameraBearing="0.0"
+                    app:maplibre_cameraPitchMax="90.0"
+                    app:maplibre_cameraPitchMin="0.0"
+                    app:maplibre_cameraTargetLat="16.07367333700006"
+                    app:maplibre_cameraTargetLng="108.14992938100005"
+                    app:maplibre_cameraTilt="0.0"
+                    app:maplibre_cameraZoom="15.0"
+                    app:maplibre_cameraZoomMax="26.0"
+                    app:maplibre_cameraZoomMin="2.0"
+                    app:maplibre_localIdeographFontFamily="Droid Sans"
+                    app:maplibre_uiCompass="true"
+                    app:maplibre_uiCompassFadeFacingNorth="true"
+                    app:maplibre_uiCompassGravity="top|end"
+                    app:maplibre_uiDoubleTapGestures="true"
+                    app:maplibre_uiHorizontalScrollGestures="true"
+                    app:maplibre_uiRotateGestures="true"
+                    app:maplibre_uiScrollGestures="true"
+                    app:maplibre_uiTiltGestures="true"
+                    app:maplibre_uiZoomGestures="true" />
+
+            </com.google.android.material.card.MaterialCardView>
+
 
             <ImageView
                 android:id="@+id/ivLocatedFixed"
@@ -130,8 +145,8 @@
                 android:layout_margin="@dimen/size_16"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_locate_fixed"
-                app:layout_constraintBottom_toBottomOf="@id/mapView"
-                app:layout_constraintEnd_toEndOf="@id/mapView" />
+                app:layout_constraintBottom_toBottomOf="@id/materialCardView"
+                app:layout_constraintEnd_toEndOf="@id/materialCardView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPackageImage"
@@ -142,10 +157,10 @@
                 android:maxHeight="@dimen/size_300"
                 android:orientation="horizontal"
                 android:overScrollMode="never"
-                android:paddingHorizontal="@dimen/size_12"
+                android:paddingHorizontal="@dimen/size_16"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/mapView"
+                app:layout_constraintTop_toBottomOf="@id/materialCardView"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_package_image" />
 

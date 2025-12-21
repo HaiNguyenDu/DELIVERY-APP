@@ -32,12 +32,11 @@ import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.model.Address
 import com.example.grabapp.model.DeliveryAddressItem
 import com.example.grabapp.model.Order
-import com.example.grabapp.model.CancelOrderType
 import com.example.grabapp.model.OrderState
 import com.example.grabapp.model.OrderStatus
+import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.service.MyFirebaseMessagingService
 import com.example.grabapp.view.dialog.CancelOrderDialog
-import com.example.grabapp.respone.GoongDirectionApiResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.maplibre.android.annotations.IconFactory
@@ -147,6 +146,16 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                     viewModel.addressItems.collect { items ->
                         if (items.isNotEmpty()) {
                             setupRecyclerView(items)
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.orderResponse.collect { orderResponse ->
+                        orderResponse?.let {
+                            setupPackageImages(it.packages.mapNotNull { packageInfo ->
+                                packageInfo.imageUrl
+                            })
                         }
                     }
                 }
@@ -548,6 +557,22 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         }
     }
 
+    private fun setupPackageImages(imageUrls: List<String>) {
+        binding.apply {
+            if (imageUrls.isNotEmpty()) {
+                rvPackageImage.visibility = View.VISIBLE
+                rvPackageImage.layoutManager = LinearLayoutManager(
+                    this@OrderDetailActivity,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+                rvPackageImage.adapter = PackageImageAdapter(imageUrls)
+            } else {
+                rvPackageImage.visibility = View.GONE
+            }
+        }
+    }
+
     override fun handleInsets(v: View, insets: Insets) {
         binding.toolbar.setPadding(0, insets.top, 0, 0)
     }
@@ -775,7 +800,6 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         try {
             unregisterReceiver(orderCancelledReceiver)
         } catch (e: Exception) {
-            // Receiver might not be registered
         }
         binding.mapView.onDestroy()
         super.onDestroy()

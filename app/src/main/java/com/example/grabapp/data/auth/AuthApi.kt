@@ -2,6 +2,7 @@ package com.example.grabapp.data.auth
 
 import com.example.grabapp.data.model.AuthRequest
 import com.example.grabapp.data.model.AuthResponse
+import com.example.grabapp.data.model.RefreshTokenRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -11,4 +12,8 @@ interface AuthApi {
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("api/auth/login")
     suspend fun login(@Body request: AuthRequest): Response<AuthResponse>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("api/auth/refresh")
+    suspend fun refreshToken(@Body request: RefreshTokenRequest): Response<AuthResponse>
 }

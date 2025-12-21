@@ -55,85 +55,91 @@
         android:textSize="@dimen/font_16"
         app:layout_constraintTop_toBottomOf="@id/llTitle" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constrainLayout1"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_16"
-        android:layout_marginTop="-20dp"
-        android:background="@drawable/bg_gradient_green_disconnected"
-        android:padding="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_8"
         app:layout_constraintTop_toBottomOf="@id/emptyView">
 
-        <ImageView
-            android:id="@+id/ivConnectionStatus"
-            android:layout_width="@dimen/size_64"
-            android:layout_height="@dimen/size_64"
-            android:background="@drawable/bg_circle_stroke_gray_16"
-            android:contentDescription="@null"
-            android:elevation="@dimen/size_12"
-            android:padding="@dimen/size_12"
-            android:src="@drawable/ic_no_wifi"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvConnectionStatus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_6"
-            android:layout_marginTop="@dimen/size_8"
-            android:fontFamily="@font/bold"
-            android:text="@string/offline"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_20"
-            app:layout_constraintEnd_toStartOf="@id/ivToggleConnection"
-            app:layout_constraintStart_toEndOf="@id/ivConnectionStatus"
-            app:layout_constraintTop_toTopOf="@id/ivConnectionStatus" />
-
-        <ImageView
-            android:id="@+id/ivToggleConnection"
-            android:layout_width="@dimen/size_56"
-            android:layout_height="@dimen/size_56"
-            android:background="@drawable/bg_circle_stroke_gray_16"
-            android:contentDescription="@null"
-            android:elevation="@dimen/size_12"
-            android:padding="@dimen/size_12"
-            android:src="@drawable/ic_white_power"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/llFinding"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrainLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_16"
-            android:background="@drawable/bg_circle_stroke_green_100"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/size_18"
-            android:paddingVertical="@dimen/size_10"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivConnectionStatus">
+            android:background="@drawable/bg_gradient_green_disconnected"
+            android:padding="@dimen/size_24">
 
             <ImageView
-                android:layout_width="@dimen/size_8"
-                android:layout_height="@dimen/size_8"
+                android:id="@+id/ivConnectionStatus"
+                android:layout_width="@dimen/size_64"
+                android:layout_height="@dimen/size_64"
+                android:background="@drawable/bg_circle_stroke_gray_16"
                 android:contentDescription="@null"
-                android:src="@drawable/bg_circle_white_100" />
+                android:elevation="@dimen/size_12"
+                android:padding="@dimen/size_12"
+                android:src="@drawable/ic_no_wifi"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tvConnectionStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_8"
-                android:layout_weight="1"
-                android:fontFamily="@font/medium"
-                android:gravity="center_vertical"
-                android:text="@string/ang_t_m_ki_m_n_h_ng_g_n_b_n"
+                android:layout_marginStart="@dimen/size_6"
+                android:layout_marginTop="@dimen/size_8"
+                android:fontFamily="@font/bold"
+                android:text="@string/offline"
                 android:textColor="@color/white"
-                android:textSize="@dimen/font_12" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textSize="@dimen/font_20"
+                app:layout_constraintEnd_toStartOf="@id/ivToggleConnection"
+                app:layout_constraintStart_toEndOf="@id/ivConnectionStatus"
+                app:layout_constraintTop_toTopOf="@id/ivConnectionStatus" />
+
+            <ImageView
+                android:id="@+id/ivToggleConnection"
+                android:layout_width="@dimen/size_56"
+                android:layout_height="@dimen/size_56"
+                android:background="@drawable/bg_circle_stroke_gray_16"
+                android:contentDescription="@null"
+                android:elevation="@dimen/size_12"
+                android:padding="@dimen/size_12"
+                android:src="@drawable/ic_white_power"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/llFinding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:background="@drawable/bg_circle_stroke_green_100"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/size_18"
+                android:paddingVertical="@dimen/size_10"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivConnectionStatus">
+
+                <ImageView
+                    android:layout_width="@dimen/size_8"
+                    android:layout_height="@dimen/size_8"
+                    android:contentDescription="@null"
+                    android:src="@drawable/bg_circle_white_100" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_8"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/medium"
+                    android:gravity="center_vertical"
+                    android:text="@string/ang_t_m_ki_m_n_h_ng_g_n_b_n"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_12" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -145,7 +151,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constrainLayout1">
+        app:layout_constraintTop_toBottomOf="@id/shimmerLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

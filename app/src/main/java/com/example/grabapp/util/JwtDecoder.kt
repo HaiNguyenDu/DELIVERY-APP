@@ -28,4 +28,11 @@ object JwtDecoder {
     fun extractUserId(token: String): String? {
         return decodePayload(token)?.sub
     }
+
+    fun isTokenExpired(token: String): Boolean {
+        val payload = decodePayload(token) ?: return true
+        val exp = payload.exp ?: return true
+        val currentTime = System.currentTimeMillis() / 1000
+        return exp <= currentTime
+    }
 }
