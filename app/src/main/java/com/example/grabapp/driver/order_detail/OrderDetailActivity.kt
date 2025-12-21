@@ -70,7 +70,8 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             if (intent?.action == MyFirebaseMessagingService.ACTION_ORDER_CANCELLED) {
                 val orderId = intent.getStringExtra(MyFirebaseMessagingService.EXTRA_ORDER_ID)
                 orderId?.let {
-                    val currentOrderId = viewModel.order.value?.orderId ?: viewModel.orderResponse.value?.id
+                    val currentOrderId =
+                        viewModel.order.value?.orderId ?: viewModel.orderResponse.value?.id
                     if (currentOrderId == orderId) {
                         handleOrderCancelledNotification()
                     }
@@ -111,7 +112,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         requestLocationPermission()
         setupAutoUpdate()
     }
-    
+
     private fun registerOrderCancelledReceiver() {
         val filter = IntentFilter(MyFirebaseMessagingService.ACTION_ORDER_CANCELLED)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -121,7 +122,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             registerReceiver(orderCancelledReceiver, filter)
         }
     }
-    
+
     private fun handleOrderCancelledNotification() {
         isWaitingForCancellation = false
         // Reload order details để lấy status mới nhất (ORDER_CANCELLED)
@@ -149,7 +150,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                         }
                     }
                 }
-                
+
                 launch {
                     viewModel.orderStatus.collect { status ->
                         // Update adapter when status changes
@@ -175,7 +176,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                         }
                     }
                 }
-                
+
                 launch {
                     viewModel.orderStatus.collect { status ->
                         status?.let {
@@ -183,21 +184,22 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                             if (it == OrderStatus.CANCELLED_BY_DRIVER && !isWaitingForCancellation) {
                                 isWaitingForCancellation = true
                             }
-                            
+
                             updateOrderStatusDisplay(it)
                             updateUIForOrderStatus(it)
-                            
+
                             // Xóa orderId khi order hoàn thành hoặc bị hủy
                             if (it == OrderStatus.DELIVERED ||
-                                it == OrderStatus.RETURNED || 
-                                it == OrderStatus.ORDER_CANCELLED) {
+                                it == OrderStatus.RETURNED ||
+                                it == OrderStatus.ORDER_CANCELLED
+                            ) {
                                 orderStorage.clearActiveOrder()
                                 isWaitingForCancellation = false
                             }
                         }
                     }
                 }
-                
+
                 launch {
                     viewModel.isDeliveryCompleteEnabled.collect { enabled ->
                         binding.tvDeliveryComplete.isEnabled = enabled
@@ -207,7 +209,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             }
         }
     }
-    
+
     private fun setupAutoUpdate() {
         autoUpdateJob = lifecycleScope.launch {
             delay(10000) // 10 seconds
@@ -228,11 +230,11 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             }
         }
     }
-    
+
     private fun updateOrderStatusDisplay(status: OrderStatus) {
         binding.tvStatus.text = status.statusName
     }
-    
+
     private fun updateUIForOrderStatus(status: OrderStatus) {
         when (status) {
             OrderStatus.ORDER_CANCELLED -> {
@@ -241,6 +243,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                 binding.tvCancelOrder.visibility = View.GONE
                 isWaitingForCancellation = false
             }
+
             OrderStatus.CANCELLED_BY_DRIVER -> {
                 // Luôn hiển thị trạng thái đang đợi xác nhận hủy đơn
                 // Vì nếu đã ORDER_CANCELLED thì status sẽ không còn là CANCELLED_BY_DRIVER nữa
@@ -248,17 +251,20 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                 binding.tvDeliveryComplete.text = "Đang đợi xác nhận"
                 binding.tvCancelOrder.visibility = View.GONE
             }
+
             OrderStatus.RETURNING_TO_SENDER -> {
                 binding.tvStatus.text = "Đang trả hàng"
                 binding.tvDeliveryComplete.text = "Trả hàng"
                 binding.tvCancelOrder.visibility = View.GONE
                 updateMapForReturning()
             }
+
             OrderStatus.RETURNED -> {
                 binding.tvStatus.text = "Đã trả hàng"
                 binding.tvDeliveryComplete.text = "Đã trả hàng"
                 binding.tvCancelOrder.visibility = View.GONE
             }
+
             else -> {
                 val canCancel = status == OrderStatus.ARRIVED_PICKUP ||
                         status == OrderStatus.DRIVER_EN_ROUTE_PICKUP ||
@@ -270,30 +276,30 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             }
         }
     }
-    
+
     private fun updateMapForReturning() {
         mapLibreMap?.let { map ->
             val startLatLng = viewModel.positioning.value?.let {
                 LatLng(it.coordinates.lat, it.coordinates.lng)
             } ?: return
-            
+
             val pickupAddress = viewModel.getPickUpAddress()
             val pickupLatLng = LatLng(
                 pickupAddress.coordinates.lat,
                 pickupAddress.coordinates.lng
             )
-            
+
             endMarker?.remove()
             val iconFactory = IconFactory.getInstance(this)
             val endBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_map)
                 .scale(80, 80, false)
             val endIcon = iconFactory.fromBitmap(endBitmap)
-            
+
             endMarker = map.addMarker(
                 MarkerOptions().position(pickupLatLng).icon(endIcon)
                     .title("Điểm trả hàng")
             )
-            
+
             viewModel.getDirectionToAddress(
                 destination = pickupAddress,
                 onSuccess = { response ->
@@ -302,12 +308,12 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                 onError = { error ->
                 }
             )
-            
+
             val bounds = LatLngBounds.Builder()
                 .include(startLatLng)
                 .include(pickupLatLng)
                 .build()
-            
+
             binding.mapView.post {
                 try {
                     val padding = 150
@@ -320,7 +326,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             }
         }
     }
-    
+
     private fun showCancelOrderDialog() {
         val currentStatus = viewModel.orderStatus.value ?: return
         CancelOrderDialog.newInstance(
@@ -417,7 +423,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
         binding.tvCancelOrder.onClickWithScale {
             showCancelOrderDialog()
         }
-        
+
         binding.tvDeliveryComplete.onClickWithScale {
             if (binding.tvDeliveryComplete.isEnabled) {
                 val currentStatus = viewModel.orderStatus.value
@@ -531,7 +537,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             )
         }
     }
-    
+
     private fun handleDeliveredClick(item: DeliveryAddressItem) {
         if (item.isPickup) {
             viewModel.handlePickupAddressClick()

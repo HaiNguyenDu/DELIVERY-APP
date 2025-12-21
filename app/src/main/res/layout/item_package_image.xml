@@ -16,8 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:riv_border_color="@color/green"
-        app:riv_border_width="@dimen/size_2"
+        app:riv_border_color="#E0E0E0"
+        app:riv_border_width="@dimen/size_1"
         app:riv_corner_radius="@dimen/size_10"
         tools:src="@tools:sample/avatars" />
 </FrameLayout>
