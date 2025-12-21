@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_circle_dialog_24"
+    android:paddingHorizontal="@dimen/size_12"
+    android:paddingVertical="@dimen/size_18">
+
+    <TextView
+        android:id="@+id/tvRateCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:fontFamily="@font/medium"
+        android:text="Đánh giá 5 cuốc xe trước"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tvRateCount">
+
+        <TextView
+            android:id="@+id/tvTotalStar"
+            android:layout_width="@dimen/size_100"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="5.00"
+            android:textSize="@dimen/font_18" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingEnd="@dimen/size_12">
+
+            <TextView
+                android:id="@+id/tvFiveStarCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/pbFiveStar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_8"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:progress="80"
+                android:progressDrawable="@drawable/progress_bar_gradient"
+                app:layout_constraintBottom_toBottomOf="@id/tvFiveStarCount"
+                app:layout_constraintEnd_toStartOf="@id/tvFiveStar"
+                app:layout_constraintStart_toEndOf="@id/tvFiveStarCount"
+                app:layout_constraintTop_toTopOf="@id/tvFiveStarCount" />
+
+            <TextView
+                android:id="@+id/tvFiveStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvFourStarCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvFiveStarCount" />
+
+            <ProgressBar
+                android:id="@+id/pbFourStar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_8"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:progressDrawable="@drawable/progress_bar_gradient"
+                app:layout_constraintBottom_toBottomOf="@id/tvFourStarCount"
+                app:layout_constraintEnd_toStartOf="@id/tvFourStar"
+                app:layout_constraintStart_toEndOf="@id/tvFourStarCount"
+                app:layout_constraintTop_toTopOf="@id/tvFourStarCount" />
+
+            <TextView
+                android:id="@+id/tvFourStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvFiveStar" />
+
+            <TextView
+                android:id="@+id/tvThreeStarCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvFourStarCount" />
+
+            <ProgressBar
+                android:id="@+id/pbThreeStar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_8"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:progressDrawable="@drawable/progress_bar_gradient"
+                app:layout_constraintBottom_toBottomOf="@id/tvThreeStarCount"
+                app:layout_constraintEnd_toStartOf="@id/tvThreeStar"
+                app:layout_constraintStart_toEndOf="@id/tvThreeStarCount"
+                app:layout_constraintTop_toTopOf="@id/tvThreeStarCount" />
+
+            <TextView
+                android:id="@+id/tvThreeStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvFourStar" />
+
+            <TextView
+                android:id="@+id/tvTwoStarCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvThreeStarCount" />
+
+            <ProgressBar
+                android:id="@+id/pbTwoStar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_8"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:progress="20"
+                android:progressDrawable="@drawable/progress_bar_gradient"
+                app:layout_constraintBottom_toBottomOf="@id/tvTwoStarCount"
+                app:layout_constraintEnd_toStartOf="@id/tvTwoStar"
+                app:layout_constraintStart_toEndOf="@id/tvTwoStarCount"
+                app:layout_constraintTop_toTopOf="@id/tvTwoStarCount" />
+
+            <TextView
+                android:id="@+id/tvTwoStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvThreeStar" />
+
+            <TextView
+                android:id="@+id/tvOneStarCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTwoStarCount" />
+
+            <ProgressBar
+                android:id="@+id/pbOneStar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_8"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:progressDrawable="@drawable/progress_bar_gradient"
+                app:layout_constraintBottom_toBottomOf="@id/tvOneStarCount"
+                app:layout_constraintEnd_toStartOf="@id/tvOneStar"
+                app:layout_constraintStart_toEndOf="@id/tvOneStarCount"
+                app:layout_constraintTop_toTopOf="@id/tvOneStarCount" />
+
+            <TextView
+                android:id="@+id/tvOneStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTwoStar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
