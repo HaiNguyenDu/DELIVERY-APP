@@ -37,6 +37,7 @@ import com.example.grabapp.model.OrderStatus
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.service.MyFirebaseMessagingService
 import com.example.grabapp.view.dialog.CancelOrderDialog
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.maplibre.android.annotations.IconFactory
@@ -61,8 +62,10 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     private var endMarker: Marker? = null
     private var routePolyline: Polyline? = null
     private var autoUpdateJob: kotlinx.coroutines.Job? = null
+    private var locationUpdateJob: Job? = null
     private lateinit var orderStorage: OrderStorage
     private var isWaitingForCancellation = false
+    private var isReturnArrived = false
 
     private val orderCancelledReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -189,7 +192,6 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                 launch {
                     viewModel.orderStatus.collect { status ->
                         status?.let {
-                            // Tự động set flag khi status là CANCELLED_BY_DRIVER (đang đợi xác nhận)
                             if (it == OrderStatus.CANCELLED_BY_DRIVER && !isWaitingForCancellation) {
                                 isWaitingForCancellation = true
                             }
@@ -200,7 +202,9 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                             // Xóa orderId khi order hoàn thành hoặc bị hủy
                             if (it == OrderStatus.DELIVERED ||
                                 it == OrderStatus.RETURNED ||
-                                it == OrderStatus.ORDER_CANCELLED
+                                it == OrderStatus.ORDER_CANCELLED ||
+                                it == OrderStatus.CANCELLED_BY_DRIVER ||
+                                it == OrderStatus.CANCELLED_BY_SENDER
                             ) {
                                 orderStorage.clearActiveOrder()
                                 isWaitingForCancellation = false
@@ -217,6 +221,42 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                 }
             }
         }
+    }
+
+    private fun startLocationMarkerUpdate() {
+        locationUpdateJob?.cancel()
+        locationUpdateJob = lifecycleScope.launch {
+            while (true) {
+                delay(5000)
+                updateDriverMarkerPosition()
+            }
+        }
+    }
+
+    private fun stopLocationMarkerUpdate() {
+        locationUpdateJob?.cancel()
+        locationUpdateJob = null
+    }
+
+    private fun updateDriverMarkerPosition() {
+        val map = mapLibreMap ?: return
+        val currentMarker = startMarker ?: return
+
+        // Lấy vị trí hiện tại
+        viewModel.getCurrentLocation(
+            onSuccess = { address ->
+                val newLatLng = LatLng(
+                    address.coordinates.lat,
+                    address.coordinates.lng
+                )
+
+                // Cập nhật marker position mà không cập nhật camera
+                currentMarker.position = newLatLng
+            },
+            onError = {
+                // Không làm gì nếu không lấy được location
+            }
+        )
     }
 
     private fun setupAutoUpdate() {
@@ -254,21 +294,26 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             }
 
             OrderStatus.CANCELLED_BY_DRIVER -> {
-                // Luôn hiển thị trạng thái đang đợi xác nhận hủy đơn
-                // Vì nếu đã ORDER_CANCELLED thì status sẽ không còn là CANCELLED_BY_DRIVER nữa
-                binding.tvStatus.text = "Đang đợi xác nhận hủy đơn"
+                binding.tvStatus.text = "Đang tìm tài xế"
                 binding.tvDeliveryComplete.text = "Đang đợi xác nhận"
                 binding.tvCancelOrder.visibility = View.GONE
             }
 
             OrderStatus.RETURNING_TO_SENDER -> {
                 binding.tvStatus.text = "Đang trả hàng"
-                binding.tvDeliveryComplete.text = "Trả hàng"
+                binding.tvDeliveryComplete.text = "Đã đến điểm trả hàng"
                 binding.tvCancelOrder.visibility = View.GONE
+                isReturnArrived = false
                 updateMapForReturning()
             }
 
             OrderStatus.RETURNED -> {
+                binding.tvStatus.text = "Đã trả hàng"
+                binding.tvDeliveryComplete.text = "Đã trả hàng"
+                binding.tvCancelOrder.visibility = View.GONE
+            }
+
+            OrderStatus.DELIVERED_WITH_ISSUES -> {
                 binding.tvStatus.text = "Đã trả hàng"
                 binding.tvDeliveryComplete.text = "Đã trả hàng"
                 binding.tvCancelOrder.visibility = View.GONE
@@ -437,22 +482,29 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             if (binding.tvDeliveryComplete.isEnabled) {
                 val currentStatus = viewModel.orderStatus.value
                 if (currentStatus == OrderStatus.RETURNING_TO_SENDER) {
-                    viewModel.completeReturn(
-                        onSuccess = {
-                            Toast.makeText(
-                                this,
-                                "Đã trả hàng thành công",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        },
-                        onError = { error ->
-                            Toast.makeText(
-                                this,
-                                "Lỗi: $error",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    )
+                    if (!isReturnArrived) {
+                        // Lần đầu nhấn: đổi text thành "Trả hàng thành công"
+                        binding.tvDeliveryComplete.text = "Trả hàng thành công"
+                        isReturnArrived = true
+                    } else {
+                        // Lần thứ hai nhấn: complete return
+                        viewModel.completeReturnWithIssues(
+                            onSuccess = {
+                                Toast.makeText(
+                                    this,
+                                    "Đã trả hàng thành công",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
+                            onError = { error ->
+                                Toast.makeText(
+                                    this,
+                                    "Lỗi: $error",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        )
+                    }
                 } else {
                     viewModel.updateOrderStatus(
                         OrderStatus.DELIVERED,
@@ -534,16 +586,53 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             rvDeliveryAddress.adapter = DeliveryAddressAdapter2(
                 items = items,
                 orderStatus = viewModel.orderStatus.value,
-                onCallClick = { name ->
-                    // TODO: Implement call functionality
+                onCallClick = { item ->
+                    handleCallClick(item)
                 },
                 onMessageClick = { name ->
                     // TODO: Implement message functionality
                 },
                 onDeliveredClick = { item ->
                     handleDeliveredClick(item)
+                },
+                onCancelClick = { item ->
+                    handleCancelClick(item)
                 }
             )
+        }
+    }
+
+    private fun handleCancelClick(item: DeliveryAddressItem) {
+        if (!item.isPickup) {
+            item.packageId?.let { packageId ->
+                viewModel.handleCancelPackageClick(packageId)
+            }
+        }
+    }
+
+    private fun handleCallClick(item: DeliveryAddressItem) {
+        val phoneNumber = item.phone
+        if (phoneNumber.isNullOrEmpty()) {
+            Toast.makeText(
+                this,
+                "Không có số điện thoại",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = android.net.Uri.parse("tel:$phoneNumber")
+        }
+        
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        } else {
+            Toast.makeText(
+                this,
+                "Không tìm thấy ứng dụng điện thoại",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -623,6 +712,11 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                         MarkerOptions().position(startLatLng).icon(driverIcon)
                             .title("Vị trí hiện tại")
                     )
+
+                    // Bắt đầu cập nhật location marker sau khi map đã được setup
+                    if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                        startLocationMarkerUpdate()
+                    }
                 }
 
                 endMarker = map.addMarker(
@@ -783,20 +877,26 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()
+        if (mapLibreMap != null && startMarker != null) {
+            startLocationMarkerUpdate()
+        }
     }
 
     override fun onPause() {
+        stopLocationMarkerUpdate()
         binding.mapView.onPause()
         super.onPause()
     }
 
     override fun onStop() {
+        stopLocationMarkerUpdate()
         binding.mapView.onStop()
         super.onStop()
     }
 
     override fun onDestroy() {
         autoUpdateJob?.cancel()
+        stopLocationMarkerUpdate()
         try {
             unregisterReceiver(orderCancelledReceiver)
         } catch (e: Exception) {

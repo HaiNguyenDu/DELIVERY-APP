@@ -74,6 +74,7 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvPhone.text = tokenStorage.getPhone()
+        loadSavedImage()
         observeUploadState()
         observeViewModel()
         viewModel.fetchOrders()
@@ -158,6 +159,11 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
                     is FaceUploadState.UploadingFile -> {
                     }
 
+                    is FaceUploadState.FileUploadSuccess -> {
+                        // Load và hiển thị ảnh ngay sau khi upload file thành công
+                        loadImageFromUrl(state.imageUrl)
+                    }
+
                     is FaceUploadState.UploadingToAI -> {
                     }
 
@@ -187,6 +193,13 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
             .load(imageUrl)
             .centerCrop()
             .into(binding.tvSummaryName)
+    }
+    
+    private fun loadSavedImage() {
+        val savedImageUrl = tokenStorage.getImageUrl()
+        if (!savedImageUrl.isNullOrEmpty()) {
+            loadImageFromUrl(savedImageUrl)
+        }
     }
 
     private fun handleLogout() {

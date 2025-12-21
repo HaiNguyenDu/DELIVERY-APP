@@ -82,6 +82,10 @@ class DriverHomeViewModel(
                     val imageUrl = uploadResult?.url
                     
                     if (imageUrl != null) {
+                        tokenStorage.saveImageUrl(imageUrl)
+                        
+                        _uploadState.value = FaceUploadState.FileUploadSuccess(imageUrl)
+                        
                         _uploadState.value = FaceUploadState.UploadingToAI
                         
                         val faceRequest = UploadFaceRequest(listOf(imageUrl))
@@ -311,16 +315,16 @@ class DriverHomeViewModel(
                 // Dừng location updates khi app bị kill
                 locationUpdateManager.stopLocationUpdates()
                 
-                val currentState = connectionStorage.getConnectionState()
-                if (currentState == ConnectionState.CONNECTED) {
-                    val fcmToken = FCMTokenHelper.getFCMToken(getApplication())
-                    val request = UpdateDriverStatusRequest(
-                        isAvailable = false,
-                        fcmToken = fcmToken
-                    )
-                    driverRepository.updateDriverStatus(request)
-                    connectionStorage.saveConnectionState(ConnectionState.DISCONNECTED)
-                }
+//                val currentState = connectionStorage.getConnectionState()
+//                if (currentState == ConnectionState.CONNECTED) {
+//                    val fcmToken = FCMTokenHelper.getFCMToken(getApplication())
+//                    val request = UpdateDriverStatusRequest(
+//                        isAvailable = false,
+//                        fcmToken = fcmToken
+//                    )
+//                    driverRepository.updateDriverStatus(request)
+//                    connectionStorage.saveConnectionState(ConnectionState.DISCONNECTED)
+//                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 connectionStorage.saveConnectionState(ConnectionState.DISCONNECTED)
@@ -358,6 +362,7 @@ sealed class FaceUploadState {
     object Idle : FaceUploadState()
     object PickingImage : FaceUploadState()
     object UploadingFile : FaceUploadState()
+    data class FileUploadSuccess(val imageUrl: String) : FaceUploadState()
     object UploadingToAI : FaceUploadState()
     data class Success(val imageUrl: String) : FaceUploadState()
     data class Error(val message: String) : FaceUploadState()

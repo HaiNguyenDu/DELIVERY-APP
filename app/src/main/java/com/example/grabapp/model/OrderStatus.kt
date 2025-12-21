@@ -28,6 +28,7 @@ enum class OrderStatus(
     // Special cases – Các trường hợp đặc biệt
     DRIVER_ISSUE_REPORTED("Tài xế gặp sự cố"),
     REASSIGNING_DRIVER("Đang đổi tài xế"),
+    DELIVERED_WITH_ISSUES("Giao hàng có sự cố"),
 
     // Cancel – Hủy đơn
     CANCELLED_BY_SENDER("Người gửi hủy"),

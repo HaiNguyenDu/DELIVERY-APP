@@ -97,7 +97,8 @@ class OrderDetailViewModel(
                 address = orderResponse.pickupAddress.detail,
                 isPickup = true,
                 packageId = null,
-                packageStatus = null
+                packageStatus = null,
+                phone = orderResponse.pickupAddress.phone
             )
         )
 
@@ -128,7 +129,8 @@ class OrderDetailViewModel(
                     address = packageInfo.dropoffAddress.detail,
                     isPickup = false,
                     packageId = packageInfo.id,
-                    packageStatus = packageStatus
+                    packageStatus = packageStatus,
+                    phone = packageInfo.dropoffAddress.phone
                 )
             )
         }
@@ -161,7 +163,7 @@ class OrderDetailViewModel(
                 _isDeliveryCompleteEnabled.value = true
             }
 
-            OrderStatus.DELIVERED, OrderStatus.RETURNED, OrderStatus.ORDER_CANCELLED, OrderStatus.CANCELLED_BY_DRIVER, OrderStatus.CANCELLED_BY_SENDER -> {
+            OrderStatus.DELIVERED, OrderStatus.RETURNED, OrderStatus.ORDER_CANCELLED, OrderStatus.CANCELLED_BY_DRIVER, OrderStatus.CANCELLED_BY_SENDER, OrderStatus.DELIVERED_WITH_ISSUES -> {
                 _isDeliveryCompleteEnabled.value = false
             }
 
@@ -478,10 +480,82 @@ class OrderDetailViewModel(
                     val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
                     _addressItems.value = addressItems
                     checkAndUpdateDeliveryCompleteButton()
+                    checkAndHandleReturnIfNeeded()
                 }, {})
             }
 
             else -> {}
+        }
+    }
+
+    fun handleCancelPackageClick(packageId: String) {
+        updatePackageStatus(packageId, PackageStatus.DELIVERY_FAILED, null, {
+            val addressItems = createAddressListFromOrderResponse(_orderResponse.value!!)
+            _addressItems.value = addressItems
+            checkAndUpdateDeliveryCompleteButton()
+            checkAndHandleReturnIfNeeded()
+        }, {})
+    }
+
+    private fun checkAndHandleReturnIfNeeded() {
+        val orderResponse = _orderResponse.value ?: return
+        val packages = orderResponse.packages
+        if (packages.isEmpty()) return
+
+        // Check nếu tất cả packages đã hoàn thành (DELIVERED hoặc DELIVERY_FAILED)
+        // "Hoàn thành" ở đây có nghĩa là không còn package nào ở trạng thái PICKED_UP, DELIVERY_IN_PROGRESS, WAITING_FOR_DELIVERY
+        val allPackagesCompleted = packages.all { packageInfo ->
+            val status = packageInfo.packageStatus?.let { parsePackageStatus(it) }
+            status == PackageStatus.DELIVERED || 
+            status == PackageStatus.DELIVERY_FAILED ||
+            status == PackageStatus.RETURNING ||
+            status == PackageStatus.RETURNED
+        }
+
+        if (allPackagesCompleted) {
+            // Check nếu có package nào DELIVERY_FAILED
+            val hasFailedPackage = packages.any { packageInfo ->
+                packageInfo.packageStatus?.let { parsePackageStatus(it) } == PackageStatus.DELIVERY_FAILED
+            }
+
+            if (hasFailedPackage && _orderStatus.value != OrderStatus.RETURNING_TO_SENDER && _orderStatus.value != OrderStatus.DELIVERED_WITH_ISSUES) {
+                // Update OrderStatus thành RETURNING_TO_SENDER
+                updateOrderStatus(OrderStatus.RETURNING_TO_SENDER, null, {
+                    // Update tất cả package có status DELIVERY_FAILED thành RETURNING
+                    val failedPackages = packages.filter {
+                        it.packageStatus?.let { status -> parsePackageStatus(status) } == PackageStatus.DELIVERY_FAILED
+                    }
+
+                    if (failedPackages.isNotEmpty()) {
+                        var completedCount = 0
+                        failedPackages.forEach { packageInfo ->
+                            updatePackageStatus(
+                                packageInfo.id,
+                                PackageStatus.RETURNING,
+                                null,
+                                {
+                                    completedCount++
+                                    if (completedCount == failedPackages.size) {
+                                        val addressItems =
+                                            createAddressListFromOrderResponse(_orderResponse.value!!)
+                                        _addressItems.value = addressItems
+                                        checkAndUpdateDeliveryCompleteButton()
+                                    }
+                                },
+                                { error ->
+                                    completedCount++
+                                    if (completedCount == failedPackages.size) {
+                                        val addressItems =
+                                            createAddressListFromOrderResponse(_orderResponse.value!!)
+                                        _addressItems.value = addressItems
+                                        checkAndUpdateDeliveryCompleteButton()
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }, {})
+            }
         }
     }
 
@@ -625,6 +699,59 @@ class OrderDetailViewModel(
                     }
                 }
             } else {
+                onSuccess()
+            }
+        }, onError)
+    }
+
+    fun completeReturnWithIssues(onSuccess: () -> Unit, onError: (String) -> Unit) {
+        val orderId = _orderResponse.value?.id ?: _order.value?.orderId
+        if (orderId == null) {
+            onError("Không tìm thấy order ID")
+            return
+        }
+
+        // Update order status to DELIVERED_WITH_ISSUES
+        updateOrderStatus(OrderStatus.DELIVERED_WITH_ISSUES, null, {
+            // Update all packages with status RETURNING to RETURNED
+            val packages = _orderResponse.value?.packages ?: emptyList()
+            if (packages.isNotEmpty()) {
+                var completedCount = 0
+                val packagesToUpdate = packages.filter {
+                    it.packageStatus == PackageStatus.RETURNING.name
+                }
+
+                if (packagesToUpdate.isEmpty()) {
+                    loadOrderDetails(orderId)
+                    _isDeliveryCompleteEnabled.value = false
+                    onSuccess()
+                } else {
+                    packagesToUpdate.forEach { packageInfo ->
+                        updatePackageStatus(
+                            packageInfo.id,
+                            PackageStatus.RETURNED,
+                            null,
+                            {
+                                completedCount++
+                                if (completedCount == packagesToUpdate.size) {
+                                    loadOrderDetails(orderId)
+                                    _isDeliveryCompleteEnabled.value = false
+                                    onSuccess()
+                                }
+                            },
+                            { error ->
+                                completedCount++
+                                if (completedCount == packagesToUpdate.size) {
+                                    loadOrderDetails(orderId)
+                                    _isDeliveryCompleteEnabled.value = false
+                                    onSuccess()
+                                }
+                            }
+                        )
+                    }
+                }
+            } else {
+                _isDeliveryCompleteEnabled.value = false
                 onSuccess()
             }
         }, onError)

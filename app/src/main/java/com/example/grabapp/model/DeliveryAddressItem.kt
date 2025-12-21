@@ -5,5 +5,6 @@ data class DeliveryAddressItem(
     val address: String,
     val isPickup: Boolean,
     val packageId: String? = null,
-    val packageStatus: PackageStatus? = null
+    val packageStatus: PackageStatus? = null,
+    val phone: String? = null
 )

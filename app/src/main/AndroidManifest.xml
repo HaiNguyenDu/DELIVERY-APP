@@ -90,7 +90,7 @@
 
         <meta-data
             android:name="com.goong.api_key"
-            android:value="lFHqJVvz4R97UeVo202sBed6FGh7KSi5CJZvjacg" />
+            android:value="QZOL9kM8PSx8NxcCENLSgc4g9n64iXggSRhhKSXA" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

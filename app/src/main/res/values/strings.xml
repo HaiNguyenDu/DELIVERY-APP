@@ -2,9 +2,9 @@
     <string name="app_name">GrabApp</string>
     //goongmap
     <string name="goong_api_url">https://rsapi.goong.io/</string>
-    <string name="goong_map_url">https://tiles.goong.io</string>
-    <string name="goong_api_key">lFHqJVvz4R97UeVo202sBed6FGh7KSi5CJZvjacg</string>
-    <string name="goong_map_key">ZxCQP01JWowkSbE5ELrpGNvEJTD3vHYILu3uyvlx</string>
+    <string name="goong_map_url">https://tiles.goong.io</string>QZOL9kM8PSx8NxcCENLSgc4g9n64iXggSRhhKSXA
+    <string name="goong_api_key">QZOL9kM8PSx8NxcCENLSgc4g9n64iXggSRhhKSXA</string>
+    <string name="goong_map_key">2HeIX1FS3q6CNg4XNcvMH5oxAD0MbSm9Y4SRUnb7</string>
     <string name="mapbox_access_token" translatable="false" tools:ignore="UnusedResources">YOUR_MAPBOX_ACCESS_TOKEN</string>
     //
     <string name="main_header">Vận Chuyển Ngay</string>
@@ -312,4 +312,7 @@
     <string name="h_yy">Hủy</string>
     <string name="x_c_nh_n">Xác nhận</string>
     <string name="n_h_ng">Đơn hàng</string>
+    <string name="kh_ng_li_n_l_c_c_ng_i_nh_n">Không liên lạc được người nhận</string>
+    <string name="kh_ng_li_n_l_c_u_c">(Không liên lạc đuợc)</string>
+    <string name="giao_th_t_b_i">(Giao thất bại)</string>
 </resources>

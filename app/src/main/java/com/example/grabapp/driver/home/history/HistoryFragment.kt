@@ -169,7 +169,6 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
                 // Filter bao gồm cả CANCELED và RETURNED
                 allOrders.filter { order ->
                     val status = orderStatusMap[order.orderId]
-                    // RETURNED và các status CANCELED đều được map thành OrderState.CANCELED
                     order.orderState == OrderState.CANCELED
                 }
             }

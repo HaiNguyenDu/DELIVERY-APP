@@ -176,8 +176,8 @@ class AddressRepository(context: Context) {
 
 
     companion object {
-        const val API_KEY = "lFHqJVvz4R97UeVo202sBed6FGh7KSi5CJZvjacg"
-        const val MAP_KEY = "ZxCQP01JWowkSbE5ELrpGNvEJTD3vHYILu3uyvlx"
+        const val API_KEY = "QZOL9kM8PSx8NxcCENLSgc4g9n64iXggSRhhKSXA"
+        const val MAP_KEY = "9rWViHwUHUcxeBq2YoDpo8Iv4NT7UJ8OEcEC140a"
         const val LIMIT = "10"
         private lateinit var addressRepository: AddressRepository
         fun getInstance(context: Context): AddressRepository {

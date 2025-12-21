@@ -12,6 +12,7 @@ class TokenStorage(context: Context) {
         private const val KEY_TOKEN_TYPE = "token_type"
         private const val KEY_USER_ID = "user_id"
         private const val KEY_PHONE = "phone"
+        private const val KEY_IMAGE_URL = "image_url"
     }
 
     private val prefs: SharedPreferences =
@@ -43,6 +44,14 @@ class TokenStorage(context: Context) {
     }
 
     fun getPhone(): String? = prefs.getString(KEY_PHONE, null)
+
+    fun saveImageUrl(imageUrl: String) {
+        prefs.edit {
+            putString(KEY_IMAGE_URL, imageUrl)
+        }
+    }
+
+    fun getImageUrl(): String? = prefs.getString(KEY_IMAGE_URL, null)
 
     fun hasToken(): Boolean = !getAccessToken().isNullOrEmpty()
 

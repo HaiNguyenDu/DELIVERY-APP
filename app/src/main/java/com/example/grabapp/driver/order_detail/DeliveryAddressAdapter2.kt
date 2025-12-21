@@ -13,18 +13,19 @@ import com.example.grabapp.model.PackageStatus
 class DeliveryAddressAdapter2(
     private val items: List<DeliveryAddressItem>,
     private val orderStatus: OrderStatus?,
-    private val onCallClick: (String) -> Unit,
+    private val onCallClick: (DeliveryAddressItem) -> Unit,
     private val onMessageClick: (String) -> Unit,
-    private val onDeliveredClick: (DeliveryAddressItem) -> Unit
+    private val onDeliveredClick: (DeliveryAddressItem) -> Unit,
+    private val onCancelClick: (DeliveryAddressItem) -> Unit
 ) : RecyclerView.Adapter<DeliveryAddressAdapter2.ViewHolder>() {
-    
+
     /**
      * Tìm package đang được giao (package đầu tiên có status PICKED_UP hoặc DELIVERY_IN_PROGRESS)
      */
     private fun getCurrentDeliveryPackageIndex(): Int? {
         return items.indexOfFirst { item ->
-            !item.isPickup && (item.packageStatus == PackageStatus.PICKED_UP || 
-                              item.packageStatus == PackageStatus.DELIVERY_IN_PROGRESS)
+            !item.isPickup && (item.packageStatus == PackageStatus.PICKED_UP ||
+                    item.packageStatus == PackageStatus.DELIVERY_IN_PROGRESS)
         }.takeIf { it >= 0 }
     }
 
@@ -37,9 +38,10 @@ class DeliveryAddressAdapter2(
             position: Int,
             orderStatus: OrderStatus?,
             currentDeliveryIndex: Int?,
-            onCallClick: (String) -> Unit,
+            onCallClick: (DeliveryAddressItem) -> Unit,
             onMessageClick: (String) -> Unit,
-            onDeliveredClick: (DeliveryAddressItem) -> Unit
+            onDeliveredClick: (DeliveryAddressItem) -> Unit,
+            onCancelClick: (DeliveryAddressItem) -> Unit
         ) {
             binding.apply {
                 tvDeliveryType.text = if (item.isPickup) {
@@ -60,24 +62,28 @@ class DeliveryAddressAdapter2(
                 )
 
                 llCall.setOnClickListener {
-                    onCallClick(item.name)
+                    onCallClick(item)
                 }
 
                 llMess.setOnClickListener {
                     onMessageClick(item.name)
                 }
-                
+
                 // Handle tvDelivered visibility and text
                 updateDeliveredButton(item, position, orderStatus, currentDeliveryIndex)
-                
+
                 tvDelivered.setOnClickListener {
                     onDeliveredClick(item)
                 }
+
+                tvCancel.setOnClickListener {
+                    onCancelClick(item)
+                }
             }
         }
-        
+
         private fun updateDeliveredButton(
-            item: DeliveryAddressItem, 
+            item: DeliveryAddressItem,
             position: Int,
             orderStatus: OrderStatus?,
             currentDeliveryIndex: Int?
@@ -85,52 +91,82 @@ class DeliveryAddressAdapter2(
             binding.apply {
                 when {
                     item.isPickup -> {
-                        // Pickup address logic
+                        tvCancel.visibility = View.GONE
+                        tvCanceled.visibility = View.GONE
+                        
                         when (orderStatus) {
                             OrderStatus.DRIVER_ASSIGNED -> {
                                 tvDelivered.visibility = View.VISIBLE
                                 tvDelivered.text = "Đến lấy đơn"
                             }
+
                             OrderStatus.DRIVER_EN_ROUTE_PICKUP -> {
                                 tvDelivered.visibility = View.VISIBLE
                                 tvDelivered.text = "Đã đến điểm lấy"
                             }
+
                             OrderStatus.ARRIVED_PICKUP -> {
                                 tvDelivered.visibility = View.VISIBLE
                                 tvDelivered.text = OrderStatus.PACKAGE_PICKED.statusName
                             }
+
                             OrderStatus.PACKAGE_PICKED -> {
                                 tvDelivered.visibility = View.GONE
                             }
+
                             else -> {
                                 tvDelivered.visibility = View.GONE
                             }
                         }
                     }
+
                     else -> {
-                        // Dropoff address logic - chỉ hiển thị cho package đang được giao
-                        val isCurrentDeliveryPackage = currentDeliveryIndex != null && position == currentDeliveryIndex
-                        
+                        val isCurrentDeliveryPackage =
+                            currentDeliveryIndex != null && position == currentDeliveryIndex
+
                         if (isCurrentDeliveryPackage) {
                             when (item.packageStatus) {
                                 PackageStatus.PICKED_UP -> {
                                     tvDelivered.visibility = View.VISIBLE
                                     tvDelivered.text = "Đến giao hàng"
+                                    tvCancel.visibility = View.GONE
+                                    tvCanceled.visibility = View.GONE
                                 }
+
                                 PackageStatus.DELIVERY_IN_PROGRESS -> {
                                     tvDelivered.visibility = View.VISIBLE
                                     tvDelivered.text = "Giao hàng"
+                                    tvCancel.visibility = View.VISIBLE
+                                    tvCanceled.visibility = View.GONE
                                 }
+
                                 PackageStatus.DELIVERED -> {
                                     tvDelivered.visibility = View.GONE
+                                    tvCancel.visibility = View.GONE
+                                    tvCanceled.visibility = View.GONE
                                 }
+
+                                PackageStatus.DELIVERY_FAILED -> {
+                                    tvDelivered.visibility = View.GONE
+                                    tvCancel.visibility = View.GONE
+                                    tvCanceled.visibility = View.VISIBLE
+                                }
+
                                 else -> {
                                     tvDelivered.visibility = View.GONE
+                                    tvCancel.visibility = View.GONE
+                                    tvCanceled.visibility = View.GONE
                                 }
                             }
                         } else {
                             // Không phải package đang được giao -> ẩn button
                             tvDelivered.visibility = View.GONE
+                            tvCancel.visibility = View.GONE
+                            tvCanceled.visibility = if (item.packageStatus == PackageStatus.DELIVERY_FAILED) {
+                                View.VISIBLE
+                            } else {
+                                View.GONE
+                            }
                         }
                     }
                 }
@@ -150,13 +186,14 @@ class DeliveryAddressAdapter2(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentDeliveryIndex = getCurrentDeliveryPackageIndex()
         holder.bind(
-            items[position], 
-            position, 
-            orderStatus, 
+            items[position],
+            position,
+            orderStatus,
             currentDeliveryIndex,
-            onCallClick, 
-            onMessageClick, 
-            onDeliveredClick
+            onCallClick,
+            onMessageClick,
+            onDeliveredClick,
+            onCancelClick
         )
     }
 

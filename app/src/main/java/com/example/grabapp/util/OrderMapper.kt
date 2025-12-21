@@ -33,7 +33,7 @@ object OrderMapper {
             lat = orderResponse.pickupAddress.latitude,
             lng = orderResponse.pickupAddress.longitude
         )
-        
+
         val dropoffCoordinates = orderResponse.packages.firstOrNull()?.dropoffAddress?.let {
             Coordinates(
                 lat = it.latitude,
@@ -70,6 +70,8 @@ object OrderMapper {
             "DRIVER_EN_ROUTE_PICKUP",
             "ARRIVED_PICKUP",
             "PACKAGE_PICKED",
+            "ARRIVED_DELIVERY",
+            "RETURNING_TO_SENDER",
             "EN_ROUTE_DELIVERY" -> OrderState.DELIVERING
 
             "CANCELLED_BY_SENDER",
@@ -174,7 +176,7 @@ object OrderMapper {
             else -> false
         }
     }
-    
+
     /**
      * Format distance cho dialog: từ mét sang km với 2 số thập phân
      * Ví dụ: 1234m -> 1.23km
@@ -186,7 +188,7 @@ object OrderMapper {
         val km = totalDistance / 1000.0
         return String.format(Locale.getDefault(), "%.2f km", km)
     }
-    
+
     /**
      * Format time cho dialog: từ giây sang phút, số tròn (không thập phân)
      * Ví dụ: 1006 giây -> 17 phút (làm tròn lên)
@@ -196,7 +198,7 @@ object OrderMapper {
 
         val totalSeconds = priceAndRoutes.sumOf { it.estimatedDuration }
         val minutes = ceil(totalSeconds / 60.0).toInt() // Làm tròn lên
-        
+
         return "$minutes phút"
     }
 }
