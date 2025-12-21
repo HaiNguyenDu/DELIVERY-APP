@@ -49,8 +49,12 @@ class DetailOrderItemAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun onHolder(packageItemModel: PackageItemModel) {
             binding.apply {
-                if (packageItemModel.dropOffAddress.detail.isNotEmpty())
-                    tvDrAddress.text = packageItemModel.dropOffAddress.detail
+                if (packageItemModel.dropOffAddress.detail.isNotEmpty()) {
+                    var detailAddress = ""
+                    if (packageItemModel.dropOffAddress.detailAddress.isNotEmpty()) detailAddress =
+                        packageItemModel.dropOffAddress.detailAddress + ", "
+                    tvDrAddress.text = detailAddress + packageItemModel.dropOffAddress.detail
+                }
                 if (packageItemModel.dropOffAddress.name.isNotEmpty())
                     tvDrUsername.text = packageItemModel.dropOffAddress.name
                 if (packageItemModel.dropOffAddress.phone.isNotEmpty())

@@ -1,6 +1,7 @@
 package com.example.grabapp.data.model.order
 
 import OrderStatus
+import com.example.grabapp.data.model.payment.PaymentStatusEnum
 import com.example.grabapp.domain.enum.PackageStatus
 import com.google.gson.annotations.SerializedName
 import java.util.Date
@@ -8,7 +9,7 @@ import java.util.Date
 data class OrderItem(
     @SerializedName("id") val id: String,
     @SerializedName("totalAmount") val totalAmount: Double,
-    @SerializedName("status") val status: OrderStatus,
+    @SerializedName("status") val status: OrderStatus?,
     @SerializedName("createdAt") val createdAt: String,
     @SerializedName("scheduledAt") val scheduledAt: String?,
     @SerializedName("pickupAddress") val pickupAddress: AddressInfo,
@@ -19,11 +20,12 @@ data class OrderItem(
 data class OrderItemResponse(
     @SerializedName("id") val id: String,
     @SerializedName("totalAmount") val totalAmount: Double,
-    @SerializedName("status") val status: OrderStatus,
+    @SerializedName("status") val status: OrderStatus?,
     @SerializedName("createdAt") val createdAt: String,
     @SerializedName("scheduledAt") val scheduledAt: String?,
     @SerializedName("pickupAddress") val pickupAddress: AddressInfo,
     @SerializedName("packages") val packages: List<PackageItemResponse>,
     @SerializedName("shipperId") val shipperId: String?,
-    @SerializedName("priceAndRoutes") val priceAndRoutes: List<PriceRouteItem>?
+    @SerializedName("priceAndRoutes") val priceAndRoutes: List<PriceRouteItem>?,
+    @SerializedName("paymentStatus") val paymentStatus: PaymentStatusEnum?
 )

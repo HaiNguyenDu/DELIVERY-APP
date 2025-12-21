@@ -21,6 +21,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GrabApp"
+rootProject.name = "QuickDN"
 include(":app")
  

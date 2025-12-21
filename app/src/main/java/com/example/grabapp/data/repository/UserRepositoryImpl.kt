@@ -14,7 +14,7 @@ class UserRepositoryImpl() : UserRepository {
 
     val fcmApi = ApiProvider.getInstance().getAuthRequiredApi(FCMApi::class.java)
     val userApi = ApiProvider.getInstance().getAuthRequiredApi(UserApi::class.java)
-    override fun updateUser(user: User) {
+    override suspend fun updateUser(user: User): Result<Boolean> {
         try {
             val userRequest = UpdateProfileRequest(
                 user.fullName,
@@ -22,9 +22,15 @@ class UserRepositoryImpl() : UserRepository {
                 user.avatarUrl ?: ""
             )
 
-            userApi.updateUser(userRequest)
+            val response = userApi.updateUser(userRequest)
+            if (!response.isSuccessful) {
+                return Result.failure(Error("Fail"))
+            }else {
+                return Result.success(true)
+            }
         } catch (e: Exception) {
             Log.e("GrabAppError", e.message.toString())
+            return Result.failure(Error("Fail"))
         }
     }
 

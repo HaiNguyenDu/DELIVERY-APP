@@ -3,7 +3,9 @@ package com.example.grabapp.ui.login
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabapp.data.model.order.PackageItemResponse
+import com.example.grabapp.databinding.DialogPreviewImageBinding
 import com.example.grabapp.databinding.ItemOderMainScreenBinding
+import com.example.grabapp.view.PreviewImageDialog
 
 class DetailOrderItemHistoryAdapter(
     var listOrder: List<PackageItemResponse>
@@ -67,13 +69,17 @@ class DetailOrderItemHistoryAdapter(
                 tvDetailPackage.setOnClickListener {
                     listener?.onDetailPackageClick(adapterPosition)
                 }
+                tvPreviewImge.setOnClickListener {
+                    listener?.onPreviewImageClick(packageItem.imgUrl)
+                }
+            }
+
             }
         }
-    }
-
     interface DetailOrderItemAdapterListener {
         fun onAddressClick(position: Int)
         fun onDeleteClick(position: Int)
         fun onDetailPackageClick(position: Int)
+        fun onPreviewImageClick(url: String)
     }
 }

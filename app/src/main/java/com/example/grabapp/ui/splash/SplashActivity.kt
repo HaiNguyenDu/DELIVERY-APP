@@ -94,6 +94,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, NoViewModel>() {
 
     private fun funShowNextScreen() {
         val token = SharedPreferencesUtils(this).getToken()
+        Log.d("Token",token)
         val newActivity = if (token.isNotEmpty()) MainActivity::class.java
         else LoginActivity::class.java
         startActivity(Intent(this@SplashActivity, newActivity))

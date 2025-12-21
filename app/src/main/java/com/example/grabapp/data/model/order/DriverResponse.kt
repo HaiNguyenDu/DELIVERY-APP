@@ -1,8 +1,21 @@
 package com.example.grabapp.data.model.order
 
+import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
 import java.time.LocalDateTime
+data class DriverLocationResponse(
+    @SerializedName("driverId")
+    val driverId: String,
 
+    @SerializedName("latitude")
+    val latitude: Double,
+
+    @SerializedName("longitude")
+    val longitude: Double,
+
+    @SerializedName("updatedAt")
+    val updatedAt: String
+)
 data class DriverResponse(
     val id: String,
     val userId: String,

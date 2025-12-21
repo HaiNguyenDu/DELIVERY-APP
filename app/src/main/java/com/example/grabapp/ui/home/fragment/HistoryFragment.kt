@@ -66,7 +66,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, MainViewModel>() {
     private fun initView() {
         historyAdapter = HistoryAdapter(emptyList()) { order ->
             when {
-                !order.status.isTerminal() -> {
+                !(order.status?.isTerminal()?:true) -> {
                     val existingFragment = childFragmentManager.findFragmentByTag("placed")
 
                     if (existingFragment == null) {

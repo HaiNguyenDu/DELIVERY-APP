@@ -1,5 +1,6 @@
 package com.example.grabapp.data.api
 
+import com.example.grabapp.data.model.order.DriverLocationResponse
 import com.example.grabapp.data.model.order.DriverResponse
 import com.example.grabapp.data.model.order.GetListOrderResponse
 import retrofit2.Response
@@ -11,4 +12,9 @@ interface DriverApi {
     suspend fun getDriverInfo(
         @Path("id") id: String,
     ): Response<DriverResponse>
+
+    @GET("auth/drivers/{driverId}/location")
+    suspend fun getDriverLocation(
+        @Path("driverId") driverId: String,
+    ): Response<DriverLocationResponse>
 }

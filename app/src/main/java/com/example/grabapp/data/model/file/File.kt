@@ -22,7 +22,6 @@ data class FileDownloadResponse(
 )
 
 data class UpLoadRequest(
-    @SerializedName("file") val file: String,
     @SerializedName("uid") val uid: String
 )
 

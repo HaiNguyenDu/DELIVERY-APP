@@ -16,6 +16,7 @@ import com.example.grabapp.R
 import com.example.grabapp.base.BaseFragment
 import com.example.grabapp.data.repository.AddressRepository
 import com.example.grabapp.databinding.FragmentCheckDirectionBinding
+import com.example.grabapp.domain.enum.PaymentTypeEnum
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
@@ -49,10 +50,26 @@ class CheckDirectionFragment :
         }
 
         binding.btnNext.setOnClickListener {
+            val order = viewModel.orderForm.value
             viewModel.createOrder({
-                Toast.makeText(requireContext(), "Tạo đơn hàng thành công", Toast.LENGTH_SHORT)
-                    .show()
-                CurrentOrder.setOrderId(it)
+                if (order.paymentTypeEnum == PaymentTypeEnum.CASH) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Tạo đơn hàng thành công",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    CurrentOrder.setOrderId(it)
+                } else {
+                    viewModel.setPage(3)
+                    SnackBarCustom(
+                        view = binding.root,
+                        message = getString(R.string.paid),
+                        backgroundColor = requireContext().getColor(R.color.white),
+                        textColor = requireContext().getColor(R.color.green),
+                        bottomMarginDp = 100f,
+                    ).show()
+                }
             }) {
                 SnackBarCustom(
                     view = binding.root,

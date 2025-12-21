@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.grabapp"
-        minSdk = 26
+        minSdk = 28
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -72,4 +72,5 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.auth0:java-jwt:4.4.0")
+    implementation("com.google.zxing:core:3.5.4")
 }

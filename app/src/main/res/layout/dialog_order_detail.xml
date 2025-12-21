@@ -131,19 +131,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/size_20"
-
                 app:cardCornerRadius="@dimen/size_20"
                 app:layout_constraintTop_toBottomOf="@+id/dividerDriver">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="20dp">
+                    android:paddingVertical="20dp">
 
                     <ImageView
                         android:id="@+id/ic_pick_up_location"
                         android:layout_width="@dimen/size_12"
                         android:layout_height="@dimen/size_12"
+                        android:layout_marginStart="20dp"
                         android:src="@drawable/ic_now_location_blue"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_pu_address"
                         app:layout_constraintStart_toStartOf="parent"
@@ -263,6 +263,7 @@
                         android:layout_width="@dimen/size_24"
                         android:layout_height="@dimen/size_24"
                         android:src="@drawable/ic_box_yellow"
+                        android:layout_marginStart="@dimen/size_20"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tv_type_name" />
 
@@ -329,6 +330,7 @@
                         android:layout_width="@dimen/size_24"
                         android:layout_height="@dimen/size_24"
                         android:src="@drawable/ic_delivery"
+                        android:layout_marginStart="@dimen/size_20"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tv_type_bike" />
 
@@ -361,123 +363,16 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:background="#BDBDBD"
-                app:layout_constraintBottom_toTopOf="@+id/rcv"
-                app:layout_constraintEnd_toEndOf="@+id/layout_info"
-                app:layout_constraintStart_toStartOf="@+id/layout_info"
-                app:layout_constraintTop_toBottomOf="@+id/layout_info" />
-
-            <View
-                android:id="@+id/dividerLocation"
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:layout_marginTop="16dp"
-                android:background="#F5F5F5"
-                app:layout_constraintTop_toBottomOf="@+id/layout_info" />
-
-            <TextView
-                android:id="@+id/tvSummaryTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Tóm tắt đơn hàng"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dividerLocation" />
-
-            <TextView
-                android:id="@+id/tvReorder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="Đặt lại"
-                android:textColor="#0091EA"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tvSummaryTitle"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <TextView
-                android:id="@+id/tvQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="1x"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tvSummaryTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvSummaryTitle" />
-
-            <TextView
-                android:id="@+id/tvItemName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:text="Trà sữa sốt khoai môn"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toStartOf="@+id/tvItemPrice"
-                app:layout_constraintStart_toEndOf="@+id/tvQuantity"
-                app:layout_constraintTop_toTopOf="@+id/tvQuantity" />
-
-            <TextView
-                android:id="@+id/tvItemDesc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Size M"
-                android:textColor="#757575"
-                android:textSize="13sp"
-                app:layout_constraintEnd_toEndOf="@+id/tvItemName"
-                app:layout_constraintStart_toStartOf="@+id/tvItemName"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemName" />
-
-            <TextView
-                android:id="@+id/tvItemPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="28.000"
-                android:textColor="#000000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvQuantity" />
-
-            <TextView
-                android:id="@+id/tvCollapse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="Thu lại ^"
-                android:textColor="#757575"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDesc" />
-
-            <View
-                android:id="@+id/dividerSummary"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="#EEEEEE"
-                app:layout_constraintTop_toBottomOf="@+id/tvCollapse" />
-
             <TextView
                 android:id="@+id/tvLabelSubtotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+
                 android:text="Tổng tạm tính"
                 android:textColor="#424242"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dividerSummary" />
+                app:layout_constraintTop_toTopOf="@+id/tv_total_price"/>
 
             <TextView
                 android:id="@+id/tv_total_price"
@@ -486,7 +381,10 @@
                 android:layout_marginEnd="16dp"
                 android:text="28.000đ"
                 android:textColor="#000000"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tvLabelSubtotal"
+                app:layout_constraintTop_toBottomOf="@+id/layout_info"
+                android:layout_marginTop="@dimen/size_50"
+                app:layout_constraintBottom_toTopOf="@+id/btn_next"
+
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <FrameLayout
@@ -496,9 +394,8 @@
                 android:layout_margin="@dimen/size_20"
                 android:background="@drawable/bg_button_green_medium_corner"
                 android:elevation="@dimen/size_4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabelSubtotal"
-                app:layout_constraintVertical_bias="1.0">
+                android:layout_marginTop="100dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_total_price">
 
                 <TextView
                     android:layout_width="wrap_content"

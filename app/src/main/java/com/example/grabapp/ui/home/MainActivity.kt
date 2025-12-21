@@ -67,13 +67,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             viewModel.listOrder.collect { list ->
                 if (list.isEmpty()) return@collect
                 list.forEach { order ->
-                    if (!order.status.isTerminal()) {
-                        binding.btnPackage.visibility = View.VISIBLE
-                        binding.btnPackage.setOnClickListener {
-                            CurrentOrder.setOrderId(order.id)
-                            showCurrentOrder()
+                    order.status?.isTerminal()?.let {
+                        if ((!it)) {
+                            binding.btnPackage.visibility = View.VISIBLE
+                            binding.btnPackage.setOnClickListener {
+                                CurrentOrder.setOrderId(order.id)
+                                showCurrentOrder()
+                            }
+                            return@collect
                         }
-                        return@collect
                     }
                 }
                 binding.btnPackage.visibility = View.GONE
@@ -103,6 +105,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.loadListOrder()
         if (CurrentOrder.orderID.value.isNotEmpty()) {
             binding.btnPackage.visibility = View.VISIBLE
             showCurrentOrder()

@@ -9,39 +9,40 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GrabApp">
+        android:theme="@style/Theme.GrabApp"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.user.ActivityUser"
             android:exported="false" />
-        <activity android:name=".ui.address_selection.AddressSelectionActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-            />
+        <activity
+            android:name=".ui.address_selection.AddressSelectionActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter android:autoVerify="false">
-                <action android:name="OPEN_SPLASH_SCREEN"/>
+                <action android:name="OPEN_SPLASH_SCREEN" />
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="https"
                     android:host="nguyenduyhai.local"
                     android:pathPrefix="/hai"
-                    />
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -49,8 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.home.MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="com.goong.api_key"

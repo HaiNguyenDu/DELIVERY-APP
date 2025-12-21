@@ -10,5 +10,6 @@ data class AddressInfo(
     @SerializedName("longitude") val longitude: Double = 0.0,
     @SerializedName("id") val note: String = "",
     @SerializedName("districtCode") val districtCode:Int? = 0,
-    @SerializedName("wardCode") val wardCode:Int? = 0
+    @SerializedName("wardCode") val wardCode:Int? = 0,
+    val detailAddress: String = ""
 )

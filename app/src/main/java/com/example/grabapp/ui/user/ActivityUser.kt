@@ -8,19 +8,19 @@ import androidx.lifecycle.lifecycleScope
 import com.example.grabapp.R
 import com.example.grabapp.base.BaseActivity
 import com.example.grabapp.databinding.ActivityUserBinding
-import com.example.grabapp.ui.splash.NoViewModel
 import com.example.grabapp.utils.SessionManager
 import com.example.grabapp.view.DialogEditUser
-import com.example.grabapp.view.DialogEditUserListener
 import kotlinx.coroutines.launch
 
 class ActivityUser : BaseActivity<ActivityUserBinding, UserViewModel>() {
-//    private val pickImageLauncher =
-//        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-//            uri?.let {
-//                viewModel.
-//            }
-//        }
+    private var dialogEditUser: DialogEditUser? = null
+    private val pickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            if (uri != null) {
+                viewModel.setImageUrl(uri.toString())
+                dialogEditUser?.setImageUrl(uri.toString())
+            }
+        }
 
     override fun getLazyBinding(): Lazy<ActivityUserBinding> = lazy {
         ActivityUserBinding.inflate(layoutInflater)
@@ -42,15 +42,23 @@ class ActivityUser : BaseActivity<ActivityUserBinding, UserViewModel>() {
         observerData()
     }
 
-    private fun observerData(){
+    private fun observerData() {
         lifecycleScope.launch {
-            viewModel.user.collect{
+            viewModel.user.collect {
                 it?.let {
                     binding.tvUsername.text = it.fullName
                 }
             }
         }
+        lifecycleScope.launch {
+            viewModel.isUpdate.collect {
+                if (it) {
+                    dialogEditUser?.dismiss()
+                }
+            }
+        }
     }
+
     override fun finish() {
         super.finish()
         overridePendingTransition(
@@ -66,19 +74,35 @@ class ActivityUser : BaseActivity<ActivityUserBinding, UserViewModel>() {
             }
             btnUserDetail.setOnClickListener {
                 viewModel.getUser()?.let {
-                    DialogEditUser(this@ActivityUser).setUser(it)
-                        .setListener(
-                            object : DialogEditUserListener {
-                                override fun onSave() {
-                                    viewModel.updateUser()
-                                }
+                    if (dialogEditUser == null) {
+                        dialogEditUser =
+                            DialogEditUser(this@ActivityUser).setUser(it)
+                                .setListener(
+                                    object : DialogEditUser.DialogEditUserListener {
+                                        override fun onSave(
+                                            phone: String,
+                                            fullName: String,
+                                            date: String
+                                        ) {
+                                            viewModel.updateUser(
+                                                this@ActivityUser,
+                                                phone,
+                                                fullName,
+                                                date
+                                            )
+                                        }
 
-                                override fun onLogOut() {
-                                    SessionManager.triggerLogout()
-                                }
-                            }
+                                        override fun onPickImage() {
+                                            pickImageLauncher.launch("image/*")
+                                        }
 
-                        ).show()
+                                        override fun onLogOut() {
+                                            SessionManager.triggerLogout()
+                                        }
+                                    }
+                                )
+                        dialogEditUser?.show()
+                    } else dialogEditUser?.setUser(it)?.show()
                 }
             }
         }

@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,9 +21,9 @@ import com.example.grabapp.databinding.DialogDetailPackageBinding
 import com.example.grabapp.domain.enum.PackageTypeEnum
 import com.example.grabapp.domain.enum.SizeEnum
 import com.example.grabapp.domain.enum.getSizeEnum
-import com.example.grabapp.domain.model.order.PackageItemModel
 import com.example.grabapp.ui.address_selection.AddressSelectionViewModel
 import com.example.grabapp.ui.address_selection.adapter.PackageTypeAdapter
+import com.example.grabapp.view.SnackBarCustom
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -53,6 +54,7 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
                     ) {
                         binding.iv.setImageURI(viewModel.imageUri.value)
                         setUpBtnCamera(true)
+                        validateData()
                     }
                 }
             }
@@ -96,14 +98,19 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
     }
 
     fun setUpView() {
-        if (viewModel.imageUri.value != null) {
-            binding.iv.setImageURI(viewModel.imageUri.value)
+        val imgUrl = viewModel.getCurrentPackageInfo().imgUrl
+        if (imgUrl.isNotEmpty()) {
+            Glide.with(binding.iv)
+                .load(imgUrl.toUri())
+                .into(binding.iv)
             setUpBtnCamera(true)
-        } else setUpBtnCamera(false)
+        }else setUpBtnCamera(false)
+        if (viewModel.getCurrentPackageInfo().weightKg != 0.0)
+            binding.edtWeight.setText(viewModel.getCurrentPackageInfo().weightKg.toInt().toString())
         binding.btnConfirm.alpha = 0.6f
-        binding.btnConfirm.isEnabled = false
         binding.rcvType.adapter = PackageTypeAdapter()
-        binding.rcvType.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rcvType.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     fun setUpBtnCamera(value: Boolean) {
@@ -117,7 +124,15 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
             requestCameraPermission.launch(android.Manifest.permission.CAMERA)
         }
         binding.btnConfirm.setOnClickListener {
-            onBtnConfirmClick()
+            binding.btnConfirm.setOnClickListener {
+                SnackBarCustom(
+                    view = binding.root,
+                    message = "Vui lòng nhập đầy đủ thông tin cân nặng và chụp ảnh đơn hàng",
+                    backgroundColor = context?.getColor(R.color.white)!!,
+                    textColor = context?.getColor(R.color.green)!!,
+                    bottomMarginDp = 100f,
+                ).show()
+            }
         }
         binding.btnDelete.setOnClickListener {
             viewModel.setImageUri(null)
@@ -139,6 +154,9 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
 
             override fun afterTextChanged(p0: Editable?) {}
         })
+        binding.btnBack.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun onChipItemClick(checkedIds: List<Int>, group: ChipGroup) {
@@ -171,7 +189,7 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
 
         val weightText = binding.edtWeight.text.toString()
         val weight = weightText.toIntOrNull()
-        val isValid = weight != null && weight in 1..maxWeight
+        val isValid = weight != null && weight in 1..maxWeight && binding.iv.isVisible
 
         binding.tvErrorWeight.isVisible = !isValid
         binding.tvErrorWeight.text = "Tối đa là $maxWeight kg"
@@ -181,10 +199,20 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
 
         if (isValid) {
             binding.btnConfirm.alpha = 1f
-            binding.btnConfirm.isEnabled = true
+            binding.btnConfirm.setOnClickListener {
+                onBtnConfirmClick()
+            }
         } else {
             binding.btnConfirm.alpha = 0.6f
-            binding.btnConfirm.isEnabled = false
+            binding.btnConfirm.setOnClickListener {
+                SnackBarCustom(
+                    view = binding.root,
+                    message = "Vui lòng nhập đầy đủ thông tin cân nặng và chụp ảnh đơn hàng",
+                    backgroundColor = context?.getColor(R.color.white)!!,
+                    textColor = context?.getColor(R.color.green)!!,
+                    bottomMarginDp = 100f,
+                ).show()
+            }
         }
     }
 
@@ -204,12 +232,14 @@ class DetailPackageFragment : BottomSheetDialogFragment() {
             binding.chipGroupSize.findViewById<Chip?>(binding.chipGroupSize.checkedChipId)?.text?.toString()
         val selectedType = binding.rcvType.adapter?.let {
             (it as PackageTypeAdapter).getSelectedType()
-        }?: PackageTypeEnum.KHAC
+        } ?: PackageTypeEnum.KHAC
         val newPackageInfo = viewModel.getCurrentPackageInfo().copy(
             weightKg = kg.toDouble(),
             packageSize = getSizeEnum(selectedText ?: ""),
-            category = selectedType
+            category = selectedType,
+            imgUrl = viewModel.imageUri.value.toString()
         )
+        viewModel.setImageUri(null)
         viewModel.updatePackageInfo(newPackageInfo)
         dismiss()
     }

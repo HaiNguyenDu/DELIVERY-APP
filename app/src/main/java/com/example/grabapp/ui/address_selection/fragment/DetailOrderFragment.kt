@@ -51,8 +51,7 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
             if (viewModel.isHashInfoPackage()) {
                 viewModel.setPage(AddressSelectionPageAdapter.FRAGMENT_CHECK_DIRECTION)
                 viewModel.getDirection()
-            }
-                else
+            } else
                 SnackBarCustom(
                     view = binding.root,
                     message = getString(R.string.fill_full_info),
@@ -69,6 +68,7 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
     }
 
     fun initView() {
+        viewModel.loadUser()
         val paymentMethods = PaymentTypeEnum.entries.map {
             it.label
         }
@@ -80,8 +80,18 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
 
         binding.edtPaymentMethod.setAdapter(adapterPayment)
 
-        binding.edtPaymentMethod.setOnItemClickListener { _, _, position, _ ->
-            val paymentMethod = if (position == 0) "CASH" else "ONLINE"
+        binding.edtPaymentMethod.setOnItemClickListener { parent, view, position, id ->
+            val selectedMethod = parent.getItemAtPosition(position) as String
+            when (selectedMethod) {
+
+                PaymentTypeEnum.CASH.label -> {
+                    viewModel.setPaymentType(PaymentTypeEnum.CASH)
+                }
+
+                PaymentTypeEnum.ONLINE.label -> {
+                    viewModel.setPaymentType(PaymentTypeEnum.ONLINE)
+                }
+            }
         }
         detailOrderItemAdapter = DetailOrderItemAdapter(viewModel.orderForm.value.listPackageInfo)
         binding.rcvOrder.apply {
@@ -131,12 +141,15 @@ class DetailOrderFragment : BaseFragment<FragmentDetailOrderBinding, AddressSele
         lifecycleScope.launch {
             viewModel.orderForm.collect {
                 binding.tvPuAddress.text = it.pickupAddress.detail
+                binding.tvPuPhone.text = it.pickupAddress.phone
+                binding.tvPuUsername.text = it.pickupAddress.name
                 detailOrderItemAdapter.setListOrder(
                     it.listPackageInfo,
                     viewModel.selectPackagePosition
                 )
                 if (viewModel.canCalculatePrice())
-                    binding.tvCost.text = viewModel.getPriceAndRoute().toDouble().toMoneyFormat()+"₫"
+                    binding.tvCost.text =
+                        viewModel.getPriceAndRoute().toDouble().toMoneyFormat() + "₫"
 
                 if (viewModel.isHashInfoPackage()) {
                     binding.btnNext.alpha = 1f

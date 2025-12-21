@@ -2,9 +2,12 @@ package com.example.grabapp.domain.model.order
 
 import com.example.grabapp.data.model.order.AddressInfo
 import com.example.grabapp.data.model.order.CreateOrderRequest
+import com.example.grabapp.data.model.order.OrderItemResponse
 import com.example.grabapp.data.model.order.PackageItem
+import com.example.grabapp.data.model.order.PackageItemResponse
 import com.example.grabapp.domain.enum.PackageTypeEnum
 import com.example.grabapp.domain.enum.PayerTypeEnum
+import com.example.grabapp.domain.enum.PaymentTypeEnum
 import com.example.grabapp.domain.enum.SizeEnum
 
 fun PackageItemModel.toDto(): PackageItem {
@@ -17,7 +20,7 @@ fun PackageItemModel.toDto(): PackageItem {
         payerType = this.payerType.name,
         category = this.category.name,
         description = this.description,
-        imgUrl = "ja",
+        imgUrl = this.imgUrl,
         dropoffAddress = this.dropOffAddress
     )
 }
@@ -68,3 +71,29 @@ fun OrderForm.toCreateOrderRequest(): CreateOrderRequest {
         paymentMethod = paymentTypeEnum.name
     )
 }
+
+fun OrderItemResponse.toOrderForm(): OrderForm {
+    return OrderForm(
+        pickupAddress = pickupAddress,
+        listPackageInfo = packages.map { it.toPackageItemModel() },
+        customerNote = "",
+        fragile = false,
+        paymentTypeEnum = PaymentTypeEnum.CASH
+    )
+}
+
+fun PackageItemResponse.toPackageItemModel(): PackageItemModel {
+    return PackageItemModel(
+        id = id,
+        weightKg = weightKg,
+        packageSize = SizeEnum.valueOf(packageSize),
+        codAmount = codAmount,
+        cod = cod,
+        payerType = PayerTypeEnum.valueOf(payerType),
+        category = PackageTypeEnum.valueOf(category),
+        description = description,
+        dropOffAddress = dropoffAddress,
+        imgUrl = imgUrl
+    )
+}
+

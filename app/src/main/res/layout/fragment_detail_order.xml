@@ -16,6 +16,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="true"
         app:layout_constraintBottom_toTopOf="@+id/layout_btn_next"
         android:paddingBottom="@dimen/size_50"
         app:layout_constraintTop_toBottomOf="@+id/tool_bar">
@@ -71,9 +72,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:maxWidth="@dimen/size_200"
                             android:fontFamily="@font/medium"
                             android:maxLines="1"
-                            android:text="Nguyễn Duy Hải"
+                            android:text="Thêm Người Gửi Hàng"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_12" />
 
@@ -95,7 +97,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/medium"
                             android:maxLines="1"
-                            android:text="0914103372"
+                            android:text="Thêm Số Điện Thoại Người Gửi"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_12"
                             app:layout_constraintEnd_toEndOf="parent"

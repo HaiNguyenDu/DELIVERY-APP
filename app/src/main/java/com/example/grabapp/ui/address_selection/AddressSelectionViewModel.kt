@@ -1,28 +1,39 @@
 package com.example.grabapp.ui.address_selection
 
+import OrderStatus
 import android.Manifest
 import android.app.Application
+import android.content.Context
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresPermission
+import androidx.core.net.toUri
 import androidx.lifecycle.viewModelScope
 import com.example.grabapp.base.BaseViewModel
 import com.example.grabapp.data.model.order.AddressInfo
+import com.example.grabapp.data.model.order.CreateOrderResponse
 import com.example.grabapp.data.model.order.PriceRouteItem
 import com.example.grabapp.data.model.payment.PayOSPaymentRequest
+import com.example.grabapp.data.model.payment.PaymentStatusEnum
 import com.example.grabapp.data.repository.AddressRepository
+import com.example.grabapp.data.repository.FileRepositoryImpl
 import com.example.grabapp.data.repository.OderRepositoryImpl
 import com.example.grabapp.data.repository.PaymentRepositoryImpl
+import com.example.grabapp.data.repository.UserRepositoryImpl
 import com.example.grabapp.domain.enum.EditTextEnum
+import com.example.grabapp.domain.enum.PaymentTypeEnum
 import com.example.grabapp.domain.model.order.OrderForm
 import com.example.grabapp.domain.model.order.PackageItemModel
+import com.example.grabapp.domain.model.user.User
+import com.example.grabapp.domain.model.user.toUser
 import com.example.grabapp.domain.repository.OrderRepository
 import com.example.grabapp.domain.repository.PaymentRepository
 import com.example.grabapp.respone.Coordinates
 import com.example.grabapp.respone.GoongDirectionApiResponse
 import com.example.grabapp.respone.Prediction
-import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter
 import com.example.grabapp.ui.address_selection.adapter.AddressSelectionPageAdapter.Companion.FRAGMENT_DETAIL_ORDER
+import com.example.grabapp.utils.JwtUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,11 +41,12 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 
 class AddressSelectionViewModel(private val application: Application) : BaseViewModel(application) {
     private var addressRepository: AddressRepository = AddressRepository.getInstance(application)
     private var orderRepository: OrderRepository = OderRepositoryImpl.getInstance()
-
+    val userRepository = UserRepositoryImpl()
     private var paymentRepository: PaymentRepository = PaymentRepositoryImpl.getInstance()
     private val _pagePosition = MutableStateFlow<Int>(0)
 
@@ -59,9 +71,61 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     private val _isCreateSuccess = MutableSharedFlow<Boolean>()
     val isCreateSuccess: SharedFlow<Boolean> = _isCreateSuccess
 
+    val fileRepository = FileRepositoryImpl()
     private val _isShowQrCode = MutableSharedFlow<Boolean>()
     val isShowQrCode: SharedFlow<Boolean> = _isCreateSuccess
     private var _lastAddress: AddressInfo? = null
+    private val _user = MutableStateFlow<User?>(null)
+    val user: StateFlow<User?> = _user
+    private val _paymentResponse = MutableStateFlow<CreateOrderResponse?>(null)
+    val paymentResponse: StateFlow<CreateOrderResponse?> = _paymentResponse
+
+    suspend fun isPaid(): Boolean = withContext(Dispatchers.IO) {
+        paymentResponse.value?.orderId?.let { orderId ->
+            val data = orderRepository.getOrderDetail(orderId)
+            data?.paymentStatus == PaymentStatusEnum.PAID
+        } ?: false
+    }
+
+    fun updateStatus(){
+        viewModelScope.launch {
+            paymentResponse.value?.orderId?.let {
+                orderRepository.updateStatus(it, OrderStatus.CANCELLED_BY_SENDER)
+                Toast.makeText(application, "Bạn đã hủy đơn hàng thành công", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    fun setIsSuccess(){
+        viewModelScope.launch {
+            _isCreateSuccess.emit(true)
+        }
+    }
+
+    fun loadUser() {
+        viewModelScope.launch {
+            val userResponse =
+                userRepository.getUserByIdFromSever(JwtUtils.getUserId(application) ?: "")
+            userResponse?.let {
+                _user.value = it.toUser()
+                _orderForm.value = _orderForm.value.copy(
+                    pickupAddress = _orderForm.value.pickupAddress.copy(
+                        name = it.fullName,
+                        phone = it.phone,
+                    )
+                )
+            }
+        }
+    }
+
+    fun setPaymentType(type: PaymentTypeEnum) {
+        _orderForm.value = _orderForm.value.copy(
+            paymentTypeEnum = type
+        )
+    }
+
+    fun updatePickUpAddress(addressInfo: AddressInfo) {
+        _orderForm.value = _orderForm.value.copy(pickupAddress = addressInfo)
+    }
 
     fun setLastAddress(address: AddressInfo?) {
         _lastAddress = address
@@ -98,16 +162,40 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
     fun createOrder(onSuccess: (String) -> Unit, onFail: () -> Unit) {
         showLoading()
         viewModelScope.launch {
-            val result = orderRepository.createOrder(_orderForm.value)
+            val listPackage = _orderForm.value.listPackageInfo
+            val newList = listPackage.map {
+                val file = uriToFile(application, it.imgUrl.toUri(), "avatar.jpg")
+                val url = fileRepository.upload(_user.value?.id ?: "", file)
+                it.copy(
+                    imgUrl = url?.url.toString()
+                )
+            }
+            val newOrder = _orderForm.value.copy(
+                listPackageInfo = newList
+            )
+            val result = orderRepository.createOrder(newOrder)
             result.onSuccess {
-                onSuccess(it)
+                onSuccess(it.orderId)
+                _paymentResponse.value = it
                 hideLoading()
+                if (PaymentTypeEnum.ONLINE == _orderForm.value.paymentTypeEnum)
+                    return@onSuccess
                 _isCreateSuccess.emit(true)
             }.onFailure {
                 onFail()
                 hideLoading()
             }
         }
+    }
+
+    fun uriToFile(context: Context, uri: Uri, fileName: String): File {
+        val inputStream = context.contentResolver.openInputStream(uri)!!
+        val file = File(context.cacheDir, fileName)
+        file.createNewFile()
+        file.outputStream().use { output ->
+            inputStream.copyTo(output)
+        }
+        return file
     }
 
     fun updatePackageInfo(packageInfo: PackageItemModel) {
@@ -223,9 +311,7 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
                             )
                         )
 
-                        if (currentOrder.listPackageInfo.firstOrNull()?.dropOffAddress?.detail?.isNotEmpty() == true
-                            && pagePosition.value == AddressSelectionPageAdapter.FRAGMENT_MAIN
-                        ) {
+                        if (currentOrder.listPackageInfo.firstOrNull()?.dropOffAddress?.detail?.isNotEmpty() == true) {
                             _pagePosition.value = FRAGMENT_DETAIL_ORDER
                             onSuccess()
                         }
@@ -270,7 +356,15 @@ class AddressSelectionViewModel(private val application: Application) : BaseView
                 address?.let {
                     viewModelScope.launch {
                         _orderForm.value = _orderForm.value.copy(
-                            pickupAddress = it
+                            pickupAddress = AddressInfo(
+                                name = _orderForm.value.pickupAddress.name,
+                                phone = orderForm.value.pickupAddress.phone,
+                                detail = it.detail,
+                                districtCode = it.districtCode,
+                                latitude = it.latitude,
+                                longitude = it.longitude,
+                                wardCode = it.wardCode
+                            )
                         )
                     }
                 }

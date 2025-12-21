@@ -15,6 +15,8 @@ import com.example.grabapp.extention.formatToVietNamTime
 import com.example.grabapp.ui.home.MainViewModel
 import com.example.grabapp.ui.home.MainViewModelFactory
 import com.example.grabapp.ui.login.DetailOrderItemHistoryAdapter
+import com.example.grabapp.ui.login.DetailOrderItemHistoryAdapter.DetailOrderItemAdapterListener
+import com.example.grabapp.view.PreviewImageDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -51,12 +53,34 @@ class OrderDetailDialog : BottomSheetDialogFragment() {
     }
 
     fun initView() {
+        binding.btnBack.setOnClickListener {
+            dismiss()
+        }
         viewModel.getSelectedOrder(orderId)
         lifecycleScope.launch {
             viewModel.selectedOrder.collect {
                 binding.loading.visibility = View.GONE
                 val detailOrderItemAdapter =
                     DetailOrderItemHistoryAdapter(it.packages)
+                detailOrderItemAdapter.setListener(object : DetailOrderItemAdapterListener {
+                    override fun onAddressClick(position: Int) {
+
+                    }
+
+                    override fun onDeleteClick(position: Int) {
+
+                    }
+
+                    override fun onDetailPackageClick(position: Int) {
+
+                    }
+
+                    override fun onPreviewImageClick(url: String) {
+                        PreviewImageDialog.with(requireContext(), url).show()
+                    }
+
+                }
+                )
                 binding.rcvOrder.apply {
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

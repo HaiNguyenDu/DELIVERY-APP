@@ -6,9 +6,12 @@ import com.example.grabapp.data.model.order.GetListOrderResponse
 import com.example.grabapp.data.model.order.OrderItem
 import com.example.grabapp.data.model.order.OrderItemResponse
 import com.example.grabapp.data.model.order.PriceRouteItem
+import com.example.grabapp.data.model.order.UpdateStatusRequest
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -36,4 +39,10 @@ interface OderApi {
     suspend fun getPriceRoute(
         @Body request: CreateOrderRequest
     ): Response<List<PriceRouteItem>>
+
+    @PATCH("{id}/package-status")
+    suspend fun updateStatus(
+        @Path("id") id: String,
+        @Body request: UpdateStatusRequest
+    ): Response<Unit>
 }

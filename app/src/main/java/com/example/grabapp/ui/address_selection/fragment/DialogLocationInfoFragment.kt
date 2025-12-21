@@ -56,16 +56,16 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
     private fun initObserver() {
         lifecycleScope.launch {
             viewModel.orderForm.collect {
-                val currentPackage = viewModel.getCurrentPackageInfo()
-                val text = if (viewModel.getLastFocusEdt() == EditTextEnum.DROP_OFF)
-                    currentPackage.dropOffAddress.detail
-                else if (viewModel.getLastFocusEdt() == EditTextEnum.PICK_UP) {
-                    it.pickupAddress.detail
-                } else ""
-                binding.edtAddress.setText(text)
-                binding.edtName.setText(currentPackage.dropOffAddress.name)
-                binding.edtPhone.setText(currentPackage.dropOffAddress.phone)
-                binding.edtNote.setText(currentPackage.description)
+                val address = if (viewModel.getLastFocusEdt() == EditTextEnum.DROP_OFF)
+                    viewModel.getCurrentPackageInfo().dropOffAddress
+                else {
+                    it.pickupAddress
+                }
+                binding.edtAddress.setText(address.detail)
+                binding.edtName.setText(address.name)
+                binding.edtPhone.setText(address.phone)
+                binding.edtNote.setText(address.note)
+                binding.edtDetailAddress.setText(address.detailAddress)
                 setupMap()
             }
         }
@@ -92,28 +92,51 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
         }
 
         btnConfirm.setOnClickListener {
-            val currentPackage = viewModel.getCurrentPackageInfo()
-            if (isHashInfo()) {
+            if (viewModel.getLastFocusEdt() == EditTextEnum.DROP_OFF) {
+                val currentPackage = viewModel.getCurrentPackageInfo()
+                if (isHashInfo()) {
 
-                val newPackage = currentPackage.copy(
-                    dropOffAddress = currentPackage.dropOffAddress.copy(
+                    val newPackage = currentPackage.copy(
+                        dropOffAddress = currentPackage.dropOffAddress.copy(
+                            name = edtName.text.toString(),
+                            phone = edtPhone.text.toString(),
+                            detail = currentPackage.dropOffAddress.detail,
+                            note = edtNote.text.toString(),
+                            detailAddress = edtDetailAddress.text.toString()
+                        )
+                    )
+                    viewModel.updatePackageInfo(newPackage)
+                    Log.d("test", newPackage.dropOffAddress.detail)
+                    dismiss()
+                } else {
+                    SnackBarCustom(
+                        view = binding.root,
+                        message = getString(R.string.fill_all_edt),
+                        backgroundColor = context?.getColor(R.color.white)!!,
+                        textColor = context?.getColor(R.color.green)!!,
+                        bottomMarginDp = 100f,
+                    ).show()
+                }
+            } else {
+                if (isHashInfo()) {
+                    val newPackage = viewModel.orderForm.value.pickupAddress.copy(
                         name = edtName.text.toString(),
                         phone = edtPhone.text.toString(),
-                        detail = edtDetailAddress.text.toString()+"," + currentPackage.dropOffAddress.detail,
-                        note = edtNote.text.toString()
+                        note = edtNote.text.toString(),
+                        detailAddress = edtDetailAddress.text.toString()
                     )
-                )
-                viewModel.updatePackageInfo(newPackage)
-                Log.d("test", newPackage.dropOffAddress.detail)
-                dismiss()
-            } else {
-                SnackBarCustom(
-                    view = binding.root,
-                    message = getString(R.string.fill_all_edt),
-                    backgroundColor = context?.getColor(R.color.white)!!,
-                    textColor = context?.getColor(R.color.green)!!,
-                    bottomMarginDp = 100f,
-                ).show()
+                    viewModel.updatePickUpAddress(
+                        newPackage
+                    )
+                } else {
+                    SnackBarCustom(
+                        view = binding.root,
+                        message = getString(R.string.fill_all_edt),
+                        backgroundColor = context?.getColor(R.color.white)!!,
+                        textColor = context?.getColor(R.color.green)!!,
+                        bottomMarginDp = 100f,
+                    ).show()
+                }
             }
         }
     }
@@ -171,7 +194,8 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
                 it.requestLayout()
                 it.setOnApplyWindowInsetsListener { _, insets ->
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                        val systemInsets =
+                            insets.getInsets(WindowInsetsCompat.Type.systemBars())
                         val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
                         val isImeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
                         if (isImeVisible)
@@ -260,7 +284,8 @@ class DialogLocationInfoFragment : BottomSheetDialogFragment() {
     override fun onStop() = super.onStop().also { binding.mapView.onStop() }
     override fun onLowMemory() = super.onLowMemory().also { binding.mapView.onLowMemory() }
     override fun onSaveInstanceState(outState: Bundle) =
-        super.onSaveInstanceState(outState).also { binding.mapView.onSaveInstanceState(outState) }
+        super.onSaveInstanceState(outState)
+            .also { binding.mapView.onSaveInstanceState(outState) }
 
     override fun onDestroyView() {
         super.onDestroyView()

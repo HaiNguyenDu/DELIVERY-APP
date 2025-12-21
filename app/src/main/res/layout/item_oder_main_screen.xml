@@ -145,7 +145,7 @@
     <LinearLayout
         android:id="@+id/layout_package_status"
         android:layout_width="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/size_20"
@@ -169,4 +169,15 @@
             app:layout_constraintStart_toStartOf="@id/layout_type_package"
             app:layout_constraintTop_toBottomOf="@id/layout_type_package" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_preview_imge"
+        android:layout_width="match_parent"
+        android:text="Xem hình ảnh đơn hàng"
+        android:fontFamily="@font/bold"
+        android:textColor="@color/dark_green"
+        android:textSize="@dimen/font_14"
+        android:layout_marginTop="@dimen/size_20"
+        app:layout_constraintTop_toBottomOf="@+id/layout_package_status"
+        android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

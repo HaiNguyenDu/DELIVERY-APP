@@ -6,193 +6,230 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <org.maplibre.android.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maplibre_apiBaseUri="https://api.maplibre.org"
+        app:maplibre_cameraBearing="0.0"
+        app:maplibre_cameraPitchMax="90.0"
+        app:maplibre_cameraPitchMin="0.0"
+        app:maplibre_cameraTargetLat="42.31230486601532"
+        app:maplibre_cameraTargetLng="64.63967338936439"
+        app:maplibre_cameraTilt="0.0"
+        app:maplibre_cameraZoom="3.9"
+        app:maplibre_cameraZoomMax="26.0"
+        app:maplibre_cameraZoomMin="2.0"
+        app:maplibre_localIdeographFontFamily="Droid Sans"
+        app:maplibre_uiCompass="true"
+        app:maplibre_uiCompassFadeFacingNorth="true"
+        app:maplibre_uiCompassGravity="top|end"
+        app:maplibre_uiDoubleTapGestures="true"
+        app:maplibre_uiHorizontalScrollGestures="true"
+        app:maplibre_uiRotateGestures="true"
+        app:maplibre_uiScrollGestures="true"
+        app:maplibre_uiTiltGestures="true"
+        app:maplibre_uiZoomGestures="true" />
+
     <ImageView
         android:id="@+id/btn_back"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginHorizontal="@dimen/size_16"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="@dimen/size_16"
         app:tint="#000000"
         tools:ignore="ContentDescription" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/btn_back"
         android:layout_marginTop="@dimen/size_20"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/white"
+        android:clipToPadding="false"
         android:orientation="vertical"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/tv_tag_saver"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_header"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/bg_button_green_medium_corner"
-                android:fontFamily="@font/bold"
-                android:paddingStart="12dp"
-                android:paddingTop="6dp"
-                android:paddingEnd="12dp"
-                android:paddingBottom="6dp"
-                android:text="Đang Giao Hàng"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_back" />
+                android:background="@drawable/bg_text_input_corner"
+                android:padding="@dimen/size_20"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tv_time_range"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:fontFamily="@font/bold"
-                android:text="23:25 - 23:35"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_tag_saver" />
+                <TextView
+                    android:id="@+id/tv_tag_saver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button_green_medium_corner"
+                    android:fontFamily="@font/bold"
+                    android:paddingStart="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="6dp"
+                    android:text="Đang Giao Hàng"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_status_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/medium"
-                android:text="Đang tìm tài xế"
-                android:textColor="#555555"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@id/iv_illustration"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_time_range" />
+                <TextView
+                    android:id="@+id/tv_time_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/bold"
+                    android:text="23:25 - 23:35"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tag_saver" />
 
-            <ImageView
-                android:id="@+id/iv_illustration"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_plane_and_truck"
-                app:layout_constraintBottom_toBottomOf="@id/tv_status_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_time_range"
-                tools:ignore="ContentDescription" />
+                <TextView
+                    android:id="@+id/tv_status_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@font/medium"
+                    android:text="Đang tìm tài xế"
+                    android:textColor="#555555"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/iv_illustration"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_time_range" />
 
-            <ImageView
-                android:id="@+id/iv_step_1"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="24dp"
-                android:src="@drawable/ic_box_yellow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_status_text"
-                tools:ignore="ContentDescription" />
+                <ImageView
+                    android:id="@+id/iv_illustration"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_plane_and_truck"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_status_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_time_range"
+                    tools:ignore="ContentDescription" />
 
-            <ProgressBar
-                android:id="@+id/line_1"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:indeterminate="false"
-                android:max="100"
-                android:progress="100"
-                android:progressTint="@color/dark_green"
-                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-                app:layout_constraintEnd_toStartOf="@id/iv_step_2"
-                app:layout_constraintStart_toEndOf="@id/iv_step_1"
-                app:layout_constraintTop_toTopOf="@id/iv_step_1" />
+                <ImageView
+                    android:id="@+id/iv_step_1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="24dp"
+                    android:src="@drawable/ic_box_yellow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_status_text"
+                    tools:ignore="ContentDescription" />
 
-            <ImageView
-                android:id="@+id/iv_step_2"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_car"
-                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-                app:layout_constraintEnd_toStartOf="@id/line_2"
-                app:layout_constraintStart_toEndOf="@id/line_1"
-                app:layout_constraintTop_toTopOf="@id/iv_step_1"
-                app:tint="#00B14F"
-                tools:ignore="ContentDescription" />
+                <ProgressBar
+                    android:id="@+id/line_1"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="100"
+                    android:progressTint="@color/dark_green"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                    app:layout_constraintEnd_toStartOf="@id/iv_step_2"
+                    app:layout_constraintStart_toEndOf="@id/iv_step_1"
+                    app:layout_constraintTop_toTopOf="@id/iv_step_1" />
 
-            <ProgressBar
-                android:id="@+id/line_2"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:indeterminate="false"
-                android:max="100"
-                android:progress="100"
-                android:progressTint="#E0E0E0"
-                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-                app:layout_constraintEnd_toStartOf="@id/iv_step_3"
-                app:layout_constraintStart_toEndOf="@id/iv_step_2"
-                app:layout_constraintTop_toTopOf="@id/iv_step_1" />
+                <ImageView
+                    android:id="@+id/iv_step_2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_assign_driver"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                    app:layout_constraintEnd_toStartOf="@id/line_2"
+                    app:layout_constraintStart_toEndOf="@id/line_1"
+                    app:layout_constraintTop_toTopOf="@id/iv_step_1"
+                    app:tint="#00B14F"
+                    tools:ignore="ContentDescription" />
 
-            <ImageView
-                android:id="@+id/iv_step_3"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_delivery"
-                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-                app:layout_constraintEnd_toStartOf="@id/line_3"
-                app:layout_constraintStart_toEndOf="@id/line_2"
-                app:layout_constraintTop_toTopOf="@id/iv_step_1"
-                app:tint="#CCCCCC"
-                tools:ignore="ContentDescription" />
+                <ProgressBar
+                    android:id="@+id/line_2"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="100"
+                    android:progressTint="#E0E0E0"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                    app:layout_constraintEnd_toStartOf="@id/iv_step_3"
+                    app:layout_constraintStart_toEndOf="@id/iv_step_2"
+                    app:layout_constraintTop_toTopOf="@id/iv_step_1" />
 
-            <ProgressBar
-                android:id="@+id/line_3"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:indeterminate="false"
-                android:max="100"
-                android:progress="100"
-                android:progressTint="#F0F0F0"
-                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-                app:layout_constraintEnd_toStartOf="@id/iv_step_4"
-                app:layout_constraintStart_toEndOf="@id/iv_step_3"
-                app:layout_constraintTop_toTopOf="@id/iv_step_1" />
+                <ImageView
+                    android:id="@+id/iv_step_3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_delivery"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                    app:layout_constraintEnd_toStartOf="@id/line_3"
+                    app:layout_constraintStart_toEndOf="@id/line_2"
+                    app:layout_constraintTop_toTopOf="@id/iv_step_1"
+                    app:tint="#CCCCCC"
+                    tools:ignore="ContentDescription" />
 
-            <ImageView
-                android:id="@+id/iv_step_4"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_home"
-                app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/line_3"
-                app:layout_constraintTop_toTopOf="@id/iv_step_1"
-                app:tint="#CCCCCC"
-                tools:ignore="ContentDescription" />
+                <ProgressBar
+                    android:id="@+id/line_3"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="100"
+                    android:progressTint="#F0F0F0"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                    app:layout_constraintEnd_toStartOf="@id/iv_step_4"
+                    app:layout_constraintStart_toEndOf="@id/iv_step_3"
+                    app:layout_constraintTop_toTopOf="@id/iv_step_1" />
 
-            <TextView
-                android:id="@+id/tv_footer_message"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/medium"
-                android:text="Chúng tôi sẽ báo bạn biết khi đơn hàng đã giao thành công"
-                android:textColor="#555555"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_step_1" />
+                <ImageView
+                    android:id="@+id/iv_step_4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_home"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_step_1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/line_3"
+                    app:layout_constraintTop_toTopOf="@id/iv_step_1"
+                    app:tint="#CCCCCC"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tv_footer_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/medium"
+                    android:text="Chúng tôi sẽ báo bạn biết khi đơn hàng đã giao thành công"
+                    android:textColor="#555555"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_step_1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_info_driver"
@@ -201,15 +238,16 @@
                 android:layout_marginTop="@dimen/size_20"
                 android:background="@drawable/bg_text_input_corner"
                 android:padding="@dimen/size_20"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_footer_message">
+                app:layout_constraintTop_toBottomOf="@+id/layout_header">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardDriverAvatar"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:cardCornerRadius="24dp"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:cardElevation="0dp">
 
                     <ImageView
@@ -257,6 +295,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvDriverName" />
 
                 <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/regular"
+                    android:text="Sdt: 0914103372"
+                    android:textColor="#616161"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tvRating"
+                    app:layout_constraintStart_toStartOf="@+id/tvDriverName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvVehicleInfo" />
+
+                <TextView
                     android:id="@+id/tvRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -272,13 +324,56 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_text_input_corner"
+                android:padding="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/layout_info_driver">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:text="Tổng cộng"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:text="30000.d"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/payment_type"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_amount"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/font_14"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/dark_green"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Đã thanh toán"
+                    android:layout_height="wrap_content"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_pick_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/size_20"
                 android:background="@drawable/bg_text_input_corner"
                 android:padding="@dimen/size_20"
-                app:layout_constraintTop_toBottomOf="@+id/layout_info_driver">
+                app:layout_constraintTop_toBottomOf="@+id/layout_cost">
 
                 <ImageView
                     android:id="@+id/ic_pick_up_location"

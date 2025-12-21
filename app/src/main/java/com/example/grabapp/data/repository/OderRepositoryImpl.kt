@@ -1,10 +1,13 @@
 package com.example.grabapp.data.repository
 
+import OrderStatus
 import android.util.Log
 import com.example.grabapp.data.api.OderApi
+import com.example.grabapp.data.model.order.CreateOrderResponse
 import com.example.grabapp.data.model.order.OrderItem
 import com.example.grabapp.data.model.order.OrderItemResponse
 import com.example.grabapp.data.model.order.PriceRouteItem
+import com.example.grabapp.data.model.order.UpdateStatusRequest
 import com.example.grabapp.domain.model.order.OrderForm
 import com.example.grabapp.domain.model.order.toCreateOrderRequest
 import com.example.grabapp.domain.repository.OrderRepository
@@ -35,7 +38,7 @@ class OderRepositoryImpl : OrderRepository {
     override suspend fun getOrderDetail(orderId: String): OrderItemResponse? {
         try {
             val response = orderApi.getDetailOrder(orderId)
-            Log.d("dsd", response.body()?.id?:""+ response.isSuccessful)
+            Log.d("dsd", response.body()?.id ?: "" + response.isSuccessful)
             if (response.isSuccessful && response.body() != null)
                 return response.body()!!
             return null
@@ -45,7 +48,7 @@ class OderRepositoryImpl : OrderRepository {
         }
     }
 
-    override suspend fun createOrder(orderForm: OrderForm): Result<String> {
+    override suspend fun createOrder(orderForm: OrderForm): Result<CreateOrderResponse> {
         val createOrderRequest =
             orderForm.toCreateOrderRequest()
         try {
@@ -53,7 +56,7 @@ class OderRepositoryImpl : OrderRepository {
                 createOrderRequest
             )
             if (response.isSuccessful && response.body()?.orderId != null)
-                return Result.success(response.body()!!.orderId)
+                return Result.success(response.body()!!)
             return Result.failure(Exception("Fail To Create Order"))
         } catch (e: Exception) {
             return Result.failure(e)
@@ -64,7 +67,7 @@ class OderRepositoryImpl : OrderRepository {
         val createOrderRequest = orderForm.toCreateOrderRequest()
         try {
             val response = orderApi.getPriceRoute(createOrderRequest)
-            if(response.isSuccessful) {
+            if (response.isSuccessful) {
                 val listItem = response.body()
                 if (listItem != null)
                     return listItem
@@ -73,6 +76,25 @@ class OderRepositoryImpl : OrderRepository {
 
         }
         return emptyList()
+    }
+
+    override suspend fun updateStatus(
+        orderId: String,
+        status: OrderStatus
+    ): Boolean {
+        return try {
+            val request = UpdateStatusRequest(
+                status = status.name,
+                note = ""
+            )
+
+            val response = orderApi.updateStatus(orderId, request)
+
+            response.isSuccessful
+        } catch (e: Exception) {
+            Log.e("UpdateStatus", "Update failed", e)
+            false
+        }
     }
 
     companion object {
