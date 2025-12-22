@@ -1,5 +1,6 @@
 package com.example.grabapp.driver.home.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
@@ -15,6 +16,7 @@ import com.example.grabapp.databinding.FragmentHistoryBinding
 import com.example.grabapp.driver.home.DriverHomeViewModel
 import com.example.grabapp.driver.home.DriverHomeViewModelFactory
 import com.example.grabapp.driver.home.adapter.OrderAdapter
+import com.example.grabapp.driver.order_detail.OrderDetailActivity
 import com.example.grabapp.extention.onClickWithScale
 import com.example.grabapp.model.Order
 import com.example.grabapp.model.OrderState
@@ -112,7 +114,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
         viewModel.fetchOrderById(order.orderId) { fetchedOrder ->
             if (fetchedOrder != null) {
                 requireContext().startActivity(
-                    android.content.Intent(requireContext(), com.example.grabapp.driver.order_detail.OrderDetailActivity::class.java).apply {
+                    Intent(requireContext(), OrderDetailActivity::class.java).apply {
                         putExtra("extra_order", fetchedOrder)
                     }
                 )
@@ -148,9 +150,15 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
 
     private fun updateStatistics() {
         val totalOrders = allOrders.size
-        val completedOrders = allOrders.count { it.orderState == OrderState.DELIVERED }
+        val completedOrders = allOrders.count { order ->
+            order.orderState == OrderState.DELIVERED || 
+            orderStatusMap[order.orderId] == "DELIVERED_WITH_ISSUES"
+        }
         val totalIncome = allOrders
-            .filter { it.orderState == OrderState.DELIVERED }
+            .filter { order ->
+                order.orderState == OrderState.DELIVERED || 
+                orderStatusMap[order.orderId] == "DELIVERED_WITH_ISSUES"
+            }
             .sumOf { it.income }
 
         binding.apply {
@@ -163,7 +171,10 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, DriverHomeViewModel
     private fun getFilteredOrders(): List<Order> {
         return when (currentFilter) {
             FilterType.ALL -> allOrders
-            FilterType.COMPLETED -> allOrders.filter { it.orderState == OrderState.DELIVERED }
+            FilterType.COMPLETED -> allOrders.filter { order ->
+                order.orderState == OrderState.DELIVERED || 
+                orderStatusMap[order.orderId] == "DELIVERED_WITH_ISSUES"
+            }
             FilterType.DELIVERING -> allOrders.filter { it.orderState == OrderState.DELIVERING }
             FilterType.CANCELED -> {
                 // Filter bao gồm cả CANCELED và RETURNED

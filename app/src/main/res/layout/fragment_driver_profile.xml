@@ -104,6 +104,7 @@
                 android:layout_marginStart="@dimen/size_8"
                 android:fontFamily="@font/bold"
                 android:text="@string/_5_0"
+                android:textColor="@color/black"
                 android:textSize="@dimen/font_16" />
 
             <TextView
@@ -112,7 +113,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_8"
                 android:fontFamily="@font/regular"
-                android:text="@string/_3_n" />
+                android:text="@string/_3_n"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -168,6 +170,7 @@
                 android:layout_marginStart="@dimen/size_12"
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
+                android:textColor="@color/black"
                 android:text="@string/ch_a_c_p_nh_t"
                 android:textSize="@dimen/font_14" />
         </LinearLayout>
@@ -190,6 +193,7 @@
                 android:id="@+id/tvVehicle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:layout_marginStart="@dimen/size_12"
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
@@ -235,6 +239,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/bold"
                     android:text="@string/_3"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_24" />
 
                 <TextView
@@ -344,6 +349,7 @@
                         android:layout_marginStart="@dimen/size_12"
                         android:layout_weight="1"
                         android:fontFamily="@font/medium"
+                        android:textColor="@color/black"
                         android:text="@string/c_i_t"
                         android:textSize="@dimen/font_16" />
                 </LinearLayout>

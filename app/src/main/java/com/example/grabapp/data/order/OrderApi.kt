@@ -42,4 +42,9 @@ interface OrderApi {
         @Path("packageId") packageId: String,
         @Body request: UpdatePackageStatusRequest
     ): Response<PackageInfo>
+    
+    @GET("order/{driverId}/rating")
+    suspend fun getDriverRating(
+        @Path("driverId") driverId: String
+    ): Response<com.example.grabapp.data.model.RatingResponse>
 }

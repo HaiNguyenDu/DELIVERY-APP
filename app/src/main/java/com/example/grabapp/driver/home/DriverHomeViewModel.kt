@@ -10,6 +10,7 @@ import com.example.grabapp.data.TokenStorage
 import com.example.grabapp.data.model.UpdateDriverStatusRequest
 import com.example.grabapp.data.model.UploadFaceRequest
 import com.example.grabapp.data.model.DriverRegisterResponse
+import com.example.grabapp.data.model.RatingResponse
 import com.example.grabapp.data.repository.AIServiceRepository
 import com.example.grabapp.data.repository.DriverRepository
 import com.example.grabapp.data.repository.FileRepository
@@ -58,6 +59,9 @@ class DriverHomeViewModel(
 
     private val _updateStatusState = MutableStateFlow<UpdateStatusState>(UpdateStatusState.Idle)
     val updateStatusState = _updateStatusState.asStateFlow()
+    
+    private val _ratingData = MutableStateFlow<RatingResponse?>(null)
+    val ratingData = _ratingData.asStateFlow()
 
     fun uploadDriverFace(uri: Uri, userId: String) {
         viewModelScope.launch {
@@ -173,6 +177,29 @@ class DriverHomeViewModel(
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+            }
+        }
+    }
+    
+    fun fetchDriverRating() {
+        viewModelScope.launch {
+            try {
+                val userId = tokenStorage.getUserId()
+                if (userId.isNullOrEmpty()) {
+                    return@launch
+                }
+
+                when (val result = orderRepository.getDriverRating(userId)) {
+                    is OrderRepository.RatingResult.Success -> {
+                        _ratingData.value = result.response
+                    }
+                    is OrderRepository.RatingResult.Error -> {
+                        // Log error but don't show to user
+                        android.util.Log.e("DriverHomeViewModel", "Error fetching rating: ${result.message}")
+                    }
+                }
+            } catch (e: Exception) {
+                android.util.Log.e("DriverHomeViewModel", "Exception fetching rating: ${e.message}", e)
             }
         }
     }

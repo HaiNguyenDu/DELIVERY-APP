@@ -95,6 +95,14 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
                 }
             }
         }
+        
+        lifecycleScope.launch {
+            viewModel.ratingData.collect { ratingData ->
+                ratingData?.let {
+                    updateRating(it)
+                }
+            }
+        }
     }
 
     private fun updateStatistics() {
@@ -111,15 +119,21 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
 
     private fun updateDriverInfo(driverInfo: DriverRegisterResponse) {
         binding.apply {
-            tvTotalRate.text = String.format("%.1f", driverInfo.ratingAvg)
-            tvRate.text = String.format("%.1f", driverInfo.ratingAvg)
-
+            // Rating sẽ được hiển thị từ ratingData
             val isApproved = driverInfo.status.uppercase() == "APPROVED"
             tvDriverStatus.text = if (isApproved) {
                 getString(R.string.t_i_x_ch_nh_th_c)
             } else {
                 "Đang chờ phê duyệt"
             }
+        }
+    }
+    
+    private fun updateRating(ratingData: com.example.grabapp.data.model.RatingResponse) {
+        binding.apply {
+            val formattedRating = String.format("%.1f", ratingData.averageRating)
+            tvTotalRate.text = formattedRating
+            tvRate.text = formattedRating
         }
     }
 
@@ -137,8 +151,23 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
             llLogout.onClickWithScale {
                 handleLogout()
             }
+            llTotalRate.onClickWithScale {
+                viewModel.ratingData.value?.let { ratingData ->
+                    showRateDriverDialog(ratingData)
+                }
+            }
         }
 
+    }
+    
+    private fun showRateDriverDialog(ratingData: com.example.grabapp.data.model.RatingResponse) {
+        val existingDialog = parentFragmentManager.findFragmentByTag("RateDriverDialog")
+        if (existingDialog != null && existingDialog.isAdded) {
+            return
+        }
+        
+        com.example.grabapp.view.dialog.RateDriverDialog.newInstance(ratingData)
+            .show(parentFragmentManager, "RateDriverDialog")
     }
 
     override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
@@ -217,7 +246,7 @@ class DriverProfileFragment : BaseFragment<FragmentDriverProfileBinding, DriverH
             delay(500)
             
             // Clear token storage khi logout
-            tokenStorage.clear()
+            //tokenStorage.clear()
             
             requireActivity().finish()
             requireContext().startActivity<DriverLoginActivity>()

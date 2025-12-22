@@ -71,6 +71,7 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
         setupFragment(savedInstanceState)
         fetchOrders()
         observeActiveOrder()
+        fetchDriverRating()
 
         // Check notification order khi onCreate (để handle khi app được mở từ notification)
         handleNotificationOrder()
@@ -174,6 +175,10 @@ class DriverHomeActivity : BaseDriverActivity<ActivityDriverHomeBinding, DriverH
 
     private fun fetchOrders() {
         viewModel.fetchOrders()
+    }
+    
+    private fun fetchDriverRating() {
+        viewModel.fetchDriverRating()
     }
 
     private fun setupListener() {

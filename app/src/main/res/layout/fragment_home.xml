@@ -176,6 +176,7 @@
                     android:fontFamily="@font/medium"
                     android:text="@string/n_h_m_nay"
                     android:textSize="@dimen/font_14"
+                    android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -197,6 +198,7 @@
                     android:layout_marginTop="@dimen/size_8"
                     android:fontFamily="@font/bold"
                     android:text="@string/_3"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_20"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/imageView1" />
@@ -220,6 +222,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/medium"
                     android:text="@string/income"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_14"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -242,6 +245,7 @@
                     android:layout_marginTop="@dimen/size_8"
                     android:fontFamily="@font/bold"
                     android:text="@string/_3"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_20"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/imageView3" />
@@ -265,6 +269,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/medium"
                     android:text="@string/nh_gi"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_14"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -284,6 +289,7 @@
                     android:id="@+id/tvRate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:layout_marginTop="@dimen/size_8"
                     android:fontFamily="@font/bold"
                     android:text="@string/_75_000"

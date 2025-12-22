@@ -48,6 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_4"
+        android:textColor="@color/black"
         android:layout_marginEnd="@dimen/size_24"
         android:fontFamily="@font/bold"
         android:text="@string/nguy_n_v_n_a"

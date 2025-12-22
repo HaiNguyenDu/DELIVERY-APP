@@ -66,7 +66,8 @@ object OrderMapper {
 
     private fun mapStatusToOrderState(status: String): OrderState {
         return when (status.uppercase()) {
-            "DELIVERED" -> OrderState.DELIVERED
+            "DELIVERED",
+            "DELIVERED_WITH_ISSUES" -> OrderState.DELIVERED
             "DRIVER_EN_ROUTE_PICKUP",
             "ARRIVED_PICKUP",
             "PACKAGE_PICKED",

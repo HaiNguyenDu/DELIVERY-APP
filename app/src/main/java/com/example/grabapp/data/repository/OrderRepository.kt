@@ -9,6 +9,7 @@ import com.example.grabapp.data.model.AssignShipperRequest
 import com.example.grabapp.data.model.OrderListResponse
 import com.example.grabapp.data.model.OrderResponse
 import com.example.grabapp.data.model.PackageInfo
+import com.example.grabapp.data.model.RatingResponse
 import com.example.grabapp.data.model.UpdateOrderStatusRequest
 import com.example.grabapp.data.model.UpdatePackageStatusRequest
 import com.example.grabapp.data.order.OrderApi
@@ -62,6 +63,11 @@ class OrderRepository(private val context: Context) {
     sealed class PackageResult {
         data class Success(val response: PackageInfo) : PackageResult()
         data class Error(val code: Int?, val message: String) : PackageResult()
+    }
+    
+    sealed class RatingResult {
+        data class Success(val response: RatingResponse) : RatingResult()
+        data class Error(val code: Int?, val message: String) : RatingResult()
     }
 
     suspend fun getOrders(role: String, userId: String): OrderListResult {
@@ -214,6 +220,36 @@ class OrderRepository(private val context: Context) {
             PackageResult.Error(e.code(), e.message ?: "Server error")
         } catch (e: Exception) {
             PackageResult.Error(null, e.message ?: "Unexpected error")
+        }
+    }
+    
+    suspend fun getDriverRating(driverId: String): RatingResult {
+        return try {
+            val resp = api.getDriverRating(driverId)
+            if (resp.isSuccessful) {
+                val body = resp.body()
+                if (body != null) {
+                    RatingResult.Success(body)
+                } else {
+                    RatingResult.Error(resp.code(), "Empty response from server")
+                }
+            } else {
+                val errorMes = try {
+                    resp.errorBody()?.string()
+                } catch (e: Exception) {
+                    null
+                }
+                RatingResult.Error(resp.code(), errorMes ?: "HTTP ${resp.code()}")
+            }
+        } catch (e: IOException) {
+            RatingResult.Error(
+                null,
+                "Network error: ${e.localizedMessage ?: "Please check your connection"}"
+            )
+        } catch (e: HttpException) {
+            RatingResult.Error(e.code(), e.message ?: "Server error")
+        } catch (e: Exception) {
+            RatingResult.Error(null, e.message ?: "Unexpected error")
         }
     }
 }

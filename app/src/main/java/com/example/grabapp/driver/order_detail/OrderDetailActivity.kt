@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -49,6 +50,7 @@ import org.maplibre.android.camera.CameraUpdateFactory
 import org.maplibre.android.geometry.LatLng
 import org.maplibre.android.geometry.LatLngBounds
 import org.maplibre.android.maps.MapLibreMap
+import androidx.core.net.toUri
 
 class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetailViewModel>() {
 
@@ -314,7 +316,7 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
             }
 
             OrderStatus.DELIVERED_WITH_ISSUES -> {
-                binding.tvStatus.text = "Đã trả hàng"
+                binding.tvStatus.text = "Giao hàng có sự cố"
                 binding.tvDeliveryComplete.text = "Đã trả hàng"
                 binding.tvCancelOrder.visibility = View.GONE
             }
@@ -590,7 +592,11 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
                     handleCallClick(item)
                 },
                 onMessageClick = { name ->
-                    // TODO: Implement message functionality
+                    Toast.makeText(
+                        this@OrderDetailActivity,
+                        "Chức năng đang được phát triển",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 },
                 onDeliveredClick = { item ->
                     handleDeliveredClick(item)
@@ -613,28 +619,20 @@ class OrderDetailActivity : BaseActivity<ActivityDetailOrderBinding, OrderDetail
     private fun handleCallClick(item: DeliveryAddressItem) {
         val phoneNumber = item.phone
         if (phoneNumber.isNullOrEmpty()) {
-            Toast.makeText(
-                this,
-                "Không có số điện thoại",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(this, "Không có số điện thoại", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = android.net.Uri.parse("tel:$phoneNumber")
-        }
-        
-        if (intent.resolveActivity(packageManager) != null) {
+        try {
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$phoneNumber")
+            }
             startActivity(intent)
-        } else {
-            Toast.makeText(
-                this,
-                "Không tìm thấy ứng dụng điện thoại",
-                Toast.LENGTH_SHORT
-            ).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Không thể mở ứng dụng gọi điện", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun handleDeliveredClick(item: DeliveryAddressItem) {
         if (item.isPickup) {

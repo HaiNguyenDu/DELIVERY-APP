@@ -50,7 +50,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        stopShimmer()
         connectionState = viewModel.getSavedConnectionState()
         updateUIState(connectionState)
         observeViewModel()
@@ -68,7 +68,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
         lifecycleScope.launch {
             viewModel.driverInfo.collect { driverInfo ->
                 driverInfo?.let {
-                    binding.tvRate.text = String.format("%.1f", it.ratingAvg)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.ratingData.collect { ratingData ->
+                ratingData?.let {
+                    binding.tvRate.text = String.format("%.1f", it.averageRating)
                 }
             }
         }
@@ -113,6 +120,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, DriverHomeViewModel>() {
             val isAvailable = newState == ConnectionState.CONNECTED
             viewModel.updateDriverStatus(isAvailable)
         }
+
+        binding.ctlRate.onClickWithScale {
+            viewModel.ratingData.value?.let { ratingData ->
+                showRateDriverDialog(ratingData)
+            }
+        }
+    }
+
+    private fun showRateDriverDialog(ratingData: com.example.grabapp.data.model.RatingResponse) {
+        val existingDialog = parentFragmentManager.findFragmentByTag("RateDriverDialog")
+        if (existingDialog != null && existingDialog.isAdded) {
+            return
+        }
+
+        com.example.grabapp.view.dialog.RateDriverDialog.newInstance(ratingData)
+            .show(parentFragmentManager, "RateDriverDialog")
     }
 
     override fun handleInset(view: View, inset: Insets, bottomInset: Int) {
